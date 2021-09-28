@@ -1,0 +1,11 @@
+#contenedorInicial{
+    margin-top: 40px;
+}
+
+#columOptions{
+    width: 14%;    
+}
+
+#columOptions button{
+    margin-right: 10px;
+}
