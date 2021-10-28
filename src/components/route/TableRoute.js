@@ -7,27 +7,22 @@ import { Pagination } from '../conduct/Pagination';
 import { SearchConduct } from '../conduct/SearchConduct';
 import '../../Styles/tableConduct.css'
 import { IconContext } from 'react-icons';
-import { ModalRoutes } from '../globalComponents/ModalRoutes';
+import { ModalRoutes } from './ModalRoutes';
+import { UseModal } from '../../hooks/UseModal';
+import axios from 'axios';
+
 
 
 export const Route = () => {
 
-    const [isOpenModal, setIsOpenModal] = useState(false);
-
-    const openModal = () => {
-        setIsOpenModal(true)
-    }
-
-    const closeModal = () => {
-        setIsOpenModal(false)
-    }
-
+    const [isOpenModalRoutes, openRoutesModal, closeRoutesModal] = UseModal();
+  
     return (
         <>
             <div className="container" id="contenedorInicial">
                 <h1>Rutas</h1>
                 <span>
-                    <SearchConduct titleButton={"Agregar nueva ruta"} icon={<RiIcons.RiRouteFill />} openModal={openModal} />
+                    <SearchConduct titleButton={"Agregar nueva ruta"} icon={<RiIcons.RiRouteFill />} openModal={openRoutesModal} />
                 </span>
                 <IconContext.Provider value={{ color: 'black', size: "18px" }}>
                     <div className="row">
@@ -48,7 +43,7 @@ export const Route = () => {
                                     <td>Otto</td>
                                     <td>@mdo</td>
                                     <td id="columOptions">
-                                        <button className="btn btn-warning btn-sm"><BsIcons.BsFillEyeFill /></button>
+                                        <button className="btn btn-warning btn-sm" onClick={openRoutesModal}><BsIcons.BsFillEyeFill /></button>
                                         <button className="btn btn-info btn-sm"><RiIcons.RiEditFill /></button>
                                         <button className="btn btn-danger btn-sm"><AiIcons.AiFillDelete /></button>
 
@@ -108,8 +103,8 @@ export const Route = () => {
             </div>
 
             <ModalRoutes
-                isOpen={isOpenModal}
-                closeModal={closeModal}
+                isOpen={isOpenModalRoutes}
+                closeModal={closeRoutesModal}
                 title="Modal rutas"
             />
 

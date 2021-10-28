@@ -3,16 +3,16 @@ import '../../Styles/login.css'
 import * as RiIcons from 'react-icons/ri';
 import * as FaIcons from 'react-icons/fa';
 import { IconContext } from 'react-icons';
-import { Loader } from './Loader';
 
 export const Login = () => {
+
+
 
     const [state, setState] = useState({
         form: {
             username: '',
             password: '',
-        },
-        loading: false
+        }
     })
 
     const handleInputChange = async (e) => {
@@ -25,31 +25,9 @@ export const Login = () => {
     }
 
     const handleSubmit = (e) => {
-        e.preventDefault();
 
-        if (state.form.username === "Juan" && state.form.password === "1234567") {
-            setTimeout(function () {
-                console.log("Mandando peticion");
-                alert("Usuarios ingresados de manera exitosa");
-                window.location.href = "/Home";
-            }, 3000);
-            setState({
-                loading: true
-            });
-        } else {
-            // window.location.reload();
-            setTimeout(function () {
-                console.log("Usuario o contraseña incorrectos");
-                alert("Usuario o contraseña incorrectos");
-            }, 3000);
-            setState({
-                form: {
-                    username: '',
-                    password: '',
-                },
-                loading: true
-            });
-        }
+        e.preventDefault();
+        
     }
 
     return (
@@ -57,7 +35,7 @@ export const Login = () => {
             <div className="container-login">
 
                 <div className="capa-gradiente"></div>
-                {state.loading && <Loader />}
+                
                 <form className="form-signin" id="form" onSubmit={handleSubmit}>
 
                     <span className="panel-heading">
