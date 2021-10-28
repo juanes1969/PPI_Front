@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { getConducts } from '../helpers/getConducts';
+import { getConducts, getTypeVehicle } from '../helpers/getConducts';
 
 export const UseEfect = () => {
     const [state, setstate] = useState({
@@ -18,4 +18,23 @@ export const UseEfect = () => {
     }, []);
 
     return state;
+}
+
+export const UseTypeVehicle = () => {
+    const [typeVehicles, setTypeVehicle] = useState({
+        data: [],
+        loading: true
+    })
+
+    useEffect(() => {
+        getTypeVehicle()
+            .then(vehicle => {
+                setTypeVehicle({
+                    data: vehicle,
+                    loading: false
+                });
+            });
+    }, []);
+
+    return typeVehicles;
 }

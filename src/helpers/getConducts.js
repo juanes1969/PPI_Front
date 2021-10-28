@@ -17,3 +17,22 @@ export const getConducts = async() => {
     return conducts;
 }
 
+
+export const getTypeVehicle = async() => {
+    const url = `https://sotransiv-ppi.herokuapp.com/Vehicle/vehicleAvailable`;
+    const resp = await fetch(url)
+
+    const { data } = await resp.json();
+
+    const typeVehicle = data.map(vhcl => {
+        return {
+            id_vehiculo: vhcl.id_vehiculo,
+            placa:vhcl.placa            
+        }
+    });
+
+    return typeVehicle;
+}
+
+
+
