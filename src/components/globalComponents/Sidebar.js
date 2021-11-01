@@ -4,6 +4,7 @@ import * as FaIcons from 'react-icons/fa';
 import { SidebarData } from '../../data/SidebarData';
 import '../../Styles/navbar.css'
 import { IconContext } from 'react-icons';
+import logo from '../../assets/img/LogoWhite.png'
 
 export const Sidebar = () => {
 
@@ -17,12 +18,13 @@ export const Sidebar = () => {
                 <div className='navbar'>
                     <Link to='#' className='menu-bars'>
                         <FaIcons.FaBars onClick={showSidebar} />
+                        <img className="logo-nav" src={logo} alt="" />
                     </Link>
                 </div>
                 <nav className={sidebar ? 'nav-menu active' : 'nav-menu'}>
                     <ul className='nav-menu-items' onClick={showSidebar}>
                         <li className='navbar-toggle'>
-                            <h1>Menu</h1>
+                            <img className="logo-menu-bar" src={logo} alt="" />
                         </li>
                         {SidebarData.map((item, index) => {
                             return (
