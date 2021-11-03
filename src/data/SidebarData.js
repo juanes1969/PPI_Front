@@ -13,7 +13,7 @@ export const SidebarData = [
         cName: 'nav-text'
     },
     {
-        title: 'Vehiculos',
+        title: 'Vehículos',
         path: '/Vehicles',
         icon: <FaIcons.FaCarSide />,
         cName: 'nav-text'
@@ -43,7 +43,7 @@ export const SidebarData = [
         cName: 'nav-text'
     },
     {
-        title: 'Cerrar sesion',
+        title: 'Cerrar sesión',
         path: '/',
         icon: <FcIcons.FcLock />,
         cName: 'nav-text'

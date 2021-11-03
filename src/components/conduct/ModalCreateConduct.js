@@ -59,16 +59,16 @@ export const ModalCreateConduct = ({ isOpenEditModal, closeModalEdit, titleModal
                         <form className="form-modal">
                             <div className="row align-items-start">
                                 <div className="col">
-                                    <label>Identificacion: </label>
+                                    <label>Identificación: </label>
                                     <input type="text" className="form-control" name="identificacion" onChange={handleInputChange} />
 
                                     <label>Segundo apellido: </label>
                                     <input type="text" className="form-control" name="segundoApellido" onChange={handleInputChange} />
 
-                                    <label>Licencia conduccion: </label>
+                                    <label>Licencia conducción: </label>
                                     <input type="text" className="form-control" name="licenciaConduccion" onChange={handleInputChange} />
 
-                                    <label>Examenes medicos: </label>
+                                    <label>Exámenes médicos: </label>
                                     <input type="date" className="form-control" name="examenesMedicos" onChange={handleInputChange} />
 
                                 </div>
@@ -82,7 +82,7 @@ export const ModalCreateConduct = ({ isOpenEditModal, closeModalEdit, titleModal
                                     <label>Fecha curso seguridad: </label>
                                     <input type="date" className="form-control" name="fechaCursoSeguridad" onChange={handleInputChange} />
 
-                                    <label>Vehiculos disponibles: </label>
+                                    <label>Vehículos disponibles: </label>
                                     <select className="form-control" name="tipoVehiculo" onChange={handleInputChange}>
                                         <option value="0">Seleccionar</option>
                                         {vehicle.map((vehcl) => (

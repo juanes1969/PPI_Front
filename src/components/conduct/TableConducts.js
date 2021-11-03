@@ -29,7 +29,7 @@ export const Conduct = () => {
                     <table className="table table-striped table-bordered">
                         <thead>
                             <tr>
-                                <th scope="col">Identificacion</th>
+                                <th scope="col">Identificación</th>
                                 <th scope="col">Nombre</th>
                                 <th scope="col">Primer apellido</th>
                                 <th scope="col">Segundo apellido</th>

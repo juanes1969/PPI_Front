@@ -8,9 +8,9 @@ export const Vehicle = () => {
     return (
         <>
             <div className="container" id="contenedorInicial">
-                <h1>Vehiculos</h1>
+                <h1>Vehículos</h1>
                 <span>
-                    <SearchConduct titleButton={"Agregar Vehiculos"} icon={<IoIcons.IoCarSportSharp />} />
+                    <SearchConduct titleButton={"Agregar Vehículos"} icon={<IoIcons.IoCarSportSharp />} />
                 </span>
 
                 <div className="row">
