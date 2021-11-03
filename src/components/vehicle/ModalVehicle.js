@@ -3,21 +3,20 @@ import '../../Styles/modal.css'
 import * as AiIcons from 'react-icons/ai';
 import { UseVehicleAvailable } from '../../hooks/UseCaseVehicle';
 
-export const ModalCreateConduct = ({ isOpenEditModal, closeModalEdit, titleModal }) => {
+export const ModalVehicle = ({ isOpenEditModal, closeModalEdit, titleModal }) => {
 
     const [state, setState] = useState({
         form: {
-            identificacion: '',
-            nombre: '',
-            primerApellido: '',
-            segundoApellido: '',
-            telefono: '',
-            fechaNacimiento: '',
-            licenciaConduccion: '',
-            fechaCursoSeguridad: '',
-            fechaCursoIndustrial: '',
-            examenesMedicos: '',
-            tipoVehiculo: '',
+            placa: '',
+            matricula: '',
+            r_trailer: '',
+            capacidad: '',
+            fecha_soat: '',
+            fecha_poliza: '',
+            modelo: '',
+            fecha_tecnomecanica: '',
+            id_marca: '',
+            id_tipo: '',
         }
     })
 
@@ -25,7 +24,7 @@ export const ModalCreateConduct = ({ isOpenEditModal, closeModalEdit, titleModal
         e.stopPropagation();
     }
 
-    const handleSubmitRegisterConduct = (e) => {
+    const handleSubmitRegisterVehicle = (e) => {
 
         e.preventDefault();
 
@@ -59,52 +58,44 @@ export const ModalCreateConduct = ({ isOpenEditModal, closeModalEdit, titleModal
                         <form className="form-modal">
                             <div className="row align-items-start">
                                 <div className="col">
-                                    <label>Identificación: </label>
+                                    <label>Placa *: </label>
                                     <input type="text" className="form-control" name="identificacion" onChange={handleInputChange} />
 
-                                    <label>Segundo apellido: </label>
+                                    <label>Placa Trailer: </label>
                                     <input type="text" className="form-control" name="segundoApellido" onChange={handleInputChange} />
 
-                                    <label>Licencia conducción: </label>
-                                    <input type="text" className="form-control" name="licenciaConduccion" onChange={handleInputChange} />
-
-                                    <label>Exámenes médicos: </label>
+                                    <label>Fecha Poliza *: </label>
                                     <input type="date" className="form-control" name="examenesMedicos" onChange={handleInputChange} />
+                                    
+                                    <label>Capacidad (Toneladas) *: </label>
+                                    <input type="text" className="form-control" name="examenesMedicos" onChange={handleInputChange} />
 
                                 </div>
                                 <div className="col">
-                                    <label>Nombre: </label>
+                                    <label>Marca *: </label>
                                     <input type="text" className="form-control" name="nombre" onChange={handleInputChange} />
 
-                                    <label>Telefono contacto: </label>
+                                    <label>Modelo *: </label>
                                     <input type="text" className="form-control" name="telefono" onChange={handleInputChange} />
 
-                                    <label>Fecha curso seguridad: </label>
+                                    <label>Fecha SOAT *: </label>
                                     <input type="date" className="form-control" name="fechaCursoSeguridad" onChange={handleInputChange} />
-
-                                    <label>Vehículos disponibles: </label>
-                                    <select className="form-control" name="tipoVehiculo" onChange={handleInputChange}>
-                                        <option value="0">Seleccionar</option>
-                                        {vehicle.map((vehcl) => (
-                                            <option value={vehcl.placa}>{vehcl.placa}</option>
-                                        ))}
-                                    </select>
 
                                 </div>
                                 <div className="col">
-                                    <label>Primer apellido: </label>
+                                    <label>Tipo vehículo *: </label>
                                     <input type="text" className="form-control" name="primerApellido" onChange={handleInputChange} />
 
-                                    <label>Fecha nacimiento: </label>
-                                    <input type="date" className="form-control" name="fechaNacimiento" onChange={handleInputChange} />
+                                    <label>Matrícula *: </label>
+                                    <input type="text" className="form-control" name="fechaNacimiento" onChange={handleInputChange} />
 
-                                    <label>Fecha curso industrial: </label>
+                                    <label>Fecha Técnico Mecánica *: </label>
                                     <input type="date" className="form-control" name="fechaCursoIndustrial" onChange={handleInputChange} />
                                 </div>
                             </div>
                             <br /><br />
 
-                            <button onClick={handleSubmitRegisterConduct}>Registrar conductor</button>
+                            <button onClick={handleSubmitRegisterVehicle}>Registrar Vehículo</button>
                             <button>Cancelar registro</button>
 
                         </form>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Pagination } from './Pagination'
 import { SearchConduct } from './SearchConduct';
 import '../../Styles/tableConduct.css'
@@ -7,7 +7,7 @@ import * as RiIcons from 'react-icons/ri';
 import * as AiIcons from 'react-icons/ai';
 import { UseModal } from '../../hooks/UseModal';
 import { ModalCreateConduct } from './ModalCreateConduct';
-import { UseEfect } from '../../hooks/UseEfect';
+import { UseEffectConduct } from '../../hooks/UseCaseConduct';
 import { Loader } from '../globalComponents/Loader';
 
 export const Conduct = () => {
@@ -15,7 +15,7 @@ export const Conduct = () => {
     const [isOpenModalConduct, openModalConduct, closeModalConduct] = UseModal();
     const [isOpenEditModalConduct, openEditModalConduct, closeEditModalConduct] = UseModal();
 
-    const { data: conducts, loading } = UseEfect();
+    const { data: conducts, loading } = UseEffectConduct();
 
     return (
         <>
