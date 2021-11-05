@@ -43,7 +43,7 @@ export const Vehicle = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {loading && <Loader />}
+                            {/* {loading && <Loader />} */}
                             {vehicles.map((vehicle) => (
                                 <tr key={vehicle.placa}>
                                     <td>{vehicle.placa}</td>
