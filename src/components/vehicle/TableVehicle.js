@@ -70,12 +70,14 @@ export const Vehicle = () => {
                 isOpenEditModal={isOpenModalVehicle}
                 closeModalEdit={closeModalVehicle}
                 titleModal={"Crear Vehículo"}
+                buttonModal={"Registrar Vehículo"}
             />
 
             <ModalVehicle
                 isOpenEditModal={isOpenEditModalVehicle}
                 closeModalEdit={closeEditModalVehicle}
                 titleModal={"Editar Vehículo"}
+                buttonModal={"Actualizar Vehículo"}
             />
 
         </>

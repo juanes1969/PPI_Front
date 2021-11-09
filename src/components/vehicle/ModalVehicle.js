@@ -1,181 +1,381 @@
-import React, { useState } from 'react'
-import '../../Styles/modal.css'
-import * as AiIcons from 'react-icons/ai';
-import { UseTypeVehicle, UseMarca } from '../../hooks/UseCaseVehicle';
-import {insertVehicle} from "../../helpers/VehicleHelper"
+import React, { useState } from "react";
+import "../../Styles/modal.css";
+import * as AiIcons from "react-icons/ai";
+import { UseTypeVehicle, UseMarca } from "../../hooks/UseCaseVehicle";
+import { insertVehicle } from "../../helpers/VehicleHelper";
+import "../../helpers/modal-function";
+import { useForm } from "react-hook-form";
 
-export const ModalVehicle = ({ isOpenEditModal, closeModalEdit, titleModal }) => {
+export const ModalVehicle = ({
+  isOpenEditModal,
+  closeModalEdit,
+  titleModal,
+  buttonModal,
+}) => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+    trigger,
+  } = useForm();
 
-    const initialVehicleState = {
-            placa: '',
-            matricula: '',
-            r_trailer: '',
-            capacidad: '',
-            fecha_soat: '',
-            fecha_poliza: '',
-            modelo: '',
-            fecha_tecnomecanica: '',
-            id_marca: '',
-            id_tipo: '',
-      };
+  // const initialVehicleState = {
+  //   placa: "",
+  //   matricula: "",
+  //   r_trailer: "",
+  //   capacidad: "",
+  //   fecha_soat: "",
+  //   fecha_poliza: "",
+  //   modelo: "",
+  //   fecha_tecnomecanica: "",
+  //   id_marca: "",
+  //   id_tipo: "",
+  // };
 
-    const [vehicle, setVehicle] = useState(initialVehicleState);
-    const [submitted, setSubmitted] = useState(false);
+  const saveVehicle = (dataVehicle) => {
+    var data = {
+      placa: dataVehicle.placa,
+      matricula: dataVehicle.matricula,
+      r_trailer: dataVehicle.r_trailer,
+      capacidad: dataVehicle.capacidad,
+      fecha_soat: dataVehicle.fecha_soat,
+      fecha_poliza: dataVehicle.fecha_poliza,
+      modelo: dataVehicle.modelo,
+      fecha_tecnomecanica: dataVehicle.fecha_tecnomecanica,
+      id_marca: dataVehicle.id_marca,
+      id_tipo: dataVehicle.id_tipo,
+      id_estado_vehiculo: 1,
+    };
 
+    insertVehicle(data)
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((e) => {
+        reset();
+        console.log(e);
+      });
 
-    const handleInputChange = event => {
-        const { name, value } = event.target;
-        setVehicle({ ...vehicle, [name]: value });
-      };
-    
-      const saveVehicle = () => {
-        var data = {
-            placa:vehicle.placa,
-            matricula: vehicle.matricula,
-            r_trailer: vehicle.r_trailer,
-            capacidad: vehicle.capacidad,
-            fecha_soat: vehicle.fecha_soat,
-            fecha_poliza: vehicle.fecha_poliza,
-            modelo: vehicle.modelo,
-            fecha_tecnomecanica: vehicle.fecha_tecnomecanica,
-            id_marca: vehicle.id_marca,
-            id_tipo: vehicle.id_tipo,
-            id_estado_vehiculo: 1
-        };
-    
-        insertVehicle(data)
-          .then(response => {
-            setVehicle({
-              placa: response.data.placa,
-              matricula: response.data.matricula,
-              r_trailer: response.data.r_trailer,
-              capacidad: response.data.capacidad,
-              fecha_soat: response.data.fecha_soat,
-              fecha_poliza: response.data.fecha_poliza,
-              modelo: response.data.modelo,
-              fecha_tecnomecanica: response.data.fecha_tecnomecanica,
-              id_marca: response.data.id_marca,
-              id_tipo: response.data.id_tipo
-            });
-            setSubmitted(true);
-            console.log(response.data);
-          })
-          .catch(e => {
-            console.log(e);
-          });
-      };
-   
-    // const [state, setState] = useState({
-    //     form: {
-    //         placa: '',
-    //         matricula: '',
-    //         r_trailer: '',
-    //         capacidad: '',
-    //         fecha_soat: '',
-    //         fecha_poliza: '',
-    //         modelo: '',
-    //         fecha_tecnomecanica: '',
-    //         id_marca: '',
-    //         id_tipo: '',
-    //     }
-    // })
+    reset();
+  };
 
-    const handleModalDialogClick = (e) => {
-        e.stopPropagation();
-    }
+  const handleModalDialogClick = (e) => {
+    e.stopPropagation();
+  };
 
-    const handleSubmitRegisterVehicle = (e) => {
-
-        e.preventDefault();
-
-    }
-
-    // const handleInputChange = async (e) => {
-    //     await setState({
-    //         form: {
-    //             ...state.form,
-    //             [e.target.name]: e.target.value
-    //         }
-    //     });
-    //     console.log(e.target.value)
-    // }
-
-    const { data:type} = UseTypeVehicle()
-
-    const { data: marcas, loading } = UseMarca();
-
-    return (
-        <>
-            <div className={`modalInicial ${isOpenEditModal && 'modal-abierta'}`}  onClick={closeModalEdit}>
-                <div className="modal-dialog">
-                    <div className="modal-content contenido__modal" onClick={handleModalDialogClick}>
-                        <div className="modal-header">
-                            <h3 className="modal-title" id="exampleModalLabel">{titleModal}</h3>
-                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" onClick={closeModalEdit}></button>
-                        </div>
-                    
-                        <div className="modal-body">
-                            <div className="container">
-                                <form className="form-modal">
-                                    <div className="row align-items-start">
-                                        <div className="col">
-                                            <label>Placa *: </label>
-                                            <input type="text" className="form-control" name="placa" value={vehicle.placa} onChange={handleInputChange} required/>
-
-                                            <label>Placa Trailer: </label>
-                                            <input type="text" className="form-control" name="r_trailer" value={vehicle.r_trailer} onChange={handleInputChange} />
-
-                                            <label>Fecha Poliza *: </label>
-                                            <input type="date" className="form-control" name="fecha_poliza" value={vehicle.fecha_poliza} onChange={handleInputChange} required/>
-                                            
-                                            <label>Capacidad (Toneladas) *: </label>
-                                            <input type="text" className="form-control" name="capacidad" value={vehicle.capacidad} onChange={handleInputChange} required/>
-
-                                        </div>
-                                        <div className="col">
-                                            <label>Marca *: </label>
-                                            <select className="form-control" name="id_marca" value={vehicle.id_marca} onChange={handleInputChange} required>
-                                                <option value="0">Seleccionar</option>
-                                                {marcas.map((marca) => (
-                                                    <option key={marca.id_marca} value={marca.id_marca}>{marca.marcaVehiculo}</option>
-                                                ))}
-                                            </select>
+  const handleSubmitRegisterVehicle = (e) => {
+    e.preventDefault();
+  };
 
 
-                                            <label>Modelo *: </label>
-                                            <input type="text" className="form-control" name="modelo" value={vehicle.modelo} onChange={handleInputChange} required/>
+  const { data: type } = UseTypeVehicle();
 
-                                            <label>Fecha SOAT *: </label>
-                                            <input type="date" className="form-control" name="fecha_soat" value={vehicle.fecha_soat} onChange={handleInputChange} required/>
+  const { data: marcas, loading } = UseMarca();
 
-                                        </div>
-                                        <div className="col">
-
-                                            <label>Tipo Vehículo *: </label>
-                                            <select className="form-control" name="id_tipo" value={vehicle.id_tipo} onChange={handleInputChange} required>
-                                                <option value="0">Seleccionar</option>
-                                                {type.map((type) => (
-                                                    <option key={type.id_tipo} value={type.id_tipo}>{type.tipoVehiculo}</option>
-                                                ))}
-                                            </select>
-
-                                            <label>Matrícula *: </label>
-                                            <input type="text" className="form-control" name="matricula" value={vehicle.matricula} onChange={handleInputChange} required/>
-
-                                            <label>Fecha Técnico Mecánica *: </label>
-                                            <input type="date" className="form-control" name="fecha_tecnomecanica" value={vehicle.fecha_tecnomecanica} onChange={handleInputChange} required/>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                        <div className="modal-footer modal-btn">
-                                <button type="button" className="btn btn-info" onClick={saveVehicle}>Registrar Vehículo</button>
-                                <button type="button" className="btn  btn-danger" onClick={closeModalEdit}>Cancelar registro</button>
-                        </div>
-                    </div>
-                </div>
+  return (
+    <>
+      <div
+        className={`modalInicial ${isOpenEditModal && "modal-abierta"}`}
+        onClick={closeModalEdit}
+      >
+        <div className="modal-dialog">
+          <div
+            className="modal-content contenido__modal"
+            onClick={handleModalDialogClick}
+          >
+            <div className="modal-header">
+              <h3 className="modal-title" id="exampleModalLabel">
+                {titleModal}
+              </h3>
+              <button
+                type="button"
+                className="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+                onClick={closeModalEdit}
+              ></button>
             </div>
-        </>
-    )
-}
+
+            <div className="modal-body">
+              <div className="container">
+                <form
+                  className="form-modal needs-validation"
+                  novalidate
+                  onSubmit={handleSubmit(saveVehicle)}
+                >
+                  <div className="row align-items-start">
+                    <div className="col">
+                      <label className="col-form-label modal-label">
+                        Placa *:
+                      </label>
+                      <input
+                        type="text"
+                        className={`form-control ${errors.placa && "invalid"}`}
+                        {...register("placa", {
+                          required: "La placa es obligatoria",
+                          pattern: {
+                            value: /^([A-Z]{3}-([0-9]{3})+)*$/,
+                            message: "Placa invalida",
+                          },
+                        })}
+                        onKeyUp={() => {
+                          trigger("placa");
+                        }}
+                      />
+                      {errors.placa && (
+                        <small className="text-danger">
+                          {errors.placa.message}
+                        </small>
+                      )}
+                      <label className="col-form-label modal-label">
+                        Marca *:
+                      </label>
+                      <select  
+                      className={`form-control ${errors.id_marca && "invalid" }`}
+                       {...register("id_marca", {
+                        required: "La marca del vehículo es obligatoria",
+                        min: {
+                          value: 1,
+                          message: "La marca del vehículo es obligatoria",
+                        },
+                      })}
+                        
+                      >
+                        <option value="0">Seleccionar</option>
+                        {marcas.map((marca) => (
+                          <option
+                            key={marca.id_marca}
+                            value={marca.id_marca}
+                            onKeyUp={() => {
+                              trigger("id_marca");
+                            }}
+                          >
+                            {marca.marcaVehiculo}
+                          </option>
+                        ))}
+                      </select>
+                      {errors.id_marca && (
+                        <small className="text-danger">
+                          {errors.id_marca.message}
+                        </small>
+                      )}
+                      <label className="col-form-label modal-label">
+                        Fecha Poliza *:
+                      </label>
+                      <input
+                        type="date"
+                        className={`form-control ${
+                          errors.fecha_poliza && "invalid"
+                        }`}
+                        {...register("fecha_poliza", {
+                          required: "La fecha de la poliza es obligatoria",
+                        })}
+                        onKeyUp={() => {
+                          trigger("fecha_poliza");
+                        }}
+                      />
+                      {errors.fecha_poliza && (
+                        <small className="text-danger">
+                          {errors.fecha_poliza.message}
+                        </small>
+                      )}
+
+                      <label className="col-form-label modal-label">
+                        Capacidad (Toneladas)*:
+                      </label>
+                      <input
+                        type="text"
+                        className={`form-control ${
+                          errors.capacidad && "invalid"
+                        }`}
+                        {...register("capacidad", {
+                          required: "La capacidad del vehículo es requerida",
+                          min: {
+                            value: 17,
+                            message: "Toneladas mínimas requeridas: 17",
+                          },
+                          max: {
+                            value: 44,
+                            message: "Toneladas máximas: 44",
+                          },
+                          pattern: {
+                            value: /^[0-9]*$/,
+                            message: "Solo se permiten números",
+                          },
+                        })}
+                        onKeyUp={() => {
+                          trigger("capacidad");
+                        }}
+                      />
+                      {errors.capacidad && (
+                        <small className="text-danger">
+                          {errors.capacidad.message}
+                        </small>
+                      )}
+                    </div>
+                    <div className="col">
+                      <label className="col-form-label modal-label">
+                        Placa Trailer:
+                      </label>
+                      <input
+                        type="text"
+                        className={`form-control ${
+                          errors.r_trailer && "invalid"
+                        }`}
+                        {...register("r_trailer", {
+                          pattern: {
+                            value: /^([R]{1}-([0-9]{5})+)*$/,
+                            message: "Placa de trailer invalida",
+                          },
+                        })}
+                        onKeyUp={() => {
+                          trigger("r_trailer");
+                        }}
+                      />
+                      {errors.r_trailer && (
+                        <small className="text-danger">
+                          {errors.r_trailer.message}
+                        </small>
+                      )}
+                      <label className="col-form-label modal-label">
+                        Modelo *:
+                      </label>
+                      <input
+                        type="text"
+                        className={`form-control ${errors.modelo && "invalid"}`}
+                        {...register("modelo", {
+                          required: "El modelo del vehículo es obligatoria",
+                          pattern: {
+                            value: /^[0-9]{4}$/,
+                            message: "Solo se permiten números",
+                          },
+                        })}
+                        onKeyUp={() => {
+                          trigger("modelo");
+                        }}
+                      />
+                      {errors.modelo && (
+                        <small className="text-danger">
+                          {errors.modelo.message}
+                        </small>
+                      )}
+                      <label className="col-form-label modal-label">
+                        Fecha SOAT *:
+                      </label>
+                      <input
+                        type="date"
+                        className={`form-control ${
+                          errors.fecha_soat && "invalid"
+                        }`}
+                        {...register("fecha_soat", {
+                          required: "La fecha del SOAT es obligatoria",
+                        })}
+                        onKeyUp={() => {
+                          trigger("fecha_soat");
+                        }}
+                      />
+                      {errors.fecha_soat && (
+                        <small className="text-danger">
+                          {errors.fecha_soat.message}
+                        </small>
+                      )}
+                    </div>
+                    <div className="col">
+                      <label className="col-form-label modal-label">
+                        Tipo Vehículo *:
+                      </label>
+                      <select
+                        className={`form-control ${errors.id_tipo && "invalid"}`}
+                      {...register("id_tipo", {
+                        required: "El tipo del vehículo es obligatoria",
+                        min: {
+                          value: 1,
+                          message: "El tipo del vehículo es obligatoria",
+                        },
+                      })}
+                      >
+                        <option value="0">Seleccionar</option>
+                        {type.map((type) => (
+                          <option
+                            key={type.id_tipo}
+                            value={type.id_tipo}
+                            
+                            onKeyUp={() => {
+                              trigger("id_tipo");
+                            }}
+                          >
+                            {type.tipoVehiculo}
+                          </option>
+                        ))}
+                      </select>
+                      {errors.id_tipo && (
+                        <small className="text-danger">
+                          {errors.id_tipo.message}
+                        </small>
+                      )}
+
+                      <label className="col-form-label modal-label">
+                        Matrícula *:{" "}
+                      </label>
+                      <input
+                        type="text"
+                        className={`form-control ${
+                          errors.matricula && "invalid"
+                        }`}
+                        {...register("matricula", {
+                          required: "La matrícula es obligatoria",
+                        })}
+                        onKeyUp={() => {
+                          trigger("matricula");
+                        }}
+                      />
+                      {errors.matricula && (
+                        <small className="text-danger">
+                          {errors.matricula.message}
+                        </small>
+                      )}
+                      <label className="col-form-label modal-label">
+                        Fecha Técnico Mecánica *:
+                      </label>
+                      <input
+                        type="date"
+                        className={`form-control ${
+                          errors.fecha_tecnomecanica && "invalid"
+                        }`}
+                        {...register("fecha_tecnomecanica", {
+                          required:
+                            "La fecha de la Técnico Mecánica es obligatoria",
+                        })}
+                        onKeyUp={() => {
+                          trigger("fecha_tecnomecanica");
+                        }}
+                      />
+                      {errors.fecha_tecnomecanica && (
+                        <small className="text-danger">
+                          {errors.fecha_tecnomecanica.message}
+                        </small>
+                      )}
+                    </div>
+                  </div>
+                  <div className="modal-footer modal-btn">
+                    <button type="submit" className="btn btn-info">
+                      {buttonModal}
+                    </button>
+                    <button
+                      type="button"
+                      className="btn  btn-danger"
+                      onClick={reset, closeModalEdit}
+                    >
+                      Cancelar registro
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+};

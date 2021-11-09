@@ -47,3 +47,15 @@
     margin: 1rem auto !important;
     width: 100% !important;
 }
+
+.modal-label{
+    padding-top: 15px;
+}
+
+.invalid {
+    border:1px solid red !important;
+   }
+   input, textarea {
+    outline: none !important;
+    box-shadow: none !important; 
+  }
