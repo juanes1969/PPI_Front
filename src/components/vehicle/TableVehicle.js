@@ -43,7 +43,7 @@ export const Vehicle = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {loading && <Loader />}
+                            {/* {loading && <Loader />} */}
                             {vehicles.map((vehicle) => (
                                 <tr key={vehicle.placa}>
                                     <td>{vehicle.placa}</td>
@@ -70,12 +70,14 @@ export const Vehicle = () => {
                 isOpenEditModal={isOpenModalVehicle}
                 closeModalEdit={closeModalVehicle}
                 titleModal={"Crear Vehículo"}
+                buttonModal={"Registrar Vehículo"}
             />
 
             <ModalVehicle
                 isOpenEditModal={isOpenEditModalVehicle}
                 closeModalEdit={closeEditModalVehicle}
                 titleModal={"Editar Vehículo"}
+                buttonModal={"Actualizar Vehículo"}
             />
 
         </>

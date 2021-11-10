@@ -32,3 +32,30 @@
 .form-modal{
     margin-top: 30px;
 }
+
+.modal-btn{
+    text-align: center;
+}
+
+.modal-btn .btn{
+    margin: 0 10px;
+}
+
+
+.modal-dialog{
+    max-width: 900px !important;
+    margin: 1rem auto !important;
+    width: 100% !important;
+}
+
+.modal-label{
+    padding-top: 15px;
+}
+
+.invalid {
+    border:1px solid red !important;
+   }
+   input, textarea {
+    outline: none !important;
+    box-shadow: none !important; 
+  }

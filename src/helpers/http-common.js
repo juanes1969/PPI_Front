@@ -1,0 +1,1 @@
+export const url_api = `https://sotransiv-ppi.herokuapp.com/`;
