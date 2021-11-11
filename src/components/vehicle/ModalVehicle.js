@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "../../Styles/modal.css";
 import * as AiIcons from "react-icons/ai";
-import { UseTypeVehicle, UseMarca } from "../../hooks/UseCaseVehicle";
+import { UseTypeVehicle, UseMarca, UseInsertVehicle } from "../../hooks/UseCaseVehicle";
 import { insertVehicle } from "../../helpers/VehicleHelper";
 import "../../helpers/modal-function";
 import { useForm } from "react-hook-form";
@@ -33,29 +33,9 @@ export const ModalVehicle = ({
   //   id_tipo: "",
   // };
 
-  const saveVehicle = (dataVehicle) => {
-    var data = {
-      placa: dataVehicle.placa,
-      matricula: dataVehicle.matricula,
-      r_trailer: dataVehicle.r_trailer,
-      capacidad: dataVehicle.capacidad,
-      fecha_soat: dataVehicle.fecha_soat,
-      fecha_poliza: dataVehicle.fecha_poliza,
-      modelo: dataVehicle.modelo,
-      fecha_tecnomecanica: dataVehicle.fecha_tecnomecanica,
-      id_marca: dataVehicle.id_marca,
-      id_tipo: dataVehicle.id_tipo,
-      id_estado_vehiculo: 1,
-    };
-
-    insertVehicle(data)
-      .then((response) => {
-        console.log(response.data);
-      })
-      .catch((e) => {
-        reset();
-        console.log(e);
-      });
+  const onSubmit = (dataVehicle, e) => {
+    e.target.reset(); 
+    UseInsertVehicle(dataVehicle);
 
     reset();
   };
@@ -102,7 +82,7 @@ export const ModalVehicle = ({
                 <form
                   className="form-modal needs-validation"
                   novalidate
-                  onSubmit={handleSubmit(saveVehicle)}
+                  onSubmit={handleSubmit(onSubmit)}
                 >
                   <div className="row align-items-start">
                     <div className="col">
@@ -359,13 +339,13 @@ export const ModalVehicle = ({
                     </div>
                   </div>
                   <div className="modal-footer modal-btn">
-                    <button type="submit" className="btn btn-info">
+                    <button type="submit" className="btn btn-info" onPress={handleSubmit(onSubmit)}>
                       {buttonModal}
                     </button>
                     <button
-                      type="button"
+                      type="reset"
                       className="btn  btn-danger"
-                      onClick={reset, closeModalEdit}
+                      onClick={closeModalEdit}
                     >
                       Cancelar registro
                     </button>
