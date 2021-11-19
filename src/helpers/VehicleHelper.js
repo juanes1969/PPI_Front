@@ -1,70 +1,98 @@
-import axios from 'axios';
-import {url_api} from './http-common';
+import axios from "axios";
+import { url_api } from "./http-common";
 
-export const getAllVehicles = async() => {
-    const url = `${url_api}Vehicle/`;
-    const resp = await axios.get(url)
-    console.log(resp)
+export const getAllVehicles = async () => {
+  const url = `${url_api}Vehicle/`;
+  const resp = await axios.get(url);
+  console.log(resp);
 
-    const typeVehicle = resp.data.map(vehicle => {
-        return {
-            placa:vehicle.placa,
-            marca:vehicle.marca,
-            capacidad:vehicle.capacidad,
-            matricula:vehicle.matricula,
-            modelo:vehicle.modelo,
-            tipoVehiculo:vehicle.tipoVehiculo,
-            estadoVehiculo:vehicle.estadoVehiculo         
-        }
-    });
+  const typeVehicle = resp.data.map((vehicle) => {
+    return {
+      placa: vehicle.placa,
+      marca: vehicle.marca,
+      capacidad: vehicle.capacidad,
+      matricula: vehicle.matricula,
+      modelo: vehicle.modelo,
+      tipoVehiculo: vehicle.tipoVehiculo,
+      estadoVehiculo: vehicle.estadoVehiculo,
+    };
+  });
 
-    return typeVehicle;
-}
+  return typeVehicle;
+};
 
-export const getVehicleAvailable = async() => {
-    const url = `${url_api}Vehicle/vehicleAvailable`;
-    const resp = await axios.get(url)
+export const getVehicleAvailable = async () => {
+  const url = `${url_api}Vehicle/vehicleAvailable`;
+  const resp = await axios.get(url);
 
-    const typeVehicle = resp.data.map(vehicle => {
-        return {
-            placa:vehicle.placa            
-        }
-    });
+  const typeVehicle = resp.data.map((vehicle) => {
+    return {
+      placa: vehicle.placa,
+    };
+  });
 
-    return typeVehicle;
-}
+  return typeVehicle;
+};
 
-export const getAllMarcas = async() => {
-    const url = `${url_api}Vehicle/marcaVehicle`;
-    const resp = await axios.get(url)
+export const getAllMarcas = async () => {
+  const url = `${url_api}Vehicle/marcaVehicle`;
+  const resp = await axios.get(url);
 
-    const marcaVehiculo = resp.data.map(marca => {
-        return {
-            id_marca: marca.id_marca,
-            marcaVehiculo: marca.marcaVehiculo          
-        }
-    });
+  const marcaVehiculo = resp.data.map((marca) => {
+    return {
+      id_marca: marca.id_marca,
+      marcaVehiculo: marca.marcaVehiculo,
+    };
+  });
 
-    return marcaVehiculo;
-}
+  return marcaVehiculo;
+};
 
-export const getAllTypeVehicle = async() => {
-    const url = `${url_api}Vehicle/vehicleType`;
-    const resp = await axios.get(url)
+export const getAllTypeVehicle = async () => {
+  const url = `${url_api}Vehicle/vehicleType`;
+  const resp = await axios.get(url);
 
-    const marcaVehiculo = resp.data.map(type => {
-        return {
-            id_tipo: type.id_tipo,
-            tipoVehiculo: type.tipoVehiculo          
-        }
-    });
+  const marcaVehiculo = resp.data.map((type) => {
+    return {
+      id_tipo: type.id_tipo,
+      tipoVehiculo: type.tipoVehiculo,
+    };
+  });
 
-    return marcaVehiculo;
-}
+  return marcaVehiculo;
+};
 
-export const insertVehicle = async(data) => {
-    const url = `${url_api}Vehicle/newVehicle`;
-    const resp = await axios.post(url, data)
+export const getVehicleByPlaca = async (placa) => {
+  const url = `${url_api}Vehicle/getVehicle/${placa}`;
+  const resp = await axios.get(url);
 
-    return resp;
-}
+  const vehicleData = resp.data.map((type) => {
+    return {
+      placa: type.placa,
+      matricula: type.matricula,
+      r_trailer: type.r_trailer,
+      capacidad: type.capacidad,
+      fecha_soat: type.fecha_soat,
+      fecha_poliza: type.fecha_poliza,
+      modelo: type.modelo,
+      fecha_tecnomecanica: type.fecha_tecnomecanica,
+      id_marca: type.id_marca,
+      id_tipo: type.id_tipo,
+      id_estado_vehiculo: 1,
+    };
+  });
+
+  return vehicleData;
+};
+
+export const insertVehicle = async (data) => {
+  const url = `${url_api}Vehicle/newVehicle`;
+  const resp = await axios.post(url, data);
+  return resp;
+};
+
+export const editVehicle = async (data, placa) => {
+  const url = `${url_api}vehicleEdit/${placa}`;
+  const resp = await axios.put(url, data);
+  return resp;
+};
