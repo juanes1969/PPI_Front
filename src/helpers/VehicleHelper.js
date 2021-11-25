@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {url_api} from './http-common';
+import {url_api, url_api_localhost} from './http-common';
 
 export const getAllVehicles = async() => {
     const url = `${url_api}Vehicle/`;
@@ -22,7 +22,7 @@ export const getAllVehicles = async() => {
 }
 
 export const getVehicleAvailable = async() => {
-    const url = `${url_api}Vehicle/vehicleAvailable`;
+    const url = `${url_api_localhost}Vehicle/vehicleAvailable`;
     const resp = await axios.get(url)
 
     const typeVehicle = resp.data.map(vehicle => {

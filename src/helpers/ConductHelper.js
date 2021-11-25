@@ -1,10 +1,11 @@
-export const getConducts = async() => {
-    const url = `https://sotransiv-ppi.herokuapp.com/Conduct`;
-    const resp = await fetch(url)
+import axios from 'axios';
+import { url_api, url_api_localhost } from './http-common';
 
-    const { data } = await resp.json();
+export const getConducts = async () => {
+    const url = `${url_api_localhost}Conduct`;
+    const resp = await axios.get(url)
 
-    const conducts = data.map(img => {
+    const conducts = resp.data.map(img => {
         return {
             identificacion: img.identificacion,
             nombre: img.nombre,
@@ -16,6 +17,30 @@ export const getConducts = async() => {
 
     return conducts;
 }
+
+export const insertConduct = async (data) => {
+    const url = `${url_api_localhost}Conduct/create`;
+    const resp = await axios.post(url, data)
+
+    return resp;
+}
+
+export const getEditConduct = async (identificacion) => {
+    const url = `${url_api_localhost}Conduct/editConduct/${identificacion}`;
+    const resp = await fetch(url)
+
+    const data= await resp.json();
+
+    return data;
+}
+
+export const editConduct = async (data) => {
+    const url = `${url_api_localhost}ConductEdit/${data.identificacion}`;
+    const resp = await axios.put(url, data)
+
+    return resp;
+}
+
 
 
 

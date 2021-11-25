@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Pagination } from './Pagination'
 import { SearchConduct } from './SearchConduct';
 import '../../Styles/tableConduct.css'
@@ -7,7 +7,7 @@ import * as RiIcons from 'react-icons/ri';
 import * as AiIcons from 'react-icons/ai';
 import { UseModal } from '../../hooks/UseModal';
 import { ModalCreateConduct } from './ModalCreateConduct';
-import { UseEffectConduct } from '../../hooks/UseCaseConduct';
+import { UseEffectConduct, UseGetEditConduct } from '../../hooks/UseCaseConduct';
 import { Loader } from '../globalComponents/Loader';
 
 export const Conduct = () => {
@@ -17,6 +17,26 @@ export const Conduct = () => {
 
     const { data: conducts, loading } = UseEffectConduct();
 
+
+    //const { identificacion } = conducts.length
+
+    //console.log(identificacion);
+
+
+    const getById = (id) => {
+        const { data } = UseGetEditConduct(id);
+        console.log(data)
+    }
+
+
+
+
+    //const { identificacion } = !!data && data[0]
+
+    //console.log(identificacion)
+
+
+
     return (
         <>
             <div className="container" id="contenedorInicial">
@@ -24,8 +44,8 @@ export const Conduct = () => {
                 <span>
                     <SearchConduct titleButton={"Agregar conductor"} icon={<BsIcons.BsPersonPlusFill />} openModal={openModalConduct} />
                 </span>
-
-                <div className="row">
+                {loading && <Loader />}
+                <div className="row" >
                     <table className="table table-striped table-bordered">
                         <thead>
                             <tr>
@@ -39,18 +59,18 @@ export const Conduct = () => {
                                 </th>
                             </tr>
                         </thead>
-                        <tbody>
-                            {loading && <Loader />}
+                        <tbody id="identificacion">
                             {conducts.map((cond) => (
                                 <tr key={cond.identificacion}>
-                                    <td>{cond.identificacion}</td>
+                                    <td >{cond.identificacion}</td>
                                     <td>{cond.nombre}</td>
                                     <td>{cond.primer_apellido}</td>
                                     <td>{cond.segundo_apellido}</td>
                                     <td><b>(+57) </b>{cond.telefono_contacto}</td>
+
                                     <td id="columOptions">
                                         <button className="btn btn-warning btn-sm"><BsIcons.BsFillEyeFill /></button>
-                                        <button className="btn btn-info btn-sm" onClick={openEditModalConduct} ><RiIcons.RiEditFill /></button>
+                                        <button className="btn btn-info btn-sm" onClick={openEditModalConduct}><RiIcons.RiEditFill /></button>
                                         <button className="btn btn-danger btn-sm"><AiIcons.AiFillDelete /></button>
                                     </td>
                                 </tr>
@@ -65,12 +85,16 @@ export const Conduct = () => {
                 isOpenEditModal={isOpenModalConduct}
                 closeModalEdit={closeModalConduct}
                 titleModal={"Crear conductores"}
+                buttonModal={"Registrar Conductor"}
+                caso={"registrar"}
             />
 
             <ModalCreateConduct
                 isOpenEditModal={isOpenEditModalConduct}
                 closeModalEdit={closeEditModalConduct}
                 titleModal={"Editar conductores"}
+                buttonModal={"Editar Conductor"}
+                caso={"registrar"}
             />
         </>
     )
