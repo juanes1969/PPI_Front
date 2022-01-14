@@ -1,10 +1,9 @@
-import React, { useState } from "react";
-import "../../Styles/modal.css";
-import * as AiIcons from "react-icons/ai";
-import { UseTypeVehicle, UseMarca, UseVehicleAvailable } from "../../hooks/UseCaseVehicle";
-import "../../helpers/modal-function";
+import React from "react";
 import { useForm } from "react-hook-form";
+import "../../helpers/modal-function";
 import { UseInsertConduct } from "../../hooks/UseCaseConduct";
+import { UseVehicleAvailable } from "../../hooks/UseCaseVehicle";
+import "../../Styles/modal.css";
 
 export const ModalCreateConduct = ({ isOpenEditModal, closeModalEdit, titleModal, buttonModal, caso }) => {
 
@@ -14,8 +13,8 @@ export const ModalCreateConduct = ({ isOpenEditModal, closeModalEdit, titleModal
     const onSubmit = (dataConduct, e) => {
         e.target.reset();
         UseInsertConduct(dataConduct);
-
         reset();
+        closeModalEdit();
     };
 
     const handleModalDialogClick = (e) => {

@@ -1,24 +1,38 @@
-import { useState, useEffect } from 'react'
-import { getConducts, getEditConduct, insertConduct } from '../helpers/ConductHelper';
+import { useState, useEffect, useRef } from 'react'
+import { deleteConduct, getConducts, getEditConduct, insertConduct } from '../helpers/ConductHelper';
 
 
 export const UseEffectConduct = () => {
-    const [state, setstate] = useState({
-        data: [],
-        loading: true
-    })
+
+    const isMounted = useRef(true)
+    const [state, setState] = useState({ data: null, loading: true, error: null });
 
     useEffect(() => {
         getConducts()
             .then(conducts => {
-                setstate({
-                    data: conducts,
-                    loading: false
-                });
+                if (isMounted.current) {
+                    setState({
+                        data: conducts,
+                        loading: false,
+                        error: null
+                    });
+                }
             });
     }, []);
 
     return state;
+}
+
+export const UseDeleteConduct = (identificacion) => {
+
+    deleteConduct(identificacion)
+        .then((response) => {
+            console.log(response);
+            window.location.reload();
+        })
+        .catch((e) => {
+            console.log(e);
+        });
 }
 
 export const UseGetEditConduct = (identificacion) => {
@@ -62,6 +76,7 @@ export const UseInsertConduct = (dataCondut) => {
     insertConduct(data)
         .then((response) => {
             console.log(response.data);
+            window.location.reload();
         })
         .catch((e) => {
             console.log(e);

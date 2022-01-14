@@ -27,17 +27,23 @@ export const insertConduct = async (data) => {
 
 export const getEditConduct = async (identificacion) => {
     const url = `${url_api_localhost}Conduct/editConduct/${identificacion}`;
-    const resp = await fetch(url)
-
-    const data= await resp.json();
-
-    return data;
+    const resp = await axios.get(url)
+    
+    return resp;
 }
 
 export const editConduct = async (data) => {
     const url = `${url_api_localhost}ConductEdit/${data.identificacion}`;
     const resp = await axios.put(url, data)
 
+    return resp;
+}
+
+
+export const deleteConduct = async (identificacion) => {
+    const url = `${url_api_localhost}Conduct/deleteConduct/${identificacion}`;
+    const resp = await axios.delete(url)
+    
     return resp;
 }
 

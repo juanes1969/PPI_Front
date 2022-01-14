@@ -25,13 +25,14 @@ export const Login = () => {
 
 
 
-  //console.log(data);
 
   const onSumbit = (e) => {
     e.preventDefault()
-    //console.log(data)
-    const response = UseCaseLogin(formState)
-    console.log(response);
+    UseCaseLogin(formState)
+
+
+
+
 
     // if (!!data && data[0]) {
     //   let descripcion = data[0].descripcion
