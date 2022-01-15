@@ -70,12 +70,14 @@ export const Route = () => {
                 isOpenEditModal={isOpenModalRoute}
                 closeModalEdit={closeModalRoute}
                 titleModal={"Crear Ruta"}
+                buttonModal={"Registrar Ruta"}
             />
 
             <ModalRoute
                 isOpenEditModal={isOpenEditModalRoute}
                 closeModalEdit={closeEditModalRoute}
                 titleModal={"Editar Ruta"}
+                buttonModal={"Actualizar Ruta"}
             />
 
         </>

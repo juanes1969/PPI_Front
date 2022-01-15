@@ -1,63 +1,80 @@
-import React, { useState } from "react";
-import "../../Styles/modal.css";
-import * as AiIcons from "react-icons/ai";
-import { UseTypeVehicle,
-   UseMarca,
-   UseInsertVehicle } from "../../hooks/UseCaseVehicle";
-import { insertVehicle } from "../../helpers/VehicleHelper";
-import "../../helpers/modal-function";
-import { useForm } from "react-hook-form";
+import React, { useState } from 'react'
+import '../../Styles/modal.css'
+import * as AiIcons from 'react-icons/ai';
+import { UseVehicleAvailable } from '../../hooks/UseCaseVehicle';
+import { UseCity, UseConductRoute, UseInsertRoute, UseState, UseVehicleRoute } from '../../hooks/UseCaseRoute';
 
-export const ModalVehicle = ({
-  isOpenEditModal,
-  closeModalEdit,
-  titleModal,
-  buttonModal,
-}) => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    reset,
-    trigger,
-  } = useForm();
+export const ModalRoute = ({ 
+    isOpenEditModal,
+     closeModalEdit,
+      titleModal 
+    }) => {
+        const {
+            register,
+            handleSubmit,
+            formState: { errors },
+            reset,
+            trigger,
+          } = useForm();
+    /*
+    const [state, setState] = useState({
+        form: {
+            id_ruta: '',
+            codigo_ruta: '',
+            nombre_producto: '',
+            referencia: '',
+            cantidad: '',
+            fecha_inicio: '',
+            fecha_fin: '',
+            placa: '',
+            flete: '',
+            ciudad_origen: '',
+            ciudad_destino: '',
+            estado: '',
+            identificacion: '',
+            descripcion: '',
+            nombre: '',
+            
+        }
+    })
+    */
 
-  // const initialVehicleState = {
-  //   placa: "",
-  //   matricula: "",
-  //   r_trailer: "",
-  //   capacidad: "",
-  //   fecha_soat: "",
-  //   fecha_poliza: "",
-  //   modelo: "",
-  //   fecha_tecnomecanica: "",
-  //   id_marca: "",
-  //   id_tipo: "",
-  // };
+    const onSubmit = (dataRoute, e) => {
+        e.target.reset(); 
+        UseInsertRoute(dataRoute);
+    
+        reset();
+      };
 
-  const onSubmit = (dataVehicle, e) => {
-    e.target.reset(); 
-    UseInsertVehicle(dataVehicle);
+    const handleModalDialogClick = (e) => {
+        e.stopPropagation();
+    }
 
-    reset();
-  };
+    const handleSubmitRegisterRoute = (e) => {
 
-  const handleModalDialogClick = (e) => {
-    e.stopPropagation();
-  };
+        e.preventDefault();
 
-  const handleSubmitRegisterVehicle = (e) => {
-    e.preventDefault();
-  };
+    }
+
+    const handleInputChange = async (e) => {
+        await setState({
+            form: {
+                ...state.form,
+                [e.target.name]: e.target.value
+            }
+        });
+        console.log(e.target.value)
+    }
 
 
-  const { data: type } = UseTypeVehicle();
+    const { data: vehicle} = UseVehicleRoute();
+    const { data: city } = UseCity();
+    const { data: stateroute} = UseState();
+    const { data: conduct} = UseConductRoute();
 
-  const { data: marcas, loading } = UseMarca();
-
-  return (
-    <>
-      <div
+    return (
+        <>
+            <div
         className={`modalInicial ${isOpenEditModal && "modal-abierta"}`}
         onClick={closeModalEdit}
       >
@@ -358,6 +375,74 @@ export const ModalVehicle = ({
           </div>
         </div>
       </div>
-    </>
-  );
-};
+
+
+
+        
+            <div className={`modalInicial ${isOpenEditModal && 'modal-abierta'}`} 
+                onClick={closeModalEdit}
+            >
+                <div className="contenido__modal" 
+                    onClick={handleModalDialogClick}
+                >
+                    <button id="btnCloseModalRoutes" onClick={closeModalEdit}>
+                        <AiIcons.AiOutlineClose />
+                    </button>
+
+                    <h1>{titleModal}</h1>
+
+
+                    <div className="container">
+                        <form className="form-modal">
+                            <div className="row align-items-start">
+                                <div className="col">
+                                    <label>Codigo de Ruta *: </label>
+                                    <input type="text" className="form-control" name="CodigoRuta" onChange={handleInputChange} />
+
+                                    <label>Nombre Producto *: </label>
+                                    <input type="text" className="form-control" name="nombreProducto" onChange={handleInputChange} />
+
+                                    <label>Referencia*: </label>
+                                    <input type="tex" className="form-control" name="referencia" onChange={handleInputChange} />
+                                    
+                                    <label>Cantidad *: </label>
+                                    <input type="text" className="form-control" name="cantidad" onChange={handleInputChange} />
+
+                                </div>
+                                <div className="col">
+                                    <label>Flete *: </label>
+                                    <input type="text" className="form-control" name="flete" onChange={handleInputChange} />
+
+                                    <label>Placa *: </label>
+                                    <input type="text" className="form-control" name="placa" onChange={handleInputChange} />
+
+                                    <label>Conductor *: </label>
+                                    <input type="text" className="form-control" name="conductor" onChange={handleInputChange} />
+
+                                </div>
+                                <div className="col">
+                                    <label>Ciudad Origen *: </label>
+                                    <input type="text" className="form-control" name="ciudadOrigen" onChange={handleInputChange} />
+
+                                    <label>Ciudad Destino *: </label>
+                                    <input type="text" className="form-control" name="ciudadDestino" onChange={handleInputChange} />
+
+                                    <label>Fecha Inicio *: </label>
+                                    <input type="date" className="form-control" name="fechaInicio" onChange={handleInputChange} />
+
+                                    <label>Fecha Fin *: </label>
+                                    <input type="date" className="form-control" name="fechaFin" onChange={handleInputChange} />
+                                </div>
+                            </div>
+                            <br /><br />
+
+                            <button onClick={handleSubmitRegisterRoute}>Registrar Ruta</button>
+                            <button>Cancelar registro</button>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </>
+    )
+}

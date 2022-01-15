@@ -1,12 +1,12 @@
 import axios from 'axios';
+import {url_api} from './http-common';
 
 export const getAllRoute = async() => {
-    const url = `http://localhost:3000/Route/`;
+    const url = `${url_api}Route/`;
     const resp = await axios.get(url)
     console.log(resp)
-    const typeRoute = resp.data.data.map(route => {
+    const typeRoute = resp.data.map(route => {
         return {
-            id_ruta:route.id_ruta,
             codigo_ruta:route.codigo_ruta,
             nombre_producto:route.nombre_producto,
             referencia:route.referencia,
@@ -26,15 +26,77 @@ export const getAllRoute = async() => {
     return typeRoute;
 }
 
-export const getVehicleAvailable = async() => {
-    const url = `http://localhost:3000/Vehicle/vehicleAvailable`;
+export const getVehicleRoute = async() => {
+    const url = `${url_api}Route/vehicleRoute`;
     const resp = await axios.get(url)
 
-    const typeVehicle = resp.data.map(vehicle => {
+    const typeVechicle = resp.data.map(route => {
         return {
-            placa:vehicle.placa            
+            
+            id_vehiculo:route.id_vehiculo, 
+            placa:route.placa,
+            identificacion:route.identificacion,  
+            id_conductor:route.identificacion,            
+          
         }
     });
 
-    return typeVehicle;
+    return typeVechicle;
+}
+
+export const getAllState = async() => {
+    const url = `${url_api}Route/stateRoute`;
+    const resp = await axios.get(url)
+
+    const typeState = resp.data.map(route => {
+        return {
+            id_estado_ruta:route.id_estado_ruta,
+            estado:route.estado            
+        }
+    });
+
+    return typeState;
+}
+
+export const getAllCity = async() => {
+    const url = `${url_api}Route/cityRoute`;
+    const resp = await axios.get(url)
+
+    const typeCityRoute = resp.data.map(route => {
+        return {
+            
+        
+            id_origen:route.id_ciudad,
+            id_destino:route.id_ciudad,
+            ciudad_destino:route.descripcion,            
+            ciudad_origen:route.descripcion
+           
+
+        }
+    });
+
+    return typeCityRoute;
+}
+
+export const getConduct = async(placa) => {
+    const url = `${url_api}Vehicle/getConductByVehicle/${placa}`;
+    const resp = await axios.get(url)
+
+    const typeConductRoute = resp.data.map(route => {
+        return {
+            identificacion: route.identificacion,
+            id_conductor: route.identificacion  
+
+        }
+    });
+
+    return typeConductRoute;
+}
+
+
+export const insertRoute = async(data) => {
+    const url = `${url_api}Route/newRoute`;
+    const resp = await axios.post(url, data)
+
+    return resp;
 }

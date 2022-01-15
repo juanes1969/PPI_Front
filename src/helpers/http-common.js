@@ -1,1 +1,1 @@
-export const url_api = `https://sotransiv-ppi.herokuapp.com/`;
+export const url_api = `http://localhost:3000/`;
