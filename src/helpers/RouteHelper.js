@@ -19,6 +19,8 @@ export const getAllRoute = async() => {
             ciudad_origen:route.ciudad_origen,
             ciudad_destino:route.ciudad_destino,
             estado:route.estado
+
+            
        
         }
     });
