@@ -32,8 +32,8 @@ export const getEditConduct = async (identificacion) => {
     return resp;
 }
 
-export const editConduct = async (data) => {
-    const url = `${url_api_localhost}ConductEdit/${data.identificacion}`;
+export const editConduct = async (identificacion, data) => {
+    const url = `${url_api_localhost}ConductEdit/${identificacion}`;
     const resp = await axios.put(url, data)
 
     return resp;

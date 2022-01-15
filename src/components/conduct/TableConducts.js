@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import * as AiIcons from 'react-icons/ai';
 import * as BsIcons from 'react-icons/bs';
 import * as RiIcons from 'react-icons/ri';
@@ -13,28 +13,29 @@ import { SearchConduct } from './SearchConduct';
 export const Conduct = () => {
 
     const [isOpenModalConduct, openModalConduct, closeModalConduct] = UseModal();
-    const [isOpenEditModalConduct, openEditModalConduct, closeEditModalConduct] = UseModal();
 
     const { data, loading } = UseEffectConduct();
+
+    const [conductInformation, setConductInformation] = useState({});
+
+    const [isEdit, setIsEdit] = useState(false);
+
     //const { data: conducts, loading } = UseEffectConduct();
 
 
 
     const getById = (id) => {
         console.log(id)
-        
-        UseDeleteConduct(id);        
+
+        UseDeleteConduct(id);
     }
 
-    // const { datos } = UseDeleteConduct(id);
-    // console.log(datos);
-
-
-
-
-    //const { identificacion } = !!data && data[0]
-
-    //console.log(identificacion)
+    const getByIdEdit = (conduct) => {
+        console.log(conduct)
+        setConductInformation(conduct);
+        setIsEdit(true);
+        openModalConduct()
+    }
 
 
 
@@ -76,7 +77,7 @@ export const Conduct = () => {
 
                                         <td id="columOptions">
                                             <button className="btn btn-warning btn-sm"><BsIcons.BsFillEyeFill /></button>
-                                            <button className="btn btn-info btn-sm" onClick={openEditModalConduct}><RiIcons.RiEditFill /></button>
+                                            <button className="btn btn-info btn-sm" onClick={() => getByIdEdit(cond)}><RiIcons.RiEditFill /></button>
                                             <button className="btn btn-danger btn-sm" onClick={() => getById(cond.identificacion)}><AiIcons.AiFillDelete /></button>
                                         </td>
                                     </tr>
@@ -90,17 +91,9 @@ export const Conduct = () => {
             <ModalCreateConduct
                 isOpenEditModal={isOpenModalConduct}
                 closeModalEdit={closeModalConduct}
-                titleModal={"Crear conductores"}
-                buttonModal={"Registrar Conductor"}
-                caso={"registrar"}
-            />
-
-            <ModalCreateConduct
-                isOpenEditModal={isOpenEditModalConduct}
-                closeModalEdit={closeEditModalConduct}
-                titleModal={"Editar conductores"}
-                buttonModal={"Editar Conductor"}
-                caso={"registrar"}
+                conduct={conductInformation}
+                setConduct={setConductInformation}
+                isEdit={isEdit}
             />
         </>
     )

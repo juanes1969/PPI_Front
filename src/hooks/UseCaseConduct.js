@@ -36,23 +36,19 @@ export const UseDeleteConduct = (identificacion) => {
 }
 
 export const UseGetEditConduct = (identificacion) => {
-    const [state, setState] = useState({ data: null, loading: true, error: null });
 
-    useEffect(() => {
-        setState({
-            data: null,
-            loading: true,
-            error: null
-        })
-        getEditConduct(identificacion)
-            .then(data => {
-                setState({
-                    loading: false,
-                    error: null,
-                    data
-                })
+    const [state, setState] = useState({ dataUser: null, loading: true, error: null });
+
+
+    getEditConduct(identificacion)
+        .then(data => {
+            setState({
+                loading: false,
+                error: null,
+                dataUser: data
             })
-    }, [identificacion])
+        })
+
     return state;
 }
 

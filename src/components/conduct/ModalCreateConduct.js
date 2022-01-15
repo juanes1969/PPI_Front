@@ -5,17 +5,30 @@ import { UseInsertConduct } from "../../hooks/UseCaseConduct";
 import { UseVehicleAvailable } from "../../hooks/UseCaseVehicle";
 import "../../Styles/modal.css";
 
-export const ModalCreateConduct = ({ isOpenEditModal, closeModalEdit, titleModal, buttonModal, caso }) => {
+export const ModalCreateConduct = ({ isOpenEditModal, closeModalEdit, conduct, setConduct, isEdit }) => {
 
 
     const { register, handleSubmit, formState: { errors }, reset, trigger } = useForm();
 
+
     const onSubmit = (dataConduct, e) => {
-        e.target.reset();
-        UseInsertConduct(dataConduct);
-        reset();
-        closeModalEdit();
+        if (isEdit) {
+            // falta incluirla
+        } else {
+            e.target.reset();
+            UseInsertConduct(dataConduct);
+            reset();
+            closeModalEdit();
+        }
+
     };
+
+
+    const handleCancelButton = () => {
+        setConduct({})
+        console.log(conduct);
+        closeModalEdit()
+    }
 
     const handleModalDialogClick = (e) => {
         e.stopPropagation();
@@ -42,7 +55,9 @@ export const ModalCreateConduct = ({ isOpenEditModal, closeModalEdit, titleModal
                     >
                         <div className="modal-header">
                             <h3 className="modal-title" id="exampleModalLabel">
-                                {titleModal}
+                                {isEdit ?
+                                    ('Editar conductor') :
+                                    ('Registrar conductor')}
                             </h3>
                             <button
                                 type="button"
@@ -56,7 +71,7 @@ export const ModalCreateConduct = ({ isOpenEditModal, closeModalEdit, titleModal
                         <div className="modal-body">
                             <div className="container">
                                 <form
-                                    className="form-modal needs-validation"                                    
+                                    className="form-modal needs-validation"
                                     onSubmit={handleSubmit(onSubmit)}
                                 >
                                     <div className="row align-items-start">
@@ -67,6 +82,7 @@ export const ModalCreateConduct = ({ isOpenEditModal, closeModalEdit, titleModal
                                             <input
                                                 type="text"
                                                 className={`form-control ${errors.identificacion && "invalid"}`}
+                                                value={conduct.identificacion}
                                                 {...register("identificacion", {
                                                     required: "La identificacion es obligatoria",
                                                     pattern: {
@@ -309,14 +325,15 @@ export const ModalCreateConduct = ({ isOpenEditModal, closeModalEdit, titleModal
                                         </div>
                                     </div>
                                     <div className="modal-footer modal-btn" id="btns-modal-footer">
-                                        {/* handleSubmit(onSubmit) || (caso === 'editar') && handleSubmit(getEditConducts)} */}
                                         <button type="submit" className="btn btn-info">
-                                            {buttonModal}
+                                            {isEdit ?
+                                                ('Editar conductor') :
+                                                ('Registrar conductor')}
                                         </button>
                                         <button
                                             type="reset"
                                             className="btn  btn-danger"
-                                            onClick={closeModalEdit}
+                                            onClick={handleCancelButton}
                                         >
                                             Cancelar registro
                                         </button>
