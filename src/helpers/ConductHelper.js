@@ -1,10 +1,9 @@
+import axios from "axios";
 export const getConducts = async() => {
     const url = `https://sotransiv-ppi.herokuapp.com/Conduct`;
-    const resp = await fetch(url)
+    const resp = await axios.get(url);
 
-    const { data } = await resp.json();
-
-    const conducts = data.map(img => {
+    const conducts = resp.data.map(img => {
         return {
             identificacion: img.identificacion,
             nombre: img.nombre,

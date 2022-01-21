@@ -3,7 +3,6 @@ import "../../Styles/modal.css";
 import * as AiIcons from "react-icons/ai";
 import { UseTypeVehicle, UseMarca, UseInsertVehicle } from "../../hooks/UseCaseVehicle";
 import { insertVehicle } from "../../helpers/VehicleHelper";
-import "../../helpers/modal-function";
 import { useForm } from "react-hook-form";
 
 export const ModalVehicle = ({
