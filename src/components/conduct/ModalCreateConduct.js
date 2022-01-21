@@ -1,116 +1,349 @@
-import React, { useState } from 'react'
-import '../../Styles/modal.css'
-import * as AiIcons from 'react-icons/ai';
-import { UseVehicleAvailable } from '../../hooks/UseCaseVehicle';
+import React from "react";
+import { useForm } from "react-hook-form";
+import "../../helpers/modal-function";
+import { UseInsertConduct } from "../../hooks/UseCaseConduct";
+import { UseVehicleAvailable } from "../../hooks/UseCaseVehicle";
+import "../../Styles/modal.css";
 
-export const ModalCreateConduct = ({ isOpenEditModal, closeModalEdit, titleModal }) => {
+export const ModalCreateConduct = ({ isOpenEditModal, closeModalEdit, conduct, setConduct, isEdit }) => {
 
-    const [state, setState] = useState({
-        form: {
-            identificacion: '',
-            nombre: '',
-            primerApellido: '',
-            segundoApellido: '',
-            telefono: '',
-            fechaNacimiento: '',
-            licenciaConduccion: '',
-            fechaCursoSeguridad: '',
-            fechaCursoIndustrial: '',
-            examenesMedicos: '',
-            tipoVehiculo: '',
+
+    const { register, handleSubmit, formState: { errors }, reset, trigger } = useForm();
+
+
+    const onSubmit = (dataConduct, e) => {
+        if (isEdit) {
+            // falta incluirla
+        } else {
+            e.target.reset();
+            UseInsertConduct(dataConduct);
+            reset();
+            closeModalEdit();
         }
-    })
+
+    };
+
+
+    const handleCancelButton = () => {
+        setConduct({})
+        console.log(conduct);
+        closeModalEdit()
+    }
 
     const handleModalDialogClick = (e) => {
         e.stopPropagation();
-    }
+    };
 
-    const handleSubmitRegisterConduct = (e) => {
-
+    const handleSubmitRegisterVehicle = (e) => {
         e.preventDefault();
-
-    }
-
-    const handleInputChange = async (e) => {
-        await setState({
-            form: {
-                ...state.form,
-                [e.target.name]: e.target.value
-            }
-        });
-        console.log(e.target.value)
-    }
+    };
 
 
-    const { data: vehicle, loading } = UseVehicleAvailable();
+    const { data: vehicle } = UseVehicleAvailable();
+
 
     return (
         <>
-            <div className={`modalInicial ${isOpenEditModal && 'modal-abierta'}`} onClick={closeModalEdit}>
-                <div className="contenido__modal" onClick={handleModalDialogClick}>
-                    <button id="btnCloseModalRoutes" onClick={closeModalEdit}>
-                        <AiIcons.AiOutlineClose />
-                    </button>
+            <div
+                className={`modalInicial ${isOpenEditModal && "modal-abierta"}`}
+                onClick={closeModalEdit}
+            >
+                <div className="modal-dialog">
+                    <div
+                        className="modal-content contenido__modal"
+                        onClick={handleModalDialogClick}
+                    >
+                        <div className="modal-header">
+                            <h3 className="modal-title" id="exampleModalLabel">
+                                {isEdit ?
+                                    ('Editar conductor') :
+                                    ('Registrar conductor')}
+                            </h3>
+                            <button
+                                type="button"
+                                className="btn-close"
+                                data-bs-dismiss="modal"
+                                aria-label="Close"
+                                onClick={closeModalEdit}
+                            ></button>
+                        </div>
 
-                    <h1>{titleModal}</h1>
+                        <div className="modal-body">
+                            <div className="container">
+                                <form
+                                    className="form-modal needs-validation"
+                                    onSubmit={handleSubmit(onSubmit)}
+                                >
+                                    <div className="row align-items-start">
+                                        <div className="col">
+                                            <label className="col-form-label modal-label">
+                                                Identificacion *:
+                                            </label>
+                                            <input
+                                                type="text"
+                                                className={`form-control ${errors.identificacion && "invalid"}`}
+                                                value={conduct.identificacion}
+                                                {...register("identificacion", {
+                                                    required: "La identificacion es obligatoria",
+                                                    pattern: {
+                                                        value: /^(([0-9]))*$/,
+                                                        message: "Identificacion invalida",
+                                                    },
+                                                })}
+                                                onKeyUp={() => {
+                                                    trigger("identificacion");
+                                                }}
 
+                                            />
+                                            {errors.identificacion && (
+                                                <small className="text-danger">
+                                                    {errors.identificacion.message}
+                                                </small>
+                                            )}
+                                            <label className="col-form-label modal-label">
+                                                Segundo apellido *:
+                                            </label>
+                                            <input
+                                                type="text"
+                                                className={`form-control ${errors.segundo_apellido && "invalid"}`}
+                                                {...register("segundo_apellido", {
+                                                    required: "Segundo apellido es obligatorio",
+                                                    pattern: {
+                                                        value: /^(([A-z]))*$/,
+                                                        message: "Segundo apellido invalido",
+                                                    },
+                                                })}
+                                                onKeyUp={() => {
+                                                    trigger("segundo_apellido");
+                                                }}
+                                            />{errors.segundo_apellido && (
+                                                <small className="text-danger">
+                                                    {errors.segundo_apellido.message}
+                                                </small>
+                                            )}
+                                            <label className="col-form-label modal-label">
+                                                Licencia conduccion *:
+                                            </label>
+                                            <input
+                                                type="text"
+                                                className={`form-control ${errors.licencia_conduccion && "invalid"}`}
+                                                {...register("licencia_conduccion", {
+                                                    required: "Licencia de conduccion es obligatoria",
+                                                    pattern: {
+                                                        value: /^([LC]{2}([0-9]{5})+)*$/,
+                                                        message: "Licencia de conduccion invalida",
+                                                    },
+                                                })}
+                                                onKeyUp={() => {
+                                                    trigger("licencia_conduccion");
+                                                }}
+                                            />
+                                            {errors.licencia_conduccion && (
+                                                <small className="text-danger">
+                                                    {errors.licencia_conduccion.message}
+                                                </small>
+                                            )}
 
-                    <div className="container">
-                        <form className="form-modal">
-                            <div className="row align-items-start">
-                                <div className="col">
-                                    <label>Identificación: </label>
-                                    <input type="text" className="form-control" name="identificacion" onChange={handleInputChange} />
+                                            <label className="col-form-label modal-label">
+                                                Fecha examenes medicos*:
+                                            </label>
+                                            <input
+                                                type="date"
+                                                className={`form-control ${errors.examenes_medicos && "invalid"
+                                                    }`}
+                                                {...register("examenes_medicos", {
+                                                    required: "La fecha del examen es oblogatoria",
+                                                })}
+                                                onKeyUp={() => {
+                                                    trigger("examenes_medicos");
+                                                }}
+                                            />
+                                            {errors.examenes_medicos && (
+                                                <small className="text-danger">
+                                                    {errors.examenes_medicos.message}
+                                                </small>
+                                            )}
+                                        </div>
+                                        <div className="col">
+                                            <label className="col-form-label modal-label">
+                                                Nombre:
+                                            </label>
+                                            <input
+                                                type="text"
+                                                className={`form-control ${errors.nombre && "invalid"}`}
+                                                {...register("nombre", {
+                                                    required: "El nombre es obligatorio",
+                                                    pattern: {
+                                                        value: /^(([A-z]))*$/,
+                                                        message: "Nombre invalido",
+                                                    },
+                                                })}
+                                                onKeyUp={() => {
+                                                    trigger("nombre");
+                                                }}
+                                            />
+                                            {errors.nombre && (
+                                                <small className="text-danger">
+                                                    {errors.nombre.message}
+                                                </small>
+                                            )}
+                                            <label className="col-form-label modal-label">
+                                                Telefono *:
+                                            </label>
+                                            <input
+                                                type="text"
+                                                className={`form-control ${errors.telefono_contacto && "invalid"}`}
+                                                {...register("telefono_contacto", {
+                                                    required: "El telefono es obligatorio",
+                                                    pattern: {
+                                                        value: /^[0-9]{10}$/,
+                                                        message: "Solo se permiten números",
+                                                    },
+                                                })}
+                                                onKeyUp={() => {
+                                                    trigger("telefono_contacto");
+                                                }}
+                                            />
+                                            {errors.telefono_contacto && (
+                                                <small className="text-danger">
+                                                    {errors.telefono_contacto.message}
+                                                </small>
+                                            )}
+                                            <label className="col-form-label modal-label">
+                                                Fecha curso seguridad *:
+                                            </label>
+                                            <input
+                                                type="date"
+                                                className={`form-control ${errors.fecha_curso_seguridad && "invalid"
+                                                    }`}
+                                                {...register("fecha_curso_seguridad", {
+                                                    required: "La fecha es obligatoria",
+                                                })}
+                                                onKeyUp={() => {
+                                                    trigger("fecha_curso_seguridad");
+                                                }}
+                                            />
+                                            {errors.fecha_curso_seguridad && (
+                                                <small className="text-danger">
+                                                    {errors.fecha_curso_seguridad.message}
+                                                </small>
+                                            )}
+                                            <label className="col-form-label modal-label">
+                                                Vehiculos disponibles *:
+                                            </label>
+                                            <select
+                                                className={`form-control ${errors.id_vehiculo && "invalid"}`}
+                                                {...register("id_vehiculo", {
+                                                    required: "Selecciona un vehiculo",
+                                                    min: {
+                                                        value: 1,
+                                                        message: "Selecciona un vehiculo",
+                                                    },
+                                                })}
 
-                                    <label>Segundo apellido: </label>
-                                    <input type="text" className="form-control" name="segundoApellido" onChange={handleInputChange} />
+                                            >
+                                                <option value="0">Seleccionar</option>
+                                                {vehicle.map((type) => (
+                                                    <option
+                                                        key={type.placa}
+                                                        value={type.placa}
 
-                                    <label>Licencia conducción: </label>
-                                    <input type="text" className="form-control" name="licenciaConduccion" onChange={handleInputChange} />
+                                                        onKeyUp={() => {
+                                                            trigger("id_vehiculo");
+                                                        }}
+                                                    >
+                                                        {type.placa}
+                                                    </option>
+                                                ))}
+                                            </select>
+                                            {errors.id_vehiculo && (
+                                                <small className="text-danger">
+                                                    {errors.id_vehiculo.message}
+                                                </small>
+                                            )}
+                                        </div>
+                                        <div className="col">
+                                            <label className="col-form-label modal-label">
+                                                Primer apellido *:
+                                            </label>
+                                            <input
+                                                type="text"
+                                                className={`form-control ${errors.primer_apellido && "invalid"}`}
+                                                {...register("primer_apellido", {
+                                                    required: "Primer apellido es obligatorio",
+                                                    pattern: {
+                                                        value: /^(([A-z]))*$/,
+                                                        message: "Primer apellido invalido",
+                                                    },
+                                                })}
+                                                onKeyUp={() => {
+                                                    trigger("primer_apellido");
+                                                }}
+                                            />
+                                            {errors.primer_apellido && (
+                                                <small className="text-danger">
+                                                    {errors.primer_apellido.message}
+                                                </small>
+                                            )}
 
-                                    <label>Exámenes médicos: </label>
-                                    <input type="date" className="form-control" name="examenesMedicos" onChange={handleInputChange} />
-
-                                </div>
-                                <div className="col">
-                                    <label>Nombre: </label>
-                                    <input type="text" className="form-control" name="nombre" onChange={handleInputChange} />
-
-                                    <label>Telefono contacto: </label>
-                                    <input type="text" className="form-control" name="telefono" onChange={handleInputChange} />
-
-                                    <label>Fecha curso seguridad: </label>
-                                    <input type="date" className="form-control" name="fechaCursoSeguridad" onChange={handleInputChange} />
-
-                                    <label>Vehículos disponibles: </label>
-                                    <select className="form-control" name="tipoVehiculo" onChange={handleInputChange}>
-                                        <option value="0">Seleccionar</option>
-                                        {vehicle.map((vehcl) => (
-                                            <option value={vehcl.placa}>{vehcl.placa}</option>
-                                        ))}
-                                    </select>
-
-                                </div>
-                                <div className="col">
-                                    <label>Primer apellido: </label>
-                                    <input type="text" className="form-control" name="primerApellido" onChange={handleInputChange} />
-
-                                    <label>Fecha nacimiento: </label>
-                                    <input type="date" className="form-control" name="fechaNacimiento" onChange={handleInputChange} />
-
-                                    <label>Fecha curso industrial: </label>
-                                    <input type="date" className="form-control" name="fechaCursoIndustrial" onChange={handleInputChange} />
-                                </div>
+                                            <label className="col-form-label modal-label">
+                                                Fecha nacimiento *:
+                                            </label>
+                                            <input
+                                                type="date"
+                                                className={`form-control ${errors.fecha_nacimiento && "invalid"}`}
+                                                {...register("fecha_nacimiento", {
+                                                    required: "La fecha de nacimiento es obligatoria",
+                                                })}
+                                                onKeyUp={() => {
+                                                    trigger("fecha_nacimiento");
+                                                }}
+                                            />
+                                            {errors.fecha_nacimiento && (
+                                                <small className="text-danger">
+                                                    {errors.fecha_nacimiento.message}
+                                                </small>
+                                            )}
+                                            <label className="col-form-label modal-label">
+                                                Fecha curso industrial *:
+                                            </label>
+                                            <input
+                                                type="date"
+                                                className={`form-control ${errors.fecha_curso_industrial && "invalid"}`}
+                                                {...register("fecha_curso_industrial", {
+                                                    required: "La fecha es obligatoria",
+                                                })}
+                                                onKeyUp={() => {
+                                                    trigger("fecha_curso_industrial");
+                                                }}
+                                            />
+                                            {errors.fecha_curso_industrial && (
+                                                <small className="text-danger">
+                                                    {errors.fecha_curso_industrial.message}
+                                                </small>
+                                            )}
+                                        </div>
+                                    </div>
+                                    <div className="modal-footer modal-btn" id="btns-modal-footer">
+                                        <button type="submit" className="btn btn-info">
+                                            {isEdit ?
+                                                ('Editar conductor') :
+                                                ('Registrar conductor')}
+                                        </button>
+                                        <button
+                                            type="reset"
+                                            className="btn  btn-danger"
+                                            onClick={handleCancelButton}
+                                        >
+                                            Cancelar registro
+                                        </button>
+                                    </div>
+                                </form>
                             </div>
-                            <br /><br />
-
-                            <button onClick={handleSubmitRegisterConduct}>Registrar conductor</button>
-                            <button>Cancelar registro</button>
-
-                        </form>
+                        </div>
                     </div>
                 </div>
             </div>
         </>
-    )
-}
+    );
+};
