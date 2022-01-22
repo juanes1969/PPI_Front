@@ -6,7 +6,8 @@ import {
   getAllTypeVehicle,
   insertVehicle,
   editVehicle,
-  getVehicleByPlaca
+  getVehicleByPlaca,
+  deleteVehicle
 } from "../helpers/VehicleHelper";
 
 export const UseEffectGetVehicles = () => {
@@ -16,7 +17,8 @@ export const UseEffectGetVehicles = () => {
   });
 
   useEffect(() => {
-    getAllVehicles().then((vehicle) => {
+    getAllVehicles()
+    .then((vehicle) => {
       setVehicles({
         data: vehicle,
         loading: false,
@@ -81,6 +83,18 @@ export const UseTypeVehicle = () => {
   return typeVehicle;
 };
 
+export const UseDeleteVehicle = (placa) => {
+
+  deleteVehicle(placa)
+      .then((response) => {
+          console.log(response);
+          window.location.reload();
+      })
+      .catch((e) => {
+          console.log(e);
+      });
+}
+
 export const UseGetVehiclePlaca = (placa) => {
   const [vehicleByPlaca, setVehicleByPlaca] = useState({
     data: [],
@@ -109,10 +123,13 @@ export const UseInsertVehicle = (dataVehicle) => {
     matricula: dataVehicle.matricula,
     r_trailer: dataVehicle.r_trailer,
     capacidad: dataVehicle.capacidad,
-    fecha_soat: dataVehicle.fecha_soat,
-    fecha_poliza: dataVehicle.fecha_poliza,
     modelo: dataVehicle.modelo,
+    vencimiento_soat: dataVehicle.vencimiento_soat,
+    vencimiento_poliza: dataVehicle.vencimiento_poliza,
     fecha_tecnomecanica: dataVehicle.fecha_tecnomecanica,
+    expedicion_soat: dataVehicle.expedicion_soat,
+    expedicion_poliza: dataVehicle.expedicion_poliza,
+    expedicion_tecnomecanica: dataVehicle.expedicion_tecnomecanica,
     id_marca: dataVehicle.id_marca,
     id_tipo: dataVehicle.id_tipo,
     id_estado_vehiculo: 1,
@@ -137,10 +154,13 @@ export const UseSaveVehicle = (dataVehicle) => {
     matricula: dataVehicle.matricula,
     r_trailer: dataVehicle.r_trailer,
     capacidad: dataVehicle.capacidad,
-    fecha_soat: dataVehicle.fecha_soat,
-    fecha_poliza: dataVehicle.fecha_poliza,
     modelo: dataVehicle.modelo,
+    vencimiento_soat: dataVehicle.vencimiento_soat,
+    vencimiento_poliza: dataVehicle.vencimiento_poliza,
     fecha_tecnomecanica: dataVehicle.fecha_tecnomecanica,
+    expedicion_soat: dataVehicle.expedicion_soat,
+    expedicion_poliza: dataVehicle.expedicion_poliza,
+    expedicion_tecnomecanica: dataVehicle.expedicion_tecnomecanica,
     id_marca: dataVehicle.id_marca,
     id_tipo: dataVehicle.id_tipo,
     id_estado_vehiculo: 1,

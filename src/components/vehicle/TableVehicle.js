@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Pagination } from '../conduct/Pagination'
 import { SearchConduct } from '../conduct/SearchConduct';
 import '../../Styles/tableConduct.css'
@@ -8,15 +8,27 @@ import * as RiIcons from 'react-icons/ri';
 import * as AiIcons from 'react-icons/ai';
 import { UseModal } from '../../hooks/UseModal';
 import { ModalVehicle } from './ModalVehicle';
-import { UseEffectGetVehicles } from '../../hooks/UseCaseVehicle';
+import { UseDeleteVehicle, UseEffectGetVehicles } from '../../hooks/UseCaseVehicle';
 import { Loader } from '../globalComponents/Loader';
 
 export const Vehicle = () => {
 
     const [isOpenModalVehicle, openModalVehicle, closeModalVehicle] = UseModal();
-    const [isOpenEditModalVehicle, openEditModalVehicle, closeEditModalVehicle] = UseModal();
+    const { data, loading } = UseEffectGetVehicles();
+    const [vehicleData, setVehicleData] = useState({});
+    const [isEdit, setIsEdit] = useState(false);
 
-    const { data: vehicles, loading } = UseEffectGetVehicles();
+    const handleDeleteVehicle = (placa) => {
+        console.log(placa)
+        UseDeleteVehicle(placa);
+    }
+
+    const getByIdEdit = (conduct) => {
+        console.log(conduct)
+        setVehicleData(conduct);
+        setIsEdit(true);
+        openModalVehicle();
+    }
 
     return (
         <>
@@ -44,7 +56,7 @@ export const Vehicle = () => {
                         </thead>
                         <tbody>
                             {/* {loading && <Loader />} */}
-                            {vehicles.map((vehicle) => (
+                            {data.map((vehicle) => (
                                 <tr key={vehicle.placa}>
                                     <td>{vehicle.placa}</td>
                                     <td>{vehicle.marca}</td>
@@ -55,8 +67,8 @@ export const Vehicle = () => {
                                     <td>{vehicle.estadoVehiculo}</td>
                                     <td id="columOptions">
                                         <button className="btn btn-warning btn-sm"><BsIcons.BsFillEyeFill /></button>
-                                        <button className="btn btn-info btn-sm" onClick={openEditModalVehicle} ><RiIcons.RiEditFill /></button>
-                                        <button className="btn btn-danger btn-sm"><AiIcons.AiFillDelete /></button>
+                                        <button className="btn btn-info btn-sm" onClick={() => getByIdEdit(vehicle)} ><RiIcons.RiEditFill /></button>
+                                        <button className="btn btn-danger btn-sm" onClick={() => handleDeleteVehicle(vehicle.placa)}><AiIcons.AiFillDelete /></button>
                                     </td>
                                 </tr>
                             ))}
@@ -67,17 +79,11 @@ export const Vehicle = () => {
             </div>
 
             <ModalVehicle
-                isOpenEditModal={isOpenModalVehicle}
-                closeModalEdit={closeModalVehicle}
-                titleModal={"Crear Vehículo"}
-                buttonModal={"Registrar Vehículo"}
-            />
-
-            <ModalVehicle
-                isOpenEditModal={isOpenEditModalVehicle}
-                closeModalEdit={closeEditModalVehicle}
-                titleModal={"Editar Vehículo"}
-                buttonModal={"Actualizar Vehículo"}
+                isOpenModal={isOpenModalVehicle}
+                closeModal={closeModalVehicle}
+                vehicle={vehicleData}
+                setVehicleData={setVehicleData}
+                isEdit={isEdit}
             />
 
         </>

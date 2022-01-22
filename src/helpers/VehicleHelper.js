@@ -62,6 +62,13 @@ export const getAllTypeVehicle = async () => {
   return marcaVehiculo;
 };
 
+export const deleteVehicle = async (placa) => {
+  const url = `${url_api}Vehicle/deleteVehicle/${placa}`;
+  const resp = await axios.delete(url)
+  
+  return resp;
+}
+
 export const getVehicleByPlaca = async (placa) => {
   const url = `${url_api}Vehicle/getVehicle/${placa}`;
   const resp = await axios.get(url);
@@ -72,10 +79,13 @@ export const getVehicleByPlaca = async (placa) => {
       matricula: type.matricula,
       r_trailer: type.r_trailer,
       capacidad: type.capacidad,
-      fecha_soat: type.fecha_soat,
-      fecha_poliza: type.fecha_poliza,
       modelo: type.modelo,
+      vencimiento_soat: type.vencimiento_soat,
+      vencimiento_poliza: type.vencimiento_poliza,
       fecha_tecnomecanica: type.fecha_tecnomecanica,
+      expedicion_soat: type.expedicion_soat,
+      expedicion_poliza: type.expedicion_poliza,
+      expedicion_tecnomecanica: type.expedicion_tecnomecanica,
       id_marca: type.id_marca,
       id_tipo: type.id_tipo,
       id_estado_vehiculo: 1,
