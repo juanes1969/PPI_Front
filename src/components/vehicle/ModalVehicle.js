@@ -5,14 +5,10 @@ import { UseTypeVehicle,
    UseMarca,
    UseInsertVehicle } from "../../hooks/UseCaseVehicle";
 import { insertVehicle } from "../../helpers/VehicleHelper";
-import "../../helpers/modal-function";
 import { useForm } from "react-hook-form";
 
 export const ModalVehicle = ({
-  isOpenEditModal,
-  closeModalEdit,
-  titleModal,
-  buttonModal,
+  isOpenModal, closeModal, vehicle, setVehicleData, isEdit
 }) => {
   const {
     register,
@@ -27,20 +23,29 @@ export const ModalVehicle = ({
   //   matricula: "",
   //   r_trailer: "",
   //   capacidad: "",
-  //   fecha_soat: "",
-  //   fecha_poliza: "",
+  //   vencimiento_soat: "",
+  //   vencimiento_poliza: "",
   //   modelo: "",
-  //   fecha_tecnomecanica: "",
+  //   vencimiento_tecnomecanica: "",
   //   id_marca: "",
   //   id_tipo: "",
   // };
 
   const onSubmit = (dataVehicle, e) => {
-    e.target.reset(); 
-    UseInsertVehicle(dataVehicle);
-
-    reset();
+    if (isEdit) {
+      // falta incluirla
+  } else {
+      e.target.reset();
+      UseInsertVehicle(dataVehicle);
+      reset();
+      closeModal();
+  }
   };
+
+  const handleCancelButton = () => {
+    setVehicleData({})
+    closeModal()
+}
 
   const handleModalDialogClick = (e) => {
     e.stopPropagation();
@@ -58,8 +63,8 @@ export const ModalVehicle = ({
   return (
     <>
       <div
-        className={`modalInicial ${isOpenEditModal && "modal-abierta"}`}
-        onClick={closeModalEdit}
+        className={`modalInicial ${isOpenModal && "modal-abierta"}`}
+        onClick={closeModal}
       >
         <div className="modal-dialog">
           <div
@@ -68,14 +73,16 @@ export const ModalVehicle = ({
           >
             <div className="modal-header">
               <h3 className="modal-title" id="exampleModalLabel">
-                {titleModal}
+              {isEdit ?
+                  ('Editar vehículo') :
+                  ('Registrar vehículo')}
               </h3>
               <button
                 type="button"
                 className="btn-close"
                 data-bs-dismiss="modal"
                 aria-label="Close"
-                onClick={closeModalEdit}
+                onClick={closeModal}
               ></button>
             </div>
 
@@ -94,6 +101,7 @@ export const ModalVehicle = ({
                       <input
                         type="text"
                         className={`form-control ${errors.placa && "invalid"}`}
+                        value={vehicle.placa}
                         {...register("placa", {
                           required: "La placa es obligatoria",
                           pattern: {
@@ -115,6 +123,7 @@ export const ModalVehicle = ({
                       </label>
                       <select  
                       className={`form-control ${errors.id_marca && "invalid" }`}
+                      value={vehicle.id_marca}
                        {...register("id_marca", {
                         required: "La marca del vehículo es obligatoria",
                         min: {
@@ -142,24 +151,46 @@ export const ModalVehicle = ({
                           {errors.id_marca.message}
                         </small>
                       )}
-                      <label className="col-form-label modal-label">
-                        Fecha Poliza *:
+                       <label className="col-form-label modal-label">
+                        Expedición poliza *:
                       </label>
                       <input
                         type="date"
                         className={`form-control ${
-                          errors.fecha_poliza && "invalid"
+                          errors.expedicion_poliza && "invalid"
                         }`}
-                        {...register("fecha_poliza", {
+                        value={vehicle.expedicion_poliza}
+                        {...register("expedicion_poliza", {
+                          required: "La fecha del SOAT es obligatoria",
+                        })}
+                        onKeyUp={() => {
+                          trigger("expedicion_poliza");
+                        }}
+                      />
+                      {errors.expedicion_poliza && (
+                        <small className="text-danger">
+                          {errors.expedicion_poliza.message}
+                        </small>
+                      )}
+                      <label className="col-form-label modal-label">
+                        Vencimiento poliza *:
+                      </label>
+                      <input
+                        type="date"
+                        className={`form-control ${
+                          errors.vencimiento_poliza && "invalid"
+                        }`}
+                        value={vehicle.vencimiento_poliza}
+                        {...register("vencimiento_poliza", {
                           required: "La fecha de la poliza es obligatoria",
                         })}
                         onKeyUp={() => {
-                          trigger("fecha_poliza");
+                          trigger("vencimiento_poliza");
                         }}
                       />
-                      {errors.fecha_poliza && (
+                      {errors.vencimiento_poliza && (
                         <small className="text-danger">
-                          {errors.fecha_poliza.message}
+                          {errors.vencimiento_poliza.message}
                         </small>
                       )}
 
@@ -171,6 +202,7 @@ export const ModalVehicle = ({
                         className={`form-control ${
                           errors.capacidad && "invalid"
                         }`}
+                        value={vehicle.capacidad}
                         {...register("capacidad", {
                           required: "La capacidad del vehículo es requerida",
                           min: {
@@ -198,13 +230,14 @@ export const ModalVehicle = ({
                     </div>
                     <div className="col">
                       <label className="col-form-label modal-label">
-                        Placa Trailer:
+                        Placa trailer:
                       </label>
                       <input
                         type="text"
                         className={`form-control ${
                           errors.r_trailer && "invalid"
                         }`}
+                        value={vehicle.r_trailer}
                         {...register("r_trailer", {
                           pattern: {
                             value: /^([R]{1}-([0-9]{5})+)*$/,
@@ -226,6 +259,7 @@ export const ModalVehicle = ({
                       <input
                         type="text"
                         className={`form-control ${errors.modelo && "invalid"}`}
+                        value={vehicle.modelo}
                         {...register("modelo", {
                           required: "El modelo del vehículo es obligatoria",
                           pattern: {
@@ -243,32 +277,55 @@ export const ModalVehicle = ({
                         </small>
                       )}
                       <label className="col-form-label modal-label">
-                        Fecha SOAT *:
+                        Expedición SOAT *:
                       </label>
                       <input
                         type="date"
                         className={`form-control ${
-                          errors.fecha_soat && "invalid"
+                          errors.expedicion_soat && "invalid"
                         }`}
-                        {...register("fecha_soat", {
+                        value={vehicle.expedicion_soat}
+                        {...register("expedicion_soat", {
                           required: "La fecha del SOAT es obligatoria",
                         })}
                         onKeyUp={() => {
-                          trigger("fecha_soat");
+                          trigger("expedicion_soat");
                         }}
                       />
-                      {errors.fecha_soat && (
+                      {errors.expedicion_soat && (
                         <small className="text-danger">
-                          {errors.fecha_soat.message}
+                          {errors.expedicion_soat.message}
+                        </small>
+                      )}
+                      <label className="col-form-label modal-label">
+                        Vencimiento SOAT *:
+                      </label>
+                      <input
+                        type="date"
+                        className={`form-control ${
+                          errors.vencimiento_soat && "invalid"
+                        }`}
+                        value={vehicle.vencimiento_soat}
+                        {...register("vencimiento_soat", {
+                          required: "La fecha del SOAT es obligatoria",
+                        })}
+                        onKeyUp={() => {
+                          trigger("vencimiento_soat");
+                        }}
+                      />
+                      {errors.vencimiento_soat && (
+                        <small className="text-danger">
+                          {errors.vencimiento_soat.message}
                         </small>
                       )}
                     </div>
                     <div className="col">
                       <label className="col-form-label modal-label">
-                        Tipo Vehículo *:
+                        Tipo vehículo *:
                       </label>
                       <select
                         className={`form-control ${errors.id_tipo && "invalid"}`}
+                        value={vehicle.id_tipo}
                       {...register("id_tipo", {
                         required: "El tipo del vehículo es obligatoria",
                         min: {
@@ -305,6 +362,7 @@ export const ModalVehicle = ({
                         className={`form-control ${
                           errors.matricula && "invalid"
                         }`}
+                        value={vehicle.matricula}
                         {...register("matricula", {
                           required: "La matrícula es obligatoria",
                         })}
@@ -317,37 +375,61 @@ export const ModalVehicle = ({
                           {errors.matricula.message}
                         </small>
                       )}
-                      <label className="col-form-label modal-label">
-                        Fecha Técnico Mecánica *:
+                       <label className="col-form-label modal-label">
+                        Expedición técnico mecánica *:
                       </label>
                       <input
                         type="date"
                         className={`form-control ${
-                          errors.fecha_tecnomecanica && "invalid"
+                          errors.expedicion_tecnomecanica && "invalid"
                         }`}
-                        {...register("fecha_tecnomecanica", {
+                        value={vehicle.expedicion_tecnomecanica}
+                        {...register("expedicion_tecnomecanica", {
+                          required: "La fecha del SOAT es obligatoria",
+                        })}
+                        onKeyUp={() => {
+                          trigger("expedicion_tecnomecanica");
+                        }}
+                      />
+                      {errors.expedicion_tecnomecanica && (
+                        <small className="text-danger">
+                          {errors.expedicion_tecnomecanica.message}
+                        </small>
+                      )}
+                      <label className="col-form-label modal-label">
+                        Vencimiento técnico mecánica*
+                      </label>
+                      <input
+                        type="date"
+                        className={`form-control ${
+                          errors.vencimiento_tecnomecanica && "invalid"
+                        }`}
+                        value={vehicle.vencimiento_tecnomecanica}
+                        {...register("vencimiento_tecnomecanica", {
                           required:
                             "La fecha de la Técnico Mecánica es obligatoria",
                         })}
                         onKeyUp={() => {
-                          trigger("fecha_tecnomecanica");
+                          trigger("vencimiento_tecnomecanica");
                         }}
                       />
-                      {errors.fecha_tecnomecanica && (
+                      {errors.vencimiento_tecnomecanica && (
                         <small className="text-danger">
-                          {errors.fecha_tecnomecanica.message}
+                          {errors.vencimiento_tecnomecanica.message}
                         </small>
                       )}
                     </div>
                   </div>
                   <div className="modal-footer modal-btn">
                     <button type="submit" className="btn btn-info" onPress={handleSubmit(onSubmit)}>
-                      {buttonModal}
+                    {isEdit ?
+                        ('Editar vehículo') :
+                        ('Registrar vehículo')}
                     </button>
                     <button
                       type="reset"
                       className="btn  btn-danger"
-                      onClick={closeModalEdit}
+                      onClick={closeModal}
                     >
                       Cancelar registro
                     </button>

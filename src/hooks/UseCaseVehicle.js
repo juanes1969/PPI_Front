@@ -5,6 +5,9 @@ import {
   getAllMarcas,
   getAllTypeVehicle,
   insertVehicle,
+  editVehicle,
+  getVehicleByPlaca,
+  deleteVehicle
 } from "../helpers/VehicleHelper";
 
 export const UseEffectGetVehicles = () => {
@@ -14,7 +17,8 @@ export const UseEffectGetVehicles = () => {
   });
 
   useEffect(() => {
-    getAllVehicles().then((vehicle) => {
+    getAllVehicles()
+    .then((vehicle) => {
       setVehicles({
         data: vehicle,
         loading: false,
@@ -79,6 +83,37 @@ export const UseTypeVehicle = () => {
   return typeVehicle;
 };
 
+export const UseDeleteVehicle = (placa) => {
+
+  deleteVehicle(placa)
+      .then((response) => {
+          console.log(response);
+          window.location.reload();
+      })
+      .catch((e) => {
+          console.log(e);
+      });
+}
+
+export const UseGetVehiclePlaca = (placa) => {
+  const [vehicleByPlaca, setVehicleByPlaca] = useState({
+    data: [],
+    loading: true,
+  });
+
+  useEffect(() => {
+    getVehicleByPlaca(placa)
+    .then((type) => {
+      setVehicleByPlaca({
+        data: type,
+        loading: false,
+      });
+    });
+  }, []);
+
+  return vehicleByPlaca;
+};
+
 /**
  * TODO: PENSAR COMO HACER ESTE USECASE!!!!
  */
@@ -88,10 +123,13 @@ export const UseInsertVehicle = (dataVehicle) => {
     matricula: dataVehicle.matricula,
     r_trailer: dataVehicle.r_trailer,
     capacidad: dataVehicle.capacidad,
-    fecha_soat: dataVehicle.fecha_soat,
-    fecha_poliza: dataVehicle.fecha_poliza,
     modelo: dataVehicle.modelo,
-    fecha_tecnomecanica: dataVehicle.fecha_tecnomecanica,
+    vencimiento_soat: dataVehicle.vencimiento_soat,
+    vencimiento_poliza: dataVehicle.vencimiento_poliza,
+    vencimiento_tecnomecanica: dataVehicle.vencimiento_tecnomecanica,
+    expedicion_soat: dataVehicle.expedicion_soat,
+    expedicion_poliza: dataVehicle.expedicion_poliza,
+    expedicion_tecnomecanica: dataVehicle.expedicion_tecnomecanica,
     id_marca: dataVehicle.id_marca,
     id_tipo: dataVehicle.id_tipo,
     id_estado_vehiculo: 1,
@@ -100,8 +138,52 @@ export const UseInsertVehicle = (dataVehicle) => {
   insertVehicle(data)
     .then((response) => {
       console.log(response.data);
+      window.location.reload();
     })
     .catch((e) => {
       console.log(e);
     });
+};
+
+export const UseSaveVehicle = (dataVehicle) => {
+
+  let vehiculo = getVehicleByPlaca(dataVehicle.placa);
+  console.log(vehiculo)
+
+  let data = {
+    placa: dataVehicle.placa,
+    matricula: dataVehicle.matricula,
+    r_trailer: dataVehicle.r_trailer,
+    capacidad: dataVehicle.capacidad,
+    modelo: dataVehicle.modelo,
+    vencimiento_soat: dataVehicle.vencimiento_soat,
+    vencimiento_poliza: dataVehicle.vencimiento_poliza,
+    vencimiento_tecnomecanica: dataVehicle.vencimiento_tecnomecanica,
+    expedicion_soat: dataVehicle.expedicion_soat,
+    expedicion_poliza: dataVehicle.expedicion_poliza,
+    expedicion_tecnomecanica: dataVehicle.expedicion_tecnomecanica,
+    id_marca: dataVehicle.id_marca,
+    id_tipo: dataVehicle.id_tipo,
+    id_estado_vehiculo: 1,
+  };
+
+  if(vehiculo != null ){
+    editVehicle(data, dataVehicle.placa)
+    .then((response) => {
+      console.log(response.data);
+      window.location.reload();
+    })
+    .catch((e) => {
+      console.log(e);
+    });
+  }else{
+    insertVehicle(data)
+    .then((response) => {
+      console.log(response.data);
+      window.location.reload();
+    })
+    .catch((e) => {
+      console.log(e);
+    });
+  }
 };

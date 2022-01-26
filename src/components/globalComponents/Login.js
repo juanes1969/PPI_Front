@@ -4,34 +4,58 @@ import * as RiIcons from "react-icons/ri";
 import * as FaIcons from "react-icons/fa";
 import { IconContext } from "react-icons";
 import logo from "../../assets/img/LogoBlack.png";
+import { UseCaseLogin } from "../../hooks/UseCaseLogin";
 
 export const Login = () => {
-  const [state, setState] = useState({
-    form: {
-      username: "",
-      password: "",
-    },
-  });
 
-  const handleInputChange = async (e) => {
-    await setState({
-      form: {
-        ...state.form,
-        [e.target.name]: e.target.value,
-      },
-    });
-  };
+  const [formState, setFormState] = useState({
+    usuario: '',
+    clave: ''
+  })
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-  };
+  const handleInputChange = ({ target }) => {
+    setFormState({
+      ...formState,
+      [target.name]: target.value
+    })
+  }
+
+  console.log(formState)
+
+
+
+
+
+  const onSumbit = (e) => {
+    e.preventDefault()
+    UseCaseLogin(formState)
+
+
+
+
+
+    // if (!!data && data[0]) {
+    //   let descripcion = data[0].descripcion
+    //   let id_rol = data[0].id_rol
+    //   console.log(descripcion, id_rol);
+
+    //   if (id_rol == 1) {
+    //     alert(`Bienvenido Inicio sesion correctamente ${id_rol}`);
+    //     window.location.href = "/Home";
+    //   }
+    // } else {
+    //   alert('El usuario o la contraseña no son correctos');
+    //   window.location.href = "/";
+    // }
+  }
+
 
   return (
     <>
       <div className="container-login">
         <div className="capa-gradiente"></div>
 
-        <form className="form-signin" id="form" onSubmit={handleSubmit}>
+        <form className="form-signin" id="form">
           <img className="logo" src={logo} alt="logo" />
 
           <IconContext.Provider value={{ size: "1.3rem" }}>
@@ -43,8 +67,8 @@ export const Login = () => {
                 id="login-username"
                 type="text"
                 className="form-control"
-                name="username"
-                placeholder="Usuario"
+                name="usuario"
+                placeholder="Username"
                 onChange={handleInputChange}
               />
             </div>
@@ -57,8 +81,8 @@ export const Login = () => {
                 id="login-password"
                 type="password"
                 className="form-control"
-                name="password"
-                placeholder="Contraseña"
+                name="clave"
+                placeholder="Password"
                 onChange={handleInputChange}
               />
             </div>
@@ -71,7 +95,7 @@ export const Login = () => {
             ></div>
           </div>
 
-          <button className="btn-login" onClick={handleSubmit}>
+          <button className="btn-login" onClick={onSumbit}>
             Iniciar Sesión
           </button>
         </form>
