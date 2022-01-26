@@ -82,7 +82,7 @@ export const getVehicleByPlaca = async (placa) => {
       modelo: type.modelo,
       vencimiento_soat: type.vencimiento_soat,
       vencimiento_poliza: type.vencimiento_poliza,
-      fecha_tecnomecanica: type.fecha_tecnomecanica,
+      vencimiento_tecnomecanica: type.vencimiento_tecnomecanica,
       expedicion_soat: type.expedicion_soat,
       expedicion_poliza: type.expedicion_poliza,
       expedicion_tecnomecanica: type.expedicion_tecnomecanica,

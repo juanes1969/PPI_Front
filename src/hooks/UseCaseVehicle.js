@@ -126,7 +126,7 @@ export const UseInsertVehicle = (dataVehicle) => {
     modelo: dataVehicle.modelo,
     vencimiento_soat: dataVehicle.vencimiento_soat,
     vencimiento_poliza: dataVehicle.vencimiento_poliza,
-    fecha_tecnomecanica: dataVehicle.fecha_tecnomecanica,
+    vencimiento_tecnomecanica: dataVehicle.vencimiento_tecnomecanica,
     expedicion_soat: dataVehicle.expedicion_soat,
     expedicion_poliza: dataVehicle.expedicion_poliza,
     expedicion_tecnomecanica: dataVehicle.expedicion_tecnomecanica,
@@ -138,6 +138,7 @@ export const UseInsertVehicle = (dataVehicle) => {
   insertVehicle(data)
     .then((response) => {
       console.log(response.data);
+      window.location.reload();
     })
     .catch((e) => {
       console.log(e);
@@ -157,7 +158,7 @@ export const UseSaveVehicle = (dataVehicle) => {
     modelo: dataVehicle.modelo,
     vencimiento_soat: dataVehicle.vencimiento_soat,
     vencimiento_poliza: dataVehicle.vencimiento_poliza,
-    fecha_tecnomecanica: dataVehicle.fecha_tecnomecanica,
+    vencimiento_tecnomecanica: dataVehicle.vencimiento_tecnomecanica,
     expedicion_soat: dataVehicle.expedicion_soat,
     expedicion_poliza: dataVehicle.expedicion_poliza,
     expedicion_tecnomecanica: dataVehicle.expedicion_tecnomecanica,
@@ -170,6 +171,7 @@ export const UseSaveVehicle = (dataVehicle) => {
     editVehicle(data, dataVehicle.placa)
     .then((response) => {
       console.log(response.data);
+      window.location.reload();
     })
     .catch((e) => {
       console.log(e);
@@ -178,6 +180,7 @@ export const UseSaveVehicle = (dataVehicle) => {
     insertVehicle(data)
     .then((response) => {
       console.log(response.data);
+      window.location.reload();
     })
     .catch((e) => {
       console.log(e);
