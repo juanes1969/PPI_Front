@@ -19,9 +19,7 @@ export const Conduct = () => {
     const [conductInformation, setConductInformation] = useState({});
 
     const [isEdit, setIsEdit] = useState(false);
-
-    //const { data: conducts, loading } = UseEffectConduct();
-
+    
 
 
     const getById = (id) => {
