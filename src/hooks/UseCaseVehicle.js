@@ -114,9 +114,6 @@ export const UseGetVehiclePlaca = (placa) => {
   return vehicleByPlaca;
 };
 
-/**
- * TODO: PENSAR COMO HACER ESTE USECASE!!!!
- */
 export const UseInsertVehicle = (dataVehicle) => {
   debugger
   var data = {

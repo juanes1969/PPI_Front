@@ -33,10 +33,10 @@ export const Vehicle = () => {
         openModalVehicle();
     }
 
-    const newVehicle = () => {
-        setVehicles([]);
-        openModalVehicle();
-    }
+    // const newVehicle = () => {
+    //     setVehicles([]);
+    //     openModalVehicle();
+    // }
 
     const retrieveVehicles = () => {
         getAllVehicles()
@@ -61,7 +61,7 @@ export const Vehicle = () => {
                 <h1>Vehículos</h1>
                 <span>
                     <SearchConduct titleButton={"Agregar Vehículos"} icon={<IoIcons.IoCarSportSharp />} openModal={openModalVehicle} />
-                    <button className="btn btn-warning btn-sm" onClick={() => newVehicle()}><IoIcons.IoCarSportSharp /> Agregar Vehículos</button>
+                    {/* <button className="btn btn-warning btn-sm" onClick={() => newVehicle()}><IoIcons.IoCarSportSharp /> Agregar Vehículos</button> */}
                 </span>
 
                 <div className="row">

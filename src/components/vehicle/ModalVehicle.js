@@ -1,4 +1,4 @@
-import React, { useEffect, useState} from "react";
+import React, { useEffect} from "react";
 import "../../Styles/modal.css";
 import { UseTypeVehicle, UseMarca, UseInsertVehicle, UseSaveVehicle } from "../../hooks/UseCaseVehicle";
 
@@ -22,11 +22,8 @@ export const ModalVehicle = ({ isOpenModal, closeModal, vehicleEdit,  setVehicle
     id_estado_vehiculo: null,
   }
 
-  
-
 
   const handleChangeData = ({target}) => {
-    console.log(vehicles)
     const {name, value} = target;
     setVehicles({...vehicles, [name]: value });
   }
@@ -34,16 +31,10 @@ export const ModalVehicle = ({ isOpenModal, closeModal, vehicleEdit,  setVehicle
   const handleSubmit = (e) => {
     e.preventDefault();
     if (vehicleEdit) {
-      debugger
-      console.log("EDITAR VEHICULO")
-      console.log(vehicles)
       UseSaveVehicle(vehicles)
       e.target.reset();
       closeModal();
   } else {
-    debugger
-    console.log("INSERTAR VEHICULO")
-    console.log(vehicles)
       UseInsertVehicle(vehicles);
       setVehicles(initialVehicleState);
       e.target.reset();
