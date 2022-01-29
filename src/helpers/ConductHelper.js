@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { url_api, url_api_localhost } from './http-common';
+import { url_api_localhost } from './http-common';
 
 export const getConducts = async () => {
     const url = `${url_api_localhost}Conduct`;

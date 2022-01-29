@@ -9,12 +9,22 @@ export const getAllVehicles = async () => {
   const typeVehicle = resp.data.map((vehicle) => {
     return {
       placa: vehicle.placa,
-      marca: vehicle.marca,
-      capacidad: vehicle.capacidad,
       matricula: vehicle.matricula,
+      r_trailer: vehicle.r_trailer,
+      capacidad: vehicle.capacidad,
       modelo: vehicle.modelo,
+      vencimiento_soat: vehicle.vencimiento_soat,
+      vencimiento_poliza: vehicle.vencimiento_poliza,
+      vencimiento_tecnomecanica: vehicle.vencimiento_tecnomecanica,
+      expedicion_soat: vehicle.expedicion_soat,
+      expedicion_poliza: vehicle.expedicion_poliza,
+      expedicion_tecnomecanica: vehicle.expedicion_tecnomecanica,
+      marca: vehicle.marca,
       tipoVehiculo: vehicle.tipoVehiculo,
       estadoVehiculo: vehicle.estadoVehiculo,
+      id_marca: vehicle.id_marca,
+      id_tipo: vehicle.id_tipo,
+      id_estado_vehiculo: vehicle.id_estado_vehiculo,
     };
   });
 
@@ -96,13 +106,15 @@ export const getVehicleByPlaca = async (placa) => {
 };
 
 export const insertVehicle = async (data) => {
+  debugger
   const url = `${url_api}Vehicle/newVehicle`;
   const resp = await axios.post(url, data);
   return resp;
 };
 
 export const editVehicle = async (data, placa) => {
-  const url = `${url_api}vehicleEdit/${placa}`;
+  debugger
+  const url = `${url_api}Vehicle/vehicleEdit/${placa}`;
   const resp = await axios.put(url, data);
   return resp;
 };

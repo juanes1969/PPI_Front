@@ -118,6 +118,7 @@ export const UseGetVehiclePlaca = (placa) => {
  * TODO: PENSAR COMO HACER ESTE USECASE!!!!
  */
 export const UseInsertVehicle = (dataVehicle) => {
+  debugger
   var data = {
     placa: dataVehicle.placa,
     matricula: dataVehicle.matricula,
@@ -137,6 +138,7 @@ export const UseInsertVehicle = (dataVehicle) => {
 
   insertVehicle(data)
     .then((response) => {
+      debugger
       console.log(response.data);
       window.location.reload();
     })
@@ -148,8 +150,9 @@ export const UseInsertVehicle = (dataVehicle) => {
 export const UseSaveVehicle = (dataVehicle) => {
 
   let vehiculo = getVehicleByPlaca(dataVehicle.placa);
+  console.log("PLACA!!")
   console.log(vehiculo)
-
+  debugger
   let data = {
     placa: dataVehicle.placa,
     matricula: dataVehicle.matricula,
@@ -168,6 +171,7 @@ export const UseSaveVehicle = (dataVehicle) => {
   };
 
   if(vehiculo != null ){
+    debugger
     editVehicle(data, dataVehicle.placa)
     .then((response) => {
       console.log(response.data);

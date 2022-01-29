@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Pagination } from '../conduct/Pagination'
 import { SearchConduct } from '../conduct/SearchConduct';
 import '../../Styles/tableConduct.css'
@@ -9,26 +9,51 @@ import * as AiIcons from 'react-icons/ai';
 import { UseModal } from '../../hooks/UseModal';
 import { ModalVehicle } from './ModalVehicle';
 import { UseDeleteVehicle, UseEffectGetVehicles } from '../../hooks/UseCaseVehicle';
-import { Loader } from '../globalComponents/Loader';
+import { getAllVehicles } from "../../helpers/VehicleHelper";
+
 
 export const Vehicle = () => {
 
     const [isOpenModalVehicle, openModalVehicle, closeModalVehicle] = UseModal();
     const { data, loading } = UseEffectGetVehicles();
-    const [vehicleData, setVehicleData] = useState({});
-    const [isEdit, setIsEdit] = useState(false);
+    const [vehicles, setVehicles] = useState([]);
+    const [vehicleEdit, setVehicleEdit] = useState(null);
+    const vehicleRef = useRef();
+
+    vehicleRef.current = vehicles;
 
     const handleDeleteVehicle = (placa) => {
         console.log(placa)
         UseDeleteVehicle(placa);
+        refreshList();
     }
 
-    const getByIdEdit = (conduct) => {
-        console.log(conduct)
-        setVehicleData(conduct);
-        setIsEdit(true);
+    const getByIdEdit = (vehicle) => {
+        setVehicleEdit(vehicle);
         openModalVehicle();
     }
+
+    const newVehicle = () => {
+        setVehicles([]);
+        openModalVehicle();
+    }
+
+    const retrieveVehicles = () => {
+        getAllVehicles()
+        .then((vehicle) => {
+            setVehicles(vehicle);
+        }).catch((e) => {
+            console.log(e);
+        });
+    }
+
+    const refreshList = () => {
+        retrieveVehicles();
+      };
+
+    useEffect(() => {
+        retrieveVehicles();
+    }, []);
 
     return (
         <>
@@ -36,6 +61,7 @@ export const Vehicle = () => {
                 <h1>Vehículos</h1>
                 <span>
                     <SearchConduct titleButton={"Agregar Vehículos"} icon={<IoIcons.IoCarSportSharp />} openModal={openModalVehicle} />
+                    <button className="btn btn-warning btn-sm" onClick={() => newVehicle()}><IoIcons.IoCarSportSharp /> Agregar Vehículos</button>
                 </span>
 
                 <div className="row">
@@ -81,9 +107,10 @@ export const Vehicle = () => {
             <ModalVehicle
                 isOpenModal={isOpenModalVehicle}
                 closeModal={closeModalVehicle}
-                vehicle={vehicleData}
-                setVehicleData={setVehicleData}
-                isEdit={isEdit}
+                vehicleEdit={vehicleEdit}
+                setVehicleEdit={setVehicleEdit}
+                vehicles={vehicles}
+                setVehicles={setVehicles}
             />
 
         </>
