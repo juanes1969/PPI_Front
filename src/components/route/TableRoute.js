@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Pagination } from '../conduct/Pagination'
 import '../../Styles/tableConduct.css'
 import * as IoIcons from 'react-icons/io5';
@@ -7,16 +7,29 @@ import * as RiIcons from 'react-icons/ri';
 import * as AiIcons from 'react-icons/ai';
 import { UseModal } from '../../hooks/UseModal';
 import { ModalRoute } from './ModalRoutes';
-import { UseEffectGetRoutes } from '../../hooks/UseCaseRoute';
+import { UseEffectGetRoutes, UseDeleteRoute } from '../../hooks/UseCaseRoute';
 import { Loader } from '../globalComponents/Loader';
 import { SearchConduct } from '../conduct/SearchConduct';
 
 export const Route = () => {
 
     const [isOpenModalRoute, OpenModalRoute, closeModalRoute] = UseModal();
-    const [isOpenEditModalRoute, openEditModalRoute, closeEditModalRoute] = UseModal();
+    const { data, loading } = UseEffectGetRoutes();
+    const [routeData, setRouteData] = useState({});
+    const [isEdit, setIsEdit] = useState(false);
 
-    const { data: route, loading } = UseEffectGetRoutes();
+    const handleDeleteRoute = (id_ruta) => {
+        console.log(id_ruta)
+        UseDeleteRoute(id_ruta);
+    }
+
+    const getByIdEdit = (route) => {
+        console.log(route)
+        setRouteData(route);
+        setIsEdit(true);
+        OpenModalRoute();
+    }
+
 
     return (
         <>
@@ -33,7 +46,7 @@ export const Route = () => {
                                 
                                 <th className="th-shipping" scope="col">Codigo Ruta</th>
                                 <th className="th-shipping" scope="col">Carga</th>
-                                <th className="th-shipping" scope="col">Nombre Conductor</th>
+                                <th className="th-shipping" scope="col">Flete</th>
                                 <th className="th-shipping" scope="col">Vehiculo Asignado</th>
                                 <th className="th-shipping" scope="col">Ciudad Origen</th>
                                 <th className="th-shipping" scope="col">Ciudad Destino</th>
@@ -42,12 +55,12 @@ export const Route = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {loading && <Loader />}
-                            {route.map((route) => (
-                                <tr key={route.codigo_ruta}>
-                                    <td>{route.codigo_ruta}</td>
+                            {/*loading && <Loader />} */ }
+                            {data.map((route) => (
+                                <tr key={route.id_ruta}>
+                                    <td>{route.id_ruta}</td>
                                     <td>{route.nombre_producto}</td>
-                                    <td>{route.nombre}</td>
+                                    <td>{route.flete}</td>
                                     <td>{route.placa}</td>
                                     <td>{route.ciudad_origen}</td>
                                     <td>{route.ciudad_destino}</td>
@@ -55,8 +68,8 @@ export const Route = () => {
                                     <td id="columOptions">
                                     
                                         <button className="btn btn-warning btn-sm"><BsIcons.BsFillEyeFill /></button>
-                                        <button className="btn btn-info btn-sm" onClick={openEditModalRoute} ><RiIcons.RiEditFill /></button>
-                                        <button className="btn btn-danger btn-sm"><AiIcons.AiFillDelete /></button>
+                                        <button className="btn btn-info btn-sm" onClick={() => getByIdEdit(route)} ><RiIcons.RiEditFill /></button>
+                                        <button className="btn btn-danger btn-sm" onClick={() => handleDeleteRoute(route.id_ruta)} ><AiIcons.AiFillDelete /></button>
                                     </td>
                                 </tr>
                             ))}
@@ -67,18 +80,13 @@ export const Route = () => {
             </div>
 
             <ModalRoute
-                isOpenEditModal={isOpenModalRoute}
-                closeModalEdit={closeModalRoute}
-                titleModal={"Crear Ruta"}
-                buttonModal={"Registrar Ruta"}
+                isOpenModal={isOpenModalRoute}
+                closeModal={closeModalRoute}
+                route={routeData}
+                setRouteData={setRouteData}
+                isEdit={isEdit}
             />
 
-            <ModalRoute
-                isOpenEditModal={isOpenEditModalRoute}
-                closeModalEdit={closeEditModalRoute}
-                titleModal={"Editar Ruta"}
-                buttonModal={"Actualizar Ruta"}
-            />
 
         </>
     )

@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import "../../Styles/modal.css";
 import * as AiIcons from "react-icons/ai";
-import { UseTypeVehicle,
-   UseMarca,
-   UseInsertVehicle } from "../../hooks/UseCaseVehicle";
+import {
+  UseTypeVehicle,
+  UseMarca,
+  UseInsertVehicle
+} from "../../hooks/UseCaseVehicle";
 import { insertVehicle } from "../../helpers/VehicleHelper";
 import { useForm } from "react-hook-form";
 
@@ -34,18 +36,18 @@ export const ModalVehicle = ({
   const onSubmit = (dataVehicle, e) => {
     if (isEdit) {
       // falta incluirla
-  } else {
+    } else {
       e.target.reset();
       UseInsertVehicle(dataVehicle);
       reset();
       closeModal();
-  }
+    }
   };
 
   const handleCancelButton = () => {
     setVehicleData({})
     closeModal()
-}
+  }
 
   const handleModalDialogClick = (e) => {
     e.stopPropagation();
@@ -73,7 +75,7 @@ export const ModalVehicle = ({
           >
             <div className="modal-header">
               <h3 className="modal-title" id="exampleModalLabel">
-              {isEdit ?
+                {isEdit ?
                   ('Editar vehículo') :
                   ('Registrar vehículo')}
               </h3>
@@ -121,17 +123,17 @@ export const ModalVehicle = ({
                       <label className="col-form-label modal-label">
                         Marca *:
                       </label>
-                      <select  
-                      className={`form-control ${errors.id_marca && "invalid" }`}
-                      value={vehicle.id_marca}
-                       {...register("id_marca", {
-                        required: "La marca del vehículo es obligatoria",
-                        min: {
-                          value: 1,
-                          message: "La marca del vehículo es obligatoria",
-                        },
-                      })}
-                        
+                      <select
+                        className={`form-control ${errors.id_marca && "invalid"}`}
+                        value={vehicle.id_marca}
+                        {...register("id_marca", {
+                          required: "La marca del vehículo es obligatoria",
+                          min: {
+                            value: 1,
+                            message: "La marca del vehículo es obligatoria",
+                          },
+                        })}
+
                       >
                         <option value="0">Seleccionar</option>
                         {marcas.map((marca) => (
@@ -151,14 +153,13 @@ export const ModalVehicle = ({
                           {errors.id_marca.message}
                         </small>
                       )}
-                       <label className="col-form-label modal-label">
+                      <label className="col-form-label modal-label">
                         Expedición poliza *:
                       </label>
                       <input
                         type="date"
-                        className={`form-control ${
-                          errors.expedicion_poliza && "invalid"
-                        }`}
+                        className={`form-control ${errors.expedicion_poliza && "invalid"
+                          }`}
                         value={vehicle.expedicion_poliza}
                         {...register("expedicion_poliza", {
                           required: "La fecha del SOAT es obligatoria",
@@ -177,9 +178,8 @@ export const ModalVehicle = ({
                       </label>
                       <input
                         type="date"
-                        className={`form-control ${
-                          errors.vencimiento_poliza && "invalid"
-                        }`}
+                        className={`form-control ${errors.vencimiento_poliza && "invalid"
+                          }`}
                         value={vehicle.vencimiento_poliza}
                         {...register("vencimiento_poliza", {
                           required: "La fecha de la poliza es obligatoria",
@@ -199,9 +199,8 @@ export const ModalVehicle = ({
                       </label>
                       <input
                         type="text"
-                        className={`form-control ${
-                          errors.capacidad && "invalid"
-                        }`}
+                        className={`form-control ${errors.capacidad && "invalid"
+                          }`}
                         value={vehicle.capacidad}
                         {...register("capacidad", {
                           required: "La capacidad del vehículo es requerida",
@@ -234,9 +233,8 @@ export const ModalVehicle = ({
                       </label>
                       <input
                         type="text"
-                        className={`form-control ${
-                          errors.r_trailer && "invalid"
-                        }`}
+                        className={`form-control ${errors.r_trailer && "invalid"
+                          }`}
                         value={vehicle.r_trailer}
                         {...register("r_trailer", {
                           pattern: {
@@ -281,9 +279,8 @@ export const ModalVehicle = ({
                       </label>
                       <input
                         type="date"
-                        className={`form-control ${
-                          errors.expedicion_soat && "invalid"
-                        }`}
+                        className={`form-control ${errors.expedicion_soat && "invalid"
+                          }`}
                         value={vehicle.expedicion_soat}
                         {...register("expedicion_soat", {
                           required: "La fecha del SOAT es obligatoria",
@@ -302,9 +299,8 @@ export const ModalVehicle = ({
                       </label>
                       <input
                         type="date"
-                        className={`form-control ${
-                          errors.vencimiento_soat && "invalid"
-                        }`}
+                        className={`form-control ${errors.vencimiento_soat && "invalid"
+                          }`}
                         value={vehicle.vencimiento_soat}
                         {...register("vencimiento_soat", {
                           required: "La fecha del SOAT es obligatoria",
@@ -326,20 +322,20 @@ export const ModalVehicle = ({
                       <select
                         className={`form-control ${errors.id_tipo && "invalid"}`}
                         value={vehicle.id_tipo}
-                      {...register("id_tipo", {
-                        required: "El tipo del vehículo es obligatoria",
-                        min: {
-                          value: 1,
-                          message: "El tipo del vehículo es obligatoria",
-                        },
-                      })}
+                        {...register("id_tipo", {
+                          required: "El tipo del vehículo es obligatoria",
+                          min: {
+                            value: 1,
+                            message: "El tipo del vehículo es obligatoria",
+                          },
+                        })}
                       >
                         <option value="0">Seleccionar</option>
                         {type.map((type) => (
                           <option
                             key={type.id_tipo}
                             value={type.id_tipo}
-                            
+
                             onKeyUp={() => {
                               trigger("id_tipo");
                             }}
@@ -359,9 +355,8 @@ export const ModalVehicle = ({
                       </label>
                       <input
                         type="text"
-                        className={`form-control ${
-                          errors.matricula && "invalid"
-                        }`}
+                        className={`form-control ${errors.matricula && "invalid"
+                          }`}
                         value={vehicle.matricula}
                         {...register("matricula", {
                           required: "La matrícula es obligatoria",
@@ -375,14 +370,13 @@ export const ModalVehicle = ({
                           {errors.matricula.message}
                         </small>
                       )}
-                       <label className="col-form-label modal-label">
+                      <label className="col-form-label modal-label">
                         Expedición técnico mecánica *:
                       </label>
                       <input
                         type="date"
-                        className={`form-control ${
-                          errors.expedicion_tecnomecanica && "invalid"
-                        }`}
+                        className={`form-control ${errors.expedicion_tecnomecanica && "invalid"
+                          }`}
                         value={vehicle.expedicion_tecnomecanica}
                         {...register("expedicion_tecnomecanica", {
                           required: "La fecha del SOAT es obligatoria",
@@ -401,9 +395,8 @@ export const ModalVehicle = ({
                       </label>
                       <input
                         type="date"
-                        className={`form-control ${
-                          errors.vencimiento_tecnomecanica && "invalid"
-                        }`}
+                        className={`form-control ${errors.vencimiento_tecnomecanica && "invalid"
+                          }`}
                         value={vehicle.vencimiento_tecnomecanica}
                         {...register("vencimiento_tecnomecanica", {
                           required:
@@ -422,7 +415,7 @@ export const ModalVehicle = ({
                   </div>
                   <div className="modal-footer modal-btn">
                     <button type="submit" className="btn btn-info" onPress={handleSubmit(onSubmit)}>
-                    {isEdit ?
+                      {isEdit ?
                         ('Editar vehículo') :
                         ('Registrar vehículo')}
                     </button>

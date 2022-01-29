@@ -5,17 +5,17 @@ import "../../helpers/modal-function";
 import { useForm } from "react-hook-form";
 import {
   UseCity,
-  UseConductRoute,
   UseInsertRoute,
-  UseState,
   UseVehicleRoute,
+  UseProduct,
 } from "../../hooks/UseCaseRoute";
 
 export const ModalRoute = ({ 
-    isOpenEditModal,
-    closeModalEdit,
-    titleModal,
-    buttonModal
+    isOpenModal,
+    closeModal,
+    route,
+    setRouteData,
+    isEdit
      
 }) => {
   const {
@@ -25,35 +25,24 @@ export const ModalRoute = ({
     reset,
     trigger,
   } = useForm();
-  /*
-    const [state, setState] = useState({
-        form: {
-            id_ruta: '',
-            codigo_ruta: '',
-            nombre_producto: '',
-            referencia: '',
-            cantidad: '',
-            fecha_inicio: '',
-            fecha_fin: '',
-            placa: '',
-            flete: '',
-            ciudad_origen: '',
-            ciudad_destino: '',
-            estado: '',
-            identificacion: '',
-            descripcion: '',
-            nombre: '',
-            
-        }
-    })
-    */
-
+  
   const onSubmit = (dataRoute, e) => {
-    e.target.reset();
-    UseInsertRoute(dataRoute);
+    if (isEdit) {
+      //falta
+    } else{
+      e.target.reset();
+      UseInsertRoute(dataRoute);
+      reset();
+      closeModal();
 
-    reset();
+    }
+    
   };
+
+  const handleCancelButton = () => {
+    setRouteData({})
+    closeModal()
+}
 
   const handleModalDialogClick = (e) => {
     e.stopPropagation();
@@ -65,16 +54,15 @@ export const ModalRoute = ({
 
 
   const { data: vehicles } = UseVehicleRoute();
-  const { data: city } = UseCity();
-  const { data: stateroute } = UseState();
-  const { data: conduct } = UseConductRoute();
+  const { data: citys } = UseCity();
+  const { data: product } = UseProduct();
 
 
   return (
     <>
       <div
-        className={`modalInicial ${isOpenEditModal && "modal-abierta"}`}
-        onClick={closeModalEdit}
+        className={`modalInicial ${isOpenModal && "modal-abierta"}`}
+        onClick={closeModal}
       >
         <div className="modal-dialog">
           <div
@@ -83,14 +71,16 @@ export const ModalRoute = ({
           >
             <div className="modal-header">
               <h3 className="modal-title" id="exampleModalLabel">
-                {titleModal}
+                {isEdit ?
+                ('Editar ruta') :
+                ('Registrar ruta')}
               </h3>
               <button
                 type="button"
                 className="btn-close"
                 data-bs-dismiss="modal"
                 aria-label="Close"
-                onClick={closeModalEdit}
+                onClick={closeModal}
               ></button>
             </div>
 
@@ -103,28 +93,9 @@ export const ModalRoute = ({
                 >
                   <div className="row align-items-start">
                     <div className="col">
-                      <label className="col-form-label modal-label">
-                       Codigo de Ruta *:
-                      </label>
-                      <input
-                        type="text"
-                        className={`form-control ${errors.codigo_ruta && "invalid"}`}
-                        {...register("codigo_ruta", {
-                          required: "El codigo de ruta es obligatoria",
-                          pattern: {
-                            value: /^([A-Z]{2}-([0-9]{6})+)*$/,
-                            message: " Formato de ruta CO-XXXXXX ",
-                          },
-                        })}
-                        onKeyUp={() => {
-                          trigger("codigo_ruta");
-                        }}
-                      />
-                      {errors.codigo_ruta && (
-                        <small className="text-danger">
-                          {errors.codigo_ruta.message}
-                        </small>
-                      )}
+                      
+
+
                       <label className="col-form-label modal-label">
                        Placa *:
                       </label>
@@ -132,6 +103,7 @@ export const ModalRoute = ({
                         className={`form-control ${
                           errors.placa && "invalid"
                         }`}
+                        value={route.id_vehiculo}
                         {...register("id_vehiculo", {
                           required: "La placa del vehículo es obligatoria",
                           min: {
@@ -149,7 +121,7 @@ export const ModalRoute = ({
                               trigger("id_vehiculo");
                             }}
                           >
-                            {vehicle.id_vehiculo}
+                            {vehicle.placa}
                           </option>
                         ))}
                       </select>
@@ -159,95 +131,68 @@ export const ModalRoute = ({
                         </small>
                       )}
                        
-                      <label className="col-form-label modal-label">
-                       Conductor *:
+
+
+                       <label className="col-form-label modal-label">
+                       Producto *:
                       </label>
                       <select
                         className={`form-control ${
-                          errors.id_conductor && "invalid"
+                          errors.producto && "invalid"
                         }`}
-                        {...register("id_conductor", {
-                          required: "La name del vehículo es obligatoria",
+                        value={route.id_producto}
+                        {...register("producto", {
+                          required: "El producto de la ruta es obligatoria",
                           min: {
                             value: 1,
-                            message: "La name del vehículo es obligatoria",
+                            message: "El producto de la ruta es obligatoria",
                           },
                         })}
                       >
                         <option value="0">Seleccionar</option>
-                        {vehicles.map((conductor) => (
+                        {product.map((product) => (
                           <option
-                            key={conductor.id_conductor}
-                            value={conductor.id_conductor}
+                            key={product.id_producto}
+                            value={product.id_producto}
                             onKeyUp={() => {
-                              trigger("id_conductor");
+                              trigger("id_producto");
                             }}
                           >
-                            {conductor.id_conductor}
+                            {product.nombre_producto}
                           </option>
                         ))}
                       </select>
-                      {errors.id_conductor && (
+                      {errors.id_producto && (
                         <small className="text-danger">
-                          {errors.id_conductor.message}
-                        </small>
-                      )} 
-                      <label className="col-form-label modal-label">
-                      Nombre Producto *:
-                      </label>
-                      <input
-                        type="text"
-                        className={`form-control ${errors.nombre_producto && "invalid"}`}
-                        {...register("nombre_producto", {
-                          required: "El Nombre del Producto es obligatoria",
-                          pattern: {
-                            value: /^([A-Z]{5}-([0-9]{2})+)*$/,
-                            message: " El Nombre del producot ",
-                          },
-                        })}
-                        onKeyUp={() => {
-                          trigger("nombre_producto");
-                        }}
-                      />
-                      {errors.nombre_producto && (
-                        <small className="text-danger">
-                          {errors.nombre_producto.message}
+                          {errors.id_producto.message}
                         </small>
                       )}
+                       
+                      
+                       <label className="col-form-label modal-label">
+                      Fecha Inicio *:
+                      </label>
+                      <input
+                        type="date"
+                        className={`form-control ${
+                          errors.fecha_inicio && "invalid"
+                        }`}
+                        value={route.fecha_inicio}
+                        {...register("fecha_inicio", {
+                          required: "La fecha del fecha_inicio es obligatoria",
+                        })}
+                        onKeyUp={() => {
+                          trigger("fecha_inicio");
+                        }}
+                      />
+                      {errors.fecha_inicio && (
+                        <small className="text-danger">
+                          {errors.fecha_inicio.message}
+                        </small>
+                      )}
+                  
                     </div>
                     <div className="col">
-                    <label className="col-form-label modal-label">
-                      Referencia*:
-                      </label>
-                      <input
-                        type="text"
-                        className={`form-control ${
-                          errors.referencia && "invalid"
-                        }`}
-                        {...register("referencia", {
-                          required: "La referencia del vehículo es requerida",
-                          min: {
-                            value: 17,
-                            message: "Toneladas mínimas requeridas: 17",
-                          },
-                          max: {
-                            value: 44,
-                            message: "Toneladas máximas: 44",
-                          },
-                          pattern: {
-                            value: /^[0-9]*$/,
-                            message: "Solo se permiten números",
-                          },
-                        })}
-                        onKeyUp={() => {
-                          trigger("referencia");
-                        }}
-                      />
-                      {errors.referencia && (
-                        <small className="text-danger">
-                          {errors.referencia.message}
-                        </small>
-                      )}
                       <label className="col-form-label modal-label">
                        Cantidad :
                       </label>
@@ -256,9 +201,10 @@ export const ModalRoute = ({
                         className={`form-control ${
                           errors.cantidad && "invalid"
                         }`}
+                        value={route.cantidad}
                         {...register("cantidad", {
                           pattern: {
-                            value: /^[0-9]{4}$/,
+                            value: /^[0-9]{2}$/,
                             message: "cantidad de invalida",
                           },
                         })}
@@ -277,10 +223,11 @@ export const ModalRoute = ({
                       <input
                         type="text"
                         className={`form-control ${errors.flete && "invalid"}`}
+                        value={route.flete}
                         {...register("flete", {
                           required: "El flete del vehículo es obligatoria",
                           pattern: {
-                            value: /^[0-9]{4}$/,
+                            value: /^[0-9]/,
                             message: "Solo se permiten números",
                           },
                         })}
@@ -294,25 +241,28 @@ export const ModalRoute = ({
                         </small>
                       )}
                       <label className="col-form-label modal-label">
-                      Fecha Inicio *:
+                       Fecha Fin *:
                       </label>
                       <input
                         type="date"
                         className={`form-control ${
-                          errors.fecha_inicio && "invalid"
+                          errors.fecha_fin && "invalid"
                         }`}
-                        {...register("fecha_inicio", {
-                          required: "La fecha del fecha_inicio es obligatoria",
+                        value={route.fecha_fin}
+                        {...register("fecha_fin", {
+                          required:
+                            "La fecha de la route es obligatoria",
                         })}
                         onKeyUp={() => {
-                          trigger("fecha_inicio");
+                          trigger("fecha_fin");
                         }}
                       />
-                      {errors.fecha_inicio && (
+                      {errors.fecha_fin && (
                         <small className="text-danger">
-                          {errors.fecha_inicio.message}
+                          {errors.fecha_fin.message}
                         </small>
                       )}
+
                     </div>
                     <div className="col">
                       <label className="col-form-label modal-label">
@@ -322,16 +272,17 @@ export const ModalRoute = ({
                         className={`form-control ${
                           errors.id_origen && "invalid"
                         }`}
+                        value={route.id_origen}
                         {...register("id_origen", {
-                          required: "El ciudad_origen del vehículo es obligatoria",
+                          required: "La ciudad_origen de la ruta es obligatoria",
                           min: {
                             value: 1,
-                            message: "El ciudad_origen del vehículo es obligatoria",
+                            message: "La ciudad_origen de la ruta es obligatoria",
                           },
                         })}
                       >
                         <option value="0">Seleccionar</option>
-                        {city.map((city) => (
+                        {citys.map((city) => (
                           <option
                             key={city.id_origen}
                             value={city.id_origen}
@@ -345,7 +296,7 @@ export const ModalRoute = ({
                       </select>
                       {errors.id_origen && (
                         <small className="text-danger">
-                          {errors.ciudad_origen.message}
+                          {errors.id_origen.message}
                         </small>
                       )}
                        <label className="col-form-label modal-label">
@@ -355,6 +306,7 @@ export const ModalRoute = ({
                         className={`form-control ${
                           errors.id_destino && "invalid"
                         }`}
+                        value={route.id_destino}
                         {...register("id_destino", {
                           required: "El ciudad_destino del vehículo es obligatoria",
                           min: {
@@ -364,7 +316,7 @@ export const ModalRoute = ({
                         })}
                       >
                         <option value="0">Seleccionar</option>
-                        {city.map((city) => (
+                        {citys.map((city) => (
                           <option
                             key={city.id_destino}
                             value={city.id_destino}
@@ -383,41 +335,19 @@ export const ModalRoute = ({
                       )}
 
 
-                      <label className="col-form-label modal-label">
-                       Fecha Fin *:
-                      </label>
-                      <input
-                        type="date"
-                        className={`form-control ${
-                          errors.fecha_fin && "invalid"
-                        }`}
-                        {...register("fecha_fin", {
-                          required:
-                            "La fecha de la route es obligatoria",
-                        })}
-                        onKeyUp={() => {
-                          trigger("fecha_fin");
-                        }}
-                      />
-                      {errors.fecha_fin && (
-                        <small className="text-danger">
-                          {errors.fecha_fin.message}
-                        </small>
-                      )}
+                      
                     </div>
                   </div>
                   <div className="modal-footer modal-btn">
-                    <button
-                      type="submit"
-                      className="btn btn-info"
-                      onPress={handleSubmit(onSubmit)}
-                    >
-                      {buttonModal}
+                  <button type="submit" className="btn btn-info" onPress={handleSubmit(onSubmit)}>
+                    {isEdit ?
+                        ('Editar ruta') :
+                        ('Registrar ruta')}
                     </button>
                     <button
                       type="reset"
                       className="btn  btn-danger"
-                      onClick={closeModalEdit}
+                      onClick={closeModal}
                     >
                       Cancelar registro
                     </button>
