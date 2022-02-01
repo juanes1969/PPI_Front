@@ -176,6 +176,7 @@ export const UseGetVehiclePlaca = (placa) => {
 };
 
 export const UseInsertVehicle = (dataVehicle) => {
+  debugger
   var data = {
     placa: dataVehicle.placa,
     matricula: dataVehicle.matricula,
@@ -195,6 +196,7 @@ export const UseInsertVehicle = (dataVehicle) => {
 
   insertVehicle(data)
     .then((response) => {
+      debugger
       swalWithBootstrapButtons.fire(
         '¡Registro Exitoso!',
         'El vehículo fue agregado con éxito',

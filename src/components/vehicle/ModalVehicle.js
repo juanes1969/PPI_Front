@@ -1,7 +1,7 @@
 import React, { useEffect} from "react";
 import "../../Styles/modal.css";
 import { UseTypeVehicle, UseMarca, UseInsertVehicle, UseSaveVehicle } from "../../hooks/UseCaseVehicle";
-
+import dateFormat, { masks } from "dateformat";
 export const ModalVehicle = ({ isOpenModal, closeModal, vehicleEdit,  setVehicleEdit, vehicles, setVehicles }) => {
 
 
@@ -17,8 +17,8 @@ export const ModalVehicle = ({ isOpenModal, closeModal, vehicleEdit,  setVehicle
     expedicion_soat: null,
     expedicion_poliza: null,
     expedicion_tecnomecanica: null,
-    id_marca: null,
-    id_tipo: null,
+    id_marca: "",
+    id_tipo: "",
     id_estado_vehiculo: null,
   }
 
@@ -35,6 +35,7 @@ export const ModalVehicle = ({ isOpenModal, closeModal, vehicleEdit,  setVehicle
       e.target.reset();
       closeModal();
   } else {
+    debugger
       UseInsertVehicle(vehicles);
       setVehicles(initialVehicleState);
       e.target.reset();
@@ -58,6 +59,26 @@ export const ModalVehicle = ({ isOpenModal, closeModal, vehicleEdit,  setVehicle
   const { data: type } = UseTypeVehicle();
 
   const { data: marcas, loading } = UseMarca();
+
+  const calcularFecha = ( fecha, input) => {
+    var myElement = document.getElementById(input);
+    if(isOpenModal && fecha != null && myElement.value == ""){
+      let fechaVencimiento = new Date(fecha)
+      fechaVencimiento.setDate(fechaVencimiento.getDate() + 1)
+      fechaVencimiento.setFullYear(fechaVencimiento.getFullYear()+1)
+      fechaVencimiento = dateFormat(fechaVencimiento, "isoDate")
+      activarOnChange(fechaVencimiento, input)
+      return fechaVencimiento;
+    }
+  }
+
+  const activarOnChange = (fechaVencimiento, valor) => {
+    var myElement = document.getElementById(valor);
+    if(!myElement.onchange){
+      setVehicles({...vehicles, [valor]: fechaVencimiento });
+      myElement.onchange = true
+    }
+  }
 
   useEffect(() => {
     debugger
@@ -122,7 +143,7 @@ export const ModalVehicle = ({ isOpenModal, closeModal, vehicleEdit,  setVehicle
                         Marca *:
                       </label>
                       <select  
-                      className={`form-control`}
+                      className={`form-select`}
                       value={vehicles.id_marca}
                       name="id_marca"
                       id="id_marca"
@@ -157,11 +178,12 @@ export const ModalVehicle = ({ isOpenModal, closeModal, vehicleEdit,  setVehicle
                       <input
                         type="date"
                         className={`form-control`}
-                        value={vehicles.vencimiento_poliza}
+                        value={calcularFecha(vehicles.expedicion_poliza, "vencimiento_poliza")}
                         name="vencimiento_poliza"
                         id="vencimiento_poliza"
-                        onChange={handleChangeData}
                         required
+                        onChange={handleChangeData}
+                        readOnly
                       />
                       <label className="col-form-label modal-label">
                         Capacidad (Toneladas)*:
@@ -218,11 +240,12 @@ export const ModalVehicle = ({ isOpenModal, closeModal, vehicleEdit,  setVehicle
                       <input
                         type="date"
                         className={`form-control`}
-                        value={vehicles.vencimiento_soat}
+                        value={calcularFecha(vehicles.expedicion_soat, "vencimiento_soat")}
                         id="vencimiento_soat"
                         name="vencimiento_soat"
-                        onChange={handleChangeData}
                         required
+                        onChange={handleChangeData}
+                        disabled
                       />
                     </div>
                     <div className="col">
@@ -230,7 +253,7 @@ export const ModalVehicle = ({ isOpenModal, closeModal, vehicleEdit,  setVehicle
                         Tipo vehículo *:
                       </label>
                       <select
-                        className={`form-control`}
+                        className={`form-select`}
                         value={vehicles.id_tipo}
                         name="id_tipo"
                         id="id_tipo"
@@ -277,11 +300,12 @@ export const ModalVehicle = ({ isOpenModal, closeModal, vehicleEdit,  setVehicle
                       <input
                         type="date"
                         className={`form-control`}
-                        value={vehicles.vencimiento_tecnomecanica}
+                        value={calcularFecha(vehicles.expedicion_tecnomecanica, "vencimiento_tecnomecanica")}
                         id="vencimiento_tecnomecanica"
                         name="vencimiento_tecnomecanica"
-                        onChange={handleChangeData}
                         required
+                        onChange={handleChangeData}
+                        disabled
                       />
                     </div>
                   </div>
