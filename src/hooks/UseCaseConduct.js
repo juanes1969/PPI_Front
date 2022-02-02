@@ -1,5 +1,5 @@
-import { useState, useEffect, useRef } from 'react'
-import { deleteConduct, getConducts, getEditConduct, insertConduct } from '../helpers/ConductHelper';
+import { useEffect, useRef, useState } from 'react';
+import { deleteConduct, editConduct, getConducts, getEditConduct, insertConduct } from '../helpers/ConductHelper';
 
 
 export const UseEffectConduct = () => {
@@ -35,22 +35,31 @@ export const UseDeleteConduct = (identificacion) => {
         });
 }
 
-export const UseGetEditConduct = (identificacion) => {
+export const UseEditConduct = (identificacion, dataCondut) => {
 
-    const [state, setState] = useState({ dataUser: null, loading: true, error: null });
+    var data = {
+        identificacion: dataCondut.identificacion,
+        nombre: dataCondut.nombre,
+        primer_apellido: dataCondut.primer_apellido,
+        segundo_apellido: dataCondut.segundo_apellido,
+        telefono_contacto: dataCondut.telefono_contacto,
+        fecha_nacimiento: dataCondut.fecha_nacimiento,
+        licencia_conduccion: dataCondut.licencia_conduccion,
+        fecha_curso_seguridad: dataCondut.fecha_curso_seguridad,
+        fecha_curso_industrial: dataCondut.fecha_curso_industrial,
+        examenes_medicos: dataCondut.examenes_medicos,
+        id_vehiculo: dataCondut.id_vehiculo,
+        id_estado_conductor: 1
+    };
 
-
-    getEditConduct(identificacion)
-        .then(data => {
-            setState({
-                loading: false,
-                error: null,
-                dataUser: data
-            })
-        })
-
-    return state;
-}
+    editConduct(data, identificacion)
+        .then((response) => {
+            console.log(response.data);
+            window.location.reload();
+        }).catch((e) => {
+            console.log(e);
+        });
+};
 
 
 export const UseInsertConduct = (dataCondut) => {

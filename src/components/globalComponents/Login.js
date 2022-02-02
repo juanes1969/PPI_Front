@@ -13,12 +13,19 @@ export const Login = () => {
     clave: ''
   })
 
+  const [credentials, setCredentials] = useState({})
+
   const handleInputChange = ({ target }) => {
     setFormState({
       ...formState,
       [target.name]: target.value
     })
   }
+
+
+
+
+
 
   console.log(formState)
 
@@ -29,24 +36,6 @@ export const Login = () => {
   const onSumbit = (e) => {
     e.preventDefault()
     UseCaseLogin(formState)
-
-
-
-
-
-    // if (!!data && data[0]) {
-    //   let descripcion = data[0].descripcion
-    //   let id_rol = data[0].id_rol
-    //   console.log(descripcion, id_rol);
-
-    //   if (id_rol == 1) {
-    //     alert(`Bienvenido Inicio sesion correctamente ${id_rol}`);
-    //     window.location.href = "/Home";
-    //   }
-    // } else {
-    //   alert('El usuario o la contraseña no son correctos');
-    //   window.location.href = "/";
-    // }
   }
 
 

@@ -1,30 +1,35 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import "../../helpers/modal-function";
-import { UseInsertConduct } from "../../hooks/UseCaseConduct";
+import { UseEditConduct, UseInsertConduct } from "../../hooks/UseCaseConduct";
 import { UseVehicleAvailable } from "../../hooks/UseCaseVehicle";
 import "../../Styles/modal.css";
+import dateFormat, { masks } from "dateformat";
 
-export const ModalCreateConduct = ({ isOpenEditModal, closeModalEdit, conduct, setConduct, isEdit }) => {
-
+export const ModalCreateConduct = ({ isOpenEditModal, closeModalEdit, conduct, setConduct, isEdit, setIsEdit }) => {
 
     const { register, handleSubmit, formState: { errors }, reset, trigger } = useForm();
 
 
     const onSubmit = (dataConduct, e) => {
         if (isEdit) {
-            // falta incluirla
+            e.target.reset();
+            UseEditConduct(conduct.identificacion, dataConduct);
+            reset()
+            closeModalEdit();
+
         } else {
             e.target.reset();
             UseInsertConduct(dataConduct);
             reset();
             closeModalEdit();
         }
-
     };
 
 
-    const handleCancelButton = () => {
+
+    const handleCancelButton = () => {        
+        setIsEdit(false)
         setConduct({})
         console.log(conduct);
         closeModalEdit()
@@ -32,10 +37,6 @@ export const ModalCreateConduct = ({ isOpenEditModal, closeModalEdit, conduct, s
 
     const handleModalDialogClick = (e) => {
         e.stopPropagation();
-    };
-
-    const handleSubmitRegisterVehicle = (e) => {
-        e.preventDefault();
     };
 
 
@@ -64,7 +65,7 @@ export const ModalCreateConduct = ({ isOpenEditModal, closeModalEdit, conduct, s
                                 className="btn-close"
                                 data-bs-dismiss="modal"
                                 aria-label="Close"
-                                onClick={closeModalEdit}
+                                onClick={handleCancelButton}
                             ></button>
                         </div>
 
@@ -106,6 +107,7 @@ export const ModalCreateConduct = ({ isOpenEditModal, closeModalEdit, conduct, s
                                             <input
                                                 type="text"
                                                 className={`form-control ${errors.segundo_apellido && "invalid"}`}
+                                                value={conduct.segundo_apellido}
                                                 {...register("segundo_apellido", {
                                                     required: "Segundo apellido es obligatorio",
                                                     pattern: {
@@ -127,6 +129,7 @@ export const ModalCreateConduct = ({ isOpenEditModal, closeModalEdit, conduct, s
                                             <input
                                                 type="text"
                                                 className={`form-control ${errors.licencia_conduccion && "invalid"}`}
+                                                value={conduct.licencia_conduccion}
                                                 {...register("licencia_conduccion", {
                                                     required: "Licencia de conduccion es obligatoria",
                                                     pattern: {
@@ -149,8 +152,8 @@ export const ModalCreateConduct = ({ isOpenEditModal, closeModalEdit, conduct, s
                                             </label>
                                             <input
                                                 type="date"
-                                                className={`form-control ${errors.examenes_medicos && "invalid"
-                                                    }`}
+                                                className={`form-control ${errors.examenes_medicos && "invalid"}`}
+                                                value={conduct.examenes_medicos}
                                                 {...register("examenes_medicos", {
                                                     required: "La fecha del examen es oblogatoria",
                                                 })}
@@ -171,6 +174,7 @@ export const ModalCreateConduct = ({ isOpenEditModal, closeModalEdit, conduct, s
                                             <input
                                                 type="text"
                                                 className={`form-control ${errors.nombre && "invalid"}`}
+                                                value={conduct.nombre}
                                                 {...register("nombre", {
                                                     required: "El nombre es obligatorio",
                                                     pattern: {
@@ -193,6 +197,7 @@ export const ModalCreateConduct = ({ isOpenEditModal, closeModalEdit, conduct, s
                                             <input
                                                 type="text"
                                                 className={`form-control ${errors.telefono_contacto && "invalid"}`}
+                                                value={conduct.telefono_contacto}
                                                 {...register("telefono_contacto", {
                                                     required: "El telefono es obligatorio",
                                                     pattern: {
@@ -214,8 +219,8 @@ export const ModalCreateConduct = ({ isOpenEditModal, closeModalEdit, conduct, s
                                             </label>
                                             <input
                                                 type="date"
-                                                className={`form-control ${errors.fecha_curso_seguridad && "invalid"
-                                                    }`}
+                                                className={`form-control ${errors.fecha_curso_seguridad && "invalid"}`}
+                                                value={conduct.fecha_curso_seguridad}
                                                 {...register("fecha_curso_seguridad", {
                                                     required: "La fecha es obligatoria",
                                                 })}
@@ -233,6 +238,7 @@ export const ModalCreateConduct = ({ isOpenEditModal, closeModalEdit, conduct, s
                                             </label>
                                             <select
                                                 className={`form-control ${errors.id_vehiculo && "invalid"}`}
+                                                value={conduct.id_vehiculo}
                                                 {...register("id_vehiculo", {
                                                     required: "Selecciona un vehiculo",
                                                     min: {
@@ -269,6 +275,7 @@ export const ModalCreateConduct = ({ isOpenEditModal, closeModalEdit, conduct, s
                                             <input
                                                 type="text"
                                                 className={`form-control ${errors.primer_apellido && "invalid"}`}
+                                                value={conduct.primer_apellido}
                                                 {...register("primer_apellido", {
                                                     required: "Primer apellido es obligatorio",
                                                     pattern: {
@@ -292,6 +299,7 @@ export const ModalCreateConduct = ({ isOpenEditModal, closeModalEdit, conduct, s
                                             <input
                                                 type="date"
                                                 className={`form-control ${errors.fecha_nacimiento && "invalid"}`}
+                                                value={conduct.fecha_nacimiento}
                                                 {...register("fecha_nacimiento", {
                                                     required: "La fecha de nacimiento es obligatoria",
                                                 })}
@@ -310,6 +318,7 @@ export const ModalCreateConduct = ({ isOpenEditModal, closeModalEdit, conduct, s
                                             <input
                                                 type="date"
                                                 className={`form-control ${errors.fecha_curso_industrial && "invalid"}`}
+                                                value={conduct.fecha_curso_industrial}
                                                 {...register("fecha_curso_industrial", {
                                                     required: "La fecha es obligatoria",
                                                 })}
