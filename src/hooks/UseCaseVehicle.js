@@ -5,8 +5,49 @@ import {
   getAllMarcas,
   getAllTypeVehicle,
   insertVehicle,
+  editVehicle,
+  getVehicleByPlaca,
+  deleteVehicle
 } from "../helpers/VehicleHelper";
+import Swal from 'sweetalert2'
+import 'sweetalert2/src/sweetalert2.scss';
 
+
+const swalWithBootstrapButtons = Swal.mixin({
+  customClass: {
+    confirmButton: 'btn btn-success',
+    cancelButton: 'btn btn-danger'
+  },
+  buttonsStyling: false
+})
+
+const handleDelete = () => {
+  swalWithBootstrapButtons.fire({
+    title: '¿Estás seguro?',
+    text: "¡No podrás revertir esto!",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: 'Si, eliminar',
+    cancelButtonText: 'No, cancelar'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      swalWithBootstrapButtons.fire(
+        '¡Eliminado!',
+        'El movimiento fue eliminado',
+        'success'
+      )
+    } else if (
+      /* Read more about handling dismissals below */
+      result.dismiss === Swal.DismissReason.cancel
+    ) {
+      swalWithBootstrapButtons.fire(
+        '¡Cancelado!',
+        'Tu movimiento está a salvo :)',
+        'error'
+      )
+    }
+  })
+}
 export const UseEffectGetVehicles = () => {
   const [vehicles, setVehicles] = useState({
     data: [],
@@ -14,7 +55,8 @@ export const UseEffectGetVehicles = () => {
   });
 
   useEffect(() => {
-    getAllVehicles().then((vehicle) => {
+    getAllVehicles()
+    .then((vehicle) => {
       setVehicles({
         data: vehicle,
         loading: false,
@@ -79,19 +121,74 @@ export const UseTypeVehicle = () => {
   return typeVehicle;
 };
 
-/**
- * TODO: PENSAR COMO HACER ESTE USECASE!!!!
- */
+export const UseDeleteVehicle = (placa) => {
+  swalWithBootstrapButtons.fire({
+    title: '¿Estás seguro?',
+    text: "El vehículo estaría inactivo",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: 'Si, eliminar',
+    cancelButtonText: 'No, cancelar'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      swalWithBootstrapButtons.fire(
+        '¡Eliminado!',
+        'El vehículo fue inactivado',
+        'success'
+      )
+      deleteVehicle(placa)
+      .then((response) => {
+          window.location.reload();
+      })
+      .catch((e) => {
+          console.log(e);
+      });
+    } else if (
+      result.dismiss === Swal.DismissReason.cancel
+    ) {
+      swalWithBootstrapButtons.fire(
+        '¡Cancelado!',
+        'El vehículo sigue activo',
+        'error'
+      )
+    }
+  })
+
+}
+
+export const UseGetVehiclePlaca = (placa) => {
+  const [vehicleByPlaca, setVehicleByPlaca] = useState({
+    data: [],
+    loading: true,
+  });
+
+  useEffect(() => {
+    getVehicleByPlaca(placa)
+    .then((type) => {
+      setVehicleByPlaca({
+        data: type,
+        loading: false,
+      });
+    });
+  }, []);
+
+  return vehicleByPlaca;
+};
+
 export const UseInsertVehicle = (dataVehicle) => {
+  debugger
   var data = {
     placa: dataVehicle.placa,
     matricula: dataVehicle.matricula,
     r_trailer: dataVehicle.r_trailer,
     capacidad: dataVehicle.capacidad,
-    fecha_soat: dataVehicle.fecha_soat,
-    fecha_poliza: dataVehicle.fecha_poliza,
     modelo: dataVehicle.modelo,
-    fecha_tecnomecanica: dataVehicle.fecha_tecnomecanica,
+    vencimiento_soat: dataVehicle.vencimiento_soat,
+    vencimiento_poliza: dataVehicle.vencimiento_poliza,
+    vencimiento_tecnomecanica: dataVehicle.vencimiento_tecnomecanica,
+    expedicion_soat: dataVehicle.expedicion_soat,
+    expedicion_poliza: dataVehicle.expedicion_poliza,
+    expedicion_tecnomecanica: dataVehicle.expedicion_tecnomecanica,
     id_marca: dataVehicle.id_marca,
     id_tipo: dataVehicle.id_tipo,
     id_estado_vehiculo: 1,
@@ -99,9 +196,65 @@ export const UseInsertVehicle = (dataVehicle) => {
 
   insertVehicle(data)
     .then((response) => {
-      console.log(response.data);
+      debugger
+      swalWithBootstrapButtons.fire(
+        '¡Registro Exitoso!',
+        'El vehículo fue agregado con éxito',
+        'success'
+      )
+      window.location.reload();
     })
     .catch((e) => {
       console.log(e);
     });
+};
+
+export const UseSaveVehicle = (dataVehicle) => {
+
+  let vehiculo = getVehicleByPlaca(dataVehicle.placa);
+
+  let data = {
+    placa: dataVehicle.placa,
+    matricula: dataVehicle.matricula,
+    r_trailer: dataVehicle.r_trailer,
+    capacidad: dataVehicle.capacidad,
+    modelo: dataVehicle.modelo,
+    vencimiento_soat: dataVehicle.vencimiento_soat,
+    vencimiento_poliza: dataVehicle.vencimiento_poliza,
+    vencimiento_tecnomecanica: dataVehicle.vencimiento_tecnomecanica,
+    expedicion_soat: dataVehicle.expedicion_soat,
+    expedicion_poliza: dataVehicle.expedicion_poliza,
+    expedicion_tecnomecanica: dataVehicle.expedicion_tecnomecanica,
+    id_marca: dataVehicle.id_marca,
+    id_tipo: dataVehicle.id_tipo,
+    id_estado_vehiculo: 1,
+  };
+
+  if(vehiculo != null ){
+    editVehicle(data, dataVehicle.placa)
+    .then((response) => {
+      swalWithBootstrapButtons.fire(
+        '¡Registro Exitoso!',
+        'El vehículo fue editado con éxito',
+        'success'
+      )
+      window.location.reload();
+    })
+    .catch((e) => {
+      console.log(e);
+    });
+  }else{
+    insertVehicle(data)
+    .then((response) => {
+      swalWithBootstrapButtons.fire(
+        '¡Registro Exitoso!',
+        'El vehículo fue agregado con éxito',
+        'success'
+      )
+      window.location.reload();
+    })
+    .catch((e) => {
+      console.log(e);
+    });
+  }
 };
