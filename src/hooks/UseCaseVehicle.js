@@ -9,7 +9,45 @@ import {
   getVehicleByPlaca,
   deleteVehicle
 } from "../helpers/VehicleHelper";
+import Swal from 'sweetalert2'
+import 'sweetalert2/src/sweetalert2.scss';
 
+
+const swalWithBootstrapButtons = Swal.mixin({
+  customClass: {
+    confirmButton: 'btn btn-success',
+    cancelButton: 'btn btn-danger'
+  },
+  buttonsStyling: false
+})
+
+const handleDelete = () => {
+  swalWithBootstrapButtons.fire({
+    title: '¿Estás seguro?',
+    text: "¡No podrás revertir esto!",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: 'Si, eliminar',
+    cancelButtonText: 'No, cancelar'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      swalWithBootstrapButtons.fire(
+        '¡Eliminado!',
+        'El movimiento fue eliminado',
+        'success'
+      )
+    } else if (
+      /* Read more about handling dismissals below */
+      result.dismiss === Swal.DismissReason.cancel
+    ) {
+      swalWithBootstrapButtons.fire(
+        '¡Cancelado!',
+        'Tu movimiento está a salvo :)',
+        'error'
+      )
+    }
+  })
+}
 export const UseEffectGetVehicles = () => {
   const [vehicles, setVehicles] = useState({
     data: [],
@@ -84,15 +122,38 @@ export const UseTypeVehicle = () => {
 };
 
 export const UseDeleteVehicle = (placa) => {
-
-  deleteVehicle(placa)
+  swalWithBootstrapButtons.fire({
+    title: '¿Estás seguro?',
+    text: "El vehículo estaría inactivo",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: 'Si, eliminar',
+    cancelButtonText: 'No, cancelar'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      swalWithBootstrapButtons.fire(
+        '¡Eliminado!',
+        'El vehículo fue inactivado',
+        'success'
+      )
+      deleteVehicle(placa)
       .then((response) => {
-          console.log(response);
           window.location.reload();
       })
       .catch((e) => {
           console.log(e);
       });
+    } else if (
+      result.dismiss === Swal.DismissReason.cancel
+    ) {
+      swalWithBootstrapButtons.fire(
+        '¡Cancelado!',
+        'El vehículo sigue activo',
+        'error'
+      )
+    }
+  })
+
 }
 
 export const UseGetVehiclePlaca = (placa) => {
@@ -114,10 +175,8 @@ export const UseGetVehiclePlaca = (placa) => {
   return vehicleByPlaca;
 };
 
-/**
- * TODO: PENSAR COMO HACER ESTE USECASE!!!!
- */
 export const UseInsertVehicle = (dataVehicle) => {
+  debugger
   var data = {
     placa: dataVehicle.placa,
     matricula: dataVehicle.matricula,
@@ -137,7 +196,12 @@ export const UseInsertVehicle = (dataVehicle) => {
 
   insertVehicle(data)
     .then((response) => {
-      console.log(response.data);
+      debugger
+      swalWithBootstrapButtons.fire(
+        '¡Registro Exitoso!',
+        'El vehículo fue agregado con éxito',
+        'success'
+      )
       window.location.reload();
     })
     .catch((e) => {
@@ -148,7 +212,6 @@ export const UseInsertVehicle = (dataVehicle) => {
 export const UseSaveVehicle = (dataVehicle) => {
 
   let vehiculo = getVehicleByPlaca(dataVehicle.placa);
-  console.log(vehiculo)
 
   let data = {
     placa: dataVehicle.placa,
@@ -170,7 +233,11 @@ export const UseSaveVehicle = (dataVehicle) => {
   if(vehiculo != null ){
     editVehicle(data, dataVehicle.placa)
     .then((response) => {
-      console.log(response.data);
+      swalWithBootstrapButtons.fire(
+        '¡Registro Exitoso!',
+        'El vehículo fue editado con éxito',
+        'success'
+      )
       window.location.reload();
     })
     .catch((e) => {
@@ -179,7 +246,11 @@ export const UseSaveVehicle = (dataVehicle) => {
   }else{
     insertVehicle(data)
     .then((response) => {
-      console.log(response.data);
+      swalWithBootstrapButtons.fire(
+        '¡Registro Exitoso!',
+        'El vehículo fue agregado con éxito',
+        'success'
+      )
       window.location.reload();
     })
     .catch((e) => {

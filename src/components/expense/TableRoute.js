@@ -39,7 +39,7 @@ export const Route = () => {
     return (
         <>
             <div className="container" id="contenedorInicial">
-                <h1>Rutas</h1>
+                <h1>Gastos</h1>
                 <span>
                     <SearchConduct titleButton={"Agregar Ruta"} icon={<IoIcons.IoCarSportSharp />} openModal={OpenModalRoute} />
                     <form className="d-flex navbar-brand" id="formSearch">

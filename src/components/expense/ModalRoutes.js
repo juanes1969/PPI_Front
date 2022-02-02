@@ -179,7 +179,7 @@ export const ModalRoute = ({
                         }`}
                         value={route.fecha_inicio}
                         {...register("fecha_inicio", {
-                          required: "La fecha del fecha_inicio es obligatoria",
+                          required: "La fecha inicio es obligatoria",
                         })}
                         onKeyUp={() => {
                           trigger("fecha_inicio");
@@ -225,7 +225,7 @@ export const ModalRoute = ({
                         className={`form-control ${errors.flete && "invalid"}`}
                         value={route.flete}
                         {...register("flete", {
-                          required: "El flete del vehículo es obligatoria",
+                          required: "El flete de la ruta es obligatoria",
                           pattern: {
                             value: /^[0-9]/,
                             message: "Solo se permiten números",
@@ -251,7 +251,7 @@ export const ModalRoute = ({
                         value={route.fecha_fin}
                         {...register("fecha_fin", {
                           required:
-                            "La fecha de la route es obligatoria",
+                            "La Fecha Fin de la routa es obligatoria",
                         })}
                         onKeyUp={() => {
                           trigger("fecha_fin");
@@ -308,10 +308,10 @@ export const ModalRoute = ({
                         }`}
                         value={route.id_destino}
                         {...register("id_destino", {
-                          required: "El ciudad_destino del vehículo es obligatoria",
+                          required: "La ciudad_destino del ruta es obligatoria",
                           min: {
                             value: 1,
-                            message: "El ciudad_destino del vehículo es obligatoria",
+                            message: "La ciudad_destino del ruta es obligatoria",
                           },
                         })}
                       >

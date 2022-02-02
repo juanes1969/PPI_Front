@@ -2,7 +2,7 @@ import axios from 'axios';
 import { url_api, url_api_localhost } from './http-common';
 
 export const getConducts = async () => {
-    const url = `${url_api}Conduct`;
+    const url = `${url_api_localhost}Conduct`;
     const resp = await axios.get(url)
 
     const conducts = resp.data.map(img => {
