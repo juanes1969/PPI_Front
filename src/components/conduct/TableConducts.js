@@ -4,6 +4,7 @@ import * as BsIcons from 'react-icons/bs';
 import * as RiIcons from 'react-icons/ri';
 import { UseDeleteConduct, UseEffectConduct } from '../../hooks/UseCaseConduct';
 import { UseModal } from '../../hooks/UseModal';
+import { UsePage } from '../../hooks/UsePage';
 import '../../Styles/tableConduct.css';
 import { Loader } from '../globalComponents/Loader';
 import { ModalCreateConduct } from './ModalCreateConduct';
@@ -19,7 +20,9 @@ export const Conduct = () => {
     const [conductInformation, setConductInformation] = useState({});
 
     const [isEdit, setIsEdit] = useState(false);
-    
+
+
+    const { filterConducts, nextPage, prevPage } = UsePage(data);
 
 
     const getById = (id) => {
@@ -27,6 +30,7 @@ export const Conduct = () => {
 
         UseDeleteConduct(id);
     }
+
 
     const getByIdEdit = (conduct) => {
         console.log(conduct)
@@ -65,7 +69,7 @@ export const Conduct = () => {
                                 </tr>
                             </thead>
                             <tbody id="identificacion">
-                                {data.map((cond) => (
+                                {filterConducts().map((cond) => (
                                     <tr key={cond.identificacion}>
                                         <td >{cond.identificacion}</td>
                                         <td>{cond.nombre}</td>
@@ -82,7 +86,11 @@ export const Conduct = () => {
                                 ))}
                             </tbody>
                         </table>
-                        <Pagination />
+
+                        <Pagination
+                            nextPage={nextPage}
+                            prevPage={prevPage}
+                        />
                     </div>)}
             </div>
 
@@ -92,6 +100,7 @@ export const Conduct = () => {
                 conduct={conductInformation}
                 setConduct={setConductInformation}
                 isEdit={isEdit}
+                setIsEdit={setIsEdit}
             />
         </>
     )

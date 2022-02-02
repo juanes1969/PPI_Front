@@ -6,7 +6,7 @@ import { UseVehicleAvailable } from "../../hooks/UseCaseVehicle";
 import "../../Styles/modal.css";
 import dateFormat, { masks } from "dateformat";
 
-export const ModalCreateConduct = ({ isOpenEditModal, closeModalEdit, conduct, setConduct, isEdit }) => {
+export const ModalCreateConduct = ({ isOpenEditModal, closeModalEdit, conduct, setConduct, isEdit, setIsEdit }) => {
 
     const { register, handleSubmit, formState: { errors }, reset, trigger } = useForm();
 
@@ -28,7 +28,8 @@ export const ModalCreateConduct = ({ isOpenEditModal, closeModalEdit, conduct, s
 
 
 
-    const handleCancelButton = () => {
+    const handleCancelButton = () => {        
+        setIsEdit(false)
         setConduct({})
         console.log(conduct);
         closeModalEdit()
@@ -36,10 +37,6 @@ export const ModalCreateConduct = ({ isOpenEditModal, closeModalEdit, conduct, s
 
     const handleModalDialogClick = (e) => {
         e.stopPropagation();
-    };
-
-    const handleSubmitRegisterVehicle = (e) => {
-        e.preventDefault();
     };
 
 
@@ -68,7 +65,7 @@ export const ModalCreateConduct = ({ isOpenEditModal, closeModalEdit, conduct, s
                                 className="btn-close"
                                 data-bs-dismiss="modal"
                                 aria-label="Close"
-                                onClick={closeModalEdit}
+                                onClick={handleCancelButton}
                             ></button>
                         </div>
 
@@ -321,8 +318,7 @@ export const ModalCreateConduct = ({ isOpenEditModal, closeModalEdit, conduct, s
                                             <input
                                                 type="date"
                                                 className={`form-control ${errors.fecha_curso_industrial && "invalid"}`}
-                                                value={isEdit && conduct.fecha_curso_industrial}
-
+                                                value={conduct.fecha_curso_industrial}
                                                 {...register("fecha_curso_industrial", {
                                                     required: "La fecha es obligatoria",
                                                 })}
