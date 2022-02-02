@@ -31,6 +31,12 @@ export const SidebarData = [
         cName: 'nav-text'
     },
     {
+        title: 'Expense',
+        path: '/Expense',
+        icon: <FaIcons.FaRoute />,
+        cName: 'nav-text'
+    },
+    {
         title: 'Reportes',
         path: '/Reports',
         icon: <FaIcons.FaNewspaper />,

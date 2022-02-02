@@ -10,6 +10,7 @@ import Login from '../pages/login/Login';
 import 'bootstrap/dist/css/bootstrap.css';
 
 import '../index.css'
+import Expense from '../pages/expense/Expense';
 
 export const App = () => {
     return (
@@ -19,8 +20,10 @@ export const App = () => {
             <Route path="/Vehicles" component={Vehicle} />
             <Route path="/Conducts" component={Conduct} />
             <Route path="/Routes" component={RouteHome} />
+            <Route path="/Expense" component={Expense} />
             <Route path="/Reports" component={Report} />
             <Route path="/Supports" component={Support} />
+            
 
         </BrowserRouter>
     )
