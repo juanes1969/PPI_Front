@@ -30,7 +30,6 @@ export const Vehicle = () => {
 
     const getByIdEdit = (vehicle) => {
         setVehicleEdit(vehicle);
-        debugger
         openModalVehicle();
     }
 

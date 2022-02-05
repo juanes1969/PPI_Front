@@ -11,6 +11,7 @@ import {
 } from "../helpers/VehicleHelper";
 import Swal from 'sweetalert2'
 import 'sweetalert2/src/sweetalert2.scss';
+import dateFormat, { masks } from "dateformat";
 
 
 const swalWithBootstrapButtons = Swal.mixin({
@@ -175,6 +176,15 @@ export const UseGetVehiclePlaca = (placa) => {
   return vehicleByPlaca;
 };
 
+const calcularFecha = ( fecha) => {
+  let fechaVencimiento = new Date(fecha)
+  if(fecha != null){
+    fechaVencimiento.setDate(fechaVencimiento.getDate() + 1)
+    fechaVencimiento.setFullYear(fechaVencimiento.getFullYear()+1)
+    fechaVencimiento = dateFormat(fechaVencimiento, "isoDate")
+    return fechaVencimiento;
+  }
+}
 export const UseInsertVehicle = (dataVehicle) => {
   debugger
   var data = {
@@ -183,9 +193,9 @@ export const UseInsertVehicle = (dataVehicle) => {
     r_trailer: dataVehicle.r_trailer,
     capacidad: dataVehicle.capacidad,
     modelo: dataVehicle.modelo,
-    vencimiento_soat: dataVehicle.vencimiento_soat,
-    vencimiento_poliza: dataVehicle.vencimiento_poliza,
-    vencimiento_tecnomecanica: dataVehicle.vencimiento_tecnomecanica,
+    vencimiento_soat: calcularFecha(dataVehicle.expedicion_soat),
+    vencimiento_poliza: calcularFecha(dataVehicle.expedicion_poliza),
+    vencimiento_tecnomecanica: calcularFecha(dataVehicle.expedicion_tecnomecanica),
     expedicion_soat: dataVehicle.expedicion_soat,
     expedicion_poliza: dataVehicle.expedicion_poliza,
     expedicion_tecnomecanica: dataVehicle.expedicion_tecnomecanica,
@@ -219,9 +229,9 @@ export const UseSaveVehicle = (dataVehicle) => {
     r_trailer: dataVehicle.r_trailer,
     capacidad: dataVehicle.capacidad,
     modelo: dataVehicle.modelo,
-    vencimiento_soat: dataVehicle.vencimiento_soat,
-    vencimiento_poliza: dataVehicle.vencimiento_poliza,
-    vencimiento_tecnomecanica: dataVehicle.vencimiento_tecnomecanica,
+    vencimiento_soat: calcularFecha(dataVehicle.expedicion_soat),
+    vencimiento_poliza: calcularFecha(dataVehicle.expedicion_poliza),
+    vencimiento_tecnomecanica: calcularFecha(dataVehicle.expedicion_tecnomecanica),
     expedicion_soat: dataVehicle.expedicion_soat,
     expedicion_poliza: dataVehicle.expedicion_poliza,
     expedicion_tecnomecanica: dataVehicle.expedicion_tecnomecanica,
