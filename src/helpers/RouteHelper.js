@@ -35,8 +35,7 @@ export const getVehicleRoute = async() => {
             
             id_vehiculo:route.id_vehiculo, 
             placa:route.placa,
-            identificacion:route.identificacion,  
-            id_conductor:route.identificacion,            
+            identificacion:route.identificacion,        
           
         }
     });
@@ -116,10 +115,9 @@ export const getConduct = async(placa) => {
 
 export const insertRoute = async(data) => {
     const url = `${url_api_localhost}Route/newRoute`;
-    debugger
     const resp = await axios.post(url, data)
     console.log(data)
-    debugger
+    
     
     return resp;
 }

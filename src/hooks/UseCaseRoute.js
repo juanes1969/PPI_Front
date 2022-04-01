@@ -11,6 +11,8 @@ import {
   editRoute,
   getRouteByIdRoute
 } from '../helpers/RouteHelper';
+import Swal from 'sweetalert2'
+import 'sweetalert2/src/sweetalert2.scss';
 
 export const UseEffectGetRoutes = () => {
   const [routes, setRoutes] = useState({
@@ -33,14 +35,37 @@ export const UseEffectGetRoutes = () => {
 
 export const UseDeleteRoute = (id_ruta) => {
 
-  deleteRoute(id_ruta)
-    .then((response) => {
-      console.log(response);
-      window.location.reload();
-    })
-    .catch((e) => {
-      console.log(e);
-    });
+  swalWithBootstrapButtons.fire({
+    title: '¿Estás seguro?',
+    text: "La Ruta quedara completa",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: 'Si, eliminar',
+    cancelButtonText: 'No, cancelar'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      swalWithBootstrapButtons.fire(
+        '¡Eliminado!',
+        'La Ruta fue Completada',
+        'success'
+      )
+      deleteRoute(id_ruta)
+      .then((response) => {
+          window.location.reload();
+      })
+      .catch((e) => {
+          console.log(e);
+      });
+    } else if (
+      result.dismiss === Swal.DismissReason.cancel
+    ) {
+      swalWithBootstrapButtons.fire(
+        '¡Cancelado!',
+        'La Ruta sigue en Proceso',
+        'error'
+      )
+    }
+  })
 }
 
 
@@ -182,11 +207,14 @@ export const UseSaveRoute = (dataRoute) => {
     id_destino: dataRoute.id_destino,
     id_estado_ruta: 1,
   };
-
   if(route != null ){
     editRoute(data, dataRoute.id_ruta)
     .then((response) => {
-      console.log(response.data);
+      swalWithBootstrapButtons.fire(
+        '¡Registro Exitoso!',
+        'El vehículo fue editado con éxito',
+        'success'
+      )
       window.location.reload();
     })
     .catch((e) => {
@@ -195,11 +223,54 @@ export const UseSaveRoute = (dataRoute) => {
   }else{
     insertRoute(data)
     .then((response) => {
-      console.log(response.data);
+      swalWithBootstrapButtons.fire(
+        '¡Registro Exitoso!',
+        'El vehículo fue agregado con éxito',
+        'success'
+      )
       window.location.reload();
     })
     .catch((e) => {
       console.log(e);
     });
   }
+
+
 };
+
+const swalWithBootstrapButtons = Swal.mixin({
+  customClass: {
+    confirmButton: 'btn btn-success',
+    cancelButton: 'btn btn-danger'
+  },
+  buttonsStyling: false
+})
+
+
+const handleDelete = () => {
+  swalWithBootstrapButtons.fire({
+    title: '¿Estás seguro?',
+    text: "¡No podrás revertir esto!",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: 'Si, eliminar',
+    cancelButtonText: 'No, cancelar'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      swalWithBootstrapButtons.fire(
+        '¡Eliminado!',
+        'El movimiento fue eliminado',
+        'success'
+      )
+    } else if (
+      /* Read more about handling dismissals below */
+      result.dismiss === Swal.DismissReason.cancel
+    ) {
+      swalWithBootstrapButtons.fire(
+        '¡Cancelado!',
+        'Tu movimiento está a salvo :)',
+        'error'
+      )
+    }
+  })
+}

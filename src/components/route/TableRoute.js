@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Pagination } from '../conduct/Pagination'
 import '../../Styles/tableConduct.css'
 import * as IoIcons from 'react-icons/io5';
@@ -11,29 +11,48 @@ import { ModalRoute } from './ModalRoutes';
 import { UseEffectGetRoutes, UseDeleteRoute } from '../../hooks/UseCaseRoute';
 import { Loader } from '../globalComponents/Loader';
 import { SearchConduct } from '../conduct/SearchConduct';
+import { getAllRoute } from '../../helpers/RouteHelper';
 
 
 export const Route = () => {
 
     const [isOpenModalRoute, OpenModalRoute, closeModalRoute] = UseModal();
     const { data, loading } = UseEffectGetRoutes();
-    const [routeData, setRouteData] = useState({});
-    const [isEdit, setIsEdit] = useState(false);
+    const [routes, setRoutes] = useState([]);
+    const [routeEdit, setRouteEdit] = useState(null);
     const [search, setSearch] = React.useState('');
-
-
+    const routeRef = useRef();
+    console.log(data)   
+    routeRef.current = routes;
 
     const handleDeleteRoute = (id_ruta) => {
         console.log(id_ruta)
         UseDeleteRoute(id_ruta);
+        refreshList();
     }
 
     const getByIdEdit = (route) => {
         console.log(route)
-        setRouteData(route);
-        setIsEdit(true);
+        setRouteEdit(route);
         OpenModalRoute();
     }
+
+    const retrieveRoute = () => {
+        getAllRoute()
+        .then((route) => {
+            setRoutes(route);
+        }).catch((e) => {
+            console.log(e);
+        });
+    }
+
+    const refreshList = () => {
+        retrieveRoute();
+      };
+
+    useEffect(() => {
+        retrieveRoute();
+    }, []);
 
 
     return (
@@ -71,26 +90,26 @@ export const Route = () => {
                         </thead>
                         <tbody>
                             {/*loading && <Loader />} */}
-                            {data.filter((route) => {
+                            {data.filter((rt) => {
                                 if (search == "") {
-                                    return route
-                                } else if (route.nombre_producto.toLowerCase().includes(search.toLowerCase())) {
-                                    return route
+                                    return rt
+                                } else if (rt.nombre_producto.toLowerCase().includes(search.toLowerCase())) {
+                                    return rt
                                 }
-                            }).map((route) => (
-                                <tr key={route.id_ruta}>
-                                    <td>{route.id_ruta}</td>
-                                    <td>{route.nombre_producto}</td>
-                                    <td>{route.flete}</td>
-                                    <td>{route.placa}</td>
-                                    <td>{route.ciudad_origen}</td>
-                                    <td>{route.ciudad_destino}</td>
-                                    <td>{route.estado}</td>
+                            }).map((rt) => (
+                                <tr key={rt.id_ruta}>
+                                    <td>{rt.id_ruta}</td>
+                                    <td>{rt.nombre_producto}</td>
+                                    <td>{rt.flete}</td>
+                                    <td>{rt.placa}</td>
+                                    <td>{rt.ciudad_origen}</td>
+                                    <td>{rt.ciudad_destino}</td>
+                                    <td>{rt.estado}</td>
                                     <td id="columOptions">
 
                                         <button className="btn btn-warning btn-sm"><BsIcons.BsFillEyeFill /></button>
-                                        <button className="btn btn-info btn-sm" onClick={() => getByIdEdit(route)} ><RiIcons.RiEditFill /></button>
-                                        <button className="btn btn-danger btn-sm" onClick={() => handleDeleteRoute(route.id_ruta)} ><AiIcons.AiFillDelete /></button>
+                                        <button className="btn btn-info btn-sm" onClick={() => getByIdEdit(rt)} ><RiIcons.RiEditFill /></button>
+                                        <button className="btn btn-danger btn-sm" onClick={() => handleDeleteRoute(rt.id_ruta)} ><AiIcons.AiFillDelete /></button>
                                     </td>
                                 </tr>
                             ))}
@@ -103,9 +122,10 @@ export const Route = () => {
             <ModalRoute
                 isOpenModal={isOpenModalRoute}
                 closeModal={closeModalRoute}
-                route={routeData}
-                setRouteData={setRouteData}
-                isEdit={isEdit}
+                routes={routes}
+                setRoutes={setRoutes}
+                setRouteEdit={setRouteEdit}
+                routeEdit={routeEdit}
             />
 
 
