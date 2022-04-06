@@ -9,7 +9,6 @@ import Support from '../pages/support/Support';
 import Login from '../pages/login/Login';
 import 'bootstrap/dist/css/bootstrap.css';
 
-import '../index.css'
 
 export const App = () => {
     return (

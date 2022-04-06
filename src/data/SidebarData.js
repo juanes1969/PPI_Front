@@ -41,11 +41,5 @@ export const SidebarData = [
         path: '/Supports',
         icon: <IoIcons.IoMdHelpCircle />,
         cName: 'nav-text'
-    },
-    {
-        title: 'Cerrar sesión',
-        path: '/',
-        icon: <FcIcons.FcLock />,
-        cName: 'nav-text'
     }
 ]
