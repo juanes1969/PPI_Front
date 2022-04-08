@@ -7,7 +7,14 @@ import '../../Styles/SearchConduct.css';
 import PropTypes from 'prop-types';
 
 
-export const SearchConduct = ({ titleButton, icon, openModal }) => {
+export const SearchConduct = ({ titleButton, icon, openModal, setSearch, setCurrentPage, setPage }) => {
+
+    const onSearchChange = ({ target }) => {
+        setCurrentPage(0)
+        setPage(1)
+        setSearch(target.value)
+    }
+
 
     return (
         <>
@@ -20,11 +27,11 @@ export const SearchConduct = ({ titleButton, icon, openModal }) => {
                         <button type="button" className="btn btn-warning" id="buttonAdd" onClick={openModal}>{icon} {titleButton}</button>
                     </div>
                     <form className="d-flex navbar-brand" id="formSearch">
-                        <input className="form-control me-2" type="search" placeholder="Buscar" aria-label="Search" />
+                        <input className="form-control me-2" type="search" placeholder="Buscar" aria-label="Search" onChange={onSearchChange} />
                         <button className="btn btn-outline-success" type="submit"><FcIcons.FcSearch /></button>
                     </form>
                 </div>
-            </nav>            
+            </nav>
         </>
     )
 }

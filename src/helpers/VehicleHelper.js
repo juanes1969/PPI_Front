@@ -37,7 +37,8 @@ export const getVehicleAvailable = async () => {
 
   const typeVehicle = resp.data.map((vehicle) => {
     return {
-      placa: vehicle.placa,
+      id_vehiculo: vehicle.id_vehiculo,
+      placa: vehicle.placa
     };
   });
 

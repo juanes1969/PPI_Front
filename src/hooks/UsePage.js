@@ -1,23 +1,43 @@
 import { useState } from 'react';
 
-export const UsePage = (data) => {
+export const UsePage = (data, perPage, search) => {
+
+    console.log(perPage)
 
     const [currentPage, setCurrentPage] = useState(0);
+    const [page, setPage] = useState(1);
 
     const filterConducts = () => {
-        return data.slice(currentPage, currentPage + 5)
+        console.log(currentPage)
+        if (search.length === 0) {
+            return data.slice(currentPage, currentPage + parseInt(perPage))
+        } else {
+            const filtered = data.filter(dat => dat.identificacion.includes(search));
+            return filtered.slice(currentPage, currentPage + parseInt(perPage))
+        }
+
+
+
     }
 
-    const nextPage = () => {
-        setCurrentPage(currentPage + 5)
-        console.log(currentPage);
+    const nextPage = (e) => {
+        e.preventDefault()
+        if (data.slice(currentPage, currentPage + parseInt(perPage)).length >= perPage) {
+            setCurrentPage(currentPage + parseInt(perPage))
+            setPage(page + 1)
+        }
+
     }
 
-    const prevPage = () => {
+    const prevPage = (e) => {
+        e.preventDefault()
         if (currentPage > 0) {
-            setCurrentPage(currentPage - 5)
+            if (perPage >= 0)
+                setCurrentPage(currentPage - parseInt(perPage))
+            setPage(page - 1)
         }
     }
 
-    return { filterConducts, nextPage, prevPage }
+
+    return { filterConducts, nextPage, prevPage, setCurrentPage, setPage, page }
 };
