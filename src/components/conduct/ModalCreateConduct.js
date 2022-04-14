@@ -1,32 +1,58 @@
-import React from "react";
-import { useForm } from "react-hook-form";
+import dateFormat, { masks } from "dateformat";
+import React, { useEffect } from "react";
 import "../../helpers/modal-function";
-import { UseInsertConduct } from "../../hooks/UseCaseConduct";
+import { UseEditConduct, UseInsertConduct, UseLicenseAvailable } from "../../hooks/UseCaseConduct";
 import { UseVehicleAvailable } from "../../hooks/UseCaseVehicle";
 import "../../Styles/modal.css";
 
-export const ModalCreateConduct = ({ isOpenEditModal, closeModalEdit, conduct, setConduct, isEdit }) => {
+export const ModalCreateConduct = ({ isOpenEditModal, closeModalEdit, conductEdit, setConductEdit, conduct, setConduct }) => {
 
+    const initialConductState = {
+        identificacion: "",
+        nombre: "",
+        primer_apellido: "",
+        segundo_apellido: "",
+        telefono_contacto: "",
+        fecha_nacimiento: null,
+        tipo_licencia: "",
+        licencia_conduccion: "",
+        expedicion_curso_seguridad: null,
+        expedicion_curso_industrial : null,
+        expedicion_examenes_medicos: null,
+        vencimiento_curso_seguridad: null,
+        vencimiento_curso_industrial: null,
+        vencimiento_examenes_medicos: null,
+        id_vehiculo: "",
+        id_estado_conductor: null,
+    }
 
-    const { register, handleSubmit, formState: { errors }, reset, trigger } = useForm();
+    const handleChangeData = ({ target }) => {
+        const { name, value } = target;
+        setConduct({ ...conduct, [name]: value });
+    }
 
+    console.log(conduct);
 
-    const onSubmit = (dataConduct, e) => {
-        if (isEdit) {
-            // falta incluirla
-        } else {
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        if (conductEdit) {
+            UseEditConduct(conduct)
             e.target.reset();
-            UseInsertConduct(dataConduct);
-            reset();
+            closeModalEdit();
+        } else {
+            debugger
+            UseInsertConduct(conduct);
+            setConduct(initialConductState);
+            e.target.reset();
             closeModalEdit();
         }
-
     };
 
 
+
     const handleCancelButton = () => {
-        setConduct({})
-        console.log(conduct);
+        setConduct(initialConductState)
+        setConductEdit(null)
         closeModalEdit()
     }
 
@@ -34,13 +60,38 @@ export const ModalCreateConduct = ({ isOpenEditModal, closeModalEdit, conduct, s
         e.stopPropagation();
     };
 
-    const handleSubmitRegisterVehicle = (e) => {
-        e.preventDefault();
-    };
-
 
     const { data: vehicle } = UseVehicleAvailable();
+    const { data: licenses } = UseLicenseAvailable()
 
+    const calcularFecha = (fecha, input) => {
+        var myElement = document.getElementById(input);
+        if (isOpenEditModal && fecha != null && myElement.value == "") {
+            let fechaVencimiento = new Date(fecha)
+            fechaVencimiento.setDate(fechaVencimiento.getDate() + 1)
+            fechaVencimiento.setFullYear(fechaVencimiento.getFullYear() + 1)
+            fechaVencimiento = dateFormat(fechaVencimiento, "isoDate")
+            activarOnChange(fechaVencimiento, input)
+            return fechaVencimiento;
+        }
+    }
+
+    const activarOnChange = (fechaVencimiento, valor) => {
+        var myElement = document.getElementById(valor);
+        if (!myElement.onchange) {
+            setConduct({ ...conduct, [valor]: fechaVencimiento });
+            myElement.onchange = true
+        }
+    }
+
+    useEffect(() => {
+        if (conductEdit) {
+            console.log(conductEdit)
+            setConduct(conductEdit)
+        } else {
+            setConduct(initialConductState)
+        }
+    }, [conductEdit, setConduct, setConductEdit]);
 
     return (
         <>
@@ -55,16 +106,16 @@ export const ModalCreateConduct = ({ isOpenEditModal, closeModalEdit, conduct, s
                     >
                         <div className="modal-header">
                             <h3 className="modal-title" id="exampleModalLabel">
-                                {isEdit ?
-                                    ('Editar conductor') :
-                                    ('Registrar conductor')}
+                                {conductEdit ?
+                                    ('Editar Conductor') :
+                                    ('Registrar Conductor')}
                             </h3>
                             <button
                                 type="button"
                                 className="btn-close"
                                 data-bs-dismiss="modal"
                                 aria-label="Close"
-                                onClick={closeModalEdit}
+                                onClick={handleCancelButton}
                             ></button>
                         </div>
 
@@ -72,7 +123,8 @@ export const ModalCreateConduct = ({ isOpenEditModal, closeModalEdit, conduct, s
                             <div className="container">
                                 <form
                                     className="form-modal needs-validation"
-                                    onSubmit={handleSubmit(onSubmit)}
+                                    novalidate
+                                    onSubmit={handleSubmit}
                                 >
                                     <div className="row align-items-start">
                                         <div className="col">
@@ -81,88 +133,50 @@ export const ModalCreateConduct = ({ isOpenEditModal, closeModalEdit, conduct, s
                                             </label>
                                             <input
                                                 type="text"
-                                                className={`form-control ${errors.identificacion && "invalid"}`}
+                                                className={`form-control`}
                                                 value={conduct.identificacion}
-                                                {...register("identificacion", {
-                                                    required: "La identificacion es obligatoria",
-                                                    pattern: {
-                                                        value: /^(([0-9]))*$/,
-                                                        message: "Identificacion invalida",
-                                                    },
-                                                })}
-                                                onKeyUp={() => {
-                                                    trigger("identificacion");
-                                                }}
-
+                                                id="identificacion"
+                                                name="identificacion"
+                                                onChange={handleChangeData}
+                                                disabled={conductEdit ? true : false}
+                                                required
                                             />
-                                            {errors.identificacion && (
-                                                <small className="text-danger">
-                                                    {errors.identificacion.message}
-                                                </small>
-                                            )}
                                             <label className="col-form-label modal-label">
-                                                Segundo apellido *:
+                                                Telefono *:
                                             </label>
                                             <input
                                                 type="text"
-                                                className={`form-control ${errors.segundo_apellido && "invalid"}`}
-                                                {...register("segundo_apellido", {
-                                                    required: "Segundo apellido es obligatorio",
-                                                    pattern: {
-                                                        value: /^(([A-z]))*$/,
-                                                        message: "Segundo apellido invalido",
-                                                    },
-                                                })}
-                                                onKeyUp={() => {
-                                                    trigger("segundo_apellido");
-                                                }}
-                                            />{errors.segundo_apellido && (
-                                                <small className="text-danger">
-                                                    {errors.segundo_apellido.message}
-                                                </small>
-                                            )}
-                                            <label className="col-form-label modal-label">
-                                                Licencia conduccion *:
-                                            </label>
-                                            <input
-                                                type="text"
-                                                className={`form-control ${errors.licencia_conduccion && "invalid"}`}
-                                                {...register("licencia_conduccion", {
-                                                    required: "Licencia de conduccion es obligatoria",
-                                                    pattern: {
-                                                        value: /^([LC]{2}([0-9]{5})+)*$/,
-                                                        message: "Licencia de conduccion invalida",
-                                                    },
-                                                })}
-                                                onKeyUp={() => {
-                                                    trigger("licencia_conduccion");
-                                                }}
+                                                className={`form-control`}
+                                                value={conduct.telefono_contacto}
+                                                name="telefono_contacto"
+                                                id="telefono_contacto"
+                                                onChange={handleChangeData}
                                             />
-                                            {errors.licencia_conduccion && (
-                                                <small className="text-danger">
-                                                    {errors.licencia_conduccion.message}
-                                                </small>
-                                            )}
-
                                             <label className="col-form-label modal-label">
-                                                Fecha examenes medicos*:
+                                                Expedicion curso seguridad *:
                                             </label>
                                             <input
                                                 type="date"
-                                                className={`form-control ${errors.examenes_medicos && "invalid"
-                                                    }`}
-                                                {...register("examenes_medicos", {
-                                                    required: "La fecha del examen es oblogatoria",
-                                                })}
-                                                onKeyUp={() => {
-                                                    trigger("examenes_medicos");
-                                                }}
+                                                className={`form-control`}
+                                                value={conduct.expedicion_curso_seguridad}
+                                                name="expedicion_curso_seguridad"
+                                                id="expedicion_curso_seguridad"
+                                                onChange={handleChangeData}
+                                                required
                                             />
-                                            {errors.examenes_medicos && (
-                                                <small className="text-danger">
-                                                    {errors.examenes_medicos.message}
-                                                </small>
-                                            )}
+                                            <label className="col-form-label modal-label">
+                                                Vencimiento curso seguridad*:
+                                            </label>
+                                            <input
+                                                type="date"
+                                                className={`form-control`}
+                                                value={calcularFecha(conduct.expedicion_curso_seguridad, "vencimiento_curso_seguridad")}
+                                                name="vencimiento_curso_seguridad"
+                                                id="vencimiento_curso_seguridad"
+                                                required
+                                                onChange={handleChangeData}
+                                                readOnly
+                                            />
                                         </div>
                                         <div className="col">
                                             <label className="col-form-label modal-label">
@@ -170,97 +184,49 @@ export const ModalCreateConduct = ({ isOpenEditModal, closeModalEdit, conduct, s
                                             </label>
                                             <input
                                                 type="text"
-                                                className={`form-control ${errors.nombre && "invalid"}`}
-                                                {...register("nombre", {
-                                                    required: "El nombre es obligatorio",
-                                                    pattern: {
-                                                        value: /^(([A-z]))*$/,
-                                                        message: "Nombre invalido",
-                                                    },
-                                                })}
-                                                onKeyUp={() => {
-                                                    trigger("nombre");
-                                                }}
+                                                className={`form-control`}
+                                                value={conduct.nombre}
+                                                name="nombre"
+                                                id="nombre"
+                                                onChange={handleChangeData}
                                             />
-                                            {errors.nombre && (
-                                                <small className="text-danger">
-                                                    {errors.nombre.message}
-                                                </small>
-                                            )}
                                             <label className="col-form-label modal-label">
-                                                Telefono *:
-                                            </label>
-                                            <input
-                                                type="text"
-                                                className={`form-control ${errors.telefono_contacto && "invalid"}`}
-                                                {...register("telefono_contacto", {
-                                                    required: "El telefono es obligatorio",
-                                                    pattern: {
-                                                        value: /^[0-9]{10}$/,
-                                                        message: "Solo se permiten números",
-                                                    },
-                                                })}
-                                                onKeyUp={() => {
-                                                    trigger("telefono_contacto");
-                                                }}
-                                            />
-                                            {errors.telefono_contacto && (
-                                                <small className="text-danger">
-                                                    {errors.telefono_contacto.message}
-                                                </small>
-                                            )}
-                                            <label className="col-form-label modal-label">
-                                                Fecha curso seguridad *:
+                                                Fecha nacimiento *:
                                             </label>
                                             <input
                                                 type="date"
-                                                className={`form-control ${errors.fecha_curso_seguridad && "invalid"
-                                                    }`}
-                                                {...register("fecha_curso_seguridad", {
-                                                    required: "La fecha es obligatoria",
-                                                })}
-                                                onKeyUp={() => {
-                                                    trigger("fecha_curso_seguridad");
-                                                }}
+                                                className={`form-control`}
+                                                value={conduct.fecha_nacimiento}
+                                                name="fecha_nacimiento"
+                                                id="fecha_nacimiento"
+                                                onChange={handleChangeData}
+                                                required
                                             />
-                                            {errors.fecha_curso_seguridad && (
-                                                <small className="text-danger">
-                                                    {errors.fecha_curso_seguridad.message}
-                                                </small>
-                                            )}
                                             <label className="col-form-label modal-label">
-                                                Vehiculos disponibles *:
+                                                Expedicion curso industrial*:
                                             </label>
-                                            <select
-                                                className={`form-control ${errors.id_vehiculo && "invalid"}`}
-                                                {...register("id_vehiculo", {
-                                                    required: "Selecciona un vehiculo",
-                                                    min: {
-                                                        value: 1,
-                                                        message: "Selecciona un vehiculo",
-                                                    },
-                                                })}
-
-                                            >
-                                                <option value="0">Seleccionar</option>
-                                                {vehicle.map((type) => (
-                                                    <option
-                                                        key={type.placa}
-                                                        value={type.placa}
-
-                                                        onKeyUp={() => {
-                                                            trigger("id_vehiculo");
-                                                        }}
-                                                    >
-                                                        {type.placa}
-                                                    </option>
-                                                ))}
-                                            </select>
-                                            {errors.id_vehiculo && (
-                                                <small className="text-danger">
-                                                    {errors.id_vehiculo.message}
-                                                </small>
-                                            )}
+                                            <input
+                                                type="date"
+                                                className={`form-control`}
+                                                value={conduct.expedicion_curso_industrial}
+                                                name="expedicion_curso_industrial"
+                                                id="expedicion_curso_industrial"
+                                                onChange={handleChangeData}
+                                                required
+                                            />
+                                            <label className="col-form-label modal-label">
+                                                Vencimiento curso industrial*:
+                                            </label>
+                                            <input
+                                                type="date"
+                                                className={`form-control`}
+                                                value={calcularFecha(conduct.expedicion_curso_industrial, "vencimiento_curso_industrial")}
+                                                id="vencimiento_curso_industrial"
+                                                name="vencimiento_curso_industrial"
+                                                required
+                                                onChange={handleChangeData}
+                                                disabled
+                                            />
                                         </div>
                                         <div className="col">
                                             <label className="col-form-label modal-label">
@@ -268,71 +234,116 @@ export const ModalCreateConduct = ({ isOpenEditModal, closeModalEdit, conduct, s
                                             </label>
                                             <input
                                                 type="text"
-                                                className={`form-control ${errors.primer_apellido && "invalid"}`}
-                                                {...register("primer_apellido", {
-                                                    required: "Primer apellido es obligatorio",
-                                                    pattern: {
-                                                        value: /^(([A-z]))*$/,
-                                                        message: "Primer apellido invalido",
-                                                    },
-                                                })}
-                                                onKeyUp={() => {
-                                                    trigger("primer_apellido");
-                                                }}
+                                                className={`form-control`}
+                                                value={conduct.primer_apellido}
+                                                name="primer_apellido"
+                                                id="primer_apellido"
+                                                onChange={handleChangeData}
                                             />
-                                            {errors.primer_apellido && (
-                                                <small className="text-danger">
-                                                    {errors.primer_apellido.message}
-                                                </small>
-                                            )}
+                                            <label className="col-form-label modal-label">
+                                                Tipo licencia *: {" "}
+                                            </label>
+                                            <select
+                                                className={`form-select`}
+                                                value={conduct.tipo_licencia}
+                                                name="tipo_licencia"
+                                                id="tipo_licencia"
+                                                onChange={handleChangeData}
+                                                required
+                                            >
+                                                <option value="0">Seleccionar</option>
+                                                {licenses.map((lic) => (
+                                                    <option
+                                                        key={lic.id_tipo_licencia}
+                                                        value={lic.id_tipo_licencia}
+                                                    >
+                                                        {lic.descripcion}
+                                                    </option>
+                                                ))}
+                                            </select>
+                                            <label className="col-form-label modal-label">
+                                                Expedición examen medico*:
+                                            </label>
+                                            <input
+                                                type="date"
+                                                className={`form-control `}
+                                                value={conduct.expedicion_examenes_medicos}
+                                                id="expedicion_examenes_medicos"
+                                                name="expedicion_examenes_medicos"
+                                                onChange={handleChangeData}
+                                                required
+                                            />
 
                                             <label className="col-form-label modal-label">
-                                                Fecha nacimiento *:
+                                                Vencimiento examen medico:*
                                             </label>
                                             <input
                                                 type="date"
-                                                className={`form-control ${errors.fecha_nacimiento && "invalid"}`}
-                                                {...register("fecha_nacimiento", {
-                                                    required: "La fecha de nacimiento es obligatoria",
-                                                })}
-                                                onKeyUp={() => {
-                                                    trigger("fecha_nacimiento");
-                                                }}
+                                                className={`form-control`}
+                                                value={calcularFecha(conduct.expedicion_examenes_medicos, "vencimiento_examenes_medicos")}
+                                                id="vencimiento_examenes_medicos"
+                                                name="vencimiento_examenes_medicos"
+                                                required
+                                                onChange={handleChangeData}
+                                                disabled
                                             />
-                                            {errors.fecha_nacimiento && (
-                                                <small className="text-danger">
-                                                    {errors.fecha_nacimiento.message}
-                                                </small>
-                                            )}
+                                        </div>
+                                        <div className="col">
                                             <label className="col-form-label modal-label">
-                                                Fecha curso industrial *:
+                                                Segundo apellido:
                                             </label>
                                             <input
-                                                type="date"
-                                                className={`form-control ${errors.fecha_curso_industrial && "invalid"}`}
-                                                {...register("fecha_curso_industrial", {
-                                                    required: "La fecha es obligatoria",
-                                                })}
-                                                onKeyUp={() => {
-                                                    trigger("fecha_curso_industrial");
-                                                }}
+                                                type="text"
+                                                className={`form-control`}
+                                                value={conduct.segundo_apellido}
+                                                name="segundo_apellido"
+                                                id="segundo_apellido"
+                                                onChange={handleChangeData}
                                             />
-                                            {errors.fecha_curso_industrial && (
-                                                <small className="text-danger">
-                                                    {errors.fecha_curso_industrial.message}
-                                                </small>
-                                            )}
+                                            <label className="col-form-label modal-label">
+                                                Numero licencia *:
+                                            </label>
+                                            <input
+                                                type="text"
+                                                className={`form-control `}
+                                                value={conduct.licencia_conduccion}
+                                                name="licencia_conduccion"
+                                                id="licencia_conduccion"
+                                                onChange={handleChangeData}
+                                                required
+                                            />
+                                            <label className="col-form-label modal-label">
+                                                Vehiculos disponibles *:
+                                            </label>
+                                            <select
+                                                className={`form-select`}
+                                                value={conduct.id_vehiculo}
+                                                name="id_vehiculo"
+                                                id="id_vehiculo"
+                                                onChange={handleChangeData}
+                                                required
+                                            >
+                                                <option value="0">Seleccionar</option>
+                                                {vehicle.map((vehicle) => (
+                                                    <option
+                                                        key={vehicle.id_vehiculo}
+                                                        value={vehicle.id_vehiculo}
+                                                    >
+                                                        {vehicle.placa}
+                                                    </option>
+                                                ))}
+                                            </select>
                                         </div>
                                     </div>
-                                    <div className="modal-footer modal-btn" id="btns-modal-footer">
-                                        <button type="submit" className="btn btn-info">
-                                            {isEdit ?
-                                                ('Editar conductor') :
-                                                ('Registrar conductor')}
+                                    <div className="modal-footer modal-btn mt-4">
+                                        <button type="submit" className="btn btn-info" onPress={handleSubmit}>
+                                            {conductEdit ?
+                                                ('Editar Conductor') :
+                                                ('Registrar Conductor')}
                                         </button>
                                         <button
                                             type="reset"
-                                            className="btn  btn-danger"
+                                            className="btn btn-danger"
                                             onClick={handleCancelButton}
                                         >
                                             Cancelar registro
@@ -341,6 +352,7 @@ export const ModalCreateConduct = ({ isOpenEditModal, closeModalEdit, conduct, s
                                 </form>
                             </div>
                         </div>
+
                     </div>
                 </div>
             </div>
