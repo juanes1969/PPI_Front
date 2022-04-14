@@ -30,7 +30,7 @@ export const Expenses = () => {
 
     const getByIdEdit = (route) => {
         console.log(route)
-        debugger
+        
         setRouteData(route);
         setIsEdit(true);
         OpenModalRoute();

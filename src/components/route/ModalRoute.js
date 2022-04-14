@@ -42,11 +42,11 @@ const handleSubmit = (e) => {
   e.preventDefault();
   if (isEdit) {
       UseSaveRoute(route)
-      debugger
+      
       e.target.reset();
       closeModal();
   } else {
-      debugger
+      
       UseInsertRoute(route);
       setRouteData(initialRouteState);
       e.target.reset();

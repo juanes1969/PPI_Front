@@ -139,7 +139,7 @@ export const UseConductRoute = (placa) => {
 
 export const UseInsertRoute = (dataRoute) => {
 
-debugger
+
   var data = {
 
     producto: dataRoute.producto,

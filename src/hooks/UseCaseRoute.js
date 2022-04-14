@@ -164,7 +164,7 @@ export const UseConductRoute = (placa) => {
 
 export const UseInsertRoute = (dataRoute) => {
 
-debugger
+
   var data = {
 
     producto: dataRoute.producto,
@@ -192,11 +192,8 @@ debugger
 
 
 export const UseSaveRoute = (dataRoute) => {
-debugger
   let route = getRouteByIdRoute(dataRoute.id_ruta);
-  console.log(route)
-  console.log(dataRoute)
-debugger
+
   let data = {
     producto: dataRoute.producto,
     cantidad: dataRoute.cantidad,
@@ -206,7 +203,7 @@ debugger
     id_vehiculo: dataRoute.id_vehiculo,
     id_origen: dataRoute.id_origen,
     id_destino: dataRoute.id_destino,
-    id_estado_ruta: 1,
+    id_estado_envio: 1,
   };
   if(route != null ){
     editRoute(data, dataRoute.id_ruta)

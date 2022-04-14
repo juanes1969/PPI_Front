@@ -126,9 +126,10 @@ export const insertRoute = async(data) => {
 
   
 export const editRoute = async (data, id_ruta) => {
-    const url = `${url_api}routeEdit/${id_ruta}`;
-    debugger
+    const url = `${url_api}Route/routeEdit/${id_ruta}`;
+    
     console.log(data)
+    console.log(id_ruta)
     console.log("URL: " + url)
     const resp = await axios.put(url, data);
     return resp;
@@ -137,7 +138,7 @@ export const editRoute = async (data, id_ruta) => {
 export const getRouteByIdRoute= async (id_ruta) => {
     const url = `${url_api}Route/getRoute/${id_ruta}`;
     const resp = await axios.get(url);
-    debugger
+    
     console.log(resp.data)
     const routeData = resp.data.map((dataRoute) => {
         return {
@@ -148,12 +149,12 @@ export const getRouteByIdRoute= async (id_ruta) => {
             fecha_fin: dataRoute.fecha_fin,
             flete: dataRoute.flete,
             id_vehiculo: dataRoute.id_vehiculo,
-            id_estado_ruta: 1,
+            id_estado_envio: 1,
             id_origen: dataRoute.id_origen,
             id_destino: dataRoute.id_destino,
         };
       });
-    debugger
+    
       return routeData;
     };
   

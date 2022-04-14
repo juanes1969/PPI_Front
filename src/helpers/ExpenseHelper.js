@@ -116,10 +116,10 @@ export const getConduct = async(placa) => {
 
 export const insertRoute = async(data) => {
     const url = `${url_api}Route/newRoute`;
-    debugger
+    
     const resp = await axios.post(url, data)
     console.log(data)
-    debugger
+    
     
     return resp;
 }
