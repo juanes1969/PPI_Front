@@ -5,6 +5,7 @@ import * as BsIcons from 'react-icons/bs';
 import * as IoIcons from 'react-icons/io';
 import * as FcIcons from 'react-icons/fc';
 
+
 export const SidebarData = [
     {
         title: 'Home',
@@ -28,6 +29,12 @@ export const SidebarData = [
         title: 'Rutas',
         path: '/Routes',
         icon: <FaIcons.FaRoute />,
+        cName: 'nav-text'
+    },
+    {
+        title: 'Gastos',
+        path: '/Expense',
+        icon: <FaIcons.FaShopify />,
         cName: 'nav-text'
     },
     {

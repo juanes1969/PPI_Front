@@ -107,13 +107,16 @@ export const getVehicleByPlaca = async (placa) => {
 };
 
 export const insertVehicle = async (data) => {
+
   debugger
   const url = `${url_api}Vehicle/newVehicle`;
   const resp = await axios.post(url, data);
+  debugger
   return resp;
 };
 
 export const editVehicle = async (data, placa) => {
+
   debugger
   const url = `${url_api}Vehicle/vehicleEdit/${placa}`;
   const resp = await axios.put(url, data);
