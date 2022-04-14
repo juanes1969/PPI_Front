@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import { Pagination } from '../conduct/Pagination'
 import '../../Styles/tableConduct.css'
 import * as IoIcons from 'react-icons/io5';
@@ -7,7 +7,7 @@ import * as RiIcons from 'react-icons/ri';
 import * as AiIcons from 'react-icons/ai';
 import * as FcIcons from 'react-icons/fc';
 import { UseModal } from '../../hooks/UseModal';
-import { ModalRoute } from './ModalRoutes';
+import { ModalRoutes } from './ModalRoute';
 import { UseEffectGetRoutes, UseDeleteRoute } from '../../hooks/UseCaseRoute';
 import { Loader } from '../globalComponents/Loader';
 import { SearchConduct } from '../conduct/SearchConduct';
@@ -18,40 +18,44 @@ export const Route = () => {
 
     const [isOpenModalRoute, OpenModalRoute, closeModalRoute] = UseModal();
     const { data, loading } = UseEffectGetRoutes();
-    const [routes, setRoutes] = useState([]);
-    const [routeEdit, setRouteEdit] = useState(null);
-    const [search, setSearch] = React.useState('');
+    const [routeData, setRouteData] = useState([]);
+    const [isEdit, setIsEdit] = useState(null);
+    const [search, setSearch] = useState('');
     const routeRef = useRef();
-    console.log(data)   
-    routeRef.current = routes;
 
-    const handleDeleteRoute = (id_ruta) => {
-        console.log(id_ruta)
-        UseDeleteRoute(id_ruta);
+    routeRef.current = routeData;
+
+
+    const getById = (id) => {
+        console.log(id)
+        UseDeleteRoute(id);
         refreshList();
     }
 
+
     const getByIdEdit = (route) => {
+        debugger
         console.log(route)
-        setRouteEdit(route);
+        setIsEdit(route);
         OpenModalRoute();
     }
 
-    const retrieveRoute = () => {
+
+    const retrieveConducts = () => {
         getAllRoute()
-        .then((route) => {
-            setRoutes(route);
-        }).catch((e) => {
-            console.log(e);
-        });
+            .then((route) => {
+                setRouteData(route);
+            }).catch((e) => {
+                console.log(e);
+            });
     }
 
     const refreshList = () => {
-        retrieveRoute();
-      };
+        retrieveConducts();
+    };
 
     useEffect(() => {
-        retrieveRoute();
+        retrieveConducts();
     }, []);
 
 
@@ -90,26 +94,26 @@ export const Route = () => {
                         </thead>
                         <tbody>
                             {/*loading && <Loader />} */}
-                            {data.filter((rt) => {
+                            {data.filter((route) => {
                                 if (search == "") {
-                                    return rt
-                                } else if (rt.nombre_producto.toLowerCase().includes(search.toLowerCase())) {
-                                    return rt
+                                    return route
+                                } else if (route.nombre_producto.toLowerCase().includes(search.toLowerCase())) {
+                                    return route
                                 }
-                            }).map((rt) => (
-                                <tr key={rt.id_ruta}>
-                                    <td>{rt.id_ruta}</td>
-                                    <td>{rt.nombre_producto}</td>
-                                    <td>{rt.flete}</td>
-                                    <td>{rt.placa}</td>
-                                    <td>{rt.ciudad_origen}</td>
-                                    <td>{rt.ciudad_destino}</td>
-                                    <td>{rt.estado}</td>
+                            }).map((route) => (
+                                <tr key={route.id_ruta}>
+                                    <td>{route.id_ruta}</td>
+                                    <td>{route.nombre_producto}</td>
+                                    <td>{route.flete}</td>
+                                    <td>{route.placa}</td>
+                                    <td>{route.ciudad_origen}</td>
+                                    <td>{route.ciudad_destino}</td>
+                                    <td>{route.estado}</td>
                                     <td id="columOptions">
 
                                         <button className="btn btn-warning btn-sm"><BsIcons.BsFillEyeFill /></button>
-                                        <button className="btn btn-info btn-sm" onClick={() => getByIdEdit(rt)} ><RiIcons.RiEditFill /></button>
-                                        <button className="btn btn-danger btn-sm" onClick={() => handleDeleteRoute(rt.id_ruta)} ><AiIcons.AiFillDelete /></button>
+                                        <button className="btn btn-info btn-sm" onClick={() => getByIdEdit(route)} ><RiIcons.RiEditFill /></button>
+                                        <button className="btn btn-danger btn-sm" onClick={() => getById(route.id_ruta)} ><AiIcons.AiFillDelete /></button>
                                     </td>
                                 </tr>
                             ))}
@@ -119,13 +123,13 @@ export const Route = () => {
                 </div>
             </div>
 
-            <ModalRoute
+            <ModalRoutes
                 isOpenModal={isOpenModalRoute}
                 closeModal={closeModalRoute}
-                routes={routes}
-                setRoutes={setRoutes}
-                setRouteEdit={setRouteEdit}
-                routeEdit={routeEdit}
+                route={routeData}
+                setRouteData={setRouteData}
+                isEdit={isEdit}
+                setIsEdit={setIsEdit}
             />
 
 

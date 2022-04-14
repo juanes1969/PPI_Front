@@ -1,8 +1,8 @@
 import axios from 'axios';
-import {url_api_localhost} from './http-common';
+import {url_api} from './http-common';
 
 export const getAllRoute = async() => {
-    const url = `${url_api_localhost}Route/`;
+    const url = `${url_api}Route/`;
     const resp = await axios.get(url)
     console.log(resp)
     const typeRoute = resp.data.map(route => {
@@ -16,10 +16,12 @@ export const getAllRoute = async() => {
             placa:route.placa,
             ciudad_origen:route.ciudad_origen,
             ciudad_destino:route.ciudad_destino,
-            estado:route.estado
-
-            
-       
+            estado:route.estado,
+            id_estado_envio:route.id_estado_envio,
+            producto:route.producto,
+            id_vehiculo:route.id_vehiculo,
+            id_origen:route.id_origen,
+            id_destino:route.id_destino
         }
     });
 
@@ -27,7 +29,7 @@ export const getAllRoute = async() => {
 }
 
 export const getVehicleRoute = async() => {
-    const url = `${url_api_localhost}Route/vehicleRoute`;
+    const url = `${url_api}Route/vehicleRoute`;
     const resp = await axios.get(url)
 
     const typeVechicle = resp.data.map(route => {
@@ -44,7 +46,7 @@ export const getVehicleRoute = async() => {
 }
 
 export const getAllState = async() => {
-    const url = `${url_api_localhost}Route/stateRoute`;
+    const url = `${url_api}Route/stateRoute`;
     const resp = await axios.get(url)
 
     const typeState = resp.data.map(route => {
@@ -58,7 +60,7 @@ export const getAllState = async() => {
 }
 
 export const getAllCity = async() => {
-    const url = `${url_api_localhost}Route/cityRoute`;
+    const url = `${url_api}Route/cityRoute`;
     const resp = await axios.get(url)
 
     const typeCityRoute = resp.data.map(route => {
@@ -78,7 +80,7 @@ export const getAllCity = async() => {
 }
 
 export const getAllProduct = async() => {
-    const url = `${url_api_localhost}Route/product`;
+    const url = `${url_api}Route/product`;
     const resp = await axios.get(url)
 
     const typeProduct = resp.data.map(route => {
@@ -98,7 +100,7 @@ export const getAllProduct = async() => {
 }
 
 export const getConduct = async(placa) => {
-    const url = `${url_api_localhost}Vehicle/getConductByVehicle/${placa}`;
+    const url = `${url_api}Vehicle/getConductByVehicle/${placa}`;
     const resp = await axios.get(url)
 
     const typeConductRoute = resp.data.map(route => {
@@ -114,7 +116,7 @@ export const getConduct = async(placa) => {
 
 
 export const insertRoute = async(data) => {
-    const url = `${url_api_localhost}Route/newRoute`;
+    const url = `${url_api}Route/newRoute`;
     const resp = await axios.post(url, data)
     console.log(data)
     
@@ -124,35 +126,40 @@ export const insertRoute = async(data) => {
 
   
 export const editRoute = async (data, id_ruta) => {
-    const url = `${url_api_localhost}routeEdit/${id_ruta}`;
+    const url = `${url_api}routeEdit/${id_ruta}`;
+    debugger
+    console.log(data)
+    console.log("URL: " + url)
     const resp = await axios.put(url, data);
     return resp;
 };
 
 export const getRouteByIdRoute= async (id_ruta) => {
-    const url = `${url_api_localhost}Route/getRoute/${id_ruta}`;
+    const url = `${url_api}Route/getRoute/${id_ruta}`;
     const resp = await axios.get(url);
-    const routeData = resp.data.map((type) => {
+    debugger
+    console.log(resp.data)
+    const routeData = resp.data.map((dataRoute) => {
         return {
-            id_ruta:type.id_ruta,
-            nombre_producto:type.nombre_producto,
-            cantidad:type.cantidad,
-            fecha_inicio:type.fecha_inicio,
-            fecha_fin:type.fecha_fin,
-            flete:type.flete,
-            placa:type.placa,
-            ciudad_origen:type.ciudad_origen,
-            ciudad_destino:type.ciudad_destino,
-            estado:1,
+            id_ruta:dataRoute.id_ruta,    
+            producto: dataRoute.producto,
+            cantidad: dataRoute.cantidad,
+            fecha_inicio: dataRoute.fecha_inicio,
+            fecha_fin: dataRoute.fecha_fin,
+            flete: dataRoute.flete,
+            id_vehiculo: dataRoute.id_vehiculo,
+            id_estado_ruta: 1,
+            id_origen: dataRoute.id_origen,
+            id_destino: dataRoute.id_destino,
         };
       });
-    
+    debugger
       return routeData;
     };
   
 
 export const deleteRoute = async (id_ruta) => {
-    const url = `${url_api_localhost}Route/deleteRoute/${id_ruta}`;
+    const url = `${url_api}Route/deleteRoute/${id_ruta}`;
     const resp = await axios.delete(url)
     
     return resp;

@@ -1,6 +1,6 @@
 import React from 'react'
+import { Expenses } from '../../components/expense/TableExpense';
 import { Sidebar } from '../../components/globalComponents/Sidebar';
-import { Route } from '../../components/expense/TableRoute';
 
 
 
@@ -8,7 +8,7 @@ const Expense = () => {
     return (
         <>
             <Sidebar />            
-            <Route />
+            <Expenses/>
         </>
     )
 }

@@ -7,13 +7,13 @@ import * as RiIcons from 'react-icons/ri';
 import * as AiIcons from 'react-icons/ai';
 import * as FcIcons from 'react-icons/fc';
 import { UseModal } from '../../hooks/UseModal';
-import { ModalRoute } from './ModalRoutes';
+import { ModalExpense } from './ModalExpense';
 import { UseEffectGetRoutes, UseDeleteRoute } from '../../hooks/UseCaseRoute';
 import { Loader } from '../globalComponents/Loader';
 import { SearchConduct } from '../conduct/SearchConduct';
 
 
-export const Route = () => {
+export const Expenses = () => {
 
     const [isOpenModalRoute, OpenModalRoute, closeModalRoute] = UseModal();
     const { data, loading } = UseEffectGetRoutes();
@@ -30,6 +30,7 @@ export const Route = () => {
 
     const getByIdEdit = (route) => {
         console.log(route)
+        debugger
         setRouteData(route);
         setIsEdit(true);
         OpenModalRoute();
@@ -100,7 +101,7 @@ export const Route = () => {
                 </div>
             </div>
 
-            <ModalRoute
+            <ModalExpense
                 isOpenModal={isOpenModalRoute}
                 closeModal={closeModalRoute}
                 route={routeData}

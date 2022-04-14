@@ -1,8 +1,8 @@
 import axios from 'axios';
-import {url_api_localhost} from './http-common';
+import {url_api} from './http-common';
 
 export const getAllRoute = async() => {
-    const url = `${url_api_localhost}Route/`;
+    const url = `${url_api}Route/`;
     const resp = await axios.get(url)
     console.log(resp)
     const typeRoute = resp.data.map(route => {
@@ -27,7 +27,7 @@ export const getAllRoute = async() => {
 }
 
 export const getVehicleRoute = async() => {
-    const url = `${url_api_localhost}Route/vehicleRoute`;
+    const url = `${url_api}Route/vehicleRoute`;
     const resp = await axios.get(url)
 
     const typeVechicle = resp.data.map(route => {
@@ -45,7 +45,7 @@ export const getVehicleRoute = async() => {
 }
 
 export const getAllState = async() => {
-    const url = `${url_api_localhost}Route/stateRoute`;
+    const url = `${url_api}Route/stateRoute`;
     const resp = await axios.get(url)
 
     const typeState = resp.data.map(route => {
@@ -59,7 +59,7 @@ export const getAllState = async() => {
 }
 
 export const getAllCity = async() => {
-    const url = `${url_api_localhost}Route/cityRoute`;
+    const url = `${url_api}Route/cityRoute`;
     const resp = await axios.get(url)
 
     const typeCityRoute = resp.data.map(route => {
@@ -79,7 +79,7 @@ export const getAllCity = async() => {
 }
 
 export const getAllProduct = async() => {
-    const url = `${url_api_localhost}Route/product`;
+    const url = `${url_api}Route/product`;
     const resp = await axios.get(url)
 
     const typeProduct = resp.data.map(route => {
@@ -99,7 +99,7 @@ export const getAllProduct = async() => {
 }
 
 export const getConduct = async(placa) => {
-    const url = `${url_api_localhost}Vehicle/getConductByVehicle/${placa}`;
+    const url = `${url_api}Vehicle/getConductByVehicle/${placa}`;
     const resp = await axios.get(url)
 
     const typeConductRoute = resp.data.map(route => {
@@ -115,7 +115,7 @@ export const getConduct = async(placa) => {
 
 
 export const insertRoute = async(data) => {
-    const url = `${url_api_localhost}Route/newRoute`;
+    const url = `${url_api}Route/newRoute`;
     debugger
     const resp = await axios.post(url, data)
     console.log(data)
@@ -126,13 +126,13 @@ export const insertRoute = async(data) => {
 
   
 export const editRoute = async (data, id_ruta) => {
-    const url = `${url_api_localhost}routeEdit/${id_ruta}`;
+    const url = `${url_api}routeEdit/${id_ruta}`;
     const resp = await axios.put(url, data);
     return resp;
 };
 
 export const getRouteByIdRoute= async (id_ruta) => {
-    const url = `${url_api_localhost}Route/getRoute/${id_ruta}`;
+    const url = `${url_api}Route/getRoute/${id_ruta}`;
     const resp = await axios.get(url);
     const routeData = resp.data.map((type) => {
         return {
@@ -154,7 +154,7 @@ export const getRouteByIdRoute= async (id_ruta) => {
   
 
 export const deleteRoute = async (id_ruta) => {
-    const url = `${url_api_localhost}Route/deleteRoute/${id_ruta}`;
+    const url = `${url_api}Route/deleteRoute/${id_ruta}`;
     const resp = await axios.delete(url)
     
     return resp;

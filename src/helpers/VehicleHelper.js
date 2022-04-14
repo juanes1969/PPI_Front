@@ -1,8 +1,8 @@
 import axios from "axios";
-import { url_api_localhost } from "./http-common";
+import { url_api } from "./http-common";
 
 export const getAllVehicles = async () => {
-  const url = `${url_api_localhost}Vehicle/`;
+  const url = `${url_api}Vehicle/`;
   const resp = await axios.get(url);
   console.log(resp);
 
@@ -32,7 +32,7 @@ export const getAllVehicles = async () => {
 };
 
 export const getVehicleAvailable = async () => {
-  const url = `${url_api_localhost}Vehicle/vehicleAvailable`;
+  const url = `${url_api}Vehicle/vehicleAvailable`;
   const resp = await axios.get(url);
 
   const typeVehicle = resp.data.map((vehicle) => {
@@ -45,7 +45,7 @@ export const getVehicleAvailable = async () => {
 };
 
 export const getAllMarcas = async () => {
-  const url = `${url_api_localhost}Vehicle/marcaVehicle`;
+  const url = `${url_api}Vehicle/marcaVehicle`;
   const resp = await axios.get(url);
 
   const marcaVehiculo = resp.data.map((marca) => {
@@ -59,7 +59,7 @@ export const getAllMarcas = async () => {
 };
 
 export const getAllTypeVehicle = async () => {
-  const url = `${url_api_localhost}Vehicle/vehicleType`;
+  const url = `${url_api}Vehicle/vehicleType`;
   const resp = await axios.get(url);
 
   const marcaVehiculo = resp.data.map((type) => {
@@ -73,14 +73,14 @@ export const getAllTypeVehicle = async () => {
 };
 
 export const deleteVehicle = async (placa) => {
-  const url = `${url_api_localhost}Vehicle/deleteVehicle/${placa}`;
+  const url = `${url_api}Vehicle/deleteVehicle/${placa}`;
   const resp = await axios.delete(url)
   
   return resp;
 }
 
 export const getVehicleByPlaca = async (placa) => {
-  const url = `${url_api_localhost}Vehicle/getVehicle/${placa}`;
+  const url = `${url_api}Vehicle/getVehicle/${placa}`;
   const resp = await axios.get(url);
 
   const vehicleData = resp.data.map((type) => {
@@ -108,7 +108,7 @@ export const getVehicleByPlaca = async (placa) => {
 export const insertVehicle = async (data) => {
 
   debugger
-  const url = `${url_api_localhost}Vehicle/newVehicle`;
+  const url = `${url_api}Vehicle/newVehicle`;
   const resp = await axios.post(url, data);
   debugger
   return resp;
@@ -117,7 +117,7 @@ export const insertVehicle = async (data) => {
 export const editVehicle = async (data, placa) => {
 
   debugger
-  const url = `${url_api_localhost}Vehicle/vehicleEdit/${placa}`;
+  const url = `${url_api}Vehicle/vehicleEdit/${placa}`;
   const resp = await axios.put(url, data);
   return resp;
 };

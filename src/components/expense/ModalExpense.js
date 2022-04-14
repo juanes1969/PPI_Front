@@ -10,7 +10,7 @@ import {
   UseProduct,
 } from "../../hooks/UseCaseRoute";
 
-export const ModalRoute = ({ 
+export const ModalExpense = ({ 
     isOpenModal,
     closeModal,
     route,

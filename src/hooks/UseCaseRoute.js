@@ -192,10 +192,11 @@ debugger
 
 
 export const UseSaveRoute = (dataRoute) => {
-
+debugger
   let route = getRouteByIdRoute(dataRoute.id_ruta);
   console.log(route)
-
+  console.log(dataRoute)
+debugger
   let data = {
     producto: dataRoute.producto,
     cantidad: dataRoute.cantidad,
