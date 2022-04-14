@@ -4,7 +4,6 @@ import {url_api} from './http-common';
 export const getAllRoute = async() => {
     const url = `${url_api}Route/`;
     const resp = await axios.get(url)
-    console.log(resp)
     const typeRoute = resp.data.map(route => {
         return {
             id_ruta:route.id_ruta,
@@ -17,9 +16,6 @@ export const getAllRoute = async() => {
             ciudad_origen:route.ciudad_origen,
             ciudad_destino:route.ciudad_destino,
             estado:route.estado
-
-            
-       
         }
     });
 
@@ -116,11 +112,7 @@ export const getConduct = async(placa) => {
 
 export const insertRoute = async(data) => {
     const url = `${url_api}Route/newRoute`;
-    
     const resp = await axios.post(url, data)
-    console.log(data)
-    
-    
     return resp;
 }
 

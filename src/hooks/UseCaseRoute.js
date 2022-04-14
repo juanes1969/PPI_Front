@@ -182,7 +182,6 @@ export const UseInsertRoute = (dataRoute) => {
 
   insertRoute(data)
     .then((response) => {
-      console.log(response.data);
       window.location.reload();
     })
     .catch((e) => {

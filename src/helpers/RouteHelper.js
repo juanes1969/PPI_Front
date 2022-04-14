@@ -4,7 +4,6 @@ import {url_api} from './http-common';
 export const getAllRoute = async() => {
     const url = `${url_api}Route/`;
     const resp = await axios.get(url)
-    console.log(resp)
     const typeRoute = resp.data.map(route => {
         return {
             id_ruta:route.id_ruta,
@@ -118,19 +117,12 @@ export const getConduct = async(placa) => {
 export const insertRoute = async(data) => {
     const url = `${url_api}Route/newRoute`;
     const resp = await axios.post(url, data)
-    console.log(data)
-    
-    
     return resp;
 }
 
   
 export const editRoute = async (data, id_ruta) => {
     const url = `${url_api}Route/routeEdit/${id_ruta}`;
-    
-    console.log(data)
-    console.log(id_ruta)
-    console.log("URL: " + url)
     const resp = await axios.put(url, data);
     return resp;
 };
@@ -138,8 +130,6 @@ export const editRoute = async (data, id_ruta) => {
 export const getRouteByIdRoute= async (id_ruta) => {
     const url = `${url_api}Route/getRoute/${id_ruta}`;
     const resp = await axios.get(url);
-    
-    console.log(resp.data)
     const routeData = resp.data.map((dataRoute) => {
         return {
             id_ruta:dataRoute.id_ruta,    

@@ -27,15 +27,12 @@ export const Route = () => {
 
 
     const getById = (id) => {
-        console.log(id)
         UseDeleteRoute(id);
         refreshList();
     }
 
 
     const getByIdEdit = (route) => {
-        
-        console.log(route)
         setIsEdit(route);
         OpenModalRoute();
     }

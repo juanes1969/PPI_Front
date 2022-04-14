@@ -24,13 +24,10 @@ export const Expenses = () => {
 
 
     const handleDeleteRoute = (id_ruta) => {
-        console.log(id_ruta)
         UseDeleteRoute(id_ruta);
     }
 
     const getByIdEdit = (route) => {
-        console.log(route)
-        
         setRouteData(route);
         setIsEdit(true);
         OpenModalRoute();
