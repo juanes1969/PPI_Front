@@ -35,7 +35,6 @@ export const ModalVehicle = ({ isOpenModal, closeModal, vehicleEdit,  setVehicle
       e.target.reset();
       closeModal();
   } else {
-    debugger
       UseInsertVehicle(vehicles);
       setVehicles(initialVehicleState);
       e.target.reset();
@@ -97,10 +96,7 @@ export const ModalVehicle = ({ isOpenModal, closeModal, vehicleEdit,  setVehicle
   }
 
   useEffect(() => {
-    debugger
     if (vehicleEdit) {
-      debugger
-      console.log(vehicleEdit)
       setVehicles(vehicleEdit)
     }else{
       setVehicles(initialVehicleState)

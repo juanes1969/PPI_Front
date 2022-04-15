@@ -23,7 +23,6 @@ export const Vehicle = () => {
     vehicleRef.current = vehicles;
 
     const handleDeleteVehicle = (placa) => {
-        console.log(placa)
         UseDeleteVehicle(placa);
         refreshList();
     }
@@ -92,8 +91,8 @@ export const Vehicle = () => {
                                     <td>{vehicle.tipoVehiculo}</td>
                                     <td>{vehicle.estadoVehiculo}</td>
                                     <td id="columOptions">
-                                        <button className="btn btn-warning btn-sm"><BsIcons.BsFillEyeFill /></button>
-                                        <button className="btn btn-info btn-sm" onClick={() => getByIdEdit(vehicle)} ><RiIcons.RiEditFill /></button>
+                                        <button className="btn btn-info btn-sm"><BsIcons.BsFillEyeFill /></button>
+                                        <button className="btn btn-success btn-sm" onClick={() => getByIdEdit(vehicle)} ><RiIcons.RiEditFill /></button>
                                         <button className="btn btn-danger btn-sm" onClick={() => handleDeleteVehicle(vehicle.placa)}><AiIcons.AiFillDelete /></button>
                                     </td>
                                 </tr>
