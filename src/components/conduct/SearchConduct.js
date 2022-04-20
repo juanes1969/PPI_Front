@@ -37,5 +37,8 @@ export const SearchConduct = ({ titleButton, icon, openModal, setSearch, setCurr
 }
 
 SearchConduct.propTypes = {
-    titleButton: PropTypes.string.isRequired
+    titleButton: PropTypes.string.isRequired,
+    evento: PropTypes.string.isRequired
+
 }
+

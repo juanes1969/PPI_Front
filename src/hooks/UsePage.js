@@ -15,9 +15,23 @@ export const UsePage = (data, perPage, search) => {
             const filtered = data.filter(dat => dat.identificacion.toLowerCase().includes(search.toLowerCase()));
             return filtered.slice(currentPage, currentPage + parseInt(perPage))
         }
+    }
 
+    const filtroVehiculo = (data, search) => {
+        debugger
+        console.log(data)
+        console.log(search)
+        return data.placa.toLowerCase().includes(search) || data.matricula.toLowerCase().includes(search) || data.marca.toLowerCase().includes(search) || data.estadoVehiculo.toLowerCase().includes(search);
+    }
 
-
+    const filterVehicle = () => {
+        console.log(currentPage)
+        if (search.length === 0) {
+            return data.slice(currentPage, currentPage + parseInt(perPage))
+        } else {
+            const filtered = data.filter(dat => filtroVehiculo(dat, search));
+            return filtered.slice(currentPage, currentPage + parseInt(perPage))
+        }
     }
 
     const nextPage = (e) => {
@@ -39,5 +53,5 @@ export const UsePage = (data, perPage, search) => {
     }
 
 
-    return { filterConducts, nextPage, prevPage, setCurrentPage, setPage, page }
+    return { filterVehicle, filterConducts, nextPage, prevPage, setCurrentPage, setPage, page }
 };

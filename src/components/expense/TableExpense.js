@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useState } from 'react'
 import { Pagination } from '../conduct/Pagination'
 import '../../Styles/tableConduct.css'
 import * as IoIcons from 'react-icons/io5';
@@ -7,59 +7,37 @@ import * as RiIcons from 'react-icons/ri';
 import * as AiIcons from 'react-icons/ai';
 import * as FcIcons from 'react-icons/fc';
 import { UseModal } from '../../hooks/UseModal';
-import { ModalRoutes } from './ModalRoute';
+import { ModalExpense } from './ModalExpense';
 import { UseEffectGetRoutes, UseDeleteRoute } from '../../hooks/UseCaseRoute';
 import { Loader } from '../globalComponents/Loader';
 import { SearchConduct } from '../conduct/SearchConduct';
-import { getAllRoute } from '../../helpers/RouteHelper';
 
 
-export const Route = () => {
+export const Expenses = () => {
 
     const [isOpenModalRoute, OpenModalRoute, closeModalRoute] = UseModal();
     const { data, loading } = UseEffectGetRoutes();
-    const [routeData, setRouteData] = useState([]);
-    const [isEdit, setIsEdit] = useState(null);
-    const [search, setSearch] = useState('');
-    const routeRef = useRef();
-
-    routeRef.current = routeData;
+    const [routeData, setRouteData] = useState({});
+    const [isEdit, setIsEdit] = useState(false);
+    const [search, setSearch] = React.useState('');
 
 
-    const getById = (id) => {
-        UseDeleteRoute(id);
-        refreshList();
+
+    const handleDeleteRoute = (id_ruta) => {
+        UseDeleteRoute(id_ruta);
     }
-
 
     const getByIdEdit = (route) => {
-        setIsEdit(route);
+        setRouteData(route);
+        setIsEdit(true);
         OpenModalRoute();
     }
-
-
-    const retrieveConducts = () => {
-        getAllRoute()
-            .then((route) => {
-                setRouteData(route);
-            }).catch((e) => {
-                console.log(e);
-            });
-    }
-
-    const refreshList = () => {
-        retrieveConducts();
-    };
-
-    useEffect(() => {
-        retrieveConducts();
-    }, []);
 
 
     return (
         <>
             <div className="container" id="contenedorInicial">
-                <h1>Rutas</h1>
+                <h1>Gastos</h1>
                 <span>
                     <SearchConduct titleButton={"Agregar Ruta"} icon={<IoIcons.IoCarSportSharp />} openModal={OpenModalRoute} />
                     <form className="d-flex navbar-brand" id="formSearch">
@@ -110,7 +88,7 @@ export const Route = () => {
 
                                         <button className="btn btn-warning btn-sm"><BsIcons.BsFillEyeFill /></button>
                                         <button className="btn btn-info btn-sm" onClick={() => getByIdEdit(route)} ><RiIcons.RiEditFill /></button>
-                                        <button className="btn btn-danger btn-sm" onClick={() => getById(route.id_ruta)} ><AiIcons.AiFillDelete /></button>
+                                        <button className="btn btn-danger btn-sm" onClick={() => handleDeleteRoute(route.id_ruta)} ><AiIcons.AiFillDelete /></button>
                                     </td>
                                 </tr>
                             ))}
@@ -120,13 +98,12 @@ export const Route = () => {
                 </div>
             </div>
 
-            <ModalRoutes
+            <ModalExpense
                 isOpenModal={isOpenModalRoute}
                 closeModal={closeModalRoute}
                 route={routeData}
                 setRouteData={setRouteData}
                 isEdit={isEdit}
-                setIsEdit={setIsEdit}
             />
 
 

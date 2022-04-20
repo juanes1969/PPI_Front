@@ -5,6 +5,7 @@ import * as BsIcons from 'react-icons/bs';
 import * as IoIcons from 'react-icons/io';
 import * as FcIcons from 'react-icons/fc';
 
+
 export const SidebarData = [
     {
         title: 'Home',
@@ -31,6 +32,12 @@ export const SidebarData = [
         cName: 'nav-text'
     },
     {
+        title: 'Gastos',
+        path: '/Expense',
+        icon: <FaIcons.FaShopify />,
+        cName: 'nav-text'
+    },
+    {
         title: 'Reportes',
         path: '/Reports',
         icon: <FaIcons.FaNewspaper />,
@@ -40,12 +47,6 @@ export const SidebarData = [
         title: 'Soporte',
         path: '/Supports',
         icon: <IoIcons.IoMdHelpCircle />,
-        cName: 'nav-text'
-    },
-    {
-        title: 'Cerrar sesión',
-        path: '/',
-        icon: <FcIcons.FcLock />,
         cName: 'nav-text'
     }
 ]

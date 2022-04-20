@@ -4,7 +4,6 @@ import { url_api } from "./http-common";
 export const getAllVehicles = async () => {
   const url = `${url_api}Vehicle/`;
   const resp = await axios.get(url);
-  console.log(resp);
 
   const typeVehicle = resp.data.map((vehicle) => {
     return {
@@ -107,14 +106,12 @@ export const getVehicleByPlaca = async (placa) => {
 };
 
 export const insertVehicle = async (data) => {
-  debugger
   const url = `${url_api}Vehicle/newVehicle`;
   const resp = await axios.post(url, data);
   return resp;
 };
 
 export const editVehicle = async (data, placa) => {
-  debugger
   const url = `${url_api}Vehicle/vehicleEdit/${placa}`;
   const resp = await axios.put(url, data);
   return resp;

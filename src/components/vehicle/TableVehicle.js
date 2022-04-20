@@ -10,6 +10,7 @@ import { UseModal } from '../../hooks/UseModal';
 import { ModalVehicle } from './ModalVehicle';
 import { UseDeleteVehicle, UseEffectGetVehicles } from '../../hooks/UseCaseVehicle';
 import { getAllVehicles } from "../../helpers/VehicleHelper";
+import { UsePage } from '../../hooks/UsePage';
 
 
 export const Vehicle = () => {
@@ -19,18 +20,19 @@ export const Vehicle = () => {
     const [vehicles, setVehicles] = useState([]);
     const [vehicleEdit, setVehicleEdit] = useState(null);
     const vehicleRef = useRef();
+    const [perPage, setPerPage] = useState(5);
+    const [search, setSearch] = useState('');
+    const { filterVehicle, nextPage, prevPage, setCurrentPage, setPage, page } = UsePage(data, perPage, search);
 
     vehicleRef.current = vehicles;
 
     const handleDeleteVehicle = (placa) => {
-        console.log(placa)
         UseDeleteVehicle(placa);
         refreshList();
     }
 
     const getByIdEdit = (vehicle) => {
         setVehicleEdit(vehicle);
-        debugger
         openModalVehicle();
     }
 
@@ -61,7 +63,14 @@ export const Vehicle = () => {
             <div className="container" id="contenedorInicial">
                 <h1>Vehículos</h1>
                 <span>
-                    <SearchConduct titleButton={"Agregar Vehículos"} icon={<IoIcons.IoCarSportSharp />} openModal={openModalVehicle} />
+                    <SearchConduct 
+                        titleButton={"Agregar Vehículos"} 
+                        icon={<IoIcons.IoCarSportSharp />} 
+                        openModal={openModalVehicle}
+                        setSearch={setSearch}
+                        setCurrentPage={setCurrentPage}
+                        setPage={setPage}
+                         />
                     {/* <button className="btn btn-warning btn-sm" onClick={() => newVehicle()}><IoIcons.IoCarSportSharp /> Agregar Vehículos</button> */}
                 </span>
 
@@ -83,7 +92,7 @@ export const Vehicle = () => {
                         </thead>
                         <tbody>
                             {/* {loading && <Loader />} */}
-                            {data.map((vehicle) => (
+                            {filterVehicle().map((vehicle) => (
                                 <tr key={vehicle.placa}>
                                     <td>{vehicle.placa}</td>
                                     <td>{vehicle.marca}</td>
@@ -93,15 +102,22 @@ export const Vehicle = () => {
                                     <td>{vehicle.tipoVehiculo}</td>
                                     <td>{vehicle.estadoVehiculo}</td>
                                     <td id="columOptions">
-                                        <button className="btn btn-warning btn-sm"><BsIcons.BsFillEyeFill /></button>
-                                        <button className="btn btn-info btn-sm" onClick={() => getByIdEdit(vehicle)} ><RiIcons.RiEditFill /></button>
+                                        <button className="btn btn-warning btn-sm" onClick={() => getByIdEdit(vehicle)} ><RiIcons.RiEditFill /></button>
+                                        <button className="btn btn-info btn-sm"><BsIcons.BsFillEyeFill /></button>
                                         <button className="btn btn-danger btn-sm" onClick={() => handleDeleteVehicle(vehicle.placa)}><AiIcons.AiFillDelete /></button>
                                     </td>
                                 </tr>
                             ))}
                         </tbody>
                     </table>
-                    <Pagination />
+                    <Pagination
+                            nextPage={nextPage}
+                            prevPage={prevPage}
+                            page={page}
+                            setPerPage={setPerPage}
+                            setCurrentPage={setCurrentPage}
+                            setPage={setPage}
+                        />
                 </div>
             </div>
 

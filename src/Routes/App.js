@@ -12,6 +12,7 @@ import Support from '../pages/support/Support';
 import Login from '../pages/login/Login';
 import 'bootstrap/dist/css/bootstrap.css';
 import '../index.css'
+import Expense from '../pages/expense/Expense';
 
 
 const init = () => {
@@ -25,7 +26,6 @@ export const App = () => {
     const [user, dispatch] = useReducer(authReducer, {}, init);
 
     return (
-
         <AuthContext.Provider value={{
             user,
             dispatch
@@ -38,6 +38,7 @@ export const App = () => {
                 <Route path="/Routes" component={RouteHome} />
                 <Route path="/Reports" component={Report} />
                 <Route path="/Supports" component={Support} />
+                <Route path="/Expense" component={Expense} />
             </BrowserRouter >
         </AuthContext.Provider >
     )

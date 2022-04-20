@@ -1,7 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import reportWebVitals from './reportWebVitals';
 import { App } from './Routes/App';
+import 'bootswatch/dist/journal/bootstrap.min.css'
+import './Styles/global.css'
 
 ReactDOM.render(
   <React.StrictMode>    
@@ -10,4 +11,3 @@ ReactDOM.render(
   document.getElementById('root')
 );
 
-reportWebVitals();

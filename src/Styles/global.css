@@ -1,0 +1,28 @@
+:root{
+    --primary-color:#fff;
+    --secundary-color:#fff;
+    --warning-color: rgb(240, 129, 18);
+    --success-color: rgb(13, 176, 1);
+    --info-color: rgb(8, 121, 220);
+    --danger-color: rgb(221 37 37);
+}
+
+.btn-danger{
+    background-color: var(--danger-color) !important;
+    border-color: var(--danger-color) !important;
+}
+
+.btn-info{
+    background-color: var(--info-color) !important;
+    border-color: var(--info-color) !important;
+}
+
+.btn-success{
+    background-color: var(--success-color) !important;
+    border-color: var(--success-color) !important;
+}
+
+.btn-warning{
+    background-color: var(--warning-color) !important;
+    border-color: var(--+--warning-color) !important; 
+}

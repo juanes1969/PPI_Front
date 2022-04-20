@@ -27,6 +27,7 @@
     top: 0;
     left: -100%;
     transition: 850ms;
+    margin-top: 80px;
   }
   
   .nav-menu.active {
@@ -79,12 +80,16 @@
     color:#f5f5f5;
     margin-left: 16px;
   }
+  
+  .navbar-nav{
+    margin: 0px 30px;
+  }
 
   .logo-nav {
     width: 130px;
     height: 60px;
     padding-top: 0;
-    margin: 0px 0px 0px 15px;
+    margin: 0px 30px;
   }
 
   .logo-menu-bar {
@@ -92,4 +97,13 @@
     height: 70px;
     padding-top: 10px;
     margin: 0px 0px 0px 30px;
+  }
+
+  .nav-link{
+    color: #f5f5f5 !important;
+  }
+
+  .link-sesion{
+    color: black !important;
+    text-decoration: none;
   }

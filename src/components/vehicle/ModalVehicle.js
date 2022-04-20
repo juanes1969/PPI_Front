@@ -35,7 +35,6 @@ export const ModalVehicle = ({ isOpenModal, closeModal, vehicleEdit,  setVehicle
       e.target.reset();
       closeModal();
   } else {
-    debugger
       UseInsertVehicle(vehicles);
       setVehicles(initialVehicleState);
       e.target.reset();
@@ -61,30 +60,43 @@ export const ModalVehicle = ({ isOpenModal, closeModal, vehicleEdit,  setVehicle
   const { data: marcas, loading } = UseMarca();
 
   const calcularFecha = ( fecha, input) => {
-    var myElement = document.getElementById(input);
-    if(isOpenModal && fecha != null && myElement.value == ""){
-      let fechaVencimiento = new Date(fecha)
+    let myElement = document.getElementById(input);
+    let fechaVencimiento = new Date(fecha)
+    if(isOpenModal && fecha != null && myElement.value == "" ){
       fechaVencimiento.setDate(fechaVencimiento.getDate() + 1)
       fechaVencimiento.setFullYear(fechaVencimiento.getFullYear()+1)
       fechaVencimiento = dateFormat(fechaVencimiento, "isoDate")
-      activarOnChange(fechaVencimiento, input)
+      return fechaVencimiento;
+    }
+    if(isOpenModal && fecha != null && myElement.value != fecha ){
+      fechaVencimiento.setDate(fechaVencimiento.getDate() + 1)
+      fechaVencimiento.setFullYear(fechaVencimiento.getFullYear()+1)
+      fechaVencimiento = dateFormat(fechaVencimiento, "isoDate")
       return fechaVencimiento;
     }
   }
 
-  const activarOnChange = (fechaVencimiento, valor) => {
-    var myElement = document.getElementById(valor);
-    if(!myElement.onchange){
-      setVehicles({...vehicles, [valor]: fechaVencimiento });
-      myElement.onchange = true
-    }
+  const formatoFecha = (date) => {
+    date = date.setDate(date.getDate() + 1);
+    return dateFormat(date, "isoDate");
+  }
+
+
+  const fechaMinima = () => {
+    let fechaMin = new Date();
+    fechaMin.setFullYear(fechaMin.getFullYear()-1)
+    fechaMin = dateFormat(fechaMin, "isoDate")
+    return fechaMin;
+  }
+
+  const fechaMaxima = () => {
+    let fechaMax = new Date();
+    fechaMax = dateFormat(fechaMax, "isoDate")
+    return fechaMax;
   }
 
   useEffect(() => {
-    debugger
     if (vehicleEdit) {
-      debugger
-      console.log(vehicleEdit)
       setVehicles(vehicleEdit)
     }else{
       setVehicles(initialVehicleState)
@@ -166,10 +178,12 @@ export const ModalVehicle = ({ isOpenModal, closeModal, vehicleEdit,  setVehicle
                       <input
                         type="date"
                         className={`form-control`}
-                        value={vehicles.expedicion_poliza}
+                        value={dateFormat(vehicles.expedicion_poliza, "isoDate")}
                         name="expedicion_poliza"
                         id="expedicion_poliza"
                         onChange={handleChangeData}
+                        min={fechaMinima()}
+                        max={fechaMaxima()}
                         required
                       />
                       <label className="col-form-label modal-label">
@@ -181,8 +195,8 @@ export const ModalVehicle = ({ isOpenModal, closeModal, vehicleEdit,  setVehicle
                         value={calcularFecha(vehicles.expedicion_poliza, "vencimiento_poliza")}
                         name="vencimiento_poliza"
                         id="vencimiento_poliza"
-                        required
                         onChange={handleChangeData}
+                        required
                         readOnly
                       />
                       <label className="col-form-label modal-label">
@@ -232,6 +246,8 @@ export const ModalVehicle = ({ isOpenModal, closeModal, vehicleEdit,  setVehicle
                         name="expedicion_soat"
                         id="expedicion_soat"
                         onChange={handleChangeData}
+                        min={fechaMinima()}
+                        max={fechaMaxima()}
                         required
                       />
                       <label className="col-form-label modal-label">
@@ -243,8 +259,8 @@ export const ModalVehicle = ({ isOpenModal, closeModal, vehicleEdit,  setVehicle
                         value={calcularFecha(vehicles.expedicion_soat, "vencimiento_soat")}
                         id="vencimiento_soat"
                         name="vencimiento_soat"
-                        required
                         onChange={handleChangeData}
+                        required
                         disabled
                       />
                     </div>
@@ -292,6 +308,8 @@ export const ModalVehicle = ({ isOpenModal, closeModal, vehicleEdit,  setVehicle
                         id="expedicion_tecnomecanica"
                         name="expedicion_tecnomecanica"
                         onChange={handleChangeData}
+                        min={fechaMinima()}
+                        max={fechaMaxima()}
                         required
                       />
                       <label className="col-form-label modal-label">
@@ -303,8 +321,8 @@ export const ModalVehicle = ({ isOpenModal, closeModal, vehicleEdit,  setVehicle
                         value={calcularFecha(vehicles.expedicion_tecnomecanica, "vencimiento_tecnomecanica")}
                         id="vencimiento_tecnomecanica"
                         name="vencimiento_tecnomecanica"
-                        required
                         onChange={handleChangeData}
+                        required
                         disabled
                       />
                     </div>
