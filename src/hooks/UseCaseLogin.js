@@ -5,13 +5,11 @@ export const UseCaseLogin = (formLogin) => {
 
     getUsers(formLogin)
         .then(response => {
-            const data = response.data.data
-            console.log(data.length)
+            const data = response.data.data            
             if (!!data && data[0]) {
                 let descripcion = data[0].descripcion
                 let id_rol = data[0].id_rol
                 console.log(descripcion, id_rol);
-
                 switch (id_rol) {
                     case 1:
                         alert(`Bienvenido Inicio sesion correctamente ${id_rol}`);
