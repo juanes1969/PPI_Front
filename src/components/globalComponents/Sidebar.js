@@ -22,7 +22,10 @@ export const Sidebar = () => {
                         <FaIcons.FaBars onClick={showSidebar} />
                     </Link>
                         <div class="collapse navbar-collapse" id="navbarColor02">
-                            <ul class="navbar-nav me-auto">
+                            <form class="me-auto">
+                                <img id='logo' className="logo-nav" src={logo} alt="" />
+                            </form>
+                            <ul class="navbar-nav d-flex">
                                 <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Administrador</a>
                                     <div class="dropdown-menu">
@@ -34,17 +37,11 @@ export const Sidebar = () => {
                                     </div>
                                 </li>
                             </ul>
-                            <form class="d-flex">
-                                    <img className="logo-nav" src={logo} alt="" />
-                            </form>
                         </div>
                     </div>
                 </nav>
                 <nav className={`navbar-dark bg-dark ${sidebar ? 'nav-menu active' : 'nav-menu'}`}>
                     <ul className='nav-menu-items' onClick={showSidebar}>
-                        {/* <li className='navbar-toggle'>
-                            <img className="logo-menu-bar" src={logo} alt="" />
-                        </li> */}
                         {SidebarData.map((item, index) => {
                             return (
                                 <li key={index} className={`${item.cName} nav-item`}>
