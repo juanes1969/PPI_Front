@@ -38,11 +38,13 @@ const handleChangeData = ({ target }) => {
   const { name, value } = target;
   setRouteData({ ...route, [name]: value });
 }
+
+console.log(route);
+
 const handleSubmit = (e) => {
   e.preventDefault();
   if (isEdit) {
-      UseSaveRoute(route)
-      
+      UseSaveRoute(route) 
       e.target.reset();
       closeModal();
   } else {
@@ -75,6 +77,7 @@ const handleCancelButton = () => {
     } else {
         setRouteData(initialRouteState)
     }
+
 }, [isEdit, setRouteData, setIsEdit]);
 
   return (

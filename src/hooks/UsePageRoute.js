@@ -1,24 +1,12 @@
 import { useState } from 'react';
 
-export const UsePage = (data, perPage, search) => {
+export const UsePageRoute = (data, perPage, search) => {
 
     console.log(perPage)
 
     const [currentPage, setCurrentPage] = useState(0);
     const [page, setPage] = useState(1);
 
-    const filterConducts = () => {
-        console.log(currentPage)
-        if (search.length === 0) {
-            return data.slice(currentPage, currentPage + parseInt(perPage))
-        } else {
-            const filtered = data.filter(dat => dat.identificacion.includes(search));
-            return filtered.slice(currentPage, currentPage + parseInt(perPage))
-        }
-
-
-
-    }
 
     const filtroRuta = (data, search) => {
         debugger
@@ -36,6 +24,8 @@ export const UsePage = (data, perPage, search) => {
             return filtered.slice(currentPage, currentPage + parseInt(perPage))
         }
     }
+
+    
 
     const nextPage = (e) => {
         e.preventDefault()
@@ -56,6 +46,5 @@ export const UsePage = (data, perPage, search) => {
     }
 
 
-
-    return { filterConducts, filterRoutes, nextPage, prevPage, setCurrentPage, setPage, page }
+    return { filterRoutes, nextPage, prevPage, setCurrentPage, setPage, page }
 };
