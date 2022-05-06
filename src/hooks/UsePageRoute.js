@@ -10,9 +10,9 @@ export const UsePageRoute = (data, perPage, search) => {
 
     const filtroRuta = (data, search) => {
         debugger
-        console.log(data)
+        console.log(data.id_ruta)
         console.log(search)
-        return data.id_ruta.includes(search) || data.nombre_producto.toLowerCase().includes(search);
+        return  data.nombre_producto.toLowerCase().includes(search);
     }
 
     const filterRoutes = () => {

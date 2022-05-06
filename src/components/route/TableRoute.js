@@ -134,8 +134,6 @@ export const Route = () => {
                 isEdit={isEdit}
                 setIsEdit={setIsEdit}
             />
-
-
         </>
     )
 }
