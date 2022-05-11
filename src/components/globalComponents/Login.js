@@ -3,7 +3,7 @@ import "../../Styles/login.css";
 import * as RiIcons from "react-icons/ri";
 import * as FaIcons from "react-icons/fa";
 import { IconContext } from "react-icons";
-import logo from "../../assets/img/LogoBlack.png";
+import logo from "../../assets/img/zyro-image (1).png";
 import { UseCaseLogin } from "../../hooks/UseCaseLogin";
 
 export const Login = () => {

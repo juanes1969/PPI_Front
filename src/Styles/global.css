@@ -1,9 +1,11 @@
 :root{
+    --background-color: #ECA455;
     --primary-color:#fff;
-    --secundary-color:#fff;
+    --secundary-color:rgb(0, 0, 0);
     --warning-color: rgb(240, 129, 18);
     --success-color: rgb(13, 176, 1);
     --info-color: rgb(8, 121, 220);
+    --info-form-color:rgb(39, 151, 61);
     --danger-color: rgb(221 37 37);
 }
 
@@ -12,6 +14,9 @@
     border-color: var(--danger-color) !important;
 }
 
+.bg-dark {
+    background-color: var(--background-color) !important;
+  }
 .btn-info{
     background-color: var(--info-color) !important;
     border-color: var(--info-color) !important;
@@ -24,5 +29,11 @@
 
 .btn-warning{
     background-color: var(--warning-color) !important;
-    border-color: var(--+--warning-color) !important; 
+    border-color: var(--warning-color) !important; 
+}
+
+.btn-info-form{
+    background-color: var(--info-form-color) !important;
+    border-color: var(--info-form-color) !important;
+    color: var(--primary-color); 
 }

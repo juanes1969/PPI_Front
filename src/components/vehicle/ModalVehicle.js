@@ -2,6 +2,7 @@ import React, { useEffect} from "react";
 import "../../Styles/modal.css";
 import { UseTypeVehicle, UseMarca, UseInsertVehicle, UseSaveVehicle } from "../../hooks/UseCaseVehicle";
 import dateFormat, { masks } from "dateformat";
+import logo from "../../assets/img/LogoNew.png";
 export const ModalVehicle = ({ isOpenModal, closeModal, vehicleEdit,  setVehicleEdit, vehicles, setVehicles }) => {
 
 
@@ -112,9 +113,9 @@ export const ModalVehicle = ({ isOpenModal, closeModal, vehicleEdit,  setVehicle
         <div className="modal-dialog">
           <div
             className="modal-content contenido__modal"
-            onClick={handleModalDialogClick}
-          >
+            onClick={handleModalDialogClick}>
             <div className="modal-header">
+             <img className="logo-form" src={logo} alt="logo" />
               <h3 className="modal-title" id="exampleModalLabel">
               {vehicleEdit ?
                   ('Editar vehículo') :
@@ -133,17 +134,17 @@ export const ModalVehicle = ({ isOpenModal, closeModal, vehicleEdit,  setVehicle
               <div className="container">
                 <form
                   className="form-modal needs-validation"
-                  novalidate
+                  noValidate
                   onSubmit={handleSubmit}
                 >
                   <div className="row align-items-start">
                     <div className="col">
                       <label className="col-form-label modal-label">
-                        Placa *:
+                        <h6 className="label-form-placa"> Placa *:</h6>
                       </label>
                       <input
                         type="text"
-                        className={`form-control`}
+                        className={`form-control input-form`}
                         value={vehicles.placa}
                         id="placa"
                         name="placa"
@@ -152,10 +153,10 @@ export const ModalVehicle = ({ isOpenModal, closeModal, vehicleEdit,  setVehicle
                         required
                       />
                       <label className="col-form-label modal-label">
-                        Marca *:
+                        <h6 className="label-form"> Marca *:</h6>
                       </label>
                       <select  
-                      className={`form-select`}
+                      className={`form-select input-form`}
                       value={vehicles.id_marca}
                       name="id_marca"
                       id="id_marca"
@@ -173,12 +174,12 @@ export const ModalVehicle = ({ isOpenModal, closeModal, vehicleEdit,  setVehicle
                         ))}
                       </select>
                        <label className="col-form-label modal-label">
-                        Expedición poliza *:
+                        <h6 className="label-form"> Expedición poliza *:</h6>
                       </label>
                       <input
                         type="date"
-                        className={`form-control`}
-                        value={dateFormat(vehicles.expedicion_poliza, "isoDate")}
+                        className={`form-control input-form`}
+                        value={vehicles.expedicion_poliza}
                         name="expedicion_poliza"
                         id="expedicion_poliza"
                         onChange={handleChangeData}
@@ -187,11 +188,11 @@ export const ModalVehicle = ({ isOpenModal, closeModal, vehicleEdit,  setVehicle
                         required
                       />
                       <label className="col-form-label modal-label">
-                        Vencimiento poliza *:
+                      <h6 className="label-form"> Vencimiento poliza *:</h6>
                       </label>
                       <input
                         type="date"
-                        className={`form-control`}
+                        className={`form-control input-form`}
                         value={calcularFecha(vehicles.expedicion_poliza, "vencimiento_poliza")}
                         name="vencimiento_poliza"
                         id="vencimiento_poliza"
@@ -200,11 +201,11 @@ export const ModalVehicle = ({ isOpenModal, closeModal, vehicleEdit,  setVehicle
                         readOnly
                       />
                       <label className="col-form-label modal-label">
-                        Capacidad (Toneladas)*:
+                      <h6 className="label-form"> Capacidad (Toneladas)*:</h6>
                       </label>
                       <input
                         type="text"
-                        className={`form-control `}
+                        className={`form-control input-form`}
                         value={vehicles.capacidad}
                         name="capacidad"
                         id="capacidad"
@@ -214,22 +215,22 @@ export const ModalVehicle = ({ isOpenModal, closeModal, vehicleEdit,  setVehicle
                     </div>
                     <div className="col">
                       <label className="col-form-label modal-label">
-                        Placa trailer:
+                      <h6 className="label-form"> Placa trailer:</h6>
                       </label>
                       <input
                         type="text"
-                        className={`form-control`}
+                        className={`form-control input-form`}
                         value={vehicles.r_trailer}
                         name="r_trailer"
                         id="r_trailer"
                         onChange={handleChangeData}
                       />
                       <label className="col-form-label modal-label">
-                        Modelo *:
+                      <h6 className="label-form"> Modelo *:</h6>
                       </label>
                       <input
                         type="text"
-                        className={`form-control `}
+                        className={`form-control input-form`}
                         value={vehicles.modelo}
                         name="modelo"
                         id="modelo"
@@ -237,11 +238,11 @@ export const ModalVehicle = ({ isOpenModal, closeModal, vehicleEdit,  setVehicle
                         required
                       />
                       <label className="col-form-label modal-label">
-                        Expedición SOAT *:
+                      <h6 className="label-form"> Expedición SOAT *:</h6>
                       </label>
                       <input
                         type="date"
-                        className={`form-control`}
+                        className={`form-control input-form`}
                         value={vehicles.expedicion_soat}
                         name="expedicion_soat"
                         id="expedicion_soat"
@@ -251,11 +252,11 @@ export const ModalVehicle = ({ isOpenModal, closeModal, vehicleEdit,  setVehicle
                         required
                       />
                       <label className="col-form-label modal-label">
-                        Vencimiento SOAT *:
+                      <h6 className="label-form"> Vencimiento SOAT *:</h6>
                       </label>
                       <input
                         type="date"
-                        className={`form-control`}
+                        className={`form-control input-form`}
                         value={calcularFecha(vehicles.expedicion_soat, "vencimiento_soat")}
                         id="vencimiento_soat"
                         name="vencimiento_soat"
@@ -266,10 +267,10 @@ export const ModalVehicle = ({ isOpenModal, closeModal, vehicleEdit,  setVehicle
                     </div>
                     <div className="col">
                       <label className="col-form-label modal-label">
-                        Tipo vehículo *:
+                      <h6 className="label-form-tipo"> Tipo vehículo *:</h6>
                       </label>
                       <select
-                        className={`form-select`}
+                        className={`form-select input-form`}
                         value={vehicles.id_tipo}
                         name="id_tipo"
                         id="id_tipo"
@@ -287,11 +288,11 @@ export const ModalVehicle = ({ isOpenModal, closeModal, vehicleEdit,  setVehicle
                         ))}
                       </select>
                       <label className="col-form-label modal-label">
-                        Matrícula *:{" "}
+                      <h6 className="label-form"> Matrícula *:</h6>
                       </label>
                       <input
                         type="text"
-                        className={`form-control `}
+                        className={`form-control input-form`}
                         value={vehicles.matricula}
                         id="matricula"
                         name="matricula"
@@ -299,11 +300,11 @@ export const ModalVehicle = ({ isOpenModal, closeModal, vehicleEdit,  setVehicle
                         required
                       />
                        <label className="col-form-label modal-label">
-                        Expedición técnico mecánica *:
+                       <h6 className="label-form-mecanica"> Expedición técnico mecánica *:</h6>
                       </label>
                       <input
                         type="date"
-                        className={`form-control `}
+                        className={`form-control input-form`}
                         value={vehicles.expedicion_tecnomecanica}
                         id="expedicion_tecnomecanica"
                         name="expedicion_tecnomecanica"
@@ -313,11 +314,11 @@ export const ModalVehicle = ({ isOpenModal, closeModal, vehicleEdit,  setVehicle
                         required
                       />
                       <label className="col-form-label modal-label">
-                        Vencimiento técnico mecánica*
+                      <h6 className="label-form-mecanica"> Vencimiento técnico mecánica* </h6>
                       </label>
                       <input
                         type="date"
-                        className={`form-control`}
+                        className={`form-control input-form`}
                         value={calcularFecha(vehicles.expedicion_tecnomecanica, "vencimiento_tecnomecanica")}
                         id="vencimiento_tecnomecanica"
                         name="vencimiento_tecnomecanica"
@@ -327,22 +328,23 @@ export const ModalVehicle = ({ isOpenModal, closeModal, vehicleEdit,  setVehicle
                       />
                     </div>
                   </div>
-                  <div className="modal-footer modal-btn">
-                    <button type="submit" className="btn btn-info" onPress={handleSubmit}>
-                    {vehicleEdit ?
-                        ('Editar vehículo') :
-                        ('Registrar vehículo')}
-                    </button>
-                    <button
-                      type="reset"
-                      className="btn  btn-danger"
-                      onClick={handleCancelButton}
-                    >
-                      Cancelar registro
-                    </button>
-                  </div>
+                  
                 </form>
               </div>
+            </div>
+            <div className="modal-footer modal-btn">
+              <button type="submit" className="btn btn-info-form" onPress={handleSubmit}>
+                {vehicleEdit ?
+                  ('Editar vehículo') :
+                  ('Registrar vehículo')}
+              </button>
+              <button
+                type="reset"
+                className="btn  btn-danger"
+                onClick={handleCancelButton}
+              >
+              Cancelar registro
+              </button>
             </div>
           </div>
         </div>
