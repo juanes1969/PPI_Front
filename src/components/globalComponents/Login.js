@@ -1,44 +1,63 @@
-import React, { useState } from "react";
-import "../../Styles/login.css";
-import * as RiIcons from "react-icons/ri";
-import * as FaIcons from "react-icons/fa";
+import React, { useContext } from "react";
 import { IconContext } from "react-icons";
+import * as FaIcons from "react-icons/fa";
+import * as RiIcons from "react-icons/ri";
+import { useNavigate } from "react-router-dom";
 import logo from "../../assets/img/LogoBlack.png";
-import { UseCaseLogin } from "../../hooks/UseCaseLogin";
+import { AuthContext } from "../../auth/authContext";
+import { getUsers } from "../../helpers/LoginHelper";
+import { UseForm } from "../../hooks/UseForm";
+import "../../Styles/login.css";
+import { types } from "../../types/types";
 
 export const Login = () => {
 
-  const [formState, setFormState] = useState({
+
+  const navigate = useNavigate();
+  const { dispatch } = useContext(AuthContext);
+
+
+  const { handleInputChange, formValues, reset } = UseForm({
     usuario: '',
     clave: ''
   })
 
-  const [credentials, setCredentials] = useState({})
-
-  const handleInputChange = ({ target }) => {
-    setFormState({
-      ...formState,
-      [target.name]: target.value
-    })
-  }
-
-
-
-
-
-
-  console.log(formState)
+  console.log(formValues)
 
 
 
 
 
   const onSumbit = (e) => {
-    e.preventDefault()
-    UseCaseLogin(formState)
-    
-  }
+    e.preventDefault();
+    // reset();
 
+    var data = {
+      usuario: formValues.usuario,
+      clave: formValues.clave,
+    }
+
+    getUsers(data)
+      .then((response) => {
+        const resp = response.data;
+
+        const action = {
+          type: types.login,
+          payload: resp
+        }
+
+        if (response.data.data.length === 1) {
+          dispatch(action);
+
+          navigate('/Home', {
+            replace: true
+          });
+        }
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }
 
   return (
     <>
@@ -73,7 +92,7 @@ export const Login = () => {
                 className="form-control"
                 name="clave"
                 placeholder="Password"
-                onChange={handleInputChange}
+                onChange={handleInputChange}                
               />
             </div>
           </IconContext.Provider>

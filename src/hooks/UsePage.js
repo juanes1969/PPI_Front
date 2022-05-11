@@ -13,8 +13,8 @@ export const UsePage = (data, perPage, search) => {
             return data.slice(currentPage, currentPage + parseInt(perPage))
         } else {
             const filtered = data.filter(dat => dat.identificacion.toLowerCase().includes(search.toLowerCase()));
-            return filtered.slice(currentPage, currentPage + parseInt(perPage))
-        }
+            return filtered.slice(currentPage, currentPage + parseInt(perPage));
+        }        
     }
 
     const filtroVehiculo = (data, search) => {
