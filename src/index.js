@@ -5,8 +5,8 @@ import 'bootswatch/dist/journal/bootstrap.min.css'
 import './Styles/global.css'
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
+  <React.StrictMode>    
+      <App />
   </React.StrictMode>,
   document.getElementById('root')
 );

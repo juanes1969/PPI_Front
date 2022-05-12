@@ -178,7 +178,7 @@ export const ModalVehicle = ({ isOpenModal, closeModal, vehicleEdit,  setVehicle
                       <input
                         type="date"
                         className={`form-control`}
-                        value={vehicles.expedicion_poliza}
+                        value={dateFormat(vehicles.expedicion_poliza, "isoDate")}
                         name="expedicion_poliza"
                         id="expedicion_poliza"
                         onChange={handleChangeData}
