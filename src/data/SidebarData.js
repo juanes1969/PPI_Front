@@ -42,11 +42,5 @@ export const SidebarData = [
         path: '/Reports',
         icon: <FaIcons.FaNewspaper />,
         cName: 'nav-text'
-    },
-    {
-        title: 'Soporte',
-        path: '/Supports',
-        icon: <IoIcons.IoMdHelpCircle />,
-        cName: 'nav-text'
     }
 ]

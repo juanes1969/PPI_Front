@@ -3,8 +3,10 @@ import "../../Styles/modal.css";
 import { UseTypeVehicle, UseMarca, UseInsertVehicle, UseSaveVehicle } from "../../hooks/UseCaseVehicle";
 import dateFormat, { masks } from "dateformat";
 import logo from "../../assets/img/LogoNew.png";
+import { useForm } from "react-hook-form";
 export const ModalVehicle = ({ isOpenModal, closeModal, vehicleEdit,  setVehicleEdit, vehicles, setVehicles }) => {
 
+  const { register, formState: { errors } } = useForm();
 
   const initialVehicleState = {
     placa: "",
@@ -151,7 +153,9 @@ export const ModalVehicle = ({ isOpenModal, closeModal, vehicleEdit,  setVehicle
                         onChange={handleChangeData}
                         disabled={vehicleEdit ? true : false}
                         required
+                        {...register("placa", {required: true})}
                       />
+                      {errors.placa?.type === 'required' && "Placa es obligatoria"}
                       <label className="col-form-label modal-label">
                         <h6 className="label-form"> Marca *:</h6>
                       </label>

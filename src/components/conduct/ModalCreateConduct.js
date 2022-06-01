@@ -17,7 +17,7 @@ export const ModalCreateConduct = ({ isOpenEditModal, closeModalEdit, conductEdi
         tipo_licencia: "",
         licencia_conduccion: "",
         expedicion_curso_seguridad: null,
-        expedicion_curso_industrial : null,
+        expedicion_curso_industrial: null,
         expedicion_examenes_medicos: null,
         vencimiento_curso_seguridad: null,
         vencimiento_curso_industrial: null,
@@ -153,12 +153,12 @@ export const ModalCreateConduct = ({ isOpenEditModal, closeModalEdit, conductEdi
                                                 onChange={handleChangeData}
                                             />
                                             <label className="col-form-label modal-label">
-                                                Expedicion curso seguridad *:
+                                                Expedición curso seguridad *:
                                             </label>
                                             <input
                                                 type="date"
                                                 className={`form-control`}
-                                                value={conduct.expedicion_curso_seguridad}
+                                                value={dateFormat(conduct.expedicion_curso_seguridad, "isoDate")}
                                                 name="expedicion_curso_seguridad"
                                                 id="expedicion_curso_seguridad"
                                                 onChange={handleChangeData}
@@ -196,7 +196,7 @@ export const ModalCreateConduct = ({ isOpenEditModal, closeModalEdit, conductEdi
                                             <input
                                                 type="date"
                                                 className={`form-control`}
-                                                value={conduct.fecha_nacimiento}
+                                                value={dateFormat(conduct.fecha_nacimiento, "isoDate")}
                                                 name="fecha_nacimiento"
                                                 id="fecha_nacimiento"
                                                 onChange={handleChangeData}
@@ -208,7 +208,7 @@ export const ModalCreateConduct = ({ isOpenEditModal, closeModalEdit, conductEdi
                                             <input
                                                 type="date"
                                                 className={`form-control`}
-                                                value={conduct.expedicion_curso_industrial}
+                                                value={dateFormat(conduct.expedicion_curso_industrial, "isoDate")}
                                                 name="expedicion_curso_industrial"
                                                 id="expedicion_curso_industrial"
                                                 onChange={handleChangeData}
@@ -267,7 +267,7 @@ export const ModalCreateConduct = ({ isOpenEditModal, closeModalEdit, conductEdi
                                             <input
                                                 type="date"
                                                 className={`form-control `}
-                                                value={conduct.expedicion_examenes_medicos}
+                                                value={dateFormat(conduct.expedicion_examenes_medicos, "isoDate")}
                                                 id="expedicion_examenes_medicos"
                                                 name="expedicion_examenes_medicos"
                                                 onChange={handleChangeData}

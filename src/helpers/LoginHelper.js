@@ -1,9 +1,9 @@
 import axios from 'axios';
 import { url_api } from './http-common';
 
-export const getUsers = async (formLogin) => {
+export const getUsers = (formLogin) => {
     const url = `${url_api}User/getUser/`;
-    const resp = await axios.post(url, formLogin)
+    const resp = axios.post(url, formLogin)
 
     return resp;
 }

@@ -61,7 +61,7 @@ export const Conduct = () => {
     return (
         <>
             <div className="container" id="contenedorInicial">
-                <h1>Conductores</h1>
+                <h1 className="title-h1">Conductores</h1>
                 <span>
                     <SearchConduct
                         titleButton={"Agregar conductor"}

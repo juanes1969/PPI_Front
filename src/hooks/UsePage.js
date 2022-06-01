@@ -9,9 +9,9 @@ export const UsePage = (data, perPage, search) => {
         if (search.length === 0) {
             return data.slice(currentPage, currentPage + parseInt(perPage))
         } else {
-            const filtered = data.filter(dat => dat.identificacion.includes(search));
-            return filtered.slice(currentPage, currentPage + parseInt(perPage))
-        }
+            const filtered = data.filter(dat => dat.identificacion.toLowerCase().includes(search.toLowerCase()));
+            return filtered.slice(currentPage, currentPage + parseInt(perPage));
+        }        
     }
 
     const filtroVehiculo = (data, search) => {
