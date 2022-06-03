@@ -51,6 +51,23 @@ export const UsePage = (data, perPage, search) => {
         }
     }
 
+    const filtroExpense = (data, search) => {
+        debugger
+        console.log(data)
+        console.log(search)
+        return data.descripcion.toLowerCase().includes(search);
+    }
+
+    const filterExpense = () => {
+        console.log(currentPage)
+        if (search.length === 0) {
+            return data.slice(currentPage, currentPage + parseInt(perPage))
+        } else {
+            const filtered = data.filter(dat => filtroExpense(dat, search));
+            return filtered.slice(currentPage, currentPage + parseInt(perPage))
+        }
+    }
+
     const nextPage = (e) => {
         e.preventDefault()
         if (data.slice(currentPage, currentPage + parseInt(perPage)).length >= perPage) {
@@ -71,5 +88,5 @@ export const UsePage = (data, perPage, search) => {
 
 
 
-    return { filterConducts, filterRoutes,filterVehicle, nextPage, prevPage, setCurrentPage, setPage, page }
+    return { filterConducts, filterRoutes,filterVehicle,filterExpense, nextPage, prevPage, setCurrentPage, setPage, page }
 };
