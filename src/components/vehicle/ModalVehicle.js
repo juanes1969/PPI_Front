@@ -1,12 +1,12 @@
-import React, { useEffect} from "react";
+import React, { useEffect, useState} from "react";
 import "../../Styles/modal.css";
 import { UseTypeVehicle, UseMarca, UseInsertVehicle, UseSaveVehicle } from "../../hooks/UseCaseVehicle";
 import dateFormat, { masks } from "dateformat";
 import logo from "../../assets/img/LogoNew.png";
-import { useForm } from "react-hook-form";
 export const ModalVehicle = ({ isOpenModal, closeModal, vehicleEdit,  setVehicleEdit, vehicles, setVehicles }) => {
 
-  const { register, formState: { errors } } = useForm();
+
+  const [error, setError] = useState({});
 
   const initialVehicleState = {
     placa: "",
@@ -31,6 +31,19 @@ export const ModalVehicle = ({ isOpenModal, closeModal, vehicleEdit,  setVehicle
     setVehicles({...vehicles, [name]: value });
   }
 
+  const validateForm = (vehicles) => {
+    let error = {}
+
+    if(!vehicles.placa){
+      error.placa = "El campo Placa es requerido"
+    }
+    return error;
+  }
+
+  const handleBlur = (e) => {
+    handleChangeData(e);
+    setError(validateForm(vehicles));
+  }
   const handleSubmit = (e) => {
     e.preventDefault();
     if (vehicleEdit) {
@@ -144,18 +157,18 @@ export const ModalVehicle = ({ isOpenModal, closeModal, vehicleEdit,  setVehicle
                       <label className="col-form-label modal-label">
                         <h6 className="label-form-placa"> Placa *:</h6>
                       </label>
+                      {error.placa && <p>{error.placa}</p>}
                       <input
                         type="text"
                         className={`form-control input-form`}
                         value={vehicles.placa}
                         id="placa"
                         name="placa"
+                        onBlur={handleBlur}
                         onChange={handleChangeData}
                         disabled={vehicleEdit ? true : false}
                         required
-                        {...register("placa", {required: true})}
                       />
-                      {errors.placa?.type === 'required' && "Placa es obligatoria"}
                       <label className="col-form-label modal-label">
                         <h6 className="label-form"> Marca *:</h6>
                       </label>
