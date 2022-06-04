@@ -3,6 +3,9 @@ import "../../Styles/modal.css";
 import * as AiIcons from "react-icons/ai";
 import "../../helpers/modal-function";
 import { useForm } from "react-hook-form";
+import dateFormat, { masks } from "dateformat";
+
+
 import {
   UseCity,
   UseInsertRoute,
@@ -11,58 +14,80 @@ import {
   UseSaveRoute,
 } from "../../hooks/UseCaseRoute";
 
-export const ModalRoutes = ({ 
-    isOpenModal,
-    closeModal,
-    route,
-    setRouteData,
-    isEdit,
-    setIsEdit
-     
+export const ModalRoutes = ({
+  isOpenModal,
+  closeModal,
+  route,
+  setRouteData,
+  isEdit,
+  setIsEdit
+
 }) => {
 
   const initialRouteState = {
-    id_ruta : "",
-    producto : "",
-    cantidad : "",
-    fecha_inicio : null,
-    fecha_fin : null,
-    flete : "",
-    id_vehiculo :null,
-    id_estado_envio : null,
-    id_origen : null,
-    id_destino : null,
-}
-  
-const handleChangeData = ({ target }) => {
-  const { name, value } = target;
-  setRouteData({ ...route, [name]: value });
-}
-const handleSubmit = (e) => {
-  e.preventDefault();
-  if (isEdit) {
+    id_ruta: "",
+    producto: "",
+    cantidad: "",
+    fecha_inicio: null,
+    fecha_fin: null,
+    flete: "",
+    id_vehiculo: null,
+    id_estado_envio: null,
+    id_origen: null,
+    id_destino: null,
+  }
+
+  const handleChangeData = ({ target }) => {
+    const { name, value } = target;
+    setRouteData({ ...route, [name]: value });
+  }
+
+  console.log(route);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (isEdit) {
       UseSaveRoute(route)
-      
       e.target.reset();
       closeModal();
-  } else {
-      
+    } else {
+
       UseInsertRoute(route);
       setRouteData(initialRouteState);
       e.target.reset();
       closeModal();
-  }
-};
+    }
+  };
 
-const handleCancelButton = () => {
-  setRouteData(initialRouteState)
-  setIsEdit(null)
-  closeModal()
-}
+  const handleCancelButton = () => {
+    setRouteData(initialRouteState)
+    setIsEdit(null)
+    closeModal()
+  }
 
   const handleModalDialogClick = (e) => {
     e.stopPropagation();
   };
+  
+  const fechaMinima = () => {
+    let fechaMin = new Date();
+    fechaMin.setFullYear(fechaMin.getFullYear()-1)
+    fechaMin = dateFormat(fechaMin, "isoDate")
+    return fechaMin;
+  }
+
+  const fechaMaxima = () => {
+    let fechaMax = new Date();
+    fechaMax = dateFormat(fechaMax, "isoDate")
+    return fechaMax;
+  }
+
+  const valorMinimo = () => {
+    let valorMin = 500000
+    return valorMin;
+  }
+
+  
 
 
   const { data: vehicles } = UseVehicleRoute();
@@ -71,11 +96,12 @@ const handleCancelButton = () => {
 
   useEffect(() => {
     if (isEdit) {
-        setRouteData(isEdit)
+      setRouteData(isEdit)
     } else {
-        setRouteData(initialRouteState)
+      setRouteData(initialRouteState)
     }
-}, [isEdit, setRouteData, setIsEdit]);
+
+  }, [isEdit, setRouteData, setIsEdit]);
 
   return (
     <>
@@ -91,8 +117,8 @@ const handleCancelButton = () => {
             <div className="modal-header">
               <h3 className="modal-title" id="exampleModalLabel">
                 {isEdit ?
-                ('Editar ruta') :
-                ('Registrar ruta')}
+                  ('Editar ruta') :
+                  ('Registrar ruta')}
               </h3>
               <button
                 type="button"
@@ -112,11 +138,11 @@ const handleCancelButton = () => {
                 >
                   <div className="row align-items-start">
                     <div className="col">
-                      
+
 
 
                       <label className="col-form-label modal-label">
-                       Placa *:
+                        Placa *:
                       </label>
                       <select
                         className={`form-control`}
@@ -136,8 +162,8 @@ const handleCancelButton = () => {
                           </option>
                         ))}
                       </select>
-                       <label className="col-form-label modal-label">
-                       Producto *:
+                      <label className="col-form-label modal-label">
+                        Producto *:
                       </label>
                       <select
                         className={`form-control`}
@@ -157,10 +183,10 @@ const handleCancelButton = () => {
                           </option>
                         ))}
                       </select>
-                       
-                      
-                       <label className="col-form-label modal-label">
-                      Fecha Inicio *:
+
+
+                      <label className="col-form-label modal-label">
+                        Fecha Inicio *:
                       </label>
                       <input
                         type="date"
@@ -169,13 +195,15 @@ const handleCancelButton = () => {
                         name="fecha_inicio"
                         id="fecha_inicio"
                         onChange={handleChangeData}
+                        min={fechaMinima()}
+                        max={fechaMaxima()}
                         required
                       />
-                  
+
                     </div>
                     <div className="col">
                       <label className="col-form-label modal-label">
-                       Cantidad :
+                        Cantidad (Toneladas):
                       </label>
                       <input
                         type="text"
@@ -196,10 +224,11 @@ const handleCancelButton = () => {
                         name="flete"
                         id="flete"
                         onChange={handleChangeData}
+                        min={valorMinimo}
                         required
                       />
                       <label className="col-form-label modal-label">
-                       Fecha Fin *:
+                        Fecha Fin *:
                       </label>
                       <input
                         type="date"
@@ -209,11 +238,12 @@ const handleCancelButton = () => {
                         id="fecha_fin"
                         onChange={handleChangeData}
                         required
+
                       />
                     </div>
                     <div className="col">
                       <label className="col-form-label modal-label">
-                      Ciudad Origen *:
+                        Ciudad Origen *:
                       </label>
                       <select
                         className={`form-control`}
@@ -233,8 +263,8 @@ const handleCancelButton = () => {
                           </option>
                         ))}
                       </select>
-                       <label className="col-form-label modal-label">
-                      Ciudad Destino *:
+                      <label className="col-form-label modal-label">
+                        Ciudad Destino *:
                       </label>
                       <select
                         className={`form-control`}
@@ -257,8 +287,8 @@ const handleCancelButton = () => {
                     </div>
                   </div>
                   <div className="modal-footer modal-btn">
-                  <button type="submit" className="btn btn-info" onPress={handleSubmit}>
-                    {isEdit ?
+                    <button type="submit" className="btn btn-info" onPress={handleSubmit}>
+                      {isEdit ?
                         ('Editar ruta') :
                         ('Registrar ruta')}
                     </button>

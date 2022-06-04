@@ -1,154 +1,85 @@
 import axios from 'axios';
-import {url_api} from './http-common';
+import { url_api } from './http-common';
 
-export const getAllRoute = async() => {
-    const url = `${url_api}Route/`;
+
+
+export const getAllExpense = async () => {
+    const url = `${url_api}Expenses/`;
     const resp = await axios.get(url)
-    const typeRoute = resp.data.map(route => {
+    const typeExpense = resp.data.map(expense => {
         return {
-            id_ruta:route.id_ruta,
-            nombre_producto:route.nombre_producto,
-            cantidad:route.cantidad,
-            fecha_inicio:route.fecha_inicio,
-            fecha_fin:route.fecha_fin,
-            flete:route.flete,
-            placa:route.placa,
-            ciudad_origen:route.ciudad_origen,
-            ciudad_destino:route.ciudad_destino,
-            estado:route.estado
+            id_gasto: expense.id_gasto,
+            valor_gasto: expense.valor_gasto,
+            descripcion: expense.descripcion,
+            id_ruta: expense.id_ruta,
+            tipo_gasto: expense.tipo_gasto,
         }
     });
 
-    return typeRoute;
+    return typeExpense;
 }
 
-export const getVehicleRoute = async() => {
-    const url = `${url_api}Route/vehicleRoute`;
+
+
+
+
+
+export const getAllTypeExpense = async () => {
+    const url = `${url_api}Expenses/typeExpenses`;
     const resp = await axios.get(url)
 
-    const typeVechicle = resp.data.map(route => {
+    const typeAllExpense = resp.data.map(expense => {
         return {
-            
-            id_vehiculo:route.id_vehiculo, 
-            placa:route.placa,
-            identificacion:route.identificacion,  
-            id_conductor:route.identificacion,            
-          
-        }
-    });
-
-    return typeVechicle;
-}
-
-export const getAllState = async() => {
-    const url = `${url_api}Route/stateRoute`;
-    const resp = await axios.get(url)
-
-    const typeState = resp.data.map(route => {
-        return {
-            id_estado_ruta:route.id_estado_ruta,
-            estado:route.estado            
-        }
-    });
-
-    return typeState;
-}
-
-export const getAllCity = async() => {
-    const url = `${url_api}Route/cityRoute`;
-    const resp = await axios.get(url)
-
-    const typeCityRoute = resp.data.map(route => {
-        return {
-            
-        
-            id_origen:route.id_ciudad,
-            id_destino:route.id_ciudad,
-            ciudad_destino:route.descripcion,            
-            ciudad_origen:route.descripcion
-           
+            id_tipo_gasto: expense.id_tipo_gasto,
+            descripcion: expense.descripcion,
 
         }
     });
 
-    return typeCityRoute;
-}
-
-export const getAllProduct = async() => {
-    const url = `${url_api}Route/product`;
-    const resp = await axios.get(url)
-
-    const typeProduct = resp.data.map(route => {
-        return {
-            
-        
-            id_producto:route.id_producto,
-            referencia:route.referencia,
-            nombre_producto:route.nombre_producto,            
-            caracteristica:route.caracteristica
-           
-
-        }
-    });
-
-    return typeProduct;
-}
-
-export const getConduct = async(placa) => {
-    const url = `${url_api}Vehicle/getConductByVehicle/${placa}`;
-    const resp = await axios.get(url)
-
-    const typeConductRoute = resp.data.map(route => {
-        return {
-            identificacion: route.identificacion,
-            id_conductor: route.identificacion  
-
-        }
-    });
-
-    return typeConductRoute;
+    return typeAllExpense;
 }
 
 
-export const insertRoute = async(data) => {
-    const url = `${url_api}Route/newRoute`;
+
+
+
+
+export const insertExpense = async (data) => {
+    const url = `${url_api}Expenses/newExpense`;
     const resp = await axios.post(url, data)
     return resp;
 }
 
-  
-export const editRoute = async (data, id_ruta) => {
-    const url = `${url_api}routeEdit/${id_ruta}`;
+
+export const editExpense = async (data, id_gasto) => {
+    const url = `${url_api}Expenses/routeExpenses/${id_gasto}`;
     const resp = await axios.put(url, data);
     return resp;
 };
 
-export const getRouteByIdRoute= async (id_ruta) => {
-    const url = `${url_api}Route/getRoute/${id_ruta}`;
-    const resp = await axios.get(url);
-    const routeData = resp.data.map((type) => {
-        return {
-            id_ruta:type.id_ruta,
-            nombre_producto:type.nombre_producto,
-            cantidad:type.cantidad,
-            fecha_inicio:type.fecha_inicio,
-            fecha_fin:type.fecha_fin,
-            flete:type.flete,
-            placa:type.placa,
-            ciudad_origen:type.ciudad_origen,
-            ciudad_destino:type.ciudad_destino,
-            estado:1,
-        };
-      });
-    
-      return routeData;
-    };
-  
 
-export const deleteRoute = async (id_ruta) => {
-    const url = `${url_api}Route/deleteRoute/${id_ruta}`;
+
+export const getExpenseByIdExpense = async (id_gasto) => {
+    const url = `${url_api}Expenses/getExpense/${id_gasto}`;
+    const resp = await axios.get(url);
+    const expenseData = resp.data.map((dataExpense) => {
+        return {
+            id_gasto: dataExpense.id_gasto,
+            valor_gasto: dataExpense.valor_gasto,
+            descripcion: dataExpense.descripcion,
+            id_ruta: dataExpense.id_ruta,
+            id_tipo_gasto: dataExpense.id_tipo_gasto
+        };
+    });
+
+    return expenseData;
+};
+
+
+export const deleteExpense = async (id_gasto) => {
+    const url = `${url_api}Expenses/deleteExpense/${id_gasto}`;
     const resp = await axios.delete(url)
-    
+
     return resp;
 }
 
