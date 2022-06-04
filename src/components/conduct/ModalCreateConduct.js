@@ -1,11 +1,15 @@
 import dateFormat, { masks } from "dateformat";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "../../helpers/modal-function";
+import { ValidationsFormConduct } from "../../helpers/ValidationsFormConduct";
 import { UseEditConduct, UseInsertConduct, UseLicenseAvailable } from "../../hooks/UseCaseConduct";
 import { UseVehicleAvailable } from "../../hooks/UseCaseVehicle";
 import "../../Styles/modal.css";
 
 export const ModalCreateConduct = ({ isOpenEditModal, closeModalEdit, conductEdit, setConductEdit, conduct, setConduct }) => {
+
+
+    const [errors, setErrors] = useState({});
 
     const initialConductState = {
         identificacion: "",
@@ -31,21 +35,34 @@ export const ModalCreateConduct = ({ isOpenEditModal, closeModalEdit, conductEdi
         setConduct({ ...conduct, [name]: value });
     }
 
-    console.log(conduct);
+
+
+
+    const handleBlur = (e) => {
+        handleChangeData(e);
+        setErrors(ValidationsFormConduct(conduct))
+    }
+
+    //console.log(conduct);
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (conductEdit) {
-            UseEditConduct(conduct)
-            e.target.reset();
-            closeModalEdit();
+        if (Object.entries(errors).length === 0) {
+            if (conductEdit) {
+                UseEditConduct(conduct)
+                e.target.reset();
+                closeModalEdit();
+            } else {
+                debugger
+                UseInsertConduct(conduct);
+                setConduct(initialConductState);
+                e.target.reset();
+                closeModalEdit();
+            }
         } else {
-            debugger
-            UseInsertConduct(conduct);
-            setConduct(initialConductState);
-            e.target.reset();
-            closeModalEdit();
+            alert('Debes ingresar los campos de manera correcta');
         }
+
     };
 
 
@@ -65,24 +82,35 @@ export const ModalCreateConduct = ({ isOpenEditModal, closeModalEdit, conductEdi
     const { data: licenses } = UseLicenseAvailable()
 
     const calcularFecha = (fecha, input) => {
-        var myElement = document.getElementById(input);
+        let myElement = document.getElementById(input);
+        let fechaVencimiento = new Date(fecha)
         if (isOpenEditModal && fecha != null && myElement.value == "") {
-            let fechaVencimiento = new Date(fecha)
             fechaVencimiento.setDate(fechaVencimiento.getDate() + 1)
             fechaVencimiento.setFullYear(fechaVencimiento.getFullYear() + 1)
             fechaVencimiento = dateFormat(fechaVencimiento, "isoDate")
-            activarOnChange(fechaVencimiento, input)
+            return fechaVencimiento;
+        }
+        if (isOpenEditModal && fecha != null && myElement.value != fecha) {
+            fechaVencimiento.setDate(fechaVencimiento.getDate() + 1)
+            fechaVencimiento.setFullYear(fechaVencimiento.getFullYear() + 1)
+            fechaVencimiento = dateFormat(fechaVencimiento, "isoDate")
             return fechaVencimiento;
         }
     }
 
-    const activarOnChange = (fechaVencimiento, valor) => {
-        var myElement = document.getElementById(valor);
-        if (!myElement.onchange) {
-            setConduct({ ...conduct, [valor]: fechaVencimiento });
-            myElement.onchange = true
-        }
+    const fechaMinima = () => {
+        let fechaMin = new Date();
+        fechaMin.setFullYear(fechaMin.getFullYear() - 1)
+        fechaMin = dateFormat(fechaMin, "isoDate")
+        return fechaMin;
     }
+
+    const fechaMaxima = () => {
+        let fechaMax = new Date();
+        fechaMax = dateFormat(fechaMax, "isoDate")
+        return fechaMax;
+    }
+    
 
     useEffect(() => {
         if (conductEdit) {
@@ -141,6 +169,8 @@ export const ModalCreateConduct = ({ isOpenEditModal, closeModalEdit, conductEdi
                                                 disabled={conductEdit ? true : false}
                                                 required
                                             />
+                                            {errors.identificacion && <p>{errors.identificacion}</p>}
+
                                             <label className="col-form-label modal-label">
                                                 Telefono *:
                                             </label>
@@ -152,16 +182,20 @@ export const ModalCreateConduct = ({ isOpenEditModal, closeModalEdit, conductEdi
                                                 id="telefono_contacto"
                                                 onChange={handleChangeData}
                                             />
+                                            {errors.telefono_contacto && <p>{errors.telefono_contacto}</p>}
+
                                             <label className="col-form-label modal-label">
                                                 Expedición curso seguridad *:
                                             </label>
                                             <input
                                                 type="date"
                                                 className={`form-control`}
-                                                value={dateFormat(conduct.expedicion_curso_seguridad, "isoDate")}
+                                                value={conductEdit && dateFormat(conduct.expedicion_curso_seguridad, "isoDate")}
                                                 name="expedicion_curso_seguridad"
                                                 id="expedicion_curso_seguridad"
                                                 onChange={handleChangeData}
+                                                min={fechaMinima()}
+                                                max={fechaMaxima()}
                                                 required
                                             />
                                             <label className="col-form-label modal-label">
@@ -172,7 +206,7 @@ export const ModalCreateConduct = ({ isOpenEditModal, closeModalEdit, conductEdi
                                                 className={`form-control`}
                                                 value={calcularFecha(conduct.expedicion_curso_seguridad, "vencimiento_curso_seguridad")}
                                                 name="vencimiento_curso_seguridad"
-                                                id="vencimiento_curso_seguridad"
+                                                id="vencimiento_curso_seguridad"                                                
                                                 required
                                                 onChange={handleChangeData}
                                                 readOnly
@@ -190,13 +224,16 @@ export const ModalCreateConduct = ({ isOpenEditModal, closeModalEdit, conductEdi
                                                 id="nombre"
                                                 onChange={handleChangeData}
                                             />
+
+                                            {errors.nombre && <p>{errors.nombre}</p>}
+
                                             <label className="col-form-label modal-label">
                                                 Fecha nacimiento *:
                                             </label>
                                             <input
                                                 type="date"
                                                 className={`form-control`}
-                                                value={dateFormat(conduct.fecha_nacimiento, "isoDate")}
+                                                value={conductEdit && dateFormat(conduct.fecha_nacimiento, "isoDate")}
                                                 name="fecha_nacimiento"
                                                 id="fecha_nacimiento"
                                                 onChange={handleChangeData}
@@ -208,10 +245,12 @@ export const ModalCreateConduct = ({ isOpenEditModal, closeModalEdit, conductEdi
                                             <input
                                                 type="date"
                                                 className={`form-control`}
-                                                value={dateFormat(conduct.expedicion_curso_industrial, "isoDate")}
+                                                value={conductEdit && dateFormat(conduct.expedicion_curso_industrial, "isoDate")}
                                                 name="expedicion_curso_industrial"
                                                 id="expedicion_curso_industrial"
                                                 onChange={handleChangeData}
+                                                min={fechaMinima()}
+                                                max={fechaMaxima()}
                                                 required
                                             />
                                             <label className="col-form-label modal-label">
@@ -240,6 +279,8 @@ export const ModalCreateConduct = ({ isOpenEditModal, closeModalEdit, conductEdi
                                                 id="primer_apellido"
                                                 onChange={handleChangeData}
                                             />
+                                            {errors.primer_apellido && <p>{errors.primer_apellido}</p>}
+
                                             <label className="col-form-label modal-label">
                                                 Tipo licencia *: {" "}
                                             </label>
@@ -267,10 +308,12 @@ export const ModalCreateConduct = ({ isOpenEditModal, closeModalEdit, conductEdi
                                             <input
                                                 type="date"
                                                 className={`form-control `}
-                                                value={dateFormat(conduct.expedicion_examenes_medicos, "isoDate")}
+                                                value={conductEdit && dateFormat(conduct.expedicion_examenes_medicos, "isoDate")}
                                                 id="expedicion_examenes_medicos"
                                                 name="expedicion_examenes_medicos"
                                                 onChange={handleChangeData}
+                                                min={fechaMinima()}
+                                                max={fechaMaxima()}
                                                 required
                                             />
 
@@ -300,6 +343,8 @@ export const ModalCreateConduct = ({ isOpenEditModal, closeModalEdit, conductEdi
                                                 id="segundo_apellido"
                                                 onChange={handleChangeData}
                                             />
+                                            {errors.segundo_apellido && <p>{errors.segundo_apellido}</p>}
+
                                             <label className="col-form-label modal-label">
                                                 Numero licencia *:
                                             </label>
@@ -312,6 +357,9 @@ export const ModalCreateConduct = ({ isOpenEditModal, closeModalEdit, conductEdi
                                                 onChange={handleChangeData}
                                                 required
                                             />
+
+                                            {errors.licencia_conduccion && <p>{errors.licencia_conduccion}</p>}
+
                                             <label className="col-form-label modal-label">
                                                 Vehiculos disponibles *:
                                             </label>
@@ -336,7 +384,7 @@ export const ModalCreateConduct = ({ isOpenEditModal, closeModalEdit, conductEdi
                                         </div>
                                     </div>
                                     <div className="modal-footer modal-btn mt-4">
-                                        <button type="submit" className="btn btn-info" onPress={handleSubmit}>
+                                        <button type="submit" className="btn btn-info" onPress={handleSubmit} onClick={handleBlur}>
                                             {conductEdit ?
                                                 ('Editar Conductor') :
                                                 ('Registrar Conductor')}
