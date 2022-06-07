@@ -5,6 +5,10 @@
     justify-content: start;
     align-items: center;
   }
+
+  .navbar-header{
+    z-index: 10;
+  }
   
   .menu-bars {
     margin-left: 1rem;
@@ -24,7 +28,7 @@
     top: 0;
     left: -100%;
     transition: 850ms;
-    margin-top: 80px;
+    z-index: 5;
   }
   
   .nav-menu.active {
@@ -60,6 +64,7 @@
   .nav-menu-items {
     width: 100%;
     padding-left: 0px;
+    padding-top: 80px;
   }
   
   .navbar-toggle h1{

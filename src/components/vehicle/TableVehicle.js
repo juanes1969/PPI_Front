@@ -61,7 +61,7 @@ export const Vehicle = () => {
     return (
         <>
             <div className="container" id="contenedorInicial">
-                <h1 className="title-h1">VEHÍCULOS</h1>
+                <h1 className="title-h1">Vehículos</h1>
                 <span>
                     <SearchConduct 
                         titleButton={"Agregar Vehículos"} 

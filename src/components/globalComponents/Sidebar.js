@@ -27,7 +27,7 @@ export const Sidebar = () => {
     return (
         <>
             <IconContext.Provider value={{ color: '#47772e' }}>
-                <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+                <nav className="navbar navbar-header navbar-expand-lg navbar-dark bg-dark">
                     <div className="container-fluid">
                     <Link to='#' className='menu-bars'>
                         <FaIcons.FaBars onClick={showSidebar} />

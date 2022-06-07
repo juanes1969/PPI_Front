@@ -51,4 +51,5 @@
     font-family: var(--font-primary) !important;
     font-size: 40px;
     color: var(--font-color-primary);
+    margin-top: 25px;
 }

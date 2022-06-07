@@ -33,10 +33,38 @@ export const ModalVehicle = ({ isOpenModal, closeModal, vehicleEdit,  setVehicle
 
   const validateForm = (vehicles) => {
     let error = {}
+    let regexPlaca = /^([A-Z]{3}-([0-9]{3})+)*$/;
+    let regexNumber = /^[0-9]*$/;
+    let regexYear = /^[0-9]{4}$/;
+    let regexPlacaTrailer = /^([R]{1}-([0-9]{5})+)*$/;
+
 
     if(!vehicles.placa){
       error.placa = "El campo Placa es requerido"
+    }else if (!regexPlaca.test(vehicles.placa)){
+      error.placa = "Formato de placa invalido"
     }
+    
+    if(!vehicles.capacidad){
+      error.capacidad = "El campo Capacidad es requerido"
+    }else if (!regexNumber.test(vehicles.capacidad)){
+      error.capacidad = "Solo se permiten números"
+    }
+
+    if (!regexPlacaTrailer.test(vehicles.r_trailer)){
+      error.r_trailer = "Formato de placa invalido"
+    }
+
+    if(!vehicles.modelo){
+      error.modelo = "El campo Modelo es requerido"
+    }else if (!regexYear.test(vehicles.modelo)){
+      error.modelo = "Año invalido"
+    }
+
+    if(!vehicles.matricula){
+      error.matricula = "El campo Matrícula es requerido"
+    }
+
     return error;
   }
 
@@ -46,6 +74,7 @@ export const ModalVehicle = ({ isOpenModal, closeModal, vehicleEdit,  setVehicle
   }
   const handleSubmit = (e) => {
     e.preventDefault();
+    setError(validateForm(vehicles));
     if (vehicleEdit) {
       UseSaveVehicle(vehicles)
       e.target.reset();
@@ -220,12 +249,14 @@ export const ModalVehicle = ({ isOpenModal, closeModal, vehicleEdit,  setVehicle
                       <label className="col-form-label modal-label">
                       <h6 className="label-form"> Capacidad (Toneladas)*:</h6>
                       </label>
+                      {error.capacidad && <p>{error.capacidad}</p>}
                       <input
                         type="text"
                         className={`form-control input-form`}
                         value={vehicles.capacidad}
                         name="capacidad"
                         id="capacidad"
+                        onBlur={handleBlur}
                         onChange={handleChangeData}
                         required
                       />
@@ -234,23 +265,27 @@ export const ModalVehicle = ({ isOpenModal, closeModal, vehicleEdit,  setVehicle
                       <label className="col-form-label modal-label">
                       <h6 className="label-form"> Placa trailer:</h6>
                       </label>
+                      {error.r_trailer && <p>{error.r_trailer}</p>}
                       <input
                         type="text"
                         className={`form-control input-form`}
                         value={vehicles.r_trailer}
                         name="r_trailer"
                         id="r_trailer"
+                        onBlur={handleBlur}
                         onChange={handleChangeData}
                       />
                       <label className="col-form-label modal-label">
                       <h6 className="label-form"> Modelo *:</h6>
                       </label>
+                      {error.modelo && <p>{error.modelo}</p>}
                       <input
                         type="text"
                         className={`form-control input-form`}
                         value={vehicles.modelo}
                         name="modelo"
                         id="modelo"
+                        onBlur={handleBlur}
                         onChange={handleChangeData}
                         required
                       />
@@ -307,12 +342,14 @@ export const ModalVehicle = ({ isOpenModal, closeModal, vehicleEdit,  setVehicle
                       <label className="col-form-label modal-label">
                       <h6 className="label-form"> Matrícula *:</h6>
                       </label>
+                      {error.matricula && <p>{error.matricula}</p>}
                       <input
                         type="text"
                         className={`form-control input-form`}
                         value={vehicles.matricula}
                         id="matricula"
                         name="matricula"
+                        onBlur={handleBlur}
                         onChange={handleChangeData}
                         required
                       />
