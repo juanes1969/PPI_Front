@@ -183,6 +183,8 @@ export const ModalVehicle = ({ isOpenModal, closeModal, vehicleEdit,  setVehicle
                 >
                   <div className="row align-items-start">
                     <div className="col">
+
+                      
                       <label className="col-form-label modal-label">
                         <h6 className="label-form-placa"> Placa *:</h6>
                       </label>

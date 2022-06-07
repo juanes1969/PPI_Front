@@ -27,6 +27,40 @@ export const UsePage = (data, perPage, search) => {
         }
     }
 
+    const filtroRuta = (data, search) => {
+        debugger
+        console.log(data)
+        console.log(search)
+        return data.id_ruta.includes(search) || data.nombre_producto.toLowerCase().includes(search);
+    }
+
+    const filterRoutes = () => {
+        console.log(currentPage)
+        if (search.length === 0) {
+            return data.slice(currentPage, currentPage + parseInt(perPage))
+        } else {
+            const filtered = data.filter(dat => filtroRuta(dat, search));
+            return filtered.slice(currentPage, currentPage + parseInt(perPage))
+        }
+    }
+
+    const filtroExpense = (data, search) => {
+        debugger
+        console.log(data)
+        console.log(search)
+        return data.descripcion.toLowerCase().includes(search);
+    }
+
+    const filterExpense = () => {
+        console.log(currentPage)
+        if (search.length === 0) {
+            return data.slice(currentPage, currentPage + parseInt(perPage))
+        } else {
+            const filtered = data.filter(dat => filtroExpense(dat, search));
+            return filtered.slice(currentPage, currentPage + parseInt(perPage))
+        }
+    }
+
     const nextPage = (e) => {
         e.preventDefault()
         if (data.slice(currentPage, currentPage + parseInt(perPage)).length >= perPage) {
@@ -46,5 +80,6 @@ export const UsePage = (data, perPage, search) => {
     }
 
 
-    return { filterVehicle, filterConducts, nextPage, prevPage, setCurrentPage, setPage, page }
+
+    return { filterConducts, filterRoutes,filterVehicle,filterExpense, nextPage, prevPage, setCurrentPage, setPage, page }
 };
