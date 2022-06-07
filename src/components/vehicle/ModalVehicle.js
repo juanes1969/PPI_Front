@@ -3,6 +3,7 @@ import "../../Styles/modal.css";
 import { UseTypeVehicle, UseMarca, UseInsertVehicle, UseSaveVehicle } from "../../hooks/UseCaseVehicle";
 import dateFormat, { masks } from "dateformat";
 import logo from "../../assets/img/LogoNew.png";
+import ValidationsFormVehicle from "../../helpers/ValidationsFormVehicle";
 export const ModalVehicle = ({ isOpenModal, closeModal, vehicleEdit,  setVehicleEdit, vehicles, setVehicles }) => {
 
 
@@ -31,60 +32,26 @@ export const ModalVehicle = ({ isOpenModal, closeModal, vehicleEdit,  setVehicle
     setVehicles({...vehicles, [name]: value });
   }
 
-  const validateForm = (vehicles) => {
-    let error = {}
-    let regexPlaca = /^([A-Z]{3}-([0-9]{3})+)*$/;
-    let regexNumber = /^[0-9]*$/;
-    let regexYear = /^[0-9]{4}$/;
-    let regexPlacaTrailer = /^([R]{1}-([0-9]{5})+)*$/;
-
-
-    if(!vehicles.placa){
-      error.placa = "El campo Placa es requerido"
-    }else if (!regexPlaca.test(vehicles.placa)){
-      error.placa = "Formato de placa invalido"
-    }
-    
-    if(!vehicles.capacidad){
-      error.capacidad = "El campo Capacidad es requerido"
-    }else if (!regexNumber.test(vehicles.capacidad)){
-      error.capacidad = "Solo se permiten números"
-    }
-
-    if (!regexPlacaTrailer.test(vehicles.r_trailer)){
-      error.r_trailer = "Formato de placa invalido"
-    }
-
-    if(!vehicles.modelo){
-      error.modelo = "El campo Modelo es requerido"
-    }else if (!regexYear.test(vehicles.modelo)){
-      error.modelo = "Año invalido"
-    }
-
-    if(!vehicles.matricula){
-      error.matricula = "El campo Matrícula es requerido"
-    }
-
-    return error;
-  }
-
   const handleBlur = (e) => {
     handleChangeData(e);
-    setError(validateForm(vehicles));
+    setError(ValidationsFormVehicle(vehicles));
   }
   const handleSubmit = (e) => {
     e.preventDefault();
-    setError(validateForm(vehicles));
-    if (vehicleEdit) {
-      UseSaveVehicle(vehicles)
-      e.target.reset();
-      closeModal();
-  } else {
-      UseInsertVehicle(vehicles);
-      setVehicles(initialVehicleState);
-      e.target.reset();
-      closeModal();
-  }
+    if (Object.entries(error).length === 0) {
+      if (vehicleEdit) {
+        UseSaveVehicle(vehicles)
+        e.target.reset();
+        closeModal();
+      } else {
+          UseInsertVehicle(vehicles);
+          setVehicles(initialVehicleState);
+          e.target.reset();
+          closeModal();
+      }
+    } else {
+      alert('Debes ingresar los campos de manera correcta');
+    }
   };
 
   const handleCancelButton = () => {
@@ -121,12 +88,6 @@ export const ModalVehicle = ({ isOpenModal, closeModal, vehicleEdit,  setVehicle
     }
   }
 
-  const formatoFecha = (date) => {
-    date = date.setDate(date.getDate() + 1);
-    return dateFormat(date, "isoDate");
-  }
-
-
   const fechaMinima = () => {
     let fechaMin = new Date();
     fechaMin.setFullYear(fechaMin.getFullYear()-1)
@@ -156,7 +117,7 @@ export const ModalVehicle = ({ isOpenModal, closeModal, vehicleEdit,  setVehicle
       >
         <div className="modal-dialog">
           <div
-            className="modal-content contenido__modal"
+            className="modal-content modal-vehicle contenido__modal"
             onClick={handleModalDialogClick}>
             <div className="modal-header">
              <img className="logo-form" src={logo} alt="logo" />
@@ -389,7 +350,7 @@ export const ModalVehicle = ({ isOpenModal, closeModal, vehicleEdit,  setVehicle
               </div>
             </div>
             <div className="modal-footer modal-btn">
-              <button type="submit" className="btn btn-info-form" onPress={handleSubmit}>
+              <button type="submit" className="btn btn-info-form" onPress={handleSubmit} onClick={handleBlur}>
                 {vehicleEdit ?
                   ('Editar vehículo') :
                   ('Registrar vehículo')}

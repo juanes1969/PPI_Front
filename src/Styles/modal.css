@@ -22,7 +22,28 @@
     background-color: var(--background-modal) !important;
     padding: 10px;
     width: 950px;
+}
+
+.modal-conduct{
+    height: 80vh;
+}
+
+.modal-vehicle{
     height: 90vh;
+}
+
+.modal-ruta{
+    height: 70vh;
+}
+
+.modal-gasto-ruta{
+    height: 320px;
+    width: 60% !important;
+    margin-left: 20% !important;
+}
+
+.modal-mantenimiento{
+    height: 70vh;
 }
 
 .modal-content{

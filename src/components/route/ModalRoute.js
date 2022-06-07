@@ -4,6 +4,7 @@ import * as AiIcons from "react-icons/ai";
 import "../../helpers/modal-function";
 import { useForm } from "react-hook-form";
 import dateFormat, { masks } from "dateformat";
+import logo from "../../assets/img/LogoNew.png";
 
 
 import {
@@ -111,10 +112,11 @@ export const ModalRoutes = ({
       >
         <div className="modal-dialog">
           <div
-            className="modal-content contenido__modal"
+            className="modal-content modal-ruta contenido__modal"
             onClick={handleModalDialogClick}
           >
             <div className="modal-header">
+            <img className="logo-form" src={logo} alt="logo" />
               <h3 className="modal-title" id="exampleModalLabel">
                 {isEdit ?
                   ('Editar ruta') :
@@ -145,7 +147,7 @@ export const ModalRoutes = ({
                         Placa *:
                       </label>
                       <select
-                        className={`form-control`}
+                        className={`form-control input-form`}
                         value={route.id_vehiculo}
                         name="id_vehiculo"
                         id="id_vehiculo"
@@ -166,7 +168,7 @@ export const ModalRoutes = ({
                         Producto *:
                       </label>
                       <select
-                        className={`form-control`}
+                        className={`form-control input-form`}
                         value={route.producto}
                         name="producto"
                         id="producto"
@@ -190,7 +192,7 @@ export const ModalRoutes = ({
                       </label>
                       <input
                         type="date"
-                        className={`form-control`}
+                        className={`form-control input-form`}
                         value={route.fecha_inicio}
                         name="fecha_inicio"
                         id="fecha_inicio"
@@ -207,7 +209,7 @@ export const ModalRoutes = ({
                       </label>
                       <input
                         type="text"
-                        className={`form-control`}
+                        className={`form-control input-form`}
                         value={route.cantidad}
                         name="cantidad"
                         id="cantidad"
@@ -219,7 +221,7 @@ export const ModalRoutes = ({
                       </label>
                       <input
                         type="text"
-                        className={`form-control`}
+                        className={`form-control input-form`}
                         value={route.flete}
                         name="flete"
                         id="flete"
@@ -232,7 +234,7 @@ export const ModalRoutes = ({
                       </label>
                       <input
                         type="date"
-                        className={`form-control`}
+                        className={`form-control input-form`}
                         value={route.fecha_fin}
                         name="fecha_fin"
                         id="fecha_fin"
@@ -246,7 +248,7 @@ export const ModalRoutes = ({
                         Ciudad Origen *:
                       </label>
                       <select
-                        className={`form-control`}
+                        className={`form-control input-form`}
                         value={route.id_origen}
                         name="id_origen"
                         id="id_origen"
@@ -267,7 +269,7 @@ export const ModalRoutes = ({
                         Ciudad Destino *:
                       </label>
                       <select
-                        className={`form-control`}
+                        className={`form-control input-form`}
                         value={route.id_destino}
                         name="id_destino"
                         id="id_destino"
@@ -286,8 +288,11 @@ export const ModalRoutes = ({
                       </select>
                     </div>
                   </div>
+                </form>
+              </div>
+            </div>
                   <div className="modal-footer modal-btn">
-                    <button type="submit" className="btn btn-info" onPress={handleSubmit}>
+                    <button type="submit" className="btn btn-info-form" onPress={handleSubmit}>
                       {isEdit ?
                         ('Editar ruta') :
                         ('Registrar ruta')}
@@ -300,9 +305,6 @@ export const ModalRoutes = ({
                       Cancelar registro
                     </button>
                   </div>
-                </form>
-              </div>
-            </div>
           </div>
         </div>
       </div>
