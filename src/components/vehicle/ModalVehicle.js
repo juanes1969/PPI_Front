@@ -33,6 +33,8 @@ export const ModalVehicle = ({ isOpenModal, closeModal, vehicleEdit,  setVehicle
   }
 
   const handleBlur = (e) => {
+    console.log("BOTON REGISTAR")
+    console.log(e)
     handleChangeData(e);
     setError(ValidationsFormVehicle(vehicles));
   }
@@ -144,28 +146,25 @@ export const ModalVehicle = ({ isOpenModal, closeModal, vehicleEdit,  setVehicle
                 >
                   <div className="row align-items-start">
                     <div className="col">
-
-                      
                       <label className="col-form-label modal-label">
                         <h6 className="label-form-placa"> Placa *:</h6>
                       </label>
-                      {error.placa && <p>{error.placa}</p>}
                       <input
                         type="text"
-                        className={`form-control input-form`}
+                        className={`form-control input-form ${error.placa && "input-error"}`}
                         value={vehicles.placa}
                         id="placa"
                         name="placa"
-                        onBlur={handleBlur}
                         onChange={handleChangeData}
                         disabled={vehicleEdit ? true : false}
                         required
-                      />
+                      /> 
+                      {error.placa && <p className="error-message">{error.placa}</p>}
                       <label className="col-form-label modal-label">
                         <h6 className="label-form"> Marca *:</h6>
                       </label>
                       <select  
-                      className={`form-select input-form`}
+                      className={`form-select input-form ${error.id_marca ? "input-error" : ""}`}
                       value={vehicles.id_marca}
                       name="id_marca"
                       id="id_marca"
@@ -181,13 +180,14 @@ export const ModalVehicle = ({ isOpenModal, closeModal, vehicleEdit,  setVehicle
                             {marca.marcaVehiculo}
                           </option>
                         ))}
-                      </select>
+                      </select> 
+                    {error.id_marca && <p className="error-message">{error.id_marca}</p>}
                        <label className="col-form-label modal-label">
                         <h6 className="label-form"> Expedición poliza *:</h6>
                       </label>
                       <input
                         type="date"
-                        className={`form-control input-form`}
+                        className={`form-control input-form ${error.expedicion_poliza ? "input-error" : ""}`}
                         value={vehicles.expedicion_poliza}
                         name="expedicion_poliza"
                         id="expedicion_poliza"
@@ -195,7 +195,8 @@ export const ModalVehicle = ({ isOpenModal, closeModal, vehicleEdit,  setVehicle
                         min={fechaMinima()}
                         max={fechaMaxima()}
                         required
-                      />
+                      /> 
+                      {error.expedicion_poliza && <p className="error-message">{error.expedicion_poliza}</p>}
                       <label className="col-form-label modal-label">
                       <h6 className="label-form"> Vencimiento poliza *:</h6>
                       </label>
@@ -212,52 +213,49 @@ export const ModalVehicle = ({ isOpenModal, closeModal, vehicleEdit,  setVehicle
                       <label className="col-form-label modal-label">
                       <h6 className="label-form"> Capacidad (Toneladas)*:</h6>
                       </label>
-                      {error.capacidad && <p>{error.capacidad}</p>}
                       <input
                         type="text"
-                        className={`form-control input-form`}
+                        className={`form-control input-form ${error.capacidad ? "input-error" : ""}`}
                         value={vehicles.capacidad}
                         name="capacidad"
                         id="capacidad"
-                        onBlur={handleBlur}
                         onChange={handleChangeData}
                         required
                       />
+                      {error.capacidad && <p className="error-message">{error.capacidad}</p>}
                     </div>
                     <div className="col">
                       <label className="col-form-label modal-label">
                       <h6 className="label-form"> Placa trailer:</h6>
                       </label>
-                      {error.r_trailer && <p>{error.r_trailer}</p>}
                       <input
                         type="text"
-                        className={`form-control input-form`}
+                        className={`form-control input-form ${error.r_trailer ? "input-error" : ""}`}
                         value={vehicles.r_trailer}
                         name="r_trailer"
                         id="r_trailer"
-                        onBlur={handleBlur}
                         onChange={handleChangeData}
                       />
+                      {error.r_trailer && <p className="error-message">{error.r_trailer}</p>}
                       <label className="col-form-label modal-label">
                       <h6 className="label-form"> Modelo *:</h6>
                       </label>
-                      {error.modelo && <p>{error.modelo}</p>}
                       <input
                         type="text"
-                        className={`form-control input-form`}
+                        className={`form-control input-form ${error.modelo ? "input-error" : ""}`}
                         value={vehicles.modelo}
                         name="modelo"
                         id="modelo"
-                        onBlur={handleBlur}
                         onChange={handleChangeData}
                         required
                       />
+                      {error.modelo && <p className="error-message">{error.modelo}</p>}
                       <label className="col-form-label modal-label">
                       <h6 className="label-form"> Expedición SOAT *:</h6>
                       </label>
                       <input
                         type="date"
-                        className={`form-control input-form`}
+                        className={`form-control input-form ${error.expedicion_soat ? "input-error" : ""}`}
                         value={vehicles.expedicion_soat}
                         name="expedicion_soat"
                         id="expedicion_soat"
@@ -266,6 +264,7 @@ export const ModalVehicle = ({ isOpenModal, closeModal, vehicleEdit,  setVehicle
                         max={fechaMaxima()}
                         required
                       />
+                      {error.expedicion_soat && <p className="error-message">{error.expedicion_soat}</p>}
                       <label className="col-form-label modal-label">
                       <h6 className="label-form"> Vencimiento SOAT *:</h6>
                       </label>
@@ -285,7 +284,7 @@ export const ModalVehicle = ({ isOpenModal, closeModal, vehicleEdit,  setVehicle
                       <h6 className="label-form-tipo"> Tipo vehículo *:</h6>
                       </label>
                       <select
-                        className={`form-select input-form`}
+                        className={`form-select input-form ${error.id_tipo ? "input-error" : ""}`}
                         value={vehicles.id_tipo}
                         name="id_tipo"
                         id="id_tipo"
@@ -302,26 +301,26 @@ export const ModalVehicle = ({ isOpenModal, closeModal, vehicleEdit,  setVehicle
                           </option>
                         ))}
                       </select>
+                      {error.id_tipo && <p className="error-message">{error.id_tipo}</p>}
                       <label className="col-form-label modal-label">
                       <h6 className="label-form"> Matrícula *:</h6>
                       </label>
-                      {error.matricula && <p>{error.matricula}</p>}
                       <input
                         type="text"
-                        className={`form-control input-form`}
+                        className={`form-control input-form ${error.matricula ? "input-error" : ""} `}
                         value={vehicles.matricula}
                         id="matricula"
                         name="matricula"
-                        onBlur={handleBlur}
                         onChange={handleChangeData}
                         required
                       />
+                      {error.matricula && <p className="error-message">{error.matricula}</p>}
                        <label className="col-form-label modal-label">
                        <h6 className="label-form-mecanica"> Expedición técnico mecánica *:</h6>
                       </label>
                       <input
                         type="date"
-                        className={`form-control input-form`}
+                        className={`form-control input-form ${error.expedicion_tecnomecanica ? "input-error" : ""}`}
                         value={vehicles.expedicion_tecnomecanica}
                         id="expedicion_tecnomecanica"
                         name="expedicion_tecnomecanica"
@@ -330,6 +329,7 @@ export const ModalVehicle = ({ isOpenModal, closeModal, vehicleEdit,  setVehicle
                         max={fechaMaxima()}
                         required
                       />
+                      {error.expedicion_tecnomecanica && <p className="error-message">{error.expedicion_tecnomecanica}</p>}
                       <label className="col-form-label modal-label">
                       <h6 className="label-form-mecanica"> Vencimiento técnico mecánica* </h6>
                       </label>

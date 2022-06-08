@@ -171,7 +171,7 @@ export const ModalCreateConduct = ({ isOpenEditModal, closeModalEdit, conductEdi
                                                 disabled={conductEdit ? true : false}
                                                 required
                                             />
-                                            {errors.identificacion && <p>{errors.identificacion}</p>}
+                                            {errors.identificacion && <p className="error-message">{errors.identificacion}</p>}
 
                                             <label className="col-form-label modal-label">
                                                 Telefono *:
@@ -184,7 +184,7 @@ export const ModalCreateConduct = ({ isOpenEditModal, closeModalEdit, conductEdi
                                                 id="telefono_contacto"
                                                 onChange={handleChangeData}
                                             />
-                                            {errors.telefono_contacto && <p>{errors.telefono_contacto}</p>}
+                                            {errors.telefono_contacto && <p className="error-message">{errors.telefono_contacto}</p>}
 
                                             <label className="col-form-label modal-label">
                                                 Expedición curso seguridad *:
@@ -227,7 +227,7 @@ export const ModalCreateConduct = ({ isOpenEditModal, closeModalEdit, conductEdi
                                                 onChange={handleChangeData}
                                             />
 
-                                            {errors.nombre && <p>{errors.nombre}</p>}
+                                            {errors.nombre && <p className="error-message">{errors.nombre}</p>}
 
                                             <label className="col-form-label modal-label">
                                                 Fecha nacimiento *:
@@ -281,7 +281,7 @@ export const ModalCreateConduct = ({ isOpenEditModal, closeModalEdit, conductEdi
                                                 id="primer_apellido"
                                                 onChange={handleChangeData}
                                             />
-                                            {errors.primer_apellido && <p>{errors.primer_apellido}</p>}
+                                            {errors.primer_apellido && <p className="error-message">{errors.primer_apellido}</p>}
 
                                             <label className="col-form-label modal-label">
                                                 Tipo licencia *: {" "}
@@ -345,7 +345,7 @@ export const ModalCreateConduct = ({ isOpenEditModal, closeModalEdit, conductEdi
                                                 id="segundo_apellido"
                                                 onChange={handleChangeData}
                                             />
-                                            {errors.segundo_apellido && <p>{errors.segundo_apellido}</p>}
+                                            {errors.segundo_apellido && <p className="error-message">{errors.segundo_apellido}</p>}
 
                                             <label className="col-form-label modal-label">
                                                 Numero licencia *:
@@ -360,7 +360,7 @@ export const ModalCreateConduct = ({ isOpenEditModal, closeModalEdit, conductEdi
                                                 required
                                             />
 
-                                            {errors.licencia_conduccion && <p>{errors.licencia_conduccion}</p>}
+                                            {errors.licencia_conduccion && <p className="error-message">{errors.licencia_conduccion}</p>}
 
                                             <label className="col-form-label modal-label">
                                                 Vehiculos disponibles *:

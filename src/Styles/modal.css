@@ -136,3 +136,11 @@
     position: absolute;
     justify-content: center !important;
 }
+
+.input-error{
+    border: 2px solid var(--danger-color);
+}
+
+.error-message{
+    color: var(--danger-color);
+}

@@ -32,6 +32,27 @@ const ValidationsFormVehicle = (vehicles) => {
       error.matricula = "El campo Matrícula es requerido"
     }
 
+    if(!vehicles.id_marca || vehicles.id_marca === "0"){
+      error.id_marca = "El campo Marca es requerido"
+    }
+
+    if(!vehicles.id_tipo || vehicles.id_tipo === "0"){
+      error.id_tipo = "El campo Tipo Vehículo es requerido"
+    }
+
+    if(!vehicles.expedicion_soat){
+      error.expedicion_soat = "El campo es requerido"
+    }
+
+    if(!vehicles.expedicion_poliza){
+      error.expedicion_poliza = "El campo es requerido"
+    }
+
+    if(!vehicles.expedicion_tecnomecanica){
+      error.expedicion_tecnomecanica = "El campo es requerido"
+    }
+
+
     return error;
 }
 
