@@ -20,6 +20,12 @@ export const SidebarData = [
         cName: 'nav-text'
     },
     {
+        title: 'Mantenimiento vehículos',
+        path: '/Maintenance',
+        icon: <FaIcons.FaCarSide />,
+        cName: 'nav-text'
+    },
+    {
         title: 'Conductores',
         path: '/Conducts',
         icon: <BsIcons.BsFillPersonLinesFill />,
