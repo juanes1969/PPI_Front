@@ -12,6 +12,7 @@ import {
 import Swal from 'sweetalert2'
 import 'sweetalert2/src/sweetalert2.scss';
 import dateFormat, { masks } from "dateformat";
+import { set } from "react-hook-form";
 
 
 const swalWithBootstrapButtons = Swal.mixin({
@@ -203,36 +204,19 @@ export const UseInsertVehicle = (dataVehicle) => {
     id_estado_vehiculo: 1,
   };
 
-  swalWithBootstrapButtons.fire({
-    title: '¿Deseas insertar vehículo?',
-    text: "Se creará el vehículo con placa: " + dataVehicle.placa,
-    icon: 'warning',
-    showCancelButton: true,
-    confirmButtonText: 'Aceptar',
-    cancelButtonText: 'Cancelar'
-  }).then((result) => {
-    if (result.isConfirmed) {
-      swalWithBootstrapButtons.fire(
-        '¡Registro Exitoso!',
-        'El vehículo fue agregado con éxito',
-        'success'
-      )
-      insertVehicle(data)
-      .then((response) => {
-          window.location.reload();
-      })
-      .catch((e) => {
-          console.log(e);
-      });
-    } else if (
-      result.dismiss === Swal.DismissReason.cancel
-    ) {
-      swalWithBootstrapButtons.fire(
-        '¡Cancelado!',
-        'No se ha creado el vehículo',
-        'error'
-      )
-    }
+  insertVehicle(data)
+  .then(() => {
+    swalWithBootstrapButtons.fire(
+      '¡Registro Exitoso!',
+      'El vehículo fue agregado con éxito',
+      'success'
+    ).then((result) => {
+      if (result.isConfirmed) {
+      window.location.reload();
+    }})
+  })
+  .catch((e) => {
+    console.log(e);
   });
 };
 

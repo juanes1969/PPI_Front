@@ -33,19 +33,11 @@ export const ModalVehicle = ({ isOpenModal, closeModal, vehicleEdit,  setVehicle
   }
 
   const handleBlur = (e) => {
-    console.log("BOTON REGISTAR")
-    console.log(e)
     handleChangeData(e);
     setError(ValidationsFormVehicle(vehicles));
-    console.log("--------")
-    console.log(error)
-    console.log("--------")
-    console.log(error.length)
   }
   const handleSubmit = (e) => {
     e.preventDefault();
-    debugger
-    console.log("--------")
     console.log(Object.entries(error).length)
     if (Object.entries(error).length === 0) {
       if (vehicleEdit) {
@@ -54,9 +46,9 @@ export const ModalVehicle = ({ isOpenModal, closeModal, vehicleEdit,  setVehicle
         closeModal();
       } else {
           UseInsertVehicle(vehicles);
+          closeModal();
           setVehicles(initialVehicleState);
           e.target.reset();
-          closeModal();
       }
     } else {
       alert('Debes ingresar los campos de manera correcta');
