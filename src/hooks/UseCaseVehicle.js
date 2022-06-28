@@ -203,18 +203,37 @@ export const UseInsertVehicle = (dataVehicle) => {
     id_estado_vehiculo: 1,
   };
 
-  insertVehicle(data)
-    .then((response) => {
+  swalWithBootstrapButtons.fire({
+    title: '¿Deseas insertar vehículo?',
+    text: "Se creará el vehículo con placa: " + dataVehicle.placa,
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: 'Aceptar',
+    cancelButtonText: 'Cancelar'
+  }).then((result) => {
+    if (result.isConfirmed) {
       swalWithBootstrapButtons.fire(
         '¡Registro Exitoso!',
         'El vehículo fue agregado con éxito',
         'success'
       )
-      window.location.reload();
-    })
-    .catch((e) => {
-      console.log(e);
-    });
+      insertVehicle(data)
+      .then((response) => {
+          window.location.reload();
+      })
+      .catch((e) => {
+          console.log(e);
+      });
+    } else if (
+      result.dismiss === Swal.DismissReason.cancel
+    ) {
+      swalWithBootstrapButtons.fire(
+        '¡Cancelado!',
+        'No se ha creado el vehículo',
+        'error'
+      )
+    }
+  });
 };
 
 export const UseSaveVehicle = (dataVehicle) => {
