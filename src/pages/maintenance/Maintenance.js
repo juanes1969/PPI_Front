@@ -1,16 +1,17 @@
 import React from 'react'
 import { Sidebar } from '../../components/globalComponents/Sidebar'
-import { Vehicle } from '../../components/maintenance/TableVehicle';
+import { Maintenance } from '../../components/maintenance/TableMaintenance';
 
-const Vehicles = () => {
+
+const Maintenances = () => {
     return (
         <>
         <>
             <Sidebar />
-            <Vehicle />
+            <Maintenance />
         </>
         </>
     )
 }
 
-export default Vehicles;
+export default Maintenances;

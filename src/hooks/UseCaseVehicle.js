@@ -23,33 +23,6 @@ const swalWithBootstrapButtons = Swal.mixin({
   buttonsStyling: false
 })
 
-const handleDelete = () => {
-  swalWithBootstrapButtons.fire({
-    title: '¿Estás seguro?',
-    text: "¡No podrás revertir esto!",
-    icon: 'warning',
-    showCancelButton: true,
-    confirmButtonText: 'Si, eliminar',
-    cancelButtonText: 'No, cancelar'
-  }).then((result) => {
-    if (result.isConfirmed) {
-      swalWithBootstrapButtons.fire(
-        '¡Eliminado!',
-        'El movimiento fue eliminado',
-        'success'
-      )
-    } else if (
-      /* Read more about handling dismissals below */
-      result.dismiss === Swal.DismissReason.cancel
-    ) {
-      swalWithBootstrapButtons.fire(
-        '¡Cancelado!',
-        'Tu movimiento está a salvo :)',
-        'error'
-      )
-    }
-  })
-}
 export const UseEffectGetVehicles = () => {
   const [vehicles, setVehicles] = useState({
     data: [],

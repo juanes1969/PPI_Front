@@ -61,6 +61,18 @@ export const UsePage = (data, perPage, search) => {
         }
     }
 
+    const filtroMaintenance = (data, search) => {
+        return data.placa.toLowerCase().includes(search);
+    }
+    const filterMaintenance = () => {
+        if (search.length === 0) {
+            return data.slice(currentPage, currentPage + parseInt(perPage))
+        } else {
+            const filtered = data.filter(dat => filtroMaintenance(dat, search));
+            return filtered.slice(currentPage, currentPage + parseInt(perPage))
+        }
+    }
+
     const nextPage = (e) => {
         e.preventDefault()
         if (data.slice(currentPage, currentPage + parseInt(perPage)).length >= perPage) {
@@ -81,5 +93,5 @@ export const UsePage = (data, perPage, search) => {
 
 
 
-    return { filterConducts, filterRoutes,filterVehicle,filterExpense, nextPage, prevPage, setCurrentPage, setPage, page }
+    return { filterConducts, filterRoutes,filterVehicle,filterExpense, filterMaintenance, nextPage, prevPage, setCurrentPage, setPage, page }
 };
