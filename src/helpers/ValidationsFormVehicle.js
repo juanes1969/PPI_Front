@@ -94,7 +94,7 @@ function validarCapacidad(vehicles, error, regexNumber) {
 function validarPlaca(vehicles, error, regexPlaca) {
   if (!vehicles.placa) {
     error.placa = Mensajes.vehiculo.campoObligatorio;
-  } else if (!regexPlaca.test(vehicles.placa)) {
+  }else if (!regexPlaca.test(vehicles.placa)) {
     error.placa = Mensajes.vehiculo.placaInvalida;
   }
 }

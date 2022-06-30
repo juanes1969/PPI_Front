@@ -292,7 +292,7 @@ export const ModalRoutes = ({
               </div>
             </div>
                   <div className="modal-footer modal-btn">
-                    <button type="submit" className="btn btn-info-form" onPress={handleSubmit}>
+                    <button type="submit" className="btn btn-info-form" onClick={handleSubmit}>
                       {isEdit ?
                         ('Editar ruta') :
                         ('Registrar ruta')}

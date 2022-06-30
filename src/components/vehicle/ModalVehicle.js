@@ -58,6 +58,7 @@ export const ModalVehicle = ({ isOpenModal, closeModal, vehicleEdit,  setVehicle
   const handleCancelButton = () => {
     setVehicles(initialVehicleState)
     setVehicleEdit(null)
+    setError({})
     closeModal()
 }
 
@@ -157,6 +158,7 @@ export const ModalVehicle = ({ isOpenModal, closeModal, vehicleEdit,  setVehicle
                         onChange={handleChangeData}
                         onBlur={handleBlur}
                         disabled={vehicleEdit ? true : false}
+                        autoComplete="off"
                         required
                       /> 
                       {error.placa && <p className="error-message">{error.placa}</p>}
@@ -223,6 +225,7 @@ export const ModalVehicle = ({ isOpenModal, closeModal, vehicleEdit,  setVehicle
                         id="capacidad"
                         onChange={handleChangeData}
                         onBlur={handleBlur}
+                        autoComplete="off"
                         required
                       />
                       {error.capacidad && <p className="error-message">{error.capacidad}</p>}
@@ -238,6 +241,7 @@ export const ModalVehicle = ({ isOpenModal, closeModal, vehicleEdit,  setVehicle
                         name="r_trailer"
                         id="r_trailer"
                         onChange={handleChangeData}
+                        autoComplete="off"
                         onBlur={handleBlur}
                       />
                       {error.r_trailer && <p className="error-message">{error.r_trailer}</p>}
@@ -252,6 +256,7 @@ export const ModalVehicle = ({ isOpenModal, closeModal, vehicleEdit,  setVehicle
                         id="modelo"
                         onChange={handleChangeData}
                         onBlur={handleBlur}
+                        autoComplete="off"
                         required
                       />
                       {error.modelo && <p className="error-message">{error.modelo}</p>}
@@ -320,6 +325,7 @@ export const ModalVehicle = ({ isOpenModal, closeModal, vehicleEdit,  setVehicle
                         name="matricula"
                         onChange={handleChangeData}
                         onBlur={handleBlur}
+                        autoComplete="off"
                         required
                       />
                       {error.matricula && <p className="error-message">{error.matricula}</p>}
