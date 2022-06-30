@@ -12,6 +12,7 @@ import {
 import Swal from 'sweetalert2'
 import 'sweetalert2/src/sweetalert2.scss';
 import dateFormat, { masks } from "dateformat";
+import { set } from "react-hook-form";
 
 
 const swalWithBootstrapButtons = Swal.mixin({
@@ -22,33 +23,6 @@ const swalWithBootstrapButtons = Swal.mixin({
   buttonsStyling: false
 })
 
-const handleDelete = () => {
-  swalWithBootstrapButtons.fire({
-    title: '¿Estás seguro?',
-    text: "¡No podrás revertir esto!",
-    icon: 'warning',
-    showCancelButton: true,
-    confirmButtonText: 'Si, eliminar',
-    cancelButtonText: 'No, cancelar'
-  }).then((result) => {
-    if (result.isConfirmed) {
-      swalWithBootstrapButtons.fire(
-        '¡Eliminado!',
-        'El movimiento fue eliminado',
-        'success'
-      )
-    } else if (
-      /* Read more about handling dismissals below */
-      result.dismiss === Swal.DismissReason.cancel
-    ) {
-      swalWithBootstrapButtons.fire(
-        '¡Cancelado!',
-        'Tu movimiento está a salvo :)',
-        'error'
-      )
-    }
-  })
-}
 export const UseEffectGetVehicles = () => {
   const [vehicles, setVehicles] = useState({
     data: [],
@@ -204,17 +178,19 @@ export const UseInsertVehicle = (dataVehicle) => {
   };
 
   insertVehicle(data)
-    .then((response) => {
-      swalWithBootstrapButtons.fire(
-        '¡Registro Exitoso!',
-        'El vehículo fue agregado con éxito',
-        'success'
-      )
+  .then(() => {
+    swalWithBootstrapButtons.fire(
+      '¡Registro Exitoso!',
+      'El vehículo fue agregado con éxito',
+      'success'
+    ).then((result) => {
+      if (result.isConfirmed) {
       window.location.reload();
-    })
-    .catch((e) => {
-      console.log(e);
-    });
+    }})
+  })
+  .catch((e) => {
+    console.log(e);
+  });
 };
 
 export const UseSaveVehicle = (dataVehicle) => {

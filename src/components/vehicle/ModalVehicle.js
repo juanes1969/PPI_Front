@@ -33,13 +33,12 @@ export const ModalVehicle = ({ isOpenModal, closeModal, vehicleEdit,  setVehicle
   }
 
   const handleBlur = (e) => {
-    console.log("BOTON REGISTAR")
-    console.log(e)
     handleChangeData(e);
     setError(ValidationsFormVehicle(vehicles));
   }
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log(Object.entries(error).length)
     if (Object.entries(error).length === 0) {
       if (vehicleEdit) {
         UseSaveVehicle(vehicles)
@@ -47,9 +46,9 @@ export const ModalVehicle = ({ isOpenModal, closeModal, vehicleEdit,  setVehicle
         closeModal();
       } else {
           UseInsertVehicle(vehicles);
+          closeModal();
           setVehicles(initialVehicleState);
           e.target.reset();
-          closeModal();
       }
     } else {
       alert('Debes ingresar los campos de manera correcta');
@@ -59,6 +58,7 @@ export const ModalVehicle = ({ isOpenModal, closeModal, vehicleEdit,  setVehicle
   const handleCancelButton = () => {
     setVehicles(initialVehicleState)
     setVehicleEdit(null)
+    setError({})
     closeModal()
 }
 
@@ -156,7 +156,9 @@ export const ModalVehicle = ({ isOpenModal, closeModal, vehicleEdit,  setVehicle
                         id="placa"
                         name="placa"
                         onChange={handleChangeData}
+                        onBlur={handleBlur}
                         disabled={vehicleEdit ? true : false}
+                        autoComplete="off"
                         required
                       /> 
                       {error.placa && <p className="error-message">{error.placa}</p>}
@@ -169,6 +171,7 @@ export const ModalVehicle = ({ isOpenModal, closeModal, vehicleEdit,  setVehicle
                       name="id_marca"
                       id="id_marca"
                       onChange={handleChangeData}
+                      onBlur={handleBlur}
                       required
                       >
                         <option value="0">Seleccionar</option>
@@ -192,6 +195,7 @@ export const ModalVehicle = ({ isOpenModal, closeModal, vehicleEdit,  setVehicle
                         name="expedicion_poliza"
                         id="expedicion_poliza"
                         onChange={handleChangeData}
+                        onBlur={handleBlur}
                         min={fechaMinima()}
                         max={fechaMaxima()}
                         required
@@ -220,6 +224,8 @@ export const ModalVehicle = ({ isOpenModal, closeModal, vehicleEdit,  setVehicle
                         name="capacidad"
                         id="capacidad"
                         onChange={handleChangeData}
+                        onBlur={handleBlur}
+                        autoComplete="off"
                         required
                       />
                       {error.capacidad && <p className="error-message">{error.capacidad}</p>}
@@ -235,6 +241,8 @@ export const ModalVehicle = ({ isOpenModal, closeModal, vehicleEdit,  setVehicle
                         name="r_trailer"
                         id="r_trailer"
                         onChange={handleChangeData}
+                        autoComplete="off"
+                        onBlur={handleBlur}
                       />
                       {error.r_trailer && <p className="error-message">{error.r_trailer}</p>}
                       <label className="col-form-label modal-label">
@@ -247,6 +255,8 @@ export const ModalVehicle = ({ isOpenModal, closeModal, vehicleEdit,  setVehicle
                         name="modelo"
                         id="modelo"
                         onChange={handleChangeData}
+                        onBlur={handleBlur}
+                        autoComplete="off"
                         required
                       />
                       {error.modelo && <p className="error-message">{error.modelo}</p>}
@@ -260,6 +270,7 @@ export const ModalVehicle = ({ isOpenModal, closeModal, vehicleEdit,  setVehicle
                         name="expedicion_soat"
                         id="expedicion_soat"
                         onChange={handleChangeData}
+                        onBlur={handleBlur}
                         min={fechaMinima()}
                         max={fechaMaxima()}
                         required
@@ -289,6 +300,7 @@ export const ModalVehicle = ({ isOpenModal, closeModal, vehicleEdit,  setVehicle
                         name="id_tipo"
                         id="id_tipo"
                         onChange={handleChangeData}
+                        onBlur={handleBlur}
                         required
                       >
                         <option value="0">Seleccionar</option>
@@ -312,6 +324,8 @@ export const ModalVehicle = ({ isOpenModal, closeModal, vehicleEdit,  setVehicle
                         id="matricula"
                         name="matricula"
                         onChange={handleChangeData}
+                        onBlur={handleBlur}
+                        autoComplete="off"
                         required
                       />
                       {error.matricula && <p className="error-message">{error.matricula}</p>}
@@ -325,6 +339,7 @@ export const ModalVehicle = ({ isOpenModal, closeModal, vehicleEdit,  setVehicle
                         id="expedicion_tecnomecanica"
                         name="expedicion_tecnomecanica"
                         onChange={handleChangeData}
+                        onBlur={handleBlur}
                         min={fechaMinima()}
                         max={fechaMaxima()}
                         required
@@ -350,7 +365,7 @@ export const ModalVehicle = ({ isOpenModal, closeModal, vehicleEdit,  setVehicle
               </div>
             </div>
             <div className="modal-footer modal-btn">
-              <button type="submit" className="btn btn-info-form" onPress={handleSubmit} onClick={handleBlur}>
+              <button type="submit" className="btn btn-info-form" onClick={handleSubmit}>
                 {vehicleEdit ?
                   ('Editar vehículo') :
                   ('Registrar vehículo')}

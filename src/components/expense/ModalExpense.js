@@ -203,7 +203,7 @@ export const ModalExpense = ({
               </div>
             </div>
             <div className="modal-footer modal-btn">
-                    <button type="submit" className="btn btn-info-form" onPress={handleSubmit}>
+                    <button type="submit" className="btn btn-info-form" onClick={handleSubmit}>
                       {expenseEdit ?
                         ('Editar gasto') :
                         ('Registrar gasto')}
