@@ -62,7 +62,7 @@ export const Route = () => {
     return (
         <>
             <div className="container" id="contenedorInicial">
-                <h1>Rutas</h1>
+                <h1 className="title-h1">Rutas</h1>
                 <span>
                     <SearchRoute
                         titleButton={"Agregar Ruta"}

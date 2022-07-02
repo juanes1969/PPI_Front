@@ -1,0 +1,124 @@
+import React, { useEffect, useRef, useState } from 'react'
+import { Pagination } from '../conduct/Pagination'
+import { SearchConduct } from '../conduct/SearchConduct';
+import '../../Styles/tableConduct.css'
+import * as IoIcons from 'react-icons/io5';
+import * as BsIcons from 'react-icons/bs';
+import * as RiIcons from 'react-icons/ri';
+import * as AiIcons from 'react-icons/ai';
+import { UseModal } from '../../hooks/UseModal';
+import { ModalMaintenance } from './ModalMaintenance';
+import { UseDeleteMaintenance, UseEffectGetMaintenances } from '../../hooks/UseCaseMaintenance';
+import { getAllMaintenances } from "../../helpers/MaintenanceHelper";
+import { UsePage } from '../../hooks/UsePage';
+
+
+export const Maintenance = () => {
+
+    const [isOpenModalMaintenance, openModalMaintenance, closeModalMaintenance] = UseModal();
+    const { data, loading } = UseEffectGetMaintenances();
+    const [maintenances, setMaintenances] = useState([]);
+    const [maintenanceEdit, setMaintenanceEdit] = useState(null);
+    const maintenanceRef = useRef();
+    const [perPage, setPerPage] = useState(5);
+    const [search, setSearch] = useState('');
+    const { filterMaintenance, nextPage, prevPage, setCurrentPage, setPage, page } = UsePage(data, perPage, search);
+
+    maintenanceRef.current = maintenances;
+
+    const handleDeleteMaintenance = (placa) => {
+        UseDeleteMaintenance(placa);
+        refreshList();
+    }
+
+    const getByIdEdit = (maintenance) => {
+        setMaintenanceEdit(maintenance);
+        openModalMaintenance();
+    }
+
+    const retrieveMaintenances = () => {
+        getAllMaintenances()
+        .then((maintenance) => {
+            setMaintenances(maintenance);
+        }).catch((e) => {
+            console.log(e);
+        });
+    }
+
+    const refreshList = () => {
+        retrieveMaintenances();
+      };
+
+    useEffect(() => {
+        retrieveMaintenances();
+    }, []);
+
+    return (
+        <>
+            <div className="container" id="contenedorInicial">
+                <h1 className="title-h1">Mantenimiento Vehícular</h1>
+                <span>
+                    <SearchConduct 
+                        titleButton={"Agregar Mantenimiento"} 
+                        icon={<IoIcons.IoCarSportSharp />} 
+                        openModal={openModalMaintenance}
+                        setSearch={setSearch}
+                        setCurrentPage={setCurrentPage}
+                        setPage={setPage}
+                         />
+                    {/* <button className="btn btn-warning btn-sm" onClick={() => newMaintenance()}><IoIcons.IoCarSportSharp /> Agregar Vehículos</button> */}
+                </span>
+
+                <div className="row">
+                    <table className="table table-striped table-bordered">
+                        <thead>
+                            <tr>
+                                <th scope="col">Placa Vehículo</th>
+                                <th scope="col">Fecha Mantenimiento</th>
+                                <th scope="col">Valor</th>
+                                <th scope="col">Descripción</th>
+                                <th scope="col" colSpan="3">
+                                    Acciones
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {/* {loading && <Loader />} */}
+                            {filterMaintenance().map((maintenance) => (
+                                <tr key={maintenance.placa}>
+                                    <td>{maintenance.placa}</td>
+                                    <td>{maintenance.fecha_realizado}</td>
+                                    <td>{maintenance.valor_mantenimiento}</td>
+                                    <td>{maintenance.descripcion}</td>
+                                    <td id="columOptions">
+                                        <button className="btn btn-warning btn-sm" onClick={() => getByIdEdit(maintenance)} ><RiIcons.RiEditFill /></button>
+                                        <button className="btn btn-info btn-sm"><BsIcons.BsFillEyeFill /></button>
+                                        <button className="btn btn-danger btn-sm" onClick={() => handleDeleteMaintenance(maintenance.placa)}><AiIcons.AiFillDelete /></button>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                    <Pagination
+                            nextPage={nextPage}
+                            prevPage={prevPage}
+                            page={page}
+                            setPerPage={setPerPage}
+                            setCurrentPage={setCurrentPage}
+                            setPage={setPage}
+                        />
+                </div>
+            </div>
+
+            <ModalMaintenance
+                isOpenModal={isOpenModalMaintenance}
+                closeModal={closeModalMaintenance}
+                maintenanceEdit={maintenanceEdit}
+                setMaintenanceEdit={setMaintenanceEdit}
+                maintenances={maintenances}
+                setMaintenances={setMaintenances}
+            />
+
+        </>
+    )
+}

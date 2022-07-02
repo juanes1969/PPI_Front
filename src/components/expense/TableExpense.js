@@ -62,7 +62,7 @@ export const Expenses = () => {
     return (
         <>
             <div className="container" id="contenedorInicial">
-                <h1>Gastos</h1>
+                <h1 className="title-h1">Gastos</h1>
                 <span>
                     <SearchConduct
                         titleButton={"Agregar Gasto"}

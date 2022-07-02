@@ -19,6 +19,12 @@ export const SidebarData = [
         cName: 'nav-text'
     },
     {
+        title: 'Mantenimiento vehículos',
+        path: '/Maintenance',
+        icon: <FaIcons.FaCarSide />,
+        cName: 'nav-text'
+    },
+    {
         title: 'Conductores',
         path: '/Conducts',
         icon: <BsIcons.BsFillPersonLinesFill />,
@@ -45,12 +51,6 @@ export const SidebarData = [
         title: 'Reportes',
         path: '/Reports',
         icon: <FaIcons.FaNewspaper />,
-        cName: 'nav-text'
-    },
-    {
-        title: 'Soporte',
-        path: '/Supports',
-        icon: <IoIcons.IoMdHelpCircle />,
         cName: 'nav-text'
     }
 ]

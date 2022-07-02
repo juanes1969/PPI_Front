@@ -1,3 +1,6 @@
+:root{
+    --background-modal: #eeb67b;
+}
 .modalInicial{
     background-color: rgba(0, 0, 0, .75);
     width: 100vw;
@@ -16,10 +19,39 @@
 }
 
 .contenido__modal{
-    background-color: #f5f5f5;
+    background-color: var(--background-modal) !important;
     padding: 10px;
     width: 950px;
-    height: 600px;
+}
+
+.modal-conduct{
+    height: 80vh;
+}
+
+.modal-vehicle{
+    height: 90vh;
+}
+
+.modal-ruta{
+    height: 70vh;
+}
+
+.modal-gasto-ruta{
+    height: 320px;
+    width: 60% !important;
+    margin-left: 20% !important;
+}
+
+.modal-mantenimiento{
+    height: 70vh;
+}
+
+.modal-content{
+    border-radius: 1.2rem !important;
+}
+
+.modal-body{
+    overflow-y: scroll;
 }
 
 .modal-abierta{
@@ -34,9 +66,6 @@
     text-align: center;
 }
 
-.form-modal{
-    margin-top: 30px;
-}
 
 .modal-btn{
     text-align: center;
@@ -67,4 +96,51 @@
 
 .align-items-start{
     padding-bottom: 10px;
+}
+
+.input-form{
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px !important;
+    border-radius: 0.5rem !important;
+}
+
+.modal-header{
+    justify-content: center !important;
+    color: rgb(0, 0, 0);
+}
+
+.h6{
+    margin-top: 10px !important;
+}
+
+.logo-form{
+    width: 25%;
+}
+
+.label-form{
+    margin-top: 10%;
+}
+
+.label-form-placa{
+    margin-top: 15%;
+}
+
+.label-form-tipo{
+    margin-top: 8%;
+}
+
+.label-form-mecanica{
+    margin-top: 6%;
+}
+
+.modal-title{
+    position: absolute;
+    justify-content: center !important;
+}
+
+.input-error{
+    border: 2px solid var(--danger-color);
+}
+
+.error-message{
+    color: var(--danger-color);
 }

@@ -5,7 +5,7 @@ import { SidebarData } from '../../data/SidebarData';
 import '../../Styles/navbar.css'
 import { IconContext } from 'react-icons';
 import * as FcIcons from 'react-icons/fc';
-import logo from '../../assets/img/LogoWhite.png';
+import logo from '../../assets/img/LogoNew.png'
 import { AuthContext } from '../../auth/authContext';
 import { types } from '../../types/types';
 
@@ -26,12 +26,12 @@ export const Sidebar = () => {
 
     return (
         <>
-            <IconContext.Provider value={{ color: '#fff' }}>
-                <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+            <IconContext.Provider value={{ color: '#47772e' }}>
+                <nav className="navbar navbar-header navbar-expand-lg navbar-dark bg-dark">
                     <div className="container-fluid">
-                        <Link to='#' className='menu-bars'>
-                            <FaIcons.FaBars onClick={showSidebar} />
-                        </Link>
+                    <Link to='#' className='menu-bars'>
+                        <FaIcons.FaBars onClick={showSidebar} />
+                    </Link>
                         <div className="collapse navbar-collapse" id="navbarColor02">
                             <form className="me-auto">
                                 <img id='logo' className="logo-nav" src={logo} alt="" />

@@ -1,32 +1,62 @@
-:root{
-    --primary-color:#fff;
-    --secundary-color:#fff;
+:root {
+    --background-primary: #24262c;
+    --background-secundary: #f46a00;
+    --background-login: #e9914d;
+    --background-color: #ECA455;
+    --primary-color: #fff;
+    --secundary-color: #000000;
     --warning-color: rgb(240, 129, 18);
     --success-color: rgb(13, 176, 1);
     --info-color: rgb(8, 121, 220);
+    --info-form-color: rgb(39, 151, 61);
     --danger-color: rgb(221 37 37);
+    /*--font-color-primary: #620037;*/
+    --font-color-primary: #000000;
+    --font-color-base: #47772e;
+
+    --font-primary: 'Aharoni', sans-serif;
+    --font-secundary: 'Oswald', sans-serif;
 }
 
-.btn-danger{
+.btn-danger {
     background-color: var(--danger-color) !important;
     border-color: var(--danger-color) !important;
 }
 
-.btn-info{
+.bg-dark {
+    background-color: var(--background-color) !important;
+}
+
+.btn-info {
     background-color: var(--info-color) !important;
     border-color: var(--info-color) !important;
 }
 
-.btn-success{
+.btn-success {
     background-color: var(--success-color) !important;
     border-color: var(--success-color) !important;
 }
 
-.btn-warning{
+.btn-warning {
     background-color: var(--warning-color) !important;
-    border-color: var(--+--warning-color) !important; 
+
+    border-color: var(--+--warning-color) !important;
+
 }
 
-#cards{
-    margin-top: 8%;    
+#cards {
+    margin-top: 8%;
+}
+
+.btn-info-form {
+    background-color: var(--info-form-color) !important;
+    border-color: var(--info-form-color) !important;
+    color: var(--primary-color);
+}
+
+.title-h1 {
+    font-family: var(--font-primary) !important;
+    font-size: 40px;
+    color: var(--font-color-primary);
+    margin-top: 25px;
 }

@@ -4,6 +4,7 @@ import "../../helpers/modal-function";
 import { ValidationsFormConduct } from "../../helpers/ValidationsFormConduct";
 import { UseEditConduct, UseInsertConduct, UseLicenseAvailable } from "../../hooks/UseCaseConduct";
 import { UseVehicleAvailable } from "../../hooks/UseCaseVehicle";
+import logo from "../../assets/img/LogoNew.png";
 import "../../Styles/modal.css";
 
 export const ModalCreateConduct = ({ isOpenEditModal, closeModalEdit, conductEdit, setConductEdit, conduct, setConduct }) => {
@@ -132,10 +133,11 @@ export const ModalCreateConduct = ({ isOpenEditModal, closeModalEdit, conductEdi
             >
                 <div className="modal-dialog">
                     <div
-                        className="modal-content contenido__modal"
+                        className="modal-content modal-conduct contenido__modal"
                         onClick={handleModalDialogClick}
                     >
                         <div className="modal-header">
+                        <img className="logo-form" src={logo} alt="logo" />
                             <h3 className="modal-title" id="exampleModalLabel">
                                 {conductEdit ?
                                     ('Editar Conductor') :
@@ -164,7 +166,7 @@ export const ModalCreateConduct = ({ isOpenEditModal, closeModalEdit, conductEdi
                                             </label>
                                             <input
                                                 type="text"
-                                                className={`form-control`}
+                                                className={`form-control input-form`}
                                                 value={conduct.identificacion}
                                                 id="identificacion"
                                                 name="identificacion"
@@ -174,28 +176,28 @@ export const ModalCreateConduct = ({ isOpenEditModal, closeModalEdit, conductEdi
                                                 required
 
                                             />
-                                            {errors.identificacion && <p>{errors.identificacion}</p>}
+                                            {errors.identificacion && <p className="error-message">{errors.identificacion}</p>}
 
                                             <label className="col-form-label modal-label">
                                                 Telefono *:
                                             </label>
                                             <input
                                                 type="text"
-                                                className={`form-control`}
+                                                className={`form-control input-form`}
                                                 value={conduct.telefono_contacto}
                                                 name="telefono_contacto"
                                                 id="telefono_contacto"
                                                 onChange={handleChangeData}
                                                 autoComplete="off"
                                             />
-                                            {errors.telefono_contacto && <p>{errors.telefono_contacto}</p>}
+                                            {errors.telefono_contacto && <p className="error-message">{errors.telefono_contacto}</p>}
 
                                             <label className="col-form-label modal-label">
                                                 Expedición curso seguridad *:
                                             </label>
                                             <input
                                                 type="date"
-                                                className={`form-control`}
+                                                className={`form-control input-form`}
                                                 value={conductEdit && dateFormat(conduct.expedicion_curso_seguridad, "isoDate")}
                                                 name="expedicion_curso_seguridad"
                                                 id="expedicion_curso_seguridad"
@@ -209,7 +211,7 @@ export const ModalCreateConduct = ({ isOpenEditModal, closeModalEdit, conductEdi
                                             </label>
                                             <input
                                                 type="date"
-                                                className={`form-control`}
+                                                className={`form-control input-form`}
                                                 value={calcularFecha(conduct.expedicion_curso_seguridad, "vencimiento_curso_seguridad")}
                                                 name="vencimiento_curso_seguridad"
                                                 id="vencimiento_curso_seguridad"     
@@ -225,7 +227,7 @@ export const ModalCreateConduct = ({ isOpenEditModal, closeModalEdit, conductEdi
                                             </label>
                                             <input
                                                 type="text"
-                                                className={`form-control`}
+                                                className={`form-control input-form`}
                                                 value={conduct.nombre}
                                                 name="nombre"
                                                 id="nombre"
@@ -233,14 +235,14 @@ export const ModalCreateConduct = ({ isOpenEditModal, closeModalEdit, conductEdi
                                                 onChange={handleChangeData}
                                             />
 
-                                            {errors.nombre && <p>{errors.nombre}</p>}
+                                            {errors.nombre && <p className="error-message">{errors.nombre}</p>}
 
                                             <label className="col-form-label modal-label">
                                                 Fecha nacimiento *:
                                             </label>
                                             <input
                                                 type="date"
-                                                className={`form-control`}
+                                                className={`form-control input-form`}
                                                 value={conductEdit && dateFormat(conduct.fecha_nacimiento, "isoDate")}
                                                 name="fecha_nacimiento"
                                                 id="fecha_nacimiento"
@@ -255,7 +257,7 @@ export const ModalCreateConduct = ({ isOpenEditModal, closeModalEdit, conductEdi
                                             </label>
                                             <input
                                                 type="date"
-                                                className={`form-control`}
+                                                className={`form-control input-form`}
                                                 value={conductEdit && dateFormat(conduct.expedicion_curso_industrial, "isoDate")}
                                                 name="expedicion_curso_industrial"
                                                 id="expedicion_curso_industrial"
@@ -270,7 +272,7 @@ export const ModalCreateConduct = ({ isOpenEditModal, closeModalEdit, conductEdi
                                             </label>
                                             <input
                                                 type="date"
-                                                className={`form-control`}
+                                                className={`form-control input-form`}
                                                 value={calcularFecha(conduct.expedicion_curso_industrial, "vencimiento_curso_industrial")}
                                                 id="vencimiento_curso_industrial"
                                                 name="vencimiento_curso_industrial"
@@ -286,20 +288,20 @@ export const ModalCreateConduct = ({ isOpenEditModal, closeModalEdit, conductEdi
                                             </label>
                                             <input
                                                 type="text"
-                                                className={`form-control`}
+                                                className={`form-control input-form`}
                                                 value={conduct.primer_apellido}
                                                 name="primer_apellido"
                                                 id="primer_apellido"
                                                 autoComplete="off"
                                                 onChange={handleChangeData}
                                             />
-                                            {errors.primer_apellido && <p>{errors.primer_apellido}</p>}
+                                            {errors.primer_apellido && <p className="error-message">{errors.primer_apellido}</p>}
 
                                             <label className="col-form-label modal-label">
                                                 Tipo licencia *: {" "}
                                             </label>
                                             <select
-                                                className={`form-select`}
+                                                className={`form-select input-form`}
                                                 value={conduct.tipo_licencia}
                                                 name="tipo_licencia"
                                                 id="tipo_licencia"
@@ -322,7 +324,7 @@ export const ModalCreateConduct = ({ isOpenEditModal, closeModalEdit, conductEdi
                                             </label>
                                             <input
                                                 type="date"
-                                                className={`form-control `}
+                                                className={`form-control input-form`}
                                                 value={conductEdit && dateFormat(conduct.expedicion_examenes_medicos, "isoDate")}
                                                 id="expedicion_examenes_medicos"
                                                 name="expedicion_examenes_medicos"
@@ -338,7 +340,7 @@ export const ModalCreateConduct = ({ isOpenEditModal, closeModalEdit, conductEdi
                                             </label>
                                             <input
                                                 type="date"
-                                                className={`form-control`}
+                                                className={`form-control input-form`}
                                                 value={calcularFecha(conduct.expedicion_examenes_medicos, "vencimiento_examenes_medicos")}
                                                 id="vencimiento_examenes_medicos"
                                                 name="vencimiento_examenes_medicos"
@@ -354,21 +356,21 @@ export const ModalCreateConduct = ({ isOpenEditModal, closeModalEdit, conductEdi
                                             </label>
                                             <input
                                                 type="text"
-                                                className={`form-control`}
+                                                className={`form-control input-form`}
                                                 value={conduct.segundo_apellido}
                                                 name="segundo_apellido"
                                                 id="segundo_apellido"
                                                 autoComplete="off"
                                                 onChange={handleChangeData}
                                             />
-                                            {errors.segundo_apellido && <p>{errors.segundo_apellido}</p>}
+                                            {errors.segundo_apellido && <p className="error-message">{errors.segundo_apellido}</p>}
 
                                             <label className="col-form-label modal-label">
                                                 Numero licencia *:
                                             </label>
                                             <input
                                                 type="text"
-                                                className={`form-control `}
+                                                className={`form-control input-form`}
                                                 value={conduct.licencia_conduccion}
                                                 name="licencia_conduccion"
                                                 id="licencia_conduccion"
@@ -377,13 +379,13 @@ export const ModalCreateConduct = ({ isOpenEditModal, closeModalEdit, conductEdi
                                                 required
                                             />
 
-                                            {errors.licencia_conduccion && <p>{errors.licencia_conduccion}</p>}
+                                            {errors.licencia_conduccion && <p className="error-message">{errors.licencia_conduccion}</p>}
 
                                             <label className="col-form-label modal-label">
                                                 Vehiculos disponibles *:
                                             </label>
                                             <select
-                                                className={`form-select`}
+                                                className={`form-select input-form`}
                                                 value={conduct.id_vehiculo}
                                                 name="id_vehiculo"
                                                 id="id_vehiculo"
@@ -403,8 +405,12 @@ export const ModalCreateConduct = ({ isOpenEditModal, closeModalEdit, conductEdi
                                             </select>
                                         </div>
                                     </div>
-                                    <div className="modal-footer modal-btn mt-4">
-                                        <button type="submit" className="btn btn-info" onPress={handleSubmit} onClick={handleBlur}>
+                                    
+                                </form>
+                            </div>
+                        </div>
+                        <div className="modal-footer modal-btn mt-4">
+                                        <button type="submit" className="btn btn-info-form" onPress={handleSubmit} onClick={handleBlur}>
                                             {conductEdit ?
                                                 ('Editar Conductor') :
                                                 ('Registrar Conductor')}
@@ -417,10 +423,6 @@ export const ModalCreateConduct = ({ isOpenEditModal, closeModalEdit, conductEdi
                                             Cancelar registro
                                         </button>
                                     </div>
-                                </form>
-                            </div>
-                        </div>
-
                     </div>
                 </div>
             </div>

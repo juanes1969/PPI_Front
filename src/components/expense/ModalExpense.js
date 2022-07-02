@@ -10,6 +10,7 @@ import {
   UseSaveExpense,
 } from "../../hooks/UseCaseExpense";
 import Expense from "../../pages/expense/Expense";
+import logo from "../../assets/img/LogoNew.png";
 
 export const ModalExpense = ({
   isOpenModal,
@@ -103,10 +104,11 @@ export const ModalExpense = ({
       >
         <div className="modal-dialog">
           <div
-            className="modal-content contenido__modal"
+            className="modal-content modal-gasto-ruta contenido__modal"
             onClick={handleModalDialogClick}
           >
             <div className="modal-header">
+            <img className="logo-form" src={logo} alt="logo" />
               <h3 className="modal-title" id="exampleModalLabel">
                 {expenseEdit ?
                   ('Editar gasto') :
@@ -121,7 +123,7 @@ export const ModalExpense = ({
               ></button>
             </div>
 
-            <div className="modal-body">
+            <div className="">
               <div className="container">
                 <form
                   className="form-modal needs-validation"
@@ -135,7 +137,7 @@ export const ModalExpense = ({
                       </label>
                       <input
                         type="text"
-                        className={`form-control`}
+                        className={`form-control input-form`}
                         value={expenses.valor_gasto}
                         name="valor_gasto"
                         id="valor_gasto"
@@ -149,7 +151,7 @@ export const ModalExpense = ({
                       </label>
                       <input
                         type="text"
-                        className={`form-control`}
+                        className={`form-control input-form`}
                         value={expenses.descripcion}
                         name="descripcion"
                         id="descripcion"
@@ -166,7 +168,7 @@ export const ModalExpense = ({
                       </label>
                       <input
                         type="text"
-                        className={`form-control`}
+                        className={`form-control input-form`}
                         value={expenses.id_ruta}
                         name="id_ruta"
                         id="id_ruta"
@@ -177,7 +179,7 @@ export const ModalExpense = ({
                         Tipo gasto *:
                       </label>
                       <select
-                        className={`form-select`}
+                        className={`form-select input-form`}
                         value={Expense.id_tipo_gasto}
                         name="id_tipo_gasto"
                         id="id_tipo_gasto"
@@ -196,13 +198,12 @@ export const ModalExpense = ({
                       </select>
 
                     </div>
-                    <div className="col">
-
-
-                    </div>
                   </div>
-                  <div className="modal-footer modal-btn">
-                    <button type="submit" className="btn btn-info" onPress={handleSubmit}>
+                </form>
+              </div>
+            </div>
+            <div className="modal-footer modal-btn">
+                    <button type="submit" className="btn btn-info-form" onClick={handleSubmit}>
                       {expenseEdit ?
                         ('Editar gasto') :
                         ('Registrar gasto')}
@@ -215,9 +216,6 @@ export const ModalExpense = ({
                       Cancelar registro
                     </button>
                   </div>
-                </form>
-              </div>
-            </div>
           </div>
         </div>
       </div>

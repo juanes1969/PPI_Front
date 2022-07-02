@@ -1,9 +1,13 @@
-import React, { useEffect} from "react";
+import React, { useEffect, useState} from "react";
 import "../../Styles/modal.css";
 import { UseTypeVehicle, UseMarca, UseInsertVehicle, UseSaveVehicle } from "../../hooks/UseCaseVehicle";
 import dateFormat, { masks } from "dateformat";
+import logo from "../../assets/img/LogoNew.png";
+import ValidationsFormVehicle from "../../helpers/ValidationsFormVehicle";
 export const ModalVehicle = ({ isOpenModal, closeModal, vehicleEdit,  setVehicleEdit, vehicles, setVehicles }) => {
 
+
+  const [error, setError] = useState({});
 
   const initialVehicleState = {
     placa: "",
@@ -28,23 +32,33 @@ export const ModalVehicle = ({ isOpenModal, closeModal, vehicleEdit,  setVehicle
     setVehicles({...vehicles, [name]: value });
   }
 
+  const handleBlur = (e) => {
+    handleChangeData(e);
+    setError(ValidationsFormVehicle(vehicles));
+  }
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (vehicleEdit) {
-      UseSaveVehicle(vehicles)
-      e.target.reset();
-      closeModal();
-  } else {
-      UseInsertVehicle(vehicles);
-      setVehicles(initialVehicleState);
-      e.target.reset();
-      closeModal();
-  }
+    console.log(Object.entries(error).length)
+    if (Object.entries(error).length === 0) {
+      if (vehicleEdit) {
+        UseSaveVehicle(vehicles)
+        e.target.reset();
+        closeModal();
+      } else {
+          UseInsertVehicle(vehicles);
+          closeModal();
+          setVehicles(initialVehicleState);
+          e.target.reset();
+      }
+    } else {
+      alert('Debes ingresar los campos de manera correcta');
+    }
   };
 
   const handleCancelButton = () => {
     setVehicles(initialVehicleState)
     setVehicleEdit(null)
+    setError({})
     closeModal()
 }
 
@@ -76,12 +90,6 @@ export const ModalVehicle = ({ isOpenModal, closeModal, vehicleEdit,  setVehicle
     }
   }
 
-  const formatoFecha = (date) => {
-    date = date.setDate(date.getDate() + 1);
-    return dateFormat(date, "isoDate");
-  }
-
-
   const fechaMinima = () => {
     let fechaMin = new Date();
     fechaMin.setFullYear(fechaMin.getFullYear()-1)
@@ -111,10 +119,10 @@ export const ModalVehicle = ({ isOpenModal, closeModal, vehicleEdit,  setVehicle
       >
         <div className="modal-dialog">
           <div
-            className="modal-content contenido__modal"
-            onClick={handleModalDialogClick}
-          >
+            className="modal-content modal-vehicle contenido__modal"
+            onClick={handleModalDialogClick}>
             <div className="modal-header">
+             <img className="logo-form" src={logo} alt="logo" />
               <h3 className="modal-title" id="exampleModalLabel">
               {vehicleEdit ?
                   ('Editar vehículo') :
@@ -133,35 +141,37 @@ export const ModalVehicle = ({ isOpenModal, closeModal, vehicleEdit,  setVehicle
               <div className="container">
                 <form
                   className="form-modal needs-validation"
-                  novalidate
+                  noValidate
                   onSubmit={handleSubmit}
                 >
                   <div className="row align-items-start">
                     <div className="col">
-
-                      
                       <label className="col-form-label modal-label">
-                        Placa *:
+                        <h6 className="label-form-placa"> Placa *:</h6>
                       </label>
                       <input
                         type="text"
-                        className={`form-control`}
+                        className={`form-control input-form ${error.placa && "input-error"}`}
                         value={vehicles.placa}
                         id="placa"
                         name="placa"
                         onChange={handleChangeData}
+                        onBlur={handleBlur}
                         disabled={vehicleEdit ? true : false}
+                        autoComplete="off"
                         required
-                      />
+                      /> 
+                      {error.placa && <p className="error-message">{error.placa}</p>}
                       <label className="col-form-label modal-label">
-                        Marca *:
+                        <h6 className="label-form"> Marca *:</h6>
                       </label>
                       <select  
-                      className={`form-select`}
+                      className={`form-select input-form ${error.id_marca ? "input-error" : ""}`}
                       value={vehicles.id_marca}
                       name="id_marca"
                       id="id_marca"
                       onChange={handleChangeData}
+                      onBlur={handleBlur}
                       required
                       >
                         <option value="0">Seleccionar</option>
@@ -173,27 +183,30 @@ export const ModalVehicle = ({ isOpenModal, closeModal, vehicleEdit,  setVehicle
                             {marca.marcaVehiculo}
                           </option>
                         ))}
-                      </select>
+                      </select> 
+                    {error.id_marca && <p className="error-message">{error.id_marca}</p>}
                        <label className="col-form-label modal-label">
-                        Expedición poliza *:
+                        <h6 className="label-form"> Expedición poliza *:</h6>
                       </label>
                       <input
                         type="date"
-                        className={`form-control`}
-                        value={dateFormat(vehicles.expedicion_poliza, "isoDate")}
+                        className={`form-control input-form ${error.expedicion_poliza ? "input-error" : ""}`}
+                        value={vehicles.expedicion_poliza}
                         name="expedicion_poliza"
                         id="expedicion_poliza"
                         onChange={handleChangeData}
+                        onBlur={handleBlur}
                         min={fechaMinima()}
                         max={fechaMaxima()}
                         required
-                      />
+                      /> 
+                      {error.expedicion_poliza && <p className="error-message">{error.expedicion_poliza}</p>}
                       <label className="col-form-label modal-label">
-                        Vencimiento poliza *:
+                      <h6 className="label-form"> Vencimiento poliza *:</h6>
                       </label>
                       <input
                         type="date"
-                        className={`form-control`}
+                        className={`form-control input-form`}
                         value={calcularFecha(vehicles.expedicion_poliza, "vencimiento_poliza")}
                         name="vencimiento_poliza"
                         id="vencimiento_poliza"
@@ -202,62 +215,73 @@ export const ModalVehicle = ({ isOpenModal, closeModal, vehicleEdit,  setVehicle
                         readOnly
                       />
                       <label className="col-form-label modal-label">
-                        Capacidad (Toneladas)*:
+                      <h6 className="label-form"> Capacidad (Toneladas)*:</h6>
                       </label>
                       <input
                         type="text"
-                        className={`form-control `}
+                        className={`form-control input-form ${error.capacidad ? "input-error" : ""}`}
                         value={vehicles.capacidad}
                         name="capacidad"
                         id="capacidad"
                         onChange={handleChangeData}
+                        onBlur={handleBlur}
+                        autoComplete="off"
                         required
                       />
+                      {error.capacidad && <p className="error-message">{error.capacidad}</p>}
                     </div>
                     <div className="col">
                       <label className="col-form-label modal-label">
-                        Placa trailer:
+                      <h6 className="label-form"> Placa trailer:</h6>
                       </label>
                       <input
                         type="text"
-                        className={`form-control`}
+                        className={`form-control input-form ${error.r_trailer ? "input-error" : ""}`}
                         value={vehicles.r_trailer}
                         name="r_trailer"
                         id="r_trailer"
                         onChange={handleChangeData}
+                        autoComplete="off"
+                        onBlur={handleBlur}
                       />
+                      {error.r_trailer && <p className="error-message">{error.r_trailer}</p>}
                       <label className="col-form-label modal-label">
-                        Modelo *:
+                      <h6 className="label-form"> Modelo *:</h6>
                       </label>
                       <input
                         type="text"
-                        className={`form-control `}
+                        className={`form-control input-form ${error.modelo ? "input-error" : ""}`}
                         value={vehicles.modelo}
                         name="modelo"
                         id="modelo"
                         onChange={handleChangeData}
+                        onBlur={handleBlur}
+                        autoComplete="off"
                         required
                       />
+                      {error.modelo && <p className="error-message">{error.modelo}</p>}
                       <label className="col-form-label modal-label">
-                        Expedición SOAT *:
+                      <h6 className="label-form"> Expedición SOAT *:</h6>
                       </label>
                       <input
                         type="date"
-                        className={`form-control`}
+                        className={`form-control input-form ${error.expedicion_soat ? "input-error" : ""}`}
                         value={vehicles.expedicion_soat}
                         name="expedicion_soat"
                         id="expedicion_soat"
                         onChange={handleChangeData}
+                        onBlur={handleBlur}
                         min={fechaMinima()}
                         max={fechaMaxima()}
                         required
                       />
+                      {error.expedicion_soat && <p className="error-message">{error.expedicion_soat}</p>}
                       <label className="col-form-label modal-label">
-                        Vencimiento SOAT *:
+                      <h6 className="label-form"> Vencimiento SOAT *:</h6>
                       </label>
                       <input
                         type="date"
-                        className={`form-control`}
+                        className={`form-control input-form`}
                         value={calcularFecha(vehicles.expedicion_soat, "vencimiento_soat")}
                         id="vencimiento_soat"
                         name="vencimiento_soat"
@@ -268,14 +292,15 @@ export const ModalVehicle = ({ isOpenModal, closeModal, vehicleEdit,  setVehicle
                     </div>
                     <div className="col">
                       <label className="col-form-label modal-label">
-                        Tipo vehículo *:
+                      <h6 className="label-form-tipo"> Tipo vehículo *:</h6>
                       </label>
                       <select
-                        className={`form-select`}
+                        className={`form-select input-form ${error.id_tipo ? "input-error" : ""}`}
                         value={vehicles.id_tipo}
                         name="id_tipo"
                         id="id_tipo"
                         onChange={handleChangeData}
+                        onBlur={handleBlur}
                         required
                       >
                         <option value="0">Seleccionar</option>
@@ -288,38 +313,44 @@ export const ModalVehicle = ({ isOpenModal, closeModal, vehicleEdit,  setVehicle
                           </option>
                         ))}
                       </select>
+                      {error.id_tipo && <p className="error-message">{error.id_tipo}</p>}
                       <label className="col-form-label modal-label">
-                        Matrícula *:{" "}
+                      <h6 className="label-form"> Matrícula *:</h6>
                       </label>
                       <input
                         type="text"
-                        className={`form-control `}
+                        className={`form-control input-form ${error.matricula ? "input-error" : ""} `}
                         value={vehicles.matricula}
                         id="matricula"
                         name="matricula"
                         onChange={handleChangeData}
+                        onBlur={handleBlur}
+                        autoComplete="off"
                         required
                       />
+                      {error.matricula && <p className="error-message">{error.matricula}</p>}
                        <label className="col-form-label modal-label">
-                        Expedición técnico mecánica *:
+                       <h6 className="label-form-mecanica"> Expedición técnico mecánica *:</h6>
                       </label>
                       <input
                         type="date"
-                        className={`form-control `}
+                        className={`form-control input-form ${error.expedicion_tecnomecanica ? "input-error" : ""}`}
                         value={vehicles.expedicion_tecnomecanica}
                         id="expedicion_tecnomecanica"
                         name="expedicion_tecnomecanica"
                         onChange={handleChangeData}
+                        onBlur={handleBlur}
                         min={fechaMinima()}
                         max={fechaMaxima()}
                         required
                       />
+                      {error.expedicion_tecnomecanica && <p className="error-message">{error.expedicion_tecnomecanica}</p>}
                       <label className="col-form-label modal-label">
-                        Vencimiento técnico mecánica*
+                      <h6 className="label-form-mecanica"> Vencimiento técnico mecánica* </h6>
                       </label>
                       <input
                         type="date"
-                        className={`form-control`}
+                        className={`form-control input-form`}
                         value={calcularFecha(vehicles.expedicion_tecnomecanica, "vencimiento_tecnomecanica")}
                         id="vencimiento_tecnomecanica"
                         name="vencimiento_tecnomecanica"
@@ -329,22 +360,23 @@ export const ModalVehicle = ({ isOpenModal, closeModal, vehicleEdit,  setVehicle
                       />
                     </div>
                   </div>
-                  <div className="modal-footer modal-btn">
-                    <button type="submit" className="btn btn-info" onPress={handleSubmit}>
-                    {vehicleEdit ?
-                        ('Editar vehículo') :
-                        ('Registrar vehículo')}
-                    </button>
-                    <button
-                      type="reset"
-                      className="btn  btn-danger"
-                      onClick={handleCancelButton}
-                    >
-                      Cancelar registro
-                    </button>
-                  </div>
+                  
                 </form>
               </div>
+            </div>
+            <div className="modal-footer modal-btn">
+              <button type="submit" className="btn btn-info-form" onClick={handleSubmit}>
+                {vehicleEdit ?
+                  ('Editar vehículo') :
+                  ('Registrar vehículo')}
+              </button>
+              <button
+                type="reset"
+                className="btn  btn-danger"
+                onClick={handleCancelButton}
+              >
+              Cancelar registro
+              </button>
             </div>
           </div>
         </div>

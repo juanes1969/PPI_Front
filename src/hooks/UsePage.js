@@ -2,13 +2,12 @@ import { useState } from 'react';
 
 export const UsePage = (data, perPage, search, active) => {
 
-    console.log(perPage)
-
     const [currentPage, setCurrentPage] = useState(0);
     const [page, setPage] = useState(1);
 
     const filterConducts = () => {
         console.log(currentPage)
+
 
         if (search.length === 0) {
             if (active === true) {
@@ -41,14 +40,10 @@ export const UsePage = (data, perPage, search, active) => {
     }
 
     const filtroVehiculo = (data, search) => {
-        debugger
-        console.log(data)
-        console.log(search)
         return data.placa.toLowerCase().includes(search) || data.matricula.toLowerCase().includes(search) || data.marca.toLowerCase().includes(search) || data.estadoVehiculo.toLowerCase().includes(search);
     }
 
     const filterVehicle = () => {
-        console.log(currentPage)
         if (search.length === 0) {
             return data.slice(currentPage, currentPage + parseInt(perPage))
         } else {
@@ -91,6 +86,18 @@ export const UsePage = (data, perPage, search, active) => {
         }
     }
 
+    const filtroMaintenance = (data, search) => {
+        return data.placa.toLowerCase().includes(search);
+    }
+    const filterMaintenance = () => {
+        if (search.length === 0) {
+            return data.slice(currentPage, currentPage + parseInt(perPage))
+        } else {
+            const filtered = data.filter(dat => filtroMaintenance(dat, search));
+            return filtered.slice(currentPage, currentPage + parseInt(perPage))
+        }
+    }
+
     const nextPage = (e) => {
         e.preventDefault()
         if (data.slice(currentPage, currentPage + parseInt(perPage)).length >= perPage) {
@@ -108,8 +115,5 @@ export const UsePage = (data, perPage, search, active) => {
             setPage(page - 1)
         }
     }
-
-
-
-    return { filterConducts, filterRoutes, filterVehicle, filterExpense, nextPage, prevPage, setCurrentPage, setPage, page }
+    return { filterConducts, filterRoutes, filterVehicle, filterExpense, filterMaintenance, nextPage, prevPage, setCurrentPage, setPage, page }
 };
