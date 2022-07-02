@@ -1,15 +1,25 @@
-#contenedorInicial{
-    margin-top: 40px;
+#contenedorInicial {
+    margin-top: 40px;        
 }
 
-#columOptions{
-    width: 14%;    
+#columOptions {
+    width: 14%;
 }
 
-#columOptions button{
+#columOptions button {
     margin-right: 10px;
 }
 
-#formSearch{
+#formSearch {
     align-content: center;
+}
+
+#btn-groupA {
+    position: static;
+    z-index: 1;
+    padding: 10px;    
+}
+
+#btn-groupA button {
+    position: static;        
 }

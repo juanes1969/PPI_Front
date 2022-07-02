@@ -26,3 +26,7 @@
     background-color: var(--warning-color) !important;
     border-color: var(--+--warning-color) !important; 
 }
+
+#cards{
+    margin-top: 8%;    
+}

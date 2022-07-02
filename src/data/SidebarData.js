@@ -3,7 +3,6 @@ import * as FaIcons from 'react-icons/fa';
 import * as AiIcons from 'react-icons/ai';
 import * as BsIcons from 'react-icons/bs';
 import * as IoIcons from 'react-icons/io';
-import * as FcIcons from 'react-icons/fc';
 
 
 export const SidebarData = [
@@ -29,7 +28,12 @@ export const SidebarData = [
         title: 'Rutas',
         path: '/Routes',
         icon: <FaIcons.FaRoute />,
-        cName: 'nav-text'
+        cName: 'nav-text', 
+        child: true, 
+        childName: 'Gastos', 
+        childPath: '/Expense', 
+        childIcon: <FaIcons.FaShopify />
+
     },
     {
         title: 'Gastos',

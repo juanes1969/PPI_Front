@@ -8,7 +8,7 @@ export const getConducts = async () => {
     const conducts = resp.data.map(img => {
         console.log(img);
         return {
-            id_conductor:img.id_conductor,
+            id_conductor: img.id_conductor,
             identificacion: img.identificacion,
             nombre: img.nombre,
             primer_apellido: img.primer_apellido,
@@ -17,15 +17,15 @@ export const getConducts = async () => {
             fecha_nacimiento: img.fecha_nacimiento,
             tipo_licencia: img.tipo_licencia,
             licencia_conduccion: img.licencia_conduccion,
-            expedicion_curso_seguridad:img.expedicion_curso_seguridad,
-            expedicion_curso_industrial:img.expedicion_curso_industrial,
-            expedicion_examenes_medicos:img.expedicion_examenes_medicos,
+            expedicion_curso_seguridad: img.expedicion_curso_seguridad,
+            expedicion_curso_industrial: img.expedicion_curso_industrial,
+            expedicion_examenes_medicos: img.expedicion_examenes_medicos,
             vencimiento_curso_seguridad: img.vencimiento_curso_seguridad,
             vencimiento_curso_industrial: img.vencimiento_curso_industrial,
             vencimiento_examenes_medicos: img.vencimiento_examenes_medicos,
             id_vehiculo: img.id_vehiculo,
             id_estado_conductor: img.id_estado_conductor,
-            estado_conductor: img.descripcion_estado_conductor, 
+            estado_conductor: img.descripcion_estado_conductor,
             placa: img.placa
         }
     });
@@ -54,7 +54,7 @@ export const getByIdConduct = async (identificacion) => {
 
     const getConduct = resp.data.map(img => {
         console.log(img);
-        return {                        
+        return {
             nombre: img.nombre,
             primer_apellido: img.primer_apellido,
             segundo_apellido: img.segundo_apellido,
@@ -62,7 +62,7 @@ export const getByIdConduct = async (identificacion) => {
             fecha_nacimiento: img.fecha_nacimiento,
             tipo_licencia: img.tipo_licencia,
             licencia_conduccion: img.licencia_conduccion,
-            expedicion_curso_seguridad: img.expedicion_curso_seguridad, 
+            expedicion_curso_seguridad: img.expedicion_curso_seguridad,
             expedicion_curso_industrial: img.expedicion_curso_industrial,
             expedicion_examenes_medicos: img.expedicion_examenes_medicos,
             vencimiento_curso_seguridad: img.vencimiento_curso_seguridad,
@@ -117,11 +117,9 @@ export const getEditConduct = async (identificacion) => {
             id_estado_conductor: img.id_estado_conductor
         }
     });
-    
+
     return conducts;
 }
-
-
 
 
 

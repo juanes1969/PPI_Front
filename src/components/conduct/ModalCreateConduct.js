@@ -70,6 +70,7 @@ export const ModalCreateConduct = ({ isOpenEditModal, closeModalEdit, conductEdi
     const handleCancelButton = () => {
         setConduct(initialConductState)
         setConductEdit(null)
+        setErrors({})
         closeModalEdit()
     }
 
@@ -97,6 +98,8 @@ export const ModalCreateConduct = ({ isOpenEditModal, closeModalEdit, conductEdi
             return fechaVencimiento;
         }
     }
+
+
 
     const fechaMinima = () => {
         let fechaMin = new Date();
@@ -151,7 +154,7 @@ export const ModalCreateConduct = ({ isOpenEditModal, closeModalEdit, conductEdi
                             <div className="container">
                                 <form
                                     className="form-modal needs-validation"
-                                    novalidate
+                                    noValidate
                                     onSubmit={handleSubmit}
                                 >
                                     <div className="row align-items-start">
@@ -167,7 +170,9 @@ export const ModalCreateConduct = ({ isOpenEditModal, closeModalEdit, conductEdi
                                                 name="identificacion"
                                                 onChange={handleChangeData}
                                                 disabled={conductEdit ? true : false}
+                                                autoComplete="off"
                                                 required
+
                                             />
                                             {errors.identificacion && <p>{errors.identificacion}</p>}
 
@@ -181,6 +186,7 @@ export const ModalCreateConduct = ({ isOpenEditModal, closeModalEdit, conductEdi
                                                 name="telefono_contacto"
                                                 id="telefono_contacto"
                                                 onChange={handleChangeData}
+                                                autoComplete="off"
                                             />
                                             {errors.telefono_contacto && <p>{errors.telefono_contacto}</p>}
 
@@ -206,7 +212,8 @@ export const ModalCreateConduct = ({ isOpenEditModal, closeModalEdit, conductEdi
                                                 className={`form-control`}
                                                 value={calcularFecha(conduct.expedicion_curso_seguridad, "vencimiento_curso_seguridad")}
                                                 name="vencimiento_curso_seguridad"
-                                                id="vencimiento_curso_seguridad"                                                
+                                                id="vencimiento_curso_seguridad"     
+                                                autoComplete="off"                                           
                                                 required
                                                 onChange={handleChangeData}
                                                 readOnly
@@ -222,6 +229,7 @@ export const ModalCreateConduct = ({ isOpenEditModal, closeModalEdit, conductEdi
                                                 value={conduct.nombre}
                                                 name="nombre"
                                                 id="nombre"
+                                                autoComplete="off"
                                                 onChange={handleChangeData}
                                             />
 
@@ -236,7 +244,10 @@ export const ModalCreateConduct = ({ isOpenEditModal, closeModalEdit, conductEdi
                                                 value={conductEdit && dateFormat(conduct.fecha_nacimiento, "isoDate")}
                                                 name="fecha_nacimiento"
                                                 id="fecha_nacimiento"
+                                                autoComplete="off"
                                                 onChange={handleChangeData}
+                                                min={fechaMinima()}
+                                                max={fechaMaxima()}
                                                 required
                                             />
                                             <label className="col-form-label modal-label">
@@ -248,6 +259,7 @@ export const ModalCreateConduct = ({ isOpenEditModal, closeModalEdit, conductEdi
                                                 value={conductEdit && dateFormat(conduct.expedicion_curso_industrial, "isoDate")}
                                                 name="expedicion_curso_industrial"
                                                 id="expedicion_curso_industrial"
+                                                autoComplete="off"
                                                 onChange={handleChangeData}
                                                 min={fechaMinima()}
                                                 max={fechaMaxima()}
@@ -262,6 +274,7 @@ export const ModalCreateConduct = ({ isOpenEditModal, closeModalEdit, conductEdi
                                                 value={calcularFecha(conduct.expedicion_curso_industrial, "vencimiento_curso_industrial")}
                                                 id="vencimiento_curso_industrial"
                                                 name="vencimiento_curso_industrial"
+                                                autoComplete="off"
                                                 required
                                                 onChange={handleChangeData}
                                                 disabled
@@ -277,6 +290,7 @@ export const ModalCreateConduct = ({ isOpenEditModal, closeModalEdit, conductEdi
                                                 value={conduct.primer_apellido}
                                                 name="primer_apellido"
                                                 id="primer_apellido"
+                                                autoComplete="off"
                                                 onChange={handleChangeData}
                                             />
                                             {errors.primer_apellido && <p>{errors.primer_apellido}</p>}
@@ -289,6 +303,7 @@ export const ModalCreateConduct = ({ isOpenEditModal, closeModalEdit, conductEdi
                                                 value={conduct.tipo_licencia}
                                                 name="tipo_licencia"
                                                 id="tipo_licencia"
+                                                autoComplete="off"
                                                 onChange={handleChangeData}
                                                 required
                                             >
@@ -311,6 +326,7 @@ export const ModalCreateConduct = ({ isOpenEditModal, closeModalEdit, conductEdi
                                                 value={conductEdit && dateFormat(conduct.expedicion_examenes_medicos, "isoDate")}
                                                 id="expedicion_examenes_medicos"
                                                 name="expedicion_examenes_medicos"
+                                                autoComplete="off"
                                                 onChange={handleChangeData}
                                                 min={fechaMinima()}
                                                 max={fechaMaxima()}
@@ -326,6 +342,7 @@ export const ModalCreateConduct = ({ isOpenEditModal, closeModalEdit, conductEdi
                                                 value={calcularFecha(conduct.expedicion_examenes_medicos, "vencimiento_examenes_medicos")}
                                                 id="vencimiento_examenes_medicos"
                                                 name="vencimiento_examenes_medicos"
+                                                autoComplete="off"
                                                 required
                                                 onChange={handleChangeData}
                                                 disabled
@@ -341,6 +358,7 @@ export const ModalCreateConduct = ({ isOpenEditModal, closeModalEdit, conductEdi
                                                 value={conduct.segundo_apellido}
                                                 name="segundo_apellido"
                                                 id="segundo_apellido"
+                                                autoComplete="off"
                                                 onChange={handleChangeData}
                                             />
                                             {errors.segundo_apellido && <p>{errors.segundo_apellido}</p>}
@@ -354,6 +372,7 @@ export const ModalCreateConduct = ({ isOpenEditModal, closeModalEdit, conductEdi
                                                 value={conduct.licencia_conduccion}
                                                 name="licencia_conduccion"
                                                 id="licencia_conduccion"
+                                                autoComplete="off"
                                                 onChange={handleChangeData}
                                                 required
                                             />
@@ -368,16 +387,17 @@ export const ModalCreateConduct = ({ isOpenEditModal, closeModalEdit, conductEdi
                                                 value={conduct.id_vehiculo}
                                                 name="id_vehiculo"
                                                 id="id_vehiculo"
+                                                autoComplete="off"
                                                 onChange={handleChangeData}
                                                 required
                                             >
                                                 <option value="0">Seleccionar</option>
-                                                {vehicle.map((vehicle) => (
+                                                {vehicle.map((vehi) => (
                                                     <option
-                                                        key={vehicle.id_vehiculo}
-                                                        value={vehicle.id_vehiculo}
+                                                        key={vehi.id_vehiculo}
+                                                        value={vehi.id_vehiculo}
                                                     >
-                                                        {vehicle.placa}
+                                                        {vehi.placa}
                                                     </option>
                                                 ))}
                                             </select>
