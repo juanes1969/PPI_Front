@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="b36baf3c-5e02-4e62-98ba-bfca6b191998" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/src/components/globalComponents/Login.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/globalComponents/Login.js" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ProjectId" id="2BacFFEljQXyLG9Tq6gqJAJTZVl" />
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="b36baf3c-5e02-4e62-98ba-bfca6b191998" name="Changes" comment="" />
+      <created>1657147554183</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1657147554183</updated>
+      <workItem from="1657147626289" duration="2000" />
+    </task>
+    <servers />
+  </component>
+</project>
