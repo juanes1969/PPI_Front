@@ -56,7 +56,7 @@ export const Maintenance = () => {
     return (
         <>
             <div className="container" id="contenedorInicial">
-                <h1 className="title-h1">Mantenimiento Vehícular</h1>
+                <h1 className="title-h1">Mantenimiento Vehículos</h1>
                 <span>
                     <SearchConduct 
                         titleButton={"Agregar Mantenimiento"} 
@@ -85,8 +85,8 @@ export const Maintenance = () => {
                         <tbody>
                             {/* {loading && <Loader />} */}
                             {filterMaintenance().map((maintenance) => (
-                                <tr key={maintenance.placa}>
-                                    <td>{maintenance.placa}</td>
+                                <tr key={maintenance.id_mantenimiento}>
+                                    <td>{maintenance.id_vehiculo}</td>
                                     <td>{maintenance.fecha_realizado}</td>
                                     <td>{maintenance.valor_mantenimiento}</td>
                                     <td>{maintenance.descripcion}</td>

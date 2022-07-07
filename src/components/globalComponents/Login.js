@@ -80,6 +80,7 @@ export const Login = () => {
                 name="usuario"
                 placeholder="Username"
                 onChange={handleInputChange}
+                autoComplete="off"
               />
             </div>
 
