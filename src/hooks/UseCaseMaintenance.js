@@ -87,7 +87,6 @@ const swalWithBootstrapButtons = Swal.mixin({
 
   export const UseSaveMaintenance = (dataMaintenance) => {
 
-    let mantenimiento = getMaintenanceById(dataMaintenance.id_mantenimiento)
     var data = {
       id_mantenimiento: dataMaintenance.id_mantenimiento,
       id_vehiculo: dataMaintenance.id_vehiculo,
@@ -95,21 +94,6 @@ const swalWithBootstrapButtons = Swal.mixin({
       valor_mantenimiento: dataMaintenance.valor_mantenimiento,
       descripcion: dataMaintenance.descripcion
     }
-
-    if(mantenimiento != null ){
-      editMaintenance(data, dataMaintenance.id_mantenimiento)
-      .then(() => {
-        swalWithBootstrapButtons.fire(
-          '¡Registro Exitoso!',
-          'El registro fue editado con éxito',
-          'success'
-        )
-        window.location.reload();
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-    }else{
       insertMaintenance(data)
       .then(() => {
         swalWithBootstrapButtons.fire(
@@ -122,12 +106,12 @@ const swalWithBootstrapButtons = Swal.mixin({
       .catch((e) => {
         console.log(e);
       });
-  }
 }
 
   export const UseEditMaintenance = (dataMaintenance) => {
 
     let mantenimiento = getMaintenanceById(dataMaintenance.id_mantenimiento)
+    debugger
     var data = {
       id_mantenimiento: dataMaintenance.id_mantenimiento,
       id_vehiculo: dataMaintenance.id_vehiculo,
