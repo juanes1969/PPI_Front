@@ -1,15 +1,13 @@
 import { Mensajes } from "./Message";
 
 const ValidationsFormVehicle = (vehicles) => {
-    let year = Date.now();
     let error = {}
     let regexPlaca = /^([A-Z]{3}-([0-9]{3})+)*$/;
     let regexNumber = /^[0-9]*$/;
     let regexYear = /^[0-9]{4}$/;
     let regexPlacaTrailer = /^([R]{1}-([0-9]{5})+)*$/;
-    let regexRangoModelo = /^(199d|200d|/+ year.getFullYear() +/)$/;
+    //let regexRangoModelo = /^(199d|200d|/+ year.getFullYear() +/)$/;
     let regexCapacidad = /^([1-4][0-9])$/;
-
 
     validarPlaca(vehicles, error, regexPlaca);
     
@@ -17,7 +15,7 @@ const ValidationsFormVehicle = (vehicles) => {
 
     validarPlacaTrailer(regexPlacaTrailer, vehicles, error);
 
-    validarModelo(vehicles, error, regexYear, regexRangoModelo);
+    validarModelo(vehicles, error, regexYear);
 
     validarMatricula(vehicles, error);
 
@@ -73,10 +71,16 @@ function validarMatricula(vehicles, error) {
   }
 }
 
-function validarModelo(vehicles, error, regexYear,regexRangoModelo) {
+const validarFecha = (year) =>{
+  let fecha = new Date;
+  return year > 1990 && year <= fecha.getFullYear();
+}
+function validarModelo(vehicles, error, regexYear) {
+  debugger
+  console.log(vehicles.modelo)
   if (!vehicles.modelo) {
     error.modelo = Mensajes.vehiculo.campoObligatorio;
-  } else if (!regexYear.test(vehicles.modelo) && !regexRangoModelo.test(vehicles.modelo)) {
+  } else if (!regexYear.test(vehicles.modelo) && !validarFecha(vehicles.modelo)) {
     error.modelo = Mensajes.vehiculo.modelo;
   }
 }
