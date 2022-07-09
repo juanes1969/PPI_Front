@@ -6,11 +6,12 @@ const ValidationsFormVehicle = (vehicles) => {
     let regexNumber = /^[0-9]*$/;
     let regexYear = /^[0-9]{4}$/;
     let regexPlacaTrailer = /^([R]{1}-([0-9]{5})+)*$/;
-
+    //let regexRangoModelo = /^(199d|200d|/+ year.getFullYear() +/)$/;
+    let regexCapacidad = /^([1-4][0-9])$/;
 
     validarPlaca(vehicles, error, regexPlaca);
     
-    validarCapacidad(vehicles, error, regexNumber);
+    validarCapacidad(vehicles, error, regexNumber, regexCapacidad);
 
     validarPlacaTrailer(regexPlacaTrailer, vehicles, error);
 
@@ -27,6 +28,7 @@ const ValidationsFormVehicle = (vehicles) => {
     validarPoliza(vehicles, error);
 
     validarTecnomecanica(vehicles, error);
+
 
     return error;
 }
@@ -69,10 +71,16 @@ function validarMatricula(vehicles, error) {
   }
 }
 
+const validarFecha = (year) =>{
+  let fecha = new Date;
+  return year > 1990 && year <= fecha.getFullYear();
+}
 function validarModelo(vehicles, error, regexYear) {
+  debugger
+  console.log(vehicles.modelo)
   if (!vehicles.modelo) {
     error.modelo = Mensajes.vehiculo.campoObligatorio;
-  } else if (!regexYear.test(vehicles.modelo)) {
+  } else if (!regexYear.test(vehicles.modelo) && !validarFecha(vehicles.modelo)) {
     error.modelo = Mensajes.vehiculo.modelo;
   }
 }
@@ -83,10 +91,10 @@ function validarPlacaTrailer(regexPlacaTrailer, vehicles, error) {
   }
 }
 
-function validarCapacidad(vehicles, error, regexNumber) {
+function validarCapacidad(vehicles, error, regexNumber, regexCapacidad) {
   if (!vehicles.capacidad) {
     error.capacidad = Mensajes.vehiculo.campoObligatorio;
-  } else if (!regexNumber.test(vehicles.capacidad)) {
+  } else if (!regexNumber.test(vehicles.capacidad) && !regexCapacidad.test(vehicles.capacidad)) {
     error.capacidad = Mensajes.vehiculo.campoNumerico;
   }
 }

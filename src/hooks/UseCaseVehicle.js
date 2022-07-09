@@ -173,7 +173,7 @@ export const UseInsertVehicle = (dataVehicle) => {
     expedicion_poliza: dataVehicle.expedicion_poliza,
     expedicion_tecnomecanica: dataVehicle.expedicion_tecnomecanica,
     id_marca: dataVehicle.id_marca,
-    id_tipo: dataVehicle.id_tipo,
+    id_tipo_vehiculo: dataVehicle.id_tipo_vehiculo,
     id_estado_vehiculo: 1,
   };
 
@@ -194,7 +194,7 @@ export const UseInsertVehicle = (dataVehicle) => {
 };
 
 export const UseSaveVehicle = (dataVehicle) => {
-
+debugger
   let vehiculo = getVehicleByPlaca(dataVehicle.placa);
 
   let data = {
@@ -210,11 +210,12 @@ export const UseSaveVehicle = (dataVehicle) => {
     expedicion_poliza: dataVehicle.expedicion_poliza,
     expedicion_tecnomecanica: dataVehicle.expedicion_tecnomecanica,
     id_marca: dataVehicle.id_marca,
-    id_tipo: dataVehicle.id_tipo,
+    id_tipo_vehiculo: dataVehicle.id_tipo_vehiculo,
     id_estado_vehiculo: 1,
   };
 
   if(vehiculo != null ){
+    debugger
     editVehicle(data, dataVehicle.placa)
     .then((response) => {
       swalWithBootstrapButtons.fire(

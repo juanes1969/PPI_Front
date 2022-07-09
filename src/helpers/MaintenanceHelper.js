@@ -68,8 +68,8 @@ export const insertMaintenance = async (data) => {
   return resp;
 };
 
-export const editMaintenance = async (data, placa) => {
-  const url = `${url_api}Maintenance/maintenanceEdit/${placa}`;
+export const editMaintenance = async (data, id_mantenimiento) => {
+  const url = `${url_api}Maintenance/maintenanceEdit/${id_mantenimiento}`;
   const resp = await axios.put(url, data);
   return resp;
 };

@@ -2,7 +2,7 @@ export const Mensajes = {
         vehiculo:{
             campoObligatorio: "Este campo es obligatorio",
             placaInvalida: "Formato de placa no válido",
-            campoNumerico: "Solo se permiten números",
+            campoNumerico: "Capacidad no válida",
             modelo: "Modelo no válido"
         },
         gasto:{

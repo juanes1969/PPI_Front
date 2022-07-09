@@ -22,7 +22,7 @@ export const ModalVehicle = ({ isOpenModal, closeModal, vehicleEdit,  setVehicle
     expedicion_poliza: null,
     expedicion_tecnomecanica: null,
     id_marca: "",
-    id_tipo: "",
+    id_tipo_vehiculo: "",
     id_estado_vehiculo: null,
   }
 
@@ -295,10 +295,10 @@ export const ModalVehicle = ({ isOpenModal, closeModal, vehicleEdit,  setVehicle
                       <h6 className="label-form-tipo"> Tipo vehículo *:</h6>
                       </label>
                       <select
-                        className={`form-select input-form ${error.id_tipo ? "input-error" : ""}`}
-                        value={vehicles.id_tipo}
-                        name="id_tipo"
-                        id="id_tipo"
+                        className={`form-select input-form ${error.id_tipo_vehiculo ? "input-error" : ""}`}
+                        value={vehicles.id_tipo_vehiculo}
+                        name="id_tipo_vehiculo"
+                        id="id_tipo_vehiculo"
                         onChange={handleChangeData}
                         onBlur={handleBlur}
                         required
@@ -306,14 +306,14 @@ export const ModalVehicle = ({ isOpenModal, closeModal, vehicleEdit,  setVehicle
                         <option value="0">Seleccionar</option>
                         {type.map((type) => (
                           <option
-                            key={type.id_tipo}
-                            value={type.id_tipo}
+                            key={type.id_tipo_vehiculo}
+                            value={type.id_tipo_vehiculo}
                           >
                             {type.tipoVehiculo}
                           </option>
                         ))}
                       </select>
-                      {error.id_tipo && <p className="error-message">{error.id_tipo}</p>}
+                      {error.id_tipo_vehiculo && <p className="error-message">{error.id_tipo_vehiculo}</p>}
                       <label className="col-form-label modal-label">
                       <h6 className="label-form"> Matrícula *:</h6>
                       </label>

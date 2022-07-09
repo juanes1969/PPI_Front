@@ -32,6 +32,8 @@ export const Vehicle = () => {
     }
 
     const getByIdEdit = (vehicle) => {
+        debugger
+        console.log(vehicle)
         setVehicleEdit(vehicle);
         openModalVehicle();
     }

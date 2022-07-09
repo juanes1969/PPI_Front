@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "../../Styles/modal.css";
 import dateFormat, { masks } from "dateformat";
 import logo from "../../assets/img/LogoNew.png";
-import { UseSaveMaintenance } from "../../hooks/UseCaseMaintenance";
+import { UseEditMaintenance, UseSaveMaintenance } from "../../hooks/UseCaseMaintenance";
 import { UseVehicleAvailable } from "../../hooks/UseCaseVehicle";
 export const ModalMaintenance = ({
   isOpenModal,
@@ -16,8 +16,9 @@ export const ModalMaintenance = ({
   const { data: vehicles } = UseVehicleAvailable();
 
   const initialMaintenanceState = {
+    id_mantenimiento: "",
     id_vehiculo: "",
-    fecha_realizado: "",
+    fecha_realizado: null,
     valor_mantenimiento: "",
     descripcion: "",
   };
@@ -33,18 +34,19 @@ export const ModalMaintenance = ({
     //setError(ValidationsFormMaintenance(maintenances));
   };
   const handleSubmit = (e) => {
+    debugger
     e.preventDefault();
     console.log(Object.entries(error).length)
     if (Object.entries(error).length === 0) {
       if (maintenanceEdit) {
-        UseSaveMaintenance(maintenances)
+        UseEditMaintenance(maintenances)
         e.target.reset();
         closeModal();
       } else {
           UseSaveMaintenance(maintenances);
+          closeModal();
           setMaintenances(initialMaintenanceState);
           e.target.reset();
-          closeModal();
       }
     } else {
       alert('Debes ingresar los campos de manera correcta');
@@ -128,7 +130,6 @@ export const ModalMaintenance = ({
                         name="id_vehiculo"
                         id="id_vehiculo"
                         onChange={handleChangeData}
-                        disabled={maintenanceEdit ? true : false}
                         required
                       >
                         <option value="0">Seleccionar</option>
@@ -152,7 +153,7 @@ export const ModalMaintenance = ({
                         className={`form-control input-form ${
                           error.fecha_realizado ? "input-error" : ""
                         }`}
-                        value={maintenances.fecha_realizado}
+                        value={maintenanceEdit && dateFormat(maintenances.fecha_realizado, "isoDate")}
                         name="fecha_realizado"
                         id="fecha_realizado"
                         onChange={handleChangeData}
