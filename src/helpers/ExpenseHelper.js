@@ -9,9 +9,10 @@ export const getAllExpense = async () => {
     const typeExpense = resp.data.map(expense => {
         return {
             id_gasto: expense.id_gasto,
+            fecha_gasto: expense.fecha_gasto,
             valor_gasto: expense.valor_gasto,
             descripcion: expense.descripcion,
-            id_ruta: expense.id_ruta,
+            codigo_manifiesto: expense.codigo_manifiesto,
             tipo_gasto: expense.tipo_gasto,
         }
     });
@@ -65,9 +66,10 @@ export const getExpenseByIdExpense = async (id_gasto) => {
     const expenseData = resp.data.map((dataExpense) => {
         return {
             id_gasto: dataExpense.id_gasto,
+            fecha_gasto: dataExpense.fecha_gasto,
             valor_gasto: dataExpense.valor_gasto,
             descripcion: dataExpense.descripcion,
-            id_ruta: dataExpense.id_ruta,
+            codigo_manifiesto: dataExpense.codigo_manifiesto,
             id_tipo_gasto: dataExpense.id_tipo_gasto
         };
     });
