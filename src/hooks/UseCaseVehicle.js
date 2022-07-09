@@ -173,7 +173,7 @@ export const UseInsertVehicle = (dataVehicle) => {
     expedicion_poliza: dataVehicle.expedicion_poliza,
     expedicion_tecnomecanica: dataVehicle.expedicion_tecnomecanica,
     id_marca: dataVehicle.id_marca,
-    id_tipo: dataVehicle.id_tipo,
+    id_tipo_vehiculo: dataVehicle.id_tipo_vehiculo,
     id_estado_vehiculo: 1,
   };
 
@@ -210,7 +210,7 @@ debugger
     expedicion_poliza: dataVehicle.expedicion_poliza,
     expedicion_tecnomecanica: dataVehicle.expedicion_tecnomecanica,
     id_marca: dataVehicle.id_marca,
-    id_tipo: dataVehicle.id_tipo,
+    id_tipo_vehiculo: dataVehicle.id_tipo_vehiculo,
     id_estado_vehiculo: 1,
   };
 
