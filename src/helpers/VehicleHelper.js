@@ -4,8 +4,7 @@ import { url_api } from "./http-common";
 export const getAllVehicles = async () => {
   const url = `${url_api}Vehicle/`;
   const resp = await axios.get(url);
-debugger
-console.log(resp.data)
+  
   const typeVehicle = resp.data.map((vehicle) => {
     return {
       placa: vehicle.placa,

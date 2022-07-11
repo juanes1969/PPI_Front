@@ -19,8 +19,6 @@ const swalWithBootstrapButtons = Swal.mixin({
     useEffect(() => {
       getAllMaintenances()
       .then((maintenance) => {
-        debugger
-        console.log(maintenance)
         setMaintenances({
           data: maintenance,
           loading: false,
@@ -111,7 +109,6 @@ const swalWithBootstrapButtons = Swal.mixin({
   export const UseEditMaintenance = (dataMaintenance) => {
 
     let mantenimiento = getMaintenanceById(dataMaintenance.id_mantenimiento)
-    debugger
     var data = {
       id_mantenimiento: dataMaintenance.id_mantenimiento,
       id_vehiculo: dataMaintenance.id_vehiculo,

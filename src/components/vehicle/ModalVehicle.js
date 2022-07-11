@@ -4,6 +4,7 @@ import { UseTypeVehicle, UseMarca, UseInsertVehicle, UseSaveVehicle } from "../.
 import dateFormat, { masks } from "dateformat";
 import logo from "../../assets/img/LogoNew.png";
 import ValidationsFormVehicle from "../../helpers/ValidationsFormVehicle";
+import { UseEffectConduct } from "../../hooks/UseCaseConduct";
 export const ModalVehicle = ({ isOpenModal, closeModal, vehicleEdit,  setVehicleEdit, vehicles, setVehicles }) => {
 
 
@@ -24,6 +25,7 @@ export const ModalVehicle = ({ isOpenModal, closeModal, vehicleEdit,  setVehicle
     id_marca: "",
     id_tipo_vehiculo: "",
     id_estado_vehiculo: null,
+    id_conductor: null
   }
 
 
@@ -38,7 +40,6 @@ export const ModalVehicle = ({ isOpenModal, closeModal, vehicleEdit,  setVehicle
   }
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(Object.entries(error).length)
     if (Object.entries(error).length === 0) {
       if (vehicleEdit) {
         UseSaveVehicle(vehicles)
@@ -72,6 +73,8 @@ export const ModalVehicle = ({ isOpenModal, closeModal, vehicleEdit,  setVehicle
   const { data: type } = UseTypeVehicle();
 
   const { data: marcas, loading } = UseMarca();
+
+  const { data: conducts, loading: cargando, error: errores} = UseEffectConduct();    
 
   const calcularFecha = ( fecha, input) => {
     let myElement = document.getElementById(input);
@@ -231,20 +234,29 @@ export const ModalVehicle = ({ isOpenModal, closeModal, vehicleEdit,  setVehicle
                       {error.capacidad && <p className="error-message">{error.capacidad}</p>}
                     </div>
                     <div className="col">
-                      <label className="col-form-label modal-label">
-                      <h6 className="label-form"> Placa trailer:</h6>
+                    <label className="col-form-label modal-label">
+                        <h6 className="label-form"> Conductor *:</h6>
                       </label>
-                      <input
-                        type="text"
-                        className={`form-control input-form ${error.r_trailer ? "input-error" : ""}`}
-                        value={vehicles.r_trailer}
-                        name="r_trailer"
-                        id="r_trailer"
-                        onChange={handleChangeData}
-                        autoComplete="off"
-                        onBlur={handleBlur}
-                      />
-                      {error.r_trailer && <p className="error-message">{error.r_trailer}</p>}
+                      <select  
+                      className={`form-select input-form ${error.id_conductor ? "input-error" : ""}`}
+                      value={vehicles.id_conductor}
+                      name="id_conductor"
+                      id="id_conductor"
+                      onChange={handleChangeData}
+                      onBlur={handleBlur}
+                      required
+                      >
+                        <option value="0">Seleccionar</option>
+                        {conducts.map((conduct) => (
+                          <option
+                            key={conduct.identificacion}
+                            value={conduct.identificacion}
+                          >
+                            {conduct.nombre + " " + conduct.primer_apellido}
+                          </option>
+                        ))}
+                      </select> 
+                    {error.id_conductor && <p className="error-message">{error.id_conductor}</p>}
                       <label className="col-form-label modal-label">
                       <h6 className="label-form"> Modelo *:</h6>
                       </label>
@@ -289,6 +301,20 @@ export const ModalVehicle = ({ isOpenModal, closeModal, vehicleEdit,  setVehicle
                         required
                         disabled
                       />
+                      <label className="col-form-label modal-label">
+                      <h6 className="label-form"> Placa trailer:</h6>
+                      </label>
+                      <input
+                        type="text"
+                        className={`form-control input-form ${error.r_trailer ? "input-error" : ""}`}
+                        value={vehicles.r_trailer}
+                        name="r_trailer"
+                        id="r_trailer"
+                        onChange={handleChangeData}
+                        autoComplete="off"
+                        onBlur={handleBlur}
+                      />
+                      {error.r_trailer && <p className="error-message">{error.r_trailer}</p>}
                     </div>
                     <div className="col">
                       <label className="col-form-label modal-label">

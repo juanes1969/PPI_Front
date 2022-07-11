@@ -44,7 +44,6 @@ export const ModalCreateConduct = ({ isOpenEditModal, closeModalEdit, conductEdi
         setErrors(ValidationsFormConduct(conduct))
     }
 
-    //console.log(conduct);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -54,7 +53,6 @@ export const ModalCreateConduct = ({ isOpenEditModal, closeModalEdit, conductEdi
                 e.target.reset();
                 closeModalEdit();
             } else {
-                debugger
                 UseInsertConduct(conduct);
                 setConduct(initialConductState);
                 e.target.reset();
@@ -115,7 +113,6 @@ export const ModalCreateConduct = ({ isOpenEditModal, closeModalEdit, conductEdi
 
     useEffect(() => {
         if (conductEdit) {
-            console.log(conductEdit)
             setConduct(conductEdit)
         } else {
             setConduct(initialConductState)

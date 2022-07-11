@@ -39,7 +39,6 @@ export const ModalRoutes = ({
     setRouteData({ ...route, [name]: value });
   };
 
-  console.log(route);
 
   const handleSubmit = (e) => {
     e.preventDefault();

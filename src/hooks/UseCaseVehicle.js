@@ -194,7 +194,6 @@ export const UseInsertVehicle = (dataVehicle) => {
 };
 
 export const UseSaveVehicle = (dataVehicle) => {
-debugger
   let vehiculo = getVehicleByPlaca(dataVehicle.placa);
 
   let data = {
@@ -215,7 +214,6 @@ debugger
   };
 
   if(vehiculo != null ){
-    debugger
     editVehicle(data, dataVehicle.placa)
     .then((response) => {
       swalWithBootstrapButtons.fire(

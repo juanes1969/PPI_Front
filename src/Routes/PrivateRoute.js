@@ -8,7 +8,6 @@ export const PrivateRoute = ({ children }) => {
 
     const { user } = useContext(AuthContext);
 
-    console.log(user);
 
 
     return user.logged

@@ -29,6 +29,7 @@ const ValidationsFormVehicle = (vehicles) => {
 
     validarTecnomecanica(vehicles, error);
 
+    validarConductor(vehicles, error);
 
     return error;
 }
@@ -54,8 +55,14 @@ function validarSoat(vehicles, error) {
 }
 
 function validarTipo(vehicles, error) {
-  if (!vehicles.id_tipo || vehicles.id_tipo === "0") {
-    error.id_tipo = Mensajes.vehiculo.campoObligatorio;
+  if (!vehicles.id_conductor || vehicles.id_conductor === "0") {
+    error.id_conductor = Mensajes.vehiculo.campoObligatorio;
+  }
+}
+
+function validarConductor(vehicles, error) {
+  if (!vehicles.id_tipo_vehiculo || vehicles.id_tipo_vehiculo === "0") {
+    error.id_tipo_vehiculo = Mensajes.vehiculo.campoObligatorio;
   }
 }
 
@@ -76,8 +83,6 @@ const validarFecha = (year) =>{
   return year > 1990 && year <= fecha.getFullYear();
 }
 function validarModelo(vehicles, error, regexYear) {
-  debugger
-  console.log(vehicles.modelo)
   if (!vehicles.modelo) {
     error.modelo = Mensajes.vehiculo.campoObligatorio;
   } else if (!regexYear.test(vehicles.modelo) && !validarFecha(vehicles.modelo)) {

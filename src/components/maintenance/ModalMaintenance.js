@@ -34,9 +34,7 @@ export const ModalMaintenance = ({
     //setError(ValidationsFormMaintenance(maintenances));
   };
   const handleSubmit = (e) => {
-    debugger
     e.preventDefault();
-    console.log(Object.entries(error).length)
     if (Object.entries(error).length === 0) {
       if (maintenanceEdit) {
         UseEditMaintenance(maintenances)

@@ -6,18 +6,16 @@ import dateFormat, { masks } from "dateformat";
 export const UseEffectConduct = () => {
 
     const isMounted = useRef(true)
-    const [state, setState] = useState({ data: null, loading: true, error: null });
+    const [state, setState] = useState({ data: [], loading: true, error: null });
 
     useEffect(() => {
         getConducts()
             .then(conducts => {
-                if (isMounted.current) {
                     setState({
                         data: conducts,
                         loading: false,
                         error: null
                     });
-                }
             });
     }, []);
 
@@ -46,7 +44,6 @@ export const UseDeleteConduct = (identificacion) => {
 
     deleteConduct(identificacion)
         .then((response) => {
-            console.log(response);
             window.location.reload();
         })
         .catch((e) => {
@@ -66,7 +63,6 @@ const calcularFecha = (fecha) => {
 
 export const UseEditConduct = (dataCondut) => {
 
-    debugger
     let conduct = getByIdConduct(dataCondut.identificacion);
 
     var data = {
@@ -89,10 +85,8 @@ export const UseEditConduct = (dataCondut) => {
     };
 
     if (conduct != null) {
-        debugger
         editConduct(data, dataCondut.identificacion)
             .then((response) => {
-                console.log(response.data)
                 window.location.reload();
             })
             .catch((e) => {
@@ -101,7 +95,6 @@ export const UseEditConduct = (dataCondut) => {
     } else {
         insertConduct(data)
             .then((response) => {
-                console.log(response.data)
                 window.location.reload();
             })
             .catch((e) => {
@@ -112,7 +105,6 @@ export const UseEditConduct = (dataCondut) => {
 
 
 export const UseInsertConduct = (dataCondut) => {
-    debugger
     var data = {
         identificacion: dataCondut.identificacion,
         nombre: dataCondut.nombre,
@@ -131,10 +123,9 @@ export const UseInsertConduct = (dataCondut) => {
         id_vehiculo: dataCondut.id_vehiculo,
         id_estado_conductor: 1,
     };
-    debugger
+
     insertConduct(data)
         .then((response) => {
-            console.log(response.data);
             window.location.reload();
         })
         .catch((e) => {

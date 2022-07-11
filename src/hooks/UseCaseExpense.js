@@ -113,7 +113,6 @@ export const UseInsertExpense= (dataExpense) => {
 
   insertExpense(data)
     .then((response) => {
-      console.log(response.data);
       window.location.reload();
     })
     .catch((e) => {
