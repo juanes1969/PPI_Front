@@ -86,9 +86,10 @@ export const Expenses = () => {
                             <tr>
 
                                 <th className="th-shipping" scope="col">Codigo Gasto</th>
+                                <th className="th-shipping" scope="col">Fecha Gasto</th>
                                 <th className="th-shipping" scope="col">Valor Gasto</th>
                                 <th className="th-shipping" scope="col">Descripcion</th>
-                                <th className="th-shipping" scope="col">Codigo Ruta</th>
+                                <th className="th-shipping" scope="col">Codigo Manifiesto</th>
                                 <th className="th-shipping" scope="col">Tipo Gasto</th>
                                 <th className="th-shipping" colSpan="3">Acciones</th>
                             </tr>
@@ -97,9 +98,10 @@ export const Expenses = () => {
                                 {filterExpense().map((expense) => (
                                     <tr key={expense.id_gasto}>
                                         <td>{expense.id_gasto}</td>
+                                        <td>{expense.fecha_gasto}</td>
                                         <td>{expense.valor_gasto}</td>
                                         <td>{expense.descripcion}</td>
-                                        <td>{expense.id_ruta}</td>
+                                        <td>{expense.codigo_manifiesto}</td>
                                         <td>{expense.tipo_gasto}</td>
                                         <td id="columOptions">
 
