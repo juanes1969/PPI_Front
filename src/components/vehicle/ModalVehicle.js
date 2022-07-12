@@ -14,7 +14,7 @@ export const ModalVehicle = ({ isOpenModal, closeModal, vehicleEdit,  setVehicle
     placa: "",
     matricula: "",
     r_trailer: "",
-    capacidad: "",
+    capacidad: null,
     modelo: "",
     vencimiento_soat: null,
     vencimiento_poliza: null,
@@ -221,7 +221,7 @@ export const ModalVehicle = ({ isOpenModal, closeModal, vehicleEdit,  setVehicle
                       <h6 className="label-form"> Capacidad (Toneladas)*:</h6>
                       </label>
                       <input
-                        type="text"
+                        type="number"
                         className={`form-control input-form ${error.capacidad ? "input-error" : ""}`}
                         value={vehicles.capacidad}
                         name="capacidad"
@@ -261,7 +261,7 @@ export const ModalVehicle = ({ isOpenModal, closeModal, vehicleEdit,  setVehicle
                       <h6 className="label-form"> Modelo *:</h6>
                       </label>
                       <input
-                        type="text"
+                        type="number"
                         className={`form-control input-form ${error.modelo ? "input-error" : ""}`}
                         value={vehicles.modelo}
                         name="modelo"

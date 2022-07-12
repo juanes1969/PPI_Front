@@ -24,6 +24,7 @@ export const getAllVehicles = async () => {
       id_marca: vehicle.id_marca,
       id_tipo_vehiculo: vehicle.id_tipo_vehiculo,
       id_estado_vehiculo: vehicle.id_estado_vehiculo,
+      id_conductor: vehicle.id_conductor
     };
   });
 
@@ -98,6 +99,7 @@ export const getVehicleByPlaca = async (placa) => {
       expedicion_tecnomecanica: type.expedicion_tecnomecanica,
       id_marca: type.id_marca,
       id_tipo_vehiculo: type.id_tipo_vehiculo,
+      id_conductor: type.id_conductor,
       id_estado_vehiculo: 1,
     };
   });
