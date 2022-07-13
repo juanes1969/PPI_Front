@@ -5,10 +5,10 @@ import { Vehicle } from '../../components/vehicle/TableVehicle'
 const Vehicles = () => {
     return (
         <>
-        <>
+        <div className='vehicle-page'>
             <Sidebar />
             <Vehicle />
-        </>
+        </div>
         </>
     )
 }
