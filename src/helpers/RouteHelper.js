@@ -155,4 +155,22 @@ export const deleteRoute = async (id_ruta) => {
     return resp;
 }
 
+export const getProductByRoute = async (codigo_manifiesto) => {
+    const url = `${url_api}Route/getProductsByRoute/${codigo_manifiesto}`;
+    const resp = await axios.get(url);
+
+    const products = resp.data.map(route => {
+        return {
+            id_detalle:route.id_detalle,
+            id_producto:route.id_producto,
+            codigo_manifiesto:route.codigo_manifiesto,
+            cantidad_producto:route.cantidad_producto,
+            referencia:route.referencia,
+            nombre_producto:route.nombre_producto
+        }
+    });
+
+    return products;
+};
+
 

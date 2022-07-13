@@ -9,7 +9,8 @@ import {
   insertRoute,
   deleteRoute,
   editRoute,
-  getRouteByIdRoute
+  getRouteByIdRoute,
+  getProductByRoute
 } from '../helpers/RouteHelper';
 import Swal from 'sweetalert2'
 import 'sweetalert2/src/sweetalert2.scss';
@@ -88,7 +89,22 @@ export const UseVehicleRoute = () => {
   return vehicleRoute;
 };
 
+export const UseGetProductByRoute = (codigo_manifiesto) => {
+  const [product, setProduct] = useState({
+    data: []
+  });
 
+  useEffect(() => {
+    getProductByRoute(codigo_manifiesto)
+    .then(product => {
+      setProduct({
+        data: product
+      });
+    });
+  }, []);
+
+  return product;
+}
 export const UseState = () => {
   const [stateRoutes, setstateRoute] = useState({
     data: [],
