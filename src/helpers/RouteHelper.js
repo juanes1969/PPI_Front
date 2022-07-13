@@ -4,23 +4,22 @@ import {url_api} from './http-common';
 export const getAllRoute = async() => {
     const url = `${url_api}Route/`;
     const resp = await axios.get(url)
+    debugger
+    console.log(resp.data)
     const typeRoute = resp.data.map(route => {
         return {
-            id_ruta:route.id_ruta,
+            codigo_manifiesto:route.codigo_manifiesto,
             nombre_producto:route.nombre_producto,
-            cantidad:route.cantidad,
+            cantidad_producto:route.cantidad_producto,
             fecha_inicio:route.fecha_inicio,
             fecha_fin:route.fecha_fin,
             flete:route.flete,
-            placa:route.placa,
+            id_vehiculo:route.id_vehiculo,
             ciudad_origen:route.ciudad_origen,
             ciudad_destino:route.ciudad_destino,
-            estado:route.estado,
-            id_estado_envio:route.id_estado_envio,
-            producto:route.producto,
-            id_vehiculo:route.id_vehiculo,
             id_origen:route.id_origen,
-            id_destino:route.id_destino
+            id_destino:route.id_destino,
+            conductor: route.conductor
         }
     });
 
@@ -132,7 +131,7 @@ export const getRouteByIdRoute= async (id_ruta) => {
     const resp = await axios.get(url);
     const routeData = resp.data.map((dataRoute) => {
         return {
-            id_ruta:dataRoute.id_ruta,    
+            codigo_manifiesto:dataRoute.codigo_manifiesto,    
             producto: dataRoute.producto,
             cantidad: dataRoute.cantidad,
             fecha_inicio: dataRoute.fecha_inicio,

@@ -103,10 +103,10 @@ export const Route = () => {
                                         <td>{route.fecha_inicio}</td>
                                         <td>{route.fecha_fin}</td>
                                         <td>{route.flete}</td>
-                                        <td>{route.placa}</td>
+                                        <td>{route.id_vehiculo}</td>
                                         <td>{route.ciudad_origen}</td>
                                         <td>{route.ciudad_destino}</td>
-                                        <td>{route.id_conductor}</td>
+                                        <td>{route.conductor}</td>
                                         <td id="columOptions">
 
                                             <button className="btn btn-warning btn-sm"><BsIcons.BsFillEyeFill /></button>

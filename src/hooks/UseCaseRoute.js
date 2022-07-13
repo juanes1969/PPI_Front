@@ -21,7 +21,8 @@ export const UseEffectGetRoutes = () => {
   });
 
   useEffect(() => {
-    getAllRoute().then(route => {
+    getAllRoute()
+    .then(route => {
       setRoutes({
         data: route,
         loading: false
