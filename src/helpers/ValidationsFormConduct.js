@@ -7,6 +7,7 @@ export const ValidationsFormConduct = (conduct) => {
     let regexNumber = /^.{1,9}(\d)$/;
     let regexLicence = /^LC.{1,10}$/;
 
+<<<<<<< HEAD
     const calcularEdad = (fecha_nacimiento) => {
 
         let hoy = new Date();
@@ -25,6 +26,8 @@ export const ValidationsFormConduct = (conduct) => {
         }
     }
 
+=======
+>>>>>>> 819c88ec36861f7ace6c89826b596bfec8640794
 
     if (!conduct.identificacion) {
         errors.identificacion = 'El campo Identificacion es requerido';

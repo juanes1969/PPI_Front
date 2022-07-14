@@ -85,26 +85,28 @@ export const Route = () => {
                             <thead>
                                 <tr>
 
-                                    <th className="th-shipping" scope="col">Codigo Ruta</th>
-                                    <th className="th-shipping" scope="col">Carga</th>
+                                    <th className="th-shipping" scope="col">Manifiesto</th>
+                                    <th className="th-shipping" scope="col">Fecha Inicio</th>
+                                    <th className="th-shipping" scope="col">Fecha Fin</th>
                                     <th className="th-shipping" scope="col">Flete</th>
                                     <th className="th-shipping" scope="col">Vehiculo Asignado</th>
                                     <th className="th-shipping" scope="col">Ciudad Origen</th>
                                     <th className="th-shipping" scope="col">Ciudad Destino</th>
-                                    <th className="th-shipping" scope="col">Estado Envio</th>
+                                    <th className="th-shipping" scope="col">Conductor</th>
                                     <th className="th-shipping" colSpan="3">Acciones</th>
                                 </tr>
                             </thead>
                             <tbody id="id_ruta">
                                 {filterRoutes().map((route) => (
-                                    <tr key={route.id_ruta}>
-                                        <td>{route.id_ruta}</td>
-                                        <td>{route.nombre_producto}</td>
+                                    <tr key={route.codigo_manifiesto}>
+                                        <td>{route.codigo_manifiesto}</td>
+                                        <td>{route.fecha_inicio}</td>
+                                        <td>{route.fecha_fin}</td>
                                         <td>{route.flete}</td>
-                                        <td>{route.placa}</td>
+                                        <td>{route.id_vehiculo}</td>
                                         <td>{route.ciudad_origen}</td>
                                         <td>{route.ciudad_destino}</td>
-                                        <td>{route.estado}</td>
+                                        <td>{route.conductor}</td>
                                         <td id="columOptions">
 
                                             <button className="btn btn-warning btn-sm"><BsIcons.BsFillEyeFill /></button>

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "../../Styles/modal.css";
 import * as AiIcons from "react-icons/ai";
 import "../../helpers/modal-function";
@@ -11,6 +11,10 @@ import {
 } from "../../hooks/UseCaseExpense";
 import Expense from "../../pages/expense/Expense";
 import logo from "../../assets/img/LogoNew.png";
+import { Expenses } from "./TableExpense";
+import ValidationsFormExpense from "../../helpers/ValidationsFormExpenses";
+
+
 
 export const ModalExpense = ({
   isOpenModal,
@@ -24,38 +28,50 @@ export const ModalExpense = ({
 
   const initialExpenseState = {
     id_gasto: "",
+    fecha_gasto: "",
     valor_gasto: "",
     descripcion: "",
     id_ruta: "",
     id_tipo_gasto: "",
 
   }
+  const [error, setError] = useState({});
 
   const handleChangeData = ({ target }) => {
     const { name, value } = target;
     setExpense({ ...expenses, [name]: value });
   }
 
-  console.log(expenses);
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (expenseEdit) {
-      UseSaveExpense(expenses)
-      e.target.reset();
-      closeModal();
+    console.log(Object.entries(error).length)
+    if (Object.entries(error).length === 0) {
+      if (expenseEdit) {
+        UseSaveExpense(expenses)
+        e.target.reset();
+        closeModal();
+      } else {
+        UseInsertExpense(expenses);
+        closeModal();
+        setExpense(initialExpenseState);
+        e.target.reset();
+      }
     } else {
-
-      UseInsertExpense(expenses);
-      setExpense(initialExpenseState);
-      e.target.reset();
-      closeModal();
+      alert('Debes ingresar los campos de manera correcta');
     }
   };
+
+  const handleBlur = (e) => {
+    handleChangeData(e);
+    setError(ValidationsFormExpense(expenses));
+  }
 
   const handleCancelButton = () => {
     setExpense(initialExpenseState)
     setExpenseEdit(null)
+    setError({})
     closeModal()
   }
 
@@ -76,8 +92,11 @@ export const ModalExpense = ({
     return fechaMax;
   }
 
-  const valorMinimo = () => {
-    let valorMin = 500000
+  const valorMinimo = (valor) => {
+    let valorMin = 10000
+    if (valor < valorMin){
+      alert('El valor')
+    }
     return valorMin;
   }
 
@@ -108,7 +127,7 @@ export const ModalExpense = ({
             onClick={handleModalDialogClick}
           >
             <div className="modal-header">
-            <img className="logo-form" src={logo} alt="logo" />
+              <img className="logo-form" src={logo} alt="logo" />
               <h3 className="modal-title" id="exampleModalLabel">
                 {expenseEdit ?
                   ('Editar gasto') :
@@ -119,11 +138,11 @@ export const ModalExpense = ({
                 className="btn-close"
                 data-bs-dismiss="modal"
                 aria-label="Close"
-                onClick={handleCancelButton}
+                onClick={closeModal}
               ></button>
             </div>
 
-            <div className="">
+            <div className="container-expenses">
               <div className="container">
                 <form
                   className="form-modal needs-validation"
@@ -133,57 +152,86 @@ export const ModalExpense = ({
                   <div className="row align-items-start">
                     <div className="col">
                       <label className="col-form-label modal-label">
-                        Valor Gasto ($):
+                        Codigo Manifiesto*:
                       </label>
                       <input
                         type="text"
-                        className={`form-control input-form`}
-                        value={expenses.valor_gasto}
-                        name="valor_gasto"
-                        id="valor_gasto"
+                        className={`form-control input-form ${error.codigo_manifiesto && "input-error"}`}
+                        value={expenses.codigo_manifiesto}
+                        name="codigo_manifiesto"
+                        id="codigo_manifiesto"
                         onChange={handleChangeData}
-                        min={valorMinimo}
+                        autoComplete="off"
+                        onBlur={handleBlur}
+                        disabled={expenseEdit ? true : false}
                         required
                       />
+                      {error.codigo_manifiesto && <p className="error-message">{error.codigo_manifiesto}</p>}
+
 
                       <label className="col-form-label modal-label">
                         Descripcion *:
                       </label>
                       <input
                         type="text"
-                        className={`form-control input-form`}
+                        className={`form-select input-form ${error.descripcion ? "input-error" : ""}`}
                         value={expenses.descripcion}
                         name="descripcion"
                         id="descripcion"
                         onChange={handleChangeData}
+                        autoComplete="off"
+                        onBlur={handleBlur}
                         required
                       />
+                      {error.descripcion && <p className="error-message">{error.descripcion}</p>}
+
+                      <label className="col-form-label modal-label">
+                        Fecha Gasto *:
+                      </label>
+                      <input
+                        type="date"
+                        className={`form-control input-form ${error.fecha_gasto ? "input-error" : ""}`}
+                        value={expenses.fecha_gasto}
+                        name="fecha_gasto"
+                        id="fecha_gasto"
+                        onChange={handleChangeData}
+                        onBlur={handleBlur}
+                        min={fechaMinima()}
+                        max={fechaMaxima()}
+                        required
+                      />
+                      {error.fecha_gasto && <p className="error-message">{error.fecha_gasto}</p>}
 
 
 
                     </div>
                     <div className="col">
                       <label className="col-form-label modal-label">
-                        Codigo (Ruta):
+                        Valor Gasto ($)*:
                       </label>
                       <input
-                        type="text"
-                        className={`form-control input-form`}
-                        value={expenses.id_ruta}
-                        name="id_ruta"
-                        id="id_ruta"
+                        type="number"
+                        className={`form-control input-form ${error.valor_gasto ? "input-error" : ""}`}
+                        value={expenses.valor_gasto}
+                        name="valor_gasto"
+                        id="valor_gasto"
                         onChange={handleChangeData}
+                        onBlur={handleBlur}
+                        min={10000}
+                        autoComplete="off"
                         required
                       />
+                      {error.valor_gasto && <p className="error-message">{error.valor_gasto}</p>}
                       <label className="col-form-label modal-label">
                         Tipo gasto *:
                       </label>
                       <select
-                        className={`form-select input-form`}
+                        className={`form-control input-form ${error.id_tipo_gasto ? "input-error" : ""}`}
                         value={Expense.id_tipo_gasto}
                         name="id_tipo_gasto"
                         id="id_tipo_gasto"
                         onChange={handleChangeData}
+                        onBlur={handleBlur}
                         required
                       >
                         <option value="0">Seleccionar</option>
@@ -196,26 +244,27 @@ export const ModalExpense = ({
                           </option>
                         ))}
                       </select>
+                      {error.id_tipo_gasto && <p className="error-message">{error.id_tipo_gasto}</p>}
 
                     </div>
                   </div>
                 </form>
               </div>
             </div>
-            <div className="modal-footer modal-btn">
-                    <button type="submit" className="btn btn-info-form" onClick={handleSubmit}>
-                      {expenseEdit ?
-                        ('Editar gasto') :
-                        ('Registrar gasto')}
-                    </button>
-                    <button
-                      type="reset"
-                      className="btn  btn-danger"
-                      onClick={closeModal}
-                    >
-                      Cancelar registro
-                    </button>
-                  </div>
+            <div className="modal-footer modal-btn footer-expense">
+              <button type="submit" className="btn btn-info-form" onClick={handleSubmit}>
+                {expenseEdit ?
+                  ('Editar gasto') :
+                  ('Registrar gasto')}
+              </button>
+              <button
+                type="reset"
+                className="btn  btn-danger"
+                onClick={handleCancelButton}
+              >
+                Cancelar registro
+              </button>
+            </div>
           </div>
         </div>
       </div>

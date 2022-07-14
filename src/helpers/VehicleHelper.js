@@ -4,7 +4,7 @@ import { url_api } from "./http-common";
 export const getAllVehicles = async () => {
   const url = `${url_api}Vehicle/`;
   const resp = await axios.get(url);
-
+  
   const typeVehicle = resp.data.map((vehicle) => {
     return {
       placa: vehicle.placa,
@@ -22,8 +22,9 @@ export const getAllVehicles = async () => {
       tipoVehiculo: vehicle.tipoVehiculo,
       estadoVehiculo: vehicle.estadoVehiculo,
       id_marca: vehicle.id_marca,
-      id_tipo: vehicle.id_tipo,
+      id_tipo_vehiculo: vehicle.id_tipo_vehiculo,
       id_estado_vehiculo: vehicle.id_estado_vehiculo,
+      id_conductor: vehicle.id_conductor
     };
   });
 
@@ -64,7 +65,7 @@ export const getAllTypeVehicle = async () => {
 
   const marcaVehiculo = resp.data.map((type) => {
     return {
-      id_tipo: type.id_tipo,
+      id_tipo_vehiculo: type.id_tipo_vehiculo,
       tipoVehiculo: type.tipoVehiculo,
     };
   });
@@ -97,7 +98,8 @@ export const getVehicleByPlaca = async (placa) => {
       expedicion_poliza: type.expedicion_poliza,
       expedicion_tecnomecanica: type.expedicion_tecnomecanica,
       id_marca: type.id_marca,
-      id_tipo: type.id_tipo,
+      id_tipo_vehiculo: type.id_tipo_vehiculo,
+      id_conductor: type.id_conductor,
       id_estado_vehiculo: 1,
     };
   });

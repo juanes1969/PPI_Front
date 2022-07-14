@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import "../../Styles/modal.css";
 import dateFormat, { masks } from "dateformat";
 import logo from "../../assets/img/LogoNew.png";
+import { UseEditMaintenance, UseSaveMaintenance } from "../../hooks/UseCaseMaintenance";
+import { UseVehicleAvailable } from "../../hooks/UseCaseVehicle";
 export const ModalMaintenance = ({
   isOpenModal,
   closeModal,
@@ -11,10 +13,12 @@ export const ModalMaintenance = ({
   setMaintenances,
 }) => {
   const [error, setError] = useState({});
+  const { data: vehicles } = UseVehicleAvailable();
 
   const initialMaintenanceState = {
-    placa: "",
-    fecha_realizado: "",
+    id_mantenimiento: "",
+    id_vehiculo: "",
+    fecha_realizado: null,
     valor_mantenimiento: "",
     descripcion: "",
   };
@@ -31,21 +35,20 @@ export const ModalMaintenance = ({
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    // console.log(Object.entries(error).length)
-    // if (Object.entries(error).length === 0) {
-    //   if (maintenanceEdit) {
-    //     UseSaveMaintenance(maintenances)
-    //     e.target.reset();
-    //     closeModal();
-    //   } else {
-    //       UseInsertMaintenance(maintenances);
-    //       setMaintenances(initialMaintenanceState);
-    //       e.target.reset();
-    //       closeModal();
-    //   }
-    // } else {
-    //   alert('Debes ingresar los campos de manera correcta');
-    // }
+    if (Object.entries(error).length === 0) {
+      if (maintenanceEdit) {
+        UseEditMaintenance(maintenances)
+        e.target.reset();
+        closeModal();
+      } else {
+          UseSaveMaintenance(maintenances);
+          closeModal();
+          setMaintenances(initialMaintenanceState);
+          e.target.reset();
+      }
+    } else {
+      alert('Debes ingresar los campos de manera correcta');
+    }
   };
 
   const handleCancelButton = () => {
@@ -115,21 +118,28 @@ export const ModalMaintenance = ({
                 >
                   <div className="row align-items-start">
                     <div className="col">
-                      <label className="col-form-label modal-label">
+
+                    <label className="col-form-label modal-label">
                         <h6 className="label-form"> Placa Vehículo *:</h6>
                       </label>
-                      <input
-                        type="text"
-                        className={`form-control input-form ${
-                          error.placa && "input-error"
-                        }`}
-                        value={maintenances.placa}
-                        id="placa"
-                        name="placa"
+                      <select
+                        className={`form-control input-form`}
+                        value={maintenances.id_vehiculo}
+                        name="id_vehiculo"
+                        id="id_vehiculo"
                         onChange={handleChangeData}
-                        disabled={maintenanceEdit ? true : false}
                         required
-                      />
+                      >
+                        <option value="0">Seleccionar</option>
+                        {vehicles.map((vehicle) => (
+                          <option
+                            key={vehicle.placa}
+                            value={vehicle.placa}
+                          >
+                            {vehicle.placa}
+                          </option>
+                        ))}
+                      </select>
                       {error.placa && (
                         <p className="error-message">{error.placa}</p>
                       )}
@@ -141,7 +151,7 @@ export const ModalMaintenance = ({
                         className={`form-control input-form ${
                           error.fecha_realizado ? "input-error" : ""
                         }`}
-                        value={maintenances.fecha_realizado}
+                        value={maintenanceEdit && dateFormat(maintenances.fecha_realizado, "isoDate")}
                         name="fecha_realizado"
                         id="fecha_realizado"
                         onChange={handleChangeData}
@@ -198,7 +208,7 @@ export const ModalMaintenance = ({
               <button
                 type="submit"
                 className="btn btn-info-form"
-                onClick={handleBlur}
+                onClick={handleSubmit}
               >
                 {maintenanceEdit ? "Editar" : "Registrar"}
               </button>

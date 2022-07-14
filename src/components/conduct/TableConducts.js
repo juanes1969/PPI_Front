@@ -30,7 +30,6 @@ export const Conduct = () => {
 
 
     const getById = (id) => {
-        console.log(id)
         UseDeleteConduct(id);
         refreshList();
     }

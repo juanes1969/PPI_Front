@@ -53,14 +53,10 @@ export const UsePage = (data, perPage, search, active) => {
     }
 
     const filtroRuta = (data, search) => {
-        debugger
-        console.log(data)
-        console.log(search)
         return data.id_ruta.includes(search) || data.nombre_producto.toLowerCase().includes(search);
     }
 
     const filterRoutes = () => {
-        console.log(currentPage)
         if (search.length === 0) {
             return data.slice(currentPage, currentPage + parseInt(perPage))
         } else {
@@ -70,14 +66,10 @@ export const UsePage = (data, perPage, search, active) => {
     }
 
     const filtroExpense = (data, search) => {
-        debugger
-        console.log(data)
-        console.log(search)
         return data.descripcion.toLowerCase().includes(search);
     }
 
     const filterExpense = () => {
-        console.log(currentPage)
         if (search.length === 0) {
             return data.slice(currentPage, currentPage + parseInt(perPage))
         } else {

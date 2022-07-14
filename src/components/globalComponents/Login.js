@@ -24,8 +24,6 @@ export const Login = () => {
     clave: ''
   })
 
-  console.log(formValues)
-
 
 
 

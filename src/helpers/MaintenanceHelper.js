@@ -4,11 +4,11 @@ import { url_api } from "./http-common";
 export const getAllMaintenances = async () => {
   const url = `${url_api}Maintenance/`;
   const resp = await axios.get(url);
-
+  
   const typeMaintenance = resp.data.map((maintenance) => {
     return {
       id_mantenimiento: maintenance.id_mantenimiento,
-      placa: maintenance.placa,
+      id_vehiculo: maintenance.id_vehiculo,
       valor_mantenimiento: maintenance.valor_mantenimiento,
       fecha_realizado: maintenance.fecha_realizado,
       descripcion: maintenance.descripcion,
@@ -34,7 +34,24 @@ export const getMaintenanceByPlaca = async (placa) => {
   const maintenanceData = resp.data.map((maintenance) => {
     return {
         id_mantenimiento: maintenance.id_mantenimiento,
-        placa: maintenance.placa,
+        id_vehiculo: maintenance.id_vehiculo,
+        valor_mantenimiento: maintenance.valor_mantenimiento,
+        fecha_realizado: maintenance.fecha_realizado,
+        descripcion: maintenance.descripcion,
+    };
+  });
+
+  return maintenanceData;
+};
+
+export const getMaintenanceById = async (id_maintenance) => {
+  const url = `${url_api}Maintenance/getMaintenanceById/${id_maintenance}`;
+  const resp = await axios.get(url);
+
+  const maintenanceData = resp.data.map((maintenance) => {
+    return {
+        id_mantenimiento: maintenance.id_mantenimiento,
+        id_vehiculo: maintenance.id_vehiculo,
         valor_mantenimiento: maintenance.valor_mantenimiento,
         fecha_realizado: maintenance.fecha_realizado,
         descripcion: maintenance.descripcion,
@@ -50,8 +67,8 @@ export const insertMaintenance = async (data) => {
   return resp;
 };
 
-export const editMaintenance = async (data, placa) => {
-  const url = `${url_api}Maintenance/maintenanceEdit/${placa}`;
+export const editMaintenance = async (data, id_mantenimiento) => {
+  const url = `${url_api}Maintenance/maintenanceEdit/${id_mantenimiento}`;
   const resp = await axios.put(url, data);
   return resp;
 };

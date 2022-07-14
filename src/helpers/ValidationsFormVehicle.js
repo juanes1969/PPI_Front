@@ -6,11 +6,12 @@ const ValidationsFormVehicle = (vehicles) => {
     let regexNumber = /^[0-9]*$/;
     let regexYear = /^[0-9]{4}$/;
     let regexPlacaTrailer = /^([R]{1}-([0-9]{5})+)*$/;
-
+    //let regexRangoModelo = /^(199d|200d|/+ year.getFullYear() +/)$/;
+    let regexCapacidad = /^([1-4][0-9])$/;
 
     validarPlaca(vehicles, error, regexPlaca);
     
-    validarCapacidad(vehicles, error, regexNumber);
+    validarCapacidad(vehicles, error, regexNumber, regexCapacidad);
 
     validarPlacaTrailer(regexPlacaTrailer, vehicles, error);
 
@@ -27,6 +28,8 @@ const ValidationsFormVehicle = (vehicles) => {
     validarPoliza(vehicles, error);
 
     validarTecnomecanica(vehicles, error);
+
+    validarConductor(vehicles, error);
 
     return error;
 }
@@ -52,8 +55,14 @@ function validarSoat(vehicles, error) {
 }
 
 function validarTipo(vehicles, error) {
-  if (!vehicles.id_tipo || vehicles.id_tipo === "0") {
-    error.id_tipo = Mensajes.vehiculo.campoObligatorio;
+  if (!vehicles.id_conductor || vehicles.id_conductor === "0") {
+    error.id_conductor = Mensajes.vehiculo.campoObligatorio;
+  }
+}
+
+function validarConductor(vehicles, error) {
+  if (!vehicles.id_tipo_vehiculo || vehicles.id_tipo_vehiculo === "0") {
+    error.id_tipo_vehiculo = Mensajes.vehiculo.campoObligatorio;
   }
 }
 
@@ -69,10 +78,14 @@ function validarMatricula(vehicles, error) {
   }
 }
 
+const validarFecha = (year) =>{
+  let fecha = new Date;
+  return year > 1990 && year <= fecha.getFullYear();
+}
 function validarModelo(vehicles, error, regexYear) {
   if (!vehicles.modelo) {
     error.modelo = Mensajes.vehiculo.campoObligatorio;
-  } else if (!regexYear.test(vehicles.modelo)) {
+  } else if (!regexYear.test(vehicles.modelo) && !validarFecha(vehicles.modelo)) {
     error.modelo = Mensajes.vehiculo.modelo;
   }
 }
@@ -83,10 +96,10 @@ function validarPlacaTrailer(regexPlacaTrailer, vehicles, error) {
   }
 }
 
-function validarCapacidad(vehicles, error, regexNumber) {
+function validarCapacidad(vehicles, error, regexNumber, regexCapacidad) {
   if (!vehicles.capacidad) {
     error.capacidad = Mensajes.vehiculo.campoObligatorio;
-  } else if (!regexNumber.test(vehicles.capacidad)) {
+  } else if (!regexCapacidad.test(vehicles.capacidad)) {
     error.capacidad = Mensajes.vehiculo.campoNumerico;
   }
 }

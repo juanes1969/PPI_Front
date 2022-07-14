@@ -104,16 +104,16 @@ export const UseInsertExpense= (dataExpense) => {
   var data = {
 
     id_gasto: dataExpense.id_gasto,
+    fecha_gasto: dataExpense.fecha_gasto,
     valor_gasto: dataExpense.valor_gasto,
     descripcion: dataExpense.descripcion,
-    id_ruta: dataExpense.id_ruta,
+    codigo_manifiesto: dataExpense.codigo_manifiesto,
     id_tipo_gasto: dataExpense.id_tipo_gasto,
 
   };
 
   insertExpense(data)
     .then((response) => {
-      console.log(response.data);
       window.location.reload();
     })
     .catch((e) => {
@@ -130,9 +130,10 @@ export const UseSaveExpense = (dataExpense) => {
 
   let data = {
     id_gasto: dataExpense.id_gasto,
+    fecha_gasto: dataExpense.fecha_gasto,
     valor_gasto: dataExpense.valor_gasto,
     descripcion: dataExpense.descripcion,
-    id_ruta: dataExpense.id_ruta,
+    codigo_manifiesto: dataExpense.codigo_manifiesto,
     id_tipo_gasto: dataExpense.id_tipo_gasto,
   };
   if(expense != null ){

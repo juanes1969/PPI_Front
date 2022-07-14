@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import Swal from "sweetalert2";
-import { deleteMaintenance, getAllMaintenances, getMaintenanceByPlaca } from "../helpers/MaintenanceHelper";
+import { deleteMaintenance, editMaintenance, getAllMaintenances, getMaintenanceById, getMaintenanceByPlaca, insertMaintenance } from "../helpers/MaintenanceHelper";
 
 const swalWithBootstrapButtons = Swal.mixin({
     customClass: {
@@ -19,8 +19,6 @@ const swalWithBootstrapButtons = Swal.mixin({
     useEffect(() => {
       getAllMaintenances()
       .then((maintenance) => {
-        debugger
-        console.log(maintenance)
         setMaintenances({
           data: maintenance,
           loading: false,
@@ -84,3 +82,53 @@ const swalWithBootstrapButtons = Swal.mixin({
   
     return maintenanceByPlaca;
   };
+
+  export const UseSaveMaintenance = (dataMaintenance) => {
+
+    var data = {
+      id_mantenimiento: dataMaintenance.id_mantenimiento,
+      id_vehiculo: dataMaintenance.id_vehiculo,
+      fecha_realizado: dataMaintenance.fecha_realizado,
+      valor_mantenimiento: dataMaintenance.valor_mantenimiento,
+      descripcion: dataMaintenance.descripcion
+    }
+      insertMaintenance(data)
+      .then(() => {
+        swalWithBootstrapButtons.fire(
+          '¡Registro Exitoso!',
+          'El registro fue agregado con éxito',
+          'success'
+        )
+        window.location.reload();
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+}
+
+  export const UseEditMaintenance = (dataMaintenance) => {
+
+    let mantenimiento = getMaintenanceById(dataMaintenance.id_mantenimiento)
+    var data = {
+      id_mantenimiento: dataMaintenance.id_mantenimiento,
+      id_vehiculo: dataMaintenance.id_vehiculo,
+      fecha_realizado: dataMaintenance.fecha_realizado,
+      valor_mantenimiento: dataMaintenance.valor_mantenimiento,
+      descripcion: dataMaintenance.descripcion
+    }
+
+    if(mantenimiento != null ){
+      editMaintenance(data, dataMaintenance.id_mantenimiento)
+      .then(() => {
+        swalWithBootstrapButtons.fire(
+          '¡Registro Exitoso!',
+          'El registro fue editado con éxito',
+          'success'
+        )
+        window.location.reload();
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+    }
+  }
