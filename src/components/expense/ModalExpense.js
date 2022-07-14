@@ -152,7 +152,7 @@ export const ModalExpense = ({
                   <div className="row align-items-start">
                     <div className="col">
                       <label className="col-form-label modal-label">
-                        Codigo (Manifiesto)*:
+                        Codigo Manifiesto*:
                       </label>
                       <input
                         type="text"
@@ -197,6 +197,7 @@ export const ModalExpense = ({
                         onChange={handleChangeData}
                         onBlur={handleBlur}
                         min={fechaMinima()}
+                        max={fechaMaxima()}
                         required
                       />
                       {error.fecha_gasto && <p className="error-message">{error.fecha_gasto}</p>}
