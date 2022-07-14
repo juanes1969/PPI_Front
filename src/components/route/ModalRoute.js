@@ -79,7 +79,7 @@ export const ModalRoutes = ({
   };
 
   const valorMinimo = () => {
-    let valorMin = 500000;
+    let valorMin = 10000;
     return valorMin;
   };
 

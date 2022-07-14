@@ -24,6 +24,14 @@ const ValidationsFormExpense = (expenses) => {
 
 export default ValidationsFormExpense
 
+
+const valorMinimo = (valor) =>{
+  if (valor <10000){
+    return valor;
+  }
+}
+
+ 
 function validarFechaGasto(expenses, error) {
   if (!expenses.fecha_gasto) {
     error.fecha_gasto = Mensajes.gasto.campoObligatorio;
@@ -33,6 +41,8 @@ function validarFechaGasto(expenses, error) {
 function validarValorGasto(expenses, error) {
   if (!expenses.valor_gasto) {
     error.valor_gasto = Mensajes.gasto.campoObligatorio;
+  }else if (valorMinimo(expenses.valor_gasto)< 10000){
+    error.valor_gasto = Mensajes.gasto.valorInvalido;
   }
 }
 

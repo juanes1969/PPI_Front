@@ -37,9 +37,14 @@
 }
 
 .modal-gasto-ruta{
-    height: 320px;
+    height: 500px;
     width: 60% !important;
     margin-left: 20% !important;
+}
+
+
+.container-expenses{
+    height: 500px;
 }
 
 .modal-mantenimiento{
