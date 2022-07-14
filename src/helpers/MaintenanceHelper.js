@@ -4,8 +4,7 @@ import { url_api } from "./http-common";
 export const getAllMaintenances = async () => {
   const url = `${url_api}Maintenance/`;
   const resp = await axios.get(url);
-debugger
-  console.log(resp)
+  
   const typeMaintenance = resp.data.map((maintenance) => {
     return {
       id_mantenimiento: maintenance.id_mantenimiento,

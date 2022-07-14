@@ -42,7 +42,6 @@ export const ModalExpense = ({
     setExpense({ ...expenses, [name]: value });
   }
 
-  console.log(expenses);
 
 
   const handleSubmit = (e) => {

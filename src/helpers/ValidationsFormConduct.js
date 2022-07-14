@@ -8,7 +8,6 @@ export const ValidationsFormConduct = (conduct) => {
     let regexNumber = /^.{1,9}(\d)$/;
     let regexLicence = /^LC.{1,10}$/;
 
-    console.log(conduct.identificacion);
 
     if (!conduct.identificacion) {
         errors.identificacion = 'El campo Identificacion es requerido';

@@ -6,9 +6,7 @@ export const getConducts = async () => {
     const resp = await axios.get(url)
 
     const conducts = resp.data.map(img => {
-        console.log(img);
         return {
-            id_conductor:img.id_conductor,
             identificacion: img.identificacion,
             nombre: img.nombre,
             primer_apellido: img.primer_apellido,
@@ -23,10 +21,8 @@ export const getConducts = async () => {
             vencimiento_curso_seguridad: img.vencimiento_curso_seguridad,
             vencimiento_curso_industrial: img.vencimiento_curso_industrial,
             vencimiento_examenes_medicos: img.vencimiento_examenes_medicos,
-            id_vehiculo: img.id_vehiculo,
             id_estado_conductor: img.id_estado_conductor,
-            estado_conductor: img.descripcion_estado_conductor, 
-            placa: img.placa
+            estado_conductor: img.descripcion_estado_conductor
         }
     });
 
@@ -38,7 +34,6 @@ export const getTypeLicense = async () => {
     const resp = await axios.get(url)
 
     const licenses = resp.data.map(img => {
-        console.log(img);
         return {
             id_tipo_licencia: img.id_tipo_licencia,
             descripcion: img.descripcion
@@ -53,7 +48,6 @@ export const getByIdConduct = async (identificacion) => {
     const resp = await axios.get(url)
 
     const getConduct = resp.data.map(img => {
-        console.log(img);
         return {                        
             nombre: img.nombre,
             primer_apellido: img.primer_apellido,
@@ -67,8 +61,7 @@ export const getByIdConduct = async (identificacion) => {
             expedicion_examenes_medicos: img.expedicion_examenes_medicos,
             vencimiento_curso_seguridad: img.vencimiento_curso_seguridad,
             vencimiento_curso_industrial: img.vencimiento_curso_industrial,
-            vencimiento_examenes_medicos: img.vencimiento_examenes_medicos,
-            id_vehiculo: img.id_vehiculo
+            vencimiento_examenes_medicos: img.vencimiento_examenes_medicos
         }
     });
 

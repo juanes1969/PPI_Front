@@ -2,21 +2,15 @@ import { useState } from 'react';
 
 export const UsePageRoute = (data, perPage, search) => {
 
-    console.log(perPage)
-
     const [currentPage, setCurrentPage] = useState(0);
     const [page, setPage] = useState(1);
 
 
     const filtroRuta = (data, search) => {
-        debugger
-        console.log(data.id_ruta)
-        console.log(search)
         return  data.nombre_producto.toLowerCase().includes(search);
     }
 
     const filterRoutes = () => {
-        console.log(currentPage)
         if (search.length === 0) {
             return data.slice(currentPage, currentPage + parseInt(perPage))
         } else {

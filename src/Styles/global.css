@@ -53,3 +53,24 @@
     color: var(--font-color-primary);
     margin-top: 25px;
 }
+
+.home-p{
+    font-family: var(--font-primary) !important;
+    font-size: 30px;
+    color: var(--font-color-primary);
+    margin-top: 20%;
+    margin-left: 50%;
+}
+
+.bg-light{
+    border: none !important;
+}
+
+.home{
+    background-image:url(../assets/img/fondo/home.svg);
+    width: 80%;
+    height: 80vh;
+    margin-top: 3%;
+    margin-left: 5%;
+    background-size: cover;
+}

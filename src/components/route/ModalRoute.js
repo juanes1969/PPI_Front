@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "../../Styles/modal.css";
 import * as AiIcons from "react-icons/ai";
+import * as RiIcons from 'react-icons/ri';
 import "../../helpers/modal-function";
 import { useForm } from "react-hook-form";
 import dateFormat, { masks } from "dateformat";
@@ -38,8 +39,6 @@ export const ModalRoutes = ({
     const { name, value } = target;
     setRouteData({ ...route, [name]: value });
   };
-
-  console.log(route);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -215,12 +214,12 @@ export const ModalRoutes = ({
                         ))}
                       </select>
                       <button
-                      type="submit"
-                      className="btn btn-info-form"
-                      onClick={handleSubmit}
-                    >
-                      {isEdit ? "Editar" : "Crear"}
-                    </button>
+                        type="submit"
+                        className="btn btn-info-form"
+                        onClick={handleSubmit}
+                      >
+                        {isEdit ? "Editar" : "Crear"}
+                      </button>
                     </div>
                     <div className="col">
                       <label className="col-form-label modal-label">
@@ -261,6 +260,7 @@ export const ModalRoutes = ({
                       />
                     </div>
                   </div>
+                  
                 </form>
               </div>
             </div>

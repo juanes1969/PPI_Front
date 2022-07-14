@@ -165,7 +165,7 @@ export const UseInsertVehicle = (dataVehicle) => {
     matricula: dataVehicle.matricula,
     r_trailer: dataVehicle.r_trailer,
     capacidad: dataVehicle.capacidad,
-    modelo: dataVehicle.modelo,
+    modelo: dataVehicle.modelo.toString(),
     vencimiento_soat: calcularFecha(dataVehicle.expedicion_soat),
     vencimiento_poliza: calcularFecha(dataVehicle.expedicion_poliza),
     vencimiento_tecnomecanica: calcularFecha(dataVehicle.expedicion_tecnomecanica),
@@ -174,6 +174,7 @@ export const UseInsertVehicle = (dataVehicle) => {
     expedicion_tecnomecanica: dataVehicle.expedicion_tecnomecanica,
     id_marca: dataVehicle.id_marca,
     id_tipo_vehiculo: dataVehicle.id_tipo_vehiculo,
+    id_conductor: dataVehicle.id_conductor,
     id_estado_vehiculo: 1,
   };
 
@@ -194,7 +195,6 @@ export const UseInsertVehicle = (dataVehicle) => {
 };
 
 export const UseSaveVehicle = (dataVehicle) => {
-debugger
   let vehiculo = getVehicleByPlaca(dataVehicle.placa);
 
   let data = {
@@ -202,7 +202,7 @@ debugger
     matricula: dataVehicle.matricula,
     r_trailer: dataVehicle.r_trailer,
     capacidad: dataVehicle.capacidad,
-    modelo: dataVehicle.modelo,
+    modelo: dataVehicle.modelo.toString(),
     vencimiento_soat: calcularFecha(dataVehicle.expedicion_soat),
     vencimiento_poliza: calcularFecha(dataVehicle.expedicion_poliza),
     vencimiento_tecnomecanica: calcularFecha(dataVehicle.expedicion_tecnomecanica),
@@ -211,11 +211,11 @@ debugger
     expedicion_tecnomecanica: dataVehicle.expedicion_tecnomecanica,
     id_marca: dataVehicle.id_marca,
     id_tipo_vehiculo: dataVehicle.id_tipo_vehiculo,
+    id_conductor: dataVehicle.id_conductor,
     id_estado_vehiculo: 1,
   };
 
   if(vehiculo != null ){
-    debugger
     editVehicle(data, dataVehicle.placa)
     .then((response) => {
       swalWithBootstrapButtons.fire(
