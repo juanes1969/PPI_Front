@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
-import { get } from 'react-hook-form';
 import { deleteConduct, editConduct, getByIdConduct, getConducts, getTypeLicense, insertConduct } from '../helpers/ConductHelper';
-import dateFormat, { masks } from "dateformat";
+import dateFormat from "dateformat";
 
 export const UseEffectConduct = () => {
 
@@ -40,8 +39,7 @@ export const UseLicenseAvailable = () => {
     return licenseAvailable;
 };
 
-export const UseDeleteConduct = (identificacion) => {
-
+export const UseDeleteConduct = (identificacion) => {    
     deleteConduct(identificacion)
         .then((response) => {
             window.location.reload();
@@ -60,6 +58,7 @@ const calcularFecha = (fecha) => {
         return fechaVencimiento;
     }
 }
+
 
 export const UseEditConduct = (dataCondut) => {
 

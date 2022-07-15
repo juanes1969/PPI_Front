@@ -1,7 +1,8 @@
-import React, { useEffect, useRef, useState } from 'react';
-import * as AiIcons from 'react-icons/ai';
+import { useEffect, useRef, useState } from 'react';
 import * as BsIcons from 'react-icons/bs';
+import * as GiIcons from 'react-icons/gi';
 import * as RiIcons from 'react-icons/ri';
+import * as AiIcons from 'react-icons/ai';
 import { getConducts } from '../../helpers/ConductHelper';
 import { UseDeleteConduct, UseEffectConduct } from '../../hooks/UseCaseConduct';
 import { UseModal } from '../../hooks/UseModal';
@@ -11,20 +12,22 @@ import { Loader } from '../globalComponents/Loader';
 import { ModalCreateConduct } from './ModalCreateConduct';
 import { Pagination } from './Pagination';
 import { SearchConduct } from './SearchConduct';
+import Swal from 'sweetalert2';
 
 export const Conduct = () => {
 
     const [isOpenModalConduct, openModalConduct, closeModalConduct] = UseModal();
     const [conductEdit, setConductEdit] = useState(null);
-    const { data, loading } = UseEffectConduct();    
+    const { data, loading } = UseEffectConduct();
     const [conducts, setConducts] = useState([]);
     const [perPage, setPerPage] = useState(5);
     const [search, setSearch] = useState('');
-    const { filterConducts, nextPage, prevPage, setCurrentPage, setPage, page } = UsePage(data, perPage, search);
+    const [active, setActive] = useState(null);
+    const { filterConducts, nextPage, prevPage, setCurrentPage, setPage, page } = UsePage(data, perPage, search, active);
     const conductRef = useRef();
 
     conductRef.current = conducts;
-        
+
 
     const getById = (id) => {
         UseDeleteConduct(id);
@@ -55,7 +58,37 @@ export const Conduct = () => {
         retrieveConducts();
     }, []);
 
-
+    const selectAlert = () => {
+        Swal.fire({
+            title: 'Select field validation',
+            input: 'select',
+            inputOptions: {
+                'Fruits': {
+                    apples: 'Apples',
+                    bananas: 'Bananas',
+                    grapes: 'Grapes',
+                    oranges: 'Oranges'
+                },
+                'Vegetables': {
+                    potato: 'Potato',
+                    broccoli: 'Broccoli',
+                    carrot: 'Carrot'
+                },
+                'icecream': 'Ice cream'
+            },
+            inputPlaceholder: 'Select a fruit',
+            showCancelButton: true,
+            inputValidator: (value) => {
+                return new Promise((resolve) => {
+                    if (value === 'oranges') {
+                        resolve()
+                    } else {
+                        resolve('You need to select oranges :)')
+                    }
+                })
+            }
+        })
+    }
 
     return (
         <>
@@ -68,9 +101,14 @@ export const Conduct = () => {
                         openModal={openModalConduct}
                         setSearch={setSearch}
                         setCurrentPage={setCurrentPage}
-                        setPage={setPage}                        
+                        setPage={setPage}
                     />
                 </span>
+
+                <div className="btn-group" role="group" aria-label="Basic outlined example" id="btn-groupA">
+                    <button type="button" className="btn btn-outline-primary" onClick={() => setActive(!active)}>{`Conductores ${active ? ('Inactivos') : ('Activos')}`}</button>
+                    <button type="button" className="btn btn-outline-primary" onClick={() => setActive(null)}>Ver todos</button>
+                </div>
 
                 {loading
                     ?
@@ -78,7 +116,7 @@ export const Conduct = () => {
                     (<Loader />) :
 
                     (<div className="row" >
-                        <table className="table table-striped table-bordered">
+                        <table className="table table-striped table-bordered" id='table-conducts'>
                             <thead>
                                 <tr>
                                     <th scope="col">Identificación</th>
@@ -95,7 +133,7 @@ export const Conduct = () => {
                             </thead>
                             <tbody id="identificacion">
                                 {filterConducts().map((cond) => (
-                                    <tr key={cond.identificacion}>
+                                    <tr key={cond.id_conductor}>
                                         <td >{cond.identificacion}</td>
                                         <td>{cond.nombre}</td>
                                         <td>{cond.primer_apellido}</td>
@@ -104,9 +142,12 @@ export const Conduct = () => {
                                         <td>{cond.estado_conductor}</td>
                                         <td>{cond.placa}</td>
                                         <td id="columOptions">
-                                            <button className="btn btn-warning btn-sm"><BsIcons.BsFillEyeFill /></button>
-                                            <button className="btn btn-info btn-sm" onClick={() => getByIdEdit(cond)}><RiIcons.RiEditFill /></button>
-                                            <button className="btn btn-danger btn-sm" onClick={() => getById(cond.id_conductor)}><AiIcons.AiFillDelete /></button>
+                                            {cond.estado_conductor == "Activo" ?
+                                                (<button className="btn btn-warning btn-sm"><BsIcons.BsFillEyeFill /></button>) :
+                                                (<button className="btn btn-warning btn-sm" onClick={selectAlert}><GiIcons.GiCarSeat /></button>)
+                                            }
+                                            <button disabled={active == false || cond.estado_conductor == "Inactivo"} className="btn btn-info btn-sm" onClick={() => getByIdEdit(cond)}><RiIcons.RiEditFill /></button>
+                                            <button disabled={active == false || cond.estado_conductor == "Inactivo"} className="btn btn-danger btn-sm" onClick={() => getById(cond.id_conductor)}><AiIcons.AiFillDelete /></button>
                                         </td>
                                     </tr>
                                 ))}

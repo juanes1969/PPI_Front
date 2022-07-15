@@ -1,12 +1,25 @@
-
-#columOptions{
-    width: 14%;    
+#contenedorInicial {
+    margin-top: 40px;        
 }
 
-#columOptions button{
+#columOptions {
+    width: 14%;
+}
+
+#columOptions button {
     margin-right: 10px;
 }
 
-#formSearch{
+#formSearch {
     align-content: center;
+}
+
+#btn-groupA {
+    position: static;
+    z-index: 1;
+    padding: 10px;    
+}
+
+#btn-groupA button {
+    position: static;        
 }

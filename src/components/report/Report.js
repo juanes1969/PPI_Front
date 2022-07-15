@@ -1,10 +1,13 @@
 import React from 'react'
+import { Cards } from './Cards'
+import '../../Styles/cards.css'
 
 export const Report = () => {
     return (
         <>
-            <div className="report">
-                <h1 className="title-h1">Report</h1>
+            <div id='initial'>
+                <h4 >Aqui encontraras unos de los reportes de nuestro sistema: </h4>
+                <Cards />
             </div>
         </>
     )
