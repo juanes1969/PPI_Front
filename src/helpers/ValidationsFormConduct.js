@@ -7,7 +7,6 @@ export const ValidationsFormConduct = (conduct) => {
     let regexNumber = /^.{1,9}(\d)$/;
     let regexLicence = /^LC.{1,10}$/;
 
-<<<<<<< HEAD
     const calcularEdad = (fecha_nacimiento) => {
 
         let hoy = new Date();
@@ -26,9 +25,6 @@ export const ValidationsFormConduct = (conduct) => {
         }
     }
 
-=======
->>>>>>> 819c88ec36861f7ace6c89826b596bfec8640794
-
     if (!conduct.identificacion) {
         errors.identificacion = 'El campo Identificacion es requerido';
     } else if (!regexNumber.test(conduct.identificacion)) {
@@ -44,7 +40,7 @@ export const ValidationsFormConduct = (conduct) => {
     if (!conduct.fecha_nacimiento) {
         errors.fecha_nacimiento = 'El campo fecha de nacimiento es requerido';
     } else if (calcularEdad(conduct.fecha_nacimiento) < 18) {
-        errors.fecha_nacimiento = 'Debes ser mayor de edad';        
+        errors.fecha_nacimiento = 'Debes ser mayor de edad';
     }
 
     if (!conduct.primer_apellido) {
@@ -63,6 +59,21 @@ export const ValidationsFormConduct = (conduct) => {
         errors.licencia_conduccion = 'El campo Licencia es requerido'
     } else if (!regexLicence.test(conduct.licencia_conduccion)) {
         errors.licencia_conduccion = 'El campo Licencia tiene un formato invalido'
+    }
+
+
+    if (!conduct.expedicion_examenes_medicos) {
+        errors.expedicion_examenes_medicos = 'El campo Examenes medicos es requerido'
+    }
+
+    if (!conduct.expedicion_curso_industrial) {
+        errors.expedicion_curso_industrial = 'El campo Curso industrial es requerido'
+    }
+    if (!conduct.expedicion_curso_seguridad) {
+        errors.expedicion_curso_seguridad = 'El campo Curso seguridad es requerido'
+    }
+    if (!conduct.tipo_licencia) {
+        errors.tipo_licencia = 'El campo Tipo licencia es requerido'
     }
 
 

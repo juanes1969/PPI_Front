@@ -21,11 +21,11 @@
 .contenido__modal{
     background-color: var(--background-modal) !important;
     padding: 10px;
-    width: 950px;
+    width: 980px;
 }
 
 .modal-conduct{
-    height: 80vh;
+    height: 90vh;
 }
 
 .modal-vehicle{

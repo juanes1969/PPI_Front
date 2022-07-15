@@ -7,10 +7,6 @@ export const getConducts = async () => {
 
     const conducts = resp.data.map(img => {
         return {
-<<<<<<< HEAD
-            id_conductor: img.id_conductor,
-=======
->>>>>>> 819c88ec36861f7ace6c89826b596bfec8640794
             identificacion: img.identificacion,
             nombre: img.nombre,
             primer_apellido: img.primer_apellido,
@@ -26,12 +22,7 @@ export const getConducts = async () => {
             vencimiento_curso_industrial: img.vencimiento_curso_industrial,
             vencimiento_examenes_medicos: img.vencimiento_examenes_medicos,
             id_estado_conductor: img.id_estado_conductor,
-<<<<<<< HEAD
-            estado_conductor: img.descripcion_estado_conductor,
-            placa: img.placa
-=======
             estado_conductor: img.descripcion_estado_conductor
->>>>>>> 819c88ec36861f7ace6c89826b596bfec8640794
         }
     });
 
