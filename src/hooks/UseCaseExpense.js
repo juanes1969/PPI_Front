@@ -20,13 +20,15 @@ export const UseEffectGetExpense = () => {
 
   useEffect(() => {
     getAllExpense().then(expense => {
+      debugger
+      console.log(expense);
       setExpenses({
         data: expense,
         loading: false
       });
     });
   }, []);
-
+  console.log(expenses)
   return expenses;
 };
 

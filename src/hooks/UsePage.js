@@ -53,6 +53,20 @@ export const UsePage = (data, perPage, search) => {
         }
     }
 
+
+    const filtroReport= (data, search) => {
+        return data.descripcion.toLowerCase().includes(search);
+    }
+
+    const filterReport = () => {
+        if (search.length === 0) {
+            return data.slice(currentPage, currentPage + parseInt(perPage))
+        } else {
+            const filtered = data.filter(dat => filtroReport(dat, search));
+            return filtered.slice(currentPage, currentPage + parseInt(perPage))
+        }
+    }
+
     const filtroMaintenance = (data, search) => {
         return data.placa.toLowerCase().includes(search);
     }
@@ -85,5 +99,5 @@ export const UsePage = (data, perPage, search) => {
 
 
 
-    return { filterConducts, filterRoutes,filterVehicle,filterExpense, filterMaintenance, nextPage, prevPage, setCurrentPage, setPage, page }
+    return { filterConducts, filterRoutes,filterVehicle,filterExpense,filterReport, filterMaintenance, nextPage, prevPage, setCurrentPage, setPage, page }
 };
