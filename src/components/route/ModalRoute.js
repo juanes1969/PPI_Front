@@ -1,20 +1,15 @@
-import React, { useState, useEffect } from "react";
-import "../../Styles/modal.css";
-import * as AiIcons from "react-icons/ai";
-import * as RiIcons from 'react-icons/ri';
-import "../../helpers/modal-function";
-import { useForm } from "react-hook-form";
-import dateFormat, { masks } from "dateformat";
+import dateFormat from "dateformat";
+import React, { useEffect } from "react";
 import logo from "../../assets/img/LogoNew.png";
+import "../../helpers/modal-function";
+import "../../Styles/modal.css";
 
+import { UseEffectConduct } from "../../hooks/UseCaseConduct";
 import {
   UseCity,
-  UseInsertRoute,
-  UseVehicleRoute,
-  UseProduct,
-  UseSaveRoute,
+  UseInsertRoute, UseSaveRoute
 } from "../../hooks/UseCaseRoute";
-import { UseEffectConduct } from "../../hooks/UseCaseConduct";
+import { UseEffectGetVehicles } from "../../hooks/UseCaseVehicle";
 
 export const ModalRoutes = ({
   isOpenModal,
@@ -83,7 +78,8 @@ export const ModalRoutes = ({
     return valorMin;
   };
 
-  const { data: vehiclesWithConduct } = UseVehicleRoute();
+  const { data: conducts } = UseEffectConduct();
+  const { data: vehicles } = UseEffectGetVehicles();
   const { data: citys } = UseCity();
 
   useEffect(() => {
@@ -138,12 +134,11 @@ export const ModalRoutes = ({
                         name="codigo_manifiesto"
                         id="codigo_manifiesto"
                         onChange={handleChangeData}
-                        min={valorMinimo}
                         required
                       />
                       <label className="col-form-label modal-label">
                         Ciudad Origen *:
-                      </label>
+                      </label>|
                       <select
                         className={`form-control input-form`}
                         value={route.id_origen}
@@ -189,7 +184,7 @@ export const ModalRoutes = ({
                         required
                       >
                         <option value="0">Seleccionar</option>
-                        {vehiclesWithConduct.map((vehicle) => (
+                        {vehicles.map((vehicle) => (
                           <option
                             key={vehicle.placa}
                             value={vehicle.placa}
@@ -245,12 +240,12 @@ export const ModalRoutes = ({
                         required
                       >
                         <option value="0">Seleccionar</option>
-                        {vehiclesWithConduct.map((conduct) => (
+                        {conducts.map((conduct) => (
                           <option
                             key={conduct.identificacion}
                             value={conduct.identificacion}
                           >
-                            {conduct.nombre}
+                            {conduct.nombre + " " + conduct.primer_apellido}
                           </option>
                         ))}
                       </select>
@@ -274,7 +269,7 @@ export const ModalRoutes = ({
                         className="btn btn-info-form"
                         onClick={handleSubmit}
                       >
-                        {isEdit ? "Editar" : "Crear"}
+                        {isEdit ? "Editar" : null}
                       </button>
                     </div>
                   </div>

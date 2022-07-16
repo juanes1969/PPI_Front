@@ -35,6 +35,7 @@ export const Route = () => {
 
 
     const getByIdEdit = (route) => {
+        console.log(route)
         setIsEdit(route);
         OpenModalRoute();
     }
@@ -110,7 +111,7 @@ export const Route = () => {
 
                                             <button className="btn btn-warning btn-sm"><BsIcons.BsFillEyeFill /></button>
                                             <button className="btn btn-info btn-sm" onClick={() => getByIdEdit(route)} ><RiIcons.RiEditFill /></button>
-                                            <button className="btn btn-danger btn-sm" onClick={() => getById(route.id_ruta)} ><AiIcons.AiFillDelete /></button>
+                                            <button className="btn btn-danger btn-sm" onClick={() => getById(route.codigo_manifiesto)} ><AiIcons.AiFillDelete /></button>
                                         </td>
                                     </tr>
                                 ))}
