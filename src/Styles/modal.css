@@ -149,3 +149,7 @@
 .error-message{
     color: var(--danger-color);
 }
+
+.btn-agregar{
+    padding-top: 36px;
+}

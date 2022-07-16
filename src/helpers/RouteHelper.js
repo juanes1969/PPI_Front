@@ -81,14 +81,9 @@ export const getAllProduct = async () => {
 
     const typeProduct = resp.data.map(route => {
         return {
-
-
             id_producto: route.id_producto,
             referencia: route.referencia,
-            nombre_producto: route.nombre_producto,
-            caracteristica: route.caracteristica
-
-
+            nombre_producto: route.nombre_producto
         }
     });
 

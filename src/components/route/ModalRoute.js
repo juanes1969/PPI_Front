@@ -34,6 +34,8 @@ export const ModalRoutes = ({
     id_origen: null,
     id_destino: null,
     id_conductor: null,
+    id_producto:null,
+    cantidad_producto:0
   };
 
   const handleChangeData = ({ target }) => {
@@ -54,6 +56,10 @@ export const ModalRoutes = ({
       closeModal();
     }
   };
+
+  const handleProduct = (e) => {
+    e.preventDefault();
+  }
 
   const handleCancelButton = () => {
     setRouteData(initialRouteState);
@@ -85,6 +91,7 @@ export const ModalRoutes = ({
 
   const { data: vehiclesWithConduct } = UseVehicleRoute();
   const { data: citys } = UseCity();
+  const { data: products } = UseProduct();
 
   useEffect(() => {
     if (isEdit) {
@@ -269,20 +276,69 @@ export const ModalRoutes = ({
                         required
                       />
 
-                      <button
+                      {/* <button
                         type="submit"
                         className="btn btn-info-form"
                         onClick={handleSubmit}
                       >
                         {isEdit ? "Editar" : "Crear"}
-                      </button>
+                      </button> */}
+                    </div>
+                    <div className="row">
+                      <div className="col">
+                        <label className="col-form-label modal-label">
+                          Producto *:
+                        </label>
+                        <select
+                          className={`form-control input-form`}
+                          value={route.id_producto}
+                          name="id_producto"
+                          id="id_producto"
+                          onChange={handleChangeData}
+                          required
+                        >
+                          <option value="0">Seleccionar</option>
+                          {products.map((product) => (
+                            <option
+                              key={product.id_producto}
+                              value={product.id_producto}
+                            >
+                              {product.nombre_producto}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+
+                      <div className="col">
+                        <label className="col-form-label modal-label">
+                          Cantidad producto *:
+                        </label>
+                        <input
+                          type="number"
+                          className={`form-control input-form`}
+                          value={route.cantidad_producto}
+                          name="cantidad_producto"
+                          id="cantidad_producto"
+                          onChange={handleChangeData}
+                          required
+                        />
+                      </div>
+                      <div className="col btn-agregar">
+                        <button
+                          type="submit"
+                          className="btn btn-info input-form "
+                          onClick={handleProduct}
+                        >
+                          {"Agregar producto"}
+                        </button>
+                      </div>
                     </div>
                   </div>
-
                 </form>
               </div>
             </div>
             <div className="modal-footer modal-btn">
+
               <button
                 type="submit"
                 className="btn btn-info-form"
@@ -298,6 +354,21 @@ export const ModalRoutes = ({
               >
                 Cancelar registro
               </button>
+              {/* <button
+                type="submit"
+                className="btn btn-info-form"
+                onClick={handleSubmit}
+                disabled={true}
+              >
+                {isEdit ? "Editar ruta" : "Registrar ruta"}
+              </button>
+              <button
+                type="reset"
+                className="btn  btn-danger"
+                onClick={closeModal}
+              >
+                Cancelar registro
+              </button> */}
             </div>
           </div>
         </div>
