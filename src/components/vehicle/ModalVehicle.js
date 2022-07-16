@@ -194,7 +194,7 @@ export const ModalVehicle = ({ isOpenModal, closeModal, vehicleEdit,  setVehicle
                       <input
                         type="date"
                         className={`form-control input-form ${error.expedicion_poliza ? "input-error" : ""}`}
-                        value={vehicles.expedicion_poliza}
+                        value={ vehicleEdit && dateFormat(vehicles.expedicion_poliza, "isoDate")}
                         name="expedicion_poliza"
                         id="expedicion_poliza"
                         onChange={handleChangeData}
@@ -210,7 +210,7 @@ export const ModalVehicle = ({ isOpenModal, closeModal, vehicleEdit,  setVehicle
                       <input
                         type="date"
                         className={`form-control input-form`}
-                        value={calcularFecha(vehicles.expedicion_poliza, "vencimiento_poliza")}
+                        value={dateFormat(calcularFecha(vehicles.expedicion_poliza, "vencimiento_poliza"), "isoDate") }
                         name="vencimiento_poliza"
                         id="vencimiento_poliza"
                         onChange={handleChangeData}
@@ -278,7 +278,7 @@ export const ModalVehicle = ({ isOpenModal, closeModal, vehicleEdit,  setVehicle
                       <input
                         type="date"
                         className={`form-control input-form ${error.expedicion_soat ? "input-error" : ""}`}
-                        value={vehicles.expedicion_soat}
+                        value={ vehicleEdit && dateFormat(vehicles.expedicion_soat, "isoDate")}
                         name="expedicion_soat"
                         id="expedicion_soat"
                         onChange={handleChangeData}
@@ -294,7 +294,7 @@ export const ModalVehicle = ({ isOpenModal, closeModal, vehicleEdit,  setVehicle
                       <input
                         type="date"
                         className={`form-control input-form`}
-                        value={calcularFecha(vehicles.expedicion_soat, "vencimiento_soat")}
+                        value={dateFormat(calcularFecha(vehicles.expedicion_soat, "vencimiento_soat"), "isoDate") }
                         id="vencimiento_soat"
                         name="vencimiento_soat"
                         onChange={handleChangeData}
@@ -361,7 +361,7 @@ export const ModalVehicle = ({ isOpenModal, closeModal, vehicleEdit,  setVehicle
                       <input
                         type="date"
                         className={`form-control input-form ${error.expedicion_tecnomecanica ? "input-error" : ""}`}
-                        value={vehicles.expedicion_tecnomecanica}
+                        value={ vehicleEdit && dateFormat(vehicles.expedicion_tecnomecanica, "isoDate")}
                         id="expedicion_tecnomecanica"
                         name="expedicion_tecnomecanica"
                         onChange={handleChangeData}
@@ -377,7 +377,7 @@ export const ModalVehicle = ({ isOpenModal, closeModal, vehicleEdit,  setVehicle
                       <input
                         type="date"
                         className={`form-control input-form`}
-                        value={calcularFecha(vehicles.expedicion_tecnomecanica, "vencimiento_tecnomecanica")}
+                        value={dateFormat(calcularFecha(vehicles.expedicion_tecnomecanica, "vencimiento_tecnomecanica"), "isoDate")}
                         id="vencimiento_tecnomecanica"
                         name="vencimiento_tecnomecanica"
                         onChange={handleChangeData}
