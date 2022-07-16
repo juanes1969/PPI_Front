@@ -92,8 +92,11 @@ export const ModalExpense = ({
     return fechaMax;
   }
 
-  const valorMinimo = () => {
-    let valorMin = 500000
+  const valorMinimo = (valor) => {
+    let valorMin = 10000
+    if (valor < valorMin){
+      alert('El valor')
+    }
     return valorMin;
   }
 
@@ -139,7 +142,7 @@ export const ModalExpense = ({
               ></button>
             </div>
 
-            <div className="">
+            <div className="container-expenses">
               <div className="container">
                 <form
                   className="form-modal needs-validation"
@@ -149,7 +152,7 @@ export const ModalExpense = ({
                   <div className="row align-items-start">
                     <div className="col">
                       <label className="col-form-label modal-label">
-                        Codigo (Manifiesto)*:
+                        Codigo Manifiesto*:
                       </label>
                       <input
                         type="text"
@@ -194,6 +197,7 @@ export const ModalExpense = ({
                         onChange={handleChangeData}
                         onBlur={handleBlur}
                         min={fechaMinima()}
+                        max={fechaMaxima()}
                         required
                       />
                       {error.fecha_gasto && <p className="error-message">{error.fecha_gasto}</p>}
@@ -206,14 +210,14 @@ export const ModalExpense = ({
                         Valor Gasto ($)*:
                       </label>
                       <input
-                        type="text"
+                        type="number"
                         className={`form-control input-form ${error.valor_gasto ? "input-error" : ""}`}
                         value={expenses.valor_gasto}
                         name="valor_gasto"
                         id="valor_gasto"
                         onChange={handleChangeData}
                         onBlur={handleBlur}
-                        min={valorMinimo}
+                        min={10000}
                         autoComplete="off"
                         required
                       />
@@ -228,7 +232,6 @@ export const ModalExpense = ({
                         id="id_tipo_gasto"
                         onChange={handleChangeData}
                         onBlur={handleBlur}
-                        autoComplete="off"
                         required
                       >
                         <option value="0">Seleccionar</option>
@@ -248,7 +251,7 @@ export const ModalExpense = ({
                 </form>
               </div>
             </div>
-            <div className="modal-footer modal-btn">
+            <div className="modal-footer modal-btn footer-expense">
               <button type="submit" className="btn btn-info-form" onClick={handleSubmit}>
                 {expenseEdit ?
                   ('Editar gasto') :

@@ -124,8 +124,7 @@ export const Conduct = () => {
                                     <th scope="col">Primer apellido</th>
                                     <th scope="col">Segundo apellido</th>
                                     <th scope="col">Telefono</th>
-                                    <th scope="col">Estado conductor</th>
-                                    <th scope="col">Vehiculo asignado</th>
+                                    <th scope="col">Estado conductor</th>                                    
                                     <th scope="col" colSpan="3">
                                         Acciones
                                     </th>
@@ -139,15 +138,14 @@ export const Conduct = () => {
                                         <td>{cond.primer_apellido}</td>
                                         <td>{cond.segundo_apellido}</td>
                                         <td><b>(+57) </b>{cond.telefono_contacto}</td>
-                                        <td>{cond.estado_conductor}</td>
-                                        <td>{cond.placa}</td>
+                                        <td>{cond.estado_conductor}</td>                                        
                                         <td id="columOptions">
                                             {cond.estado_conductor == "Activo" ?
                                                 (<button className="btn btn-warning btn-sm"><BsIcons.BsFillEyeFill /></button>) :
                                                 (<button className="btn btn-warning btn-sm" onClick={selectAlert}><GiIcons.GiCarSeat /></button>)
                                             }
                                             <button disabled={active == false || cond.estado_conductor == "Inactivo"} className="btn btn-info btn-sm" onClick={() => getByIdEdit(cond)}><RiIcons.RiEditFill /></button>
-                                            <button disabled={active == false || cond.estado_conductor == "Inactivo"} className="btn btn-danger btn-sm" onClick={() => getById(cond.id_conductor)}><AiIcons.AiFillDelete /></button>
+                                            <button disabled={active == false || cond.estado_conductor == "Inactivo"} className="btn btn-danger btn-sm" onClick={() => getById(cond.identificacion)}><AiIcons.AiFillDelete /></button>
                                         </td>
                                     </tr>
                                 ))}

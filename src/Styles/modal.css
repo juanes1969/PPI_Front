@@ -21,11 +21,11 @@
 .contenido__modal{
     background-color: var(--background-modal) !important;
     padding: 10px;
-    width: 950px;
+    width: 980px;
 }
 
 .modal-conduct{
-    height: 80vh;
+    height: 90vh;
 }
 
 .modal-vehicle{
@@ -37,9 +37,14 @@
 }
 
 .modal-gasto-ruta{
-    height: 320px;
+    height: 500px;
     width: 60% !important;
     margin-left: 20% !important;
+}
+
+
+.container-expenses{
+    height: 500px;
 }
 
 .modal-mantenimiento{

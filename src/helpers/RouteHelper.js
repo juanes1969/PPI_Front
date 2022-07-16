@@ -1,7 +1,7 @@
 import axios from 'axios';
-import {url_api} from './http-common';
+import { url_api } from './http-common';
 
-export const getAllRoute = async() => {
+export const getAllRoute = async () => {
     const url = `${url_api}Route/`;
     const resp = await axios.get(url)
     debugger
@@ -26,50 +26,48 @@ export const getAllRoute = async() => {
     return typeRoute;
 }
 
-export const getVehicleRoute = async() => {
+export const getVehicleRoute = async () => {
     const url = `${url_api}Route/vehicleRoute`;
     const resp = await axios.get(url)
 
     const typeVechicle = resp.data.map(route => {
         return {
-            
-            id_vehiculo:route.id_vehiculo, 
-            placa:route.placa,
-            identificacion:route.identificacion,        
-          
+            identificacion: route.identificacion,
+            nombre: route.nombre,
+            placa: route.placa
         }
     });
 
     return typeVechicle;
 }
 
-export const getAllState = async() => {
+export const getAllState = async () => {
     const url = `${url_api}Route/stateRoute`;
     const resp = await axios.get(url)
 
     const typeState = resp.data.map(route => {
         return {
-            id_estado_ruta:route.id_estado_ruta,
-            estado:route.estado            
+            id_estado_ruta: route.id_estado_ruta,
+            estado: route.estado
         }
     });
 
     return typeState;
 }
 
-export const getAllCity = async() => {
+export const getAllCity = async () => {
     const url = `${url_api}Route/cityRoute`;
     const resp = await axios.get(url)
 
     const typeCityRoute = resp.data.map(route => {
         return {
-            
-        
-            id_origen:route.id_ciudad,
-            id_destino:route.id_ciudad,
-            ciudad_destino:route.descripcion,            
-            ciudad_origen:route.descripcion
-           
+
+
+            id_origen: route.id_ciudad,
+            id_destino: route.id_ciudad,
+            ciudad_destino: route.descripcion,
+            ciudad_origen: route.descripcion
+
 
         }
     });
@@ -77,19 +75,19 @@ export const getAllCity = async() => {
     return typeCityRoute;
 }
 
-export const getAllProduct = async() => {
+export const getAllProduct = async () => {
     const url = `${url_api}Route/product`;
     const resp = await axios.get(url)
 
     const typeProduct = resp.data.map(route => {
         return {
-            
-        
-            id_producto:route.id_producto,
-            referencia:route.referencia,
-            nombre_producto:route.nombre_producto,            
-            caracteristica:route.caracteristica
-           
+
+
+            id_producto: route.id_producto,
+            referencia: route.referencia,
+            nombre_producto: route.nombre_producto,
+            caracteristica: route.caracteristica
+
 
         }
     });
@@ -97,14 +95,14 @@ export const getAllProduct = async() => {
     return typeProduct;
 }
 
-export const getConduct = async(placa) => {
+export const getConduct = async (placa) => {
     const url = `${url_api}Vehicle/getConductByVehicle/${placa}`;
     const resp = await axios.get(url)
 
     const typeConductRoute = resp.data.map(route => {
         return {
             identificacion: route.identificacion,
-            id_conductor: route.identificacion  
+            id_conductor: route.identificacion
 
         }
     });
@@ -113,25 +111,25 @@ export const getConduct = async(placa) => {
 }
 
 
-export const insertRoute = async(data) => {
+export const insertRoute = async (data) => {
     const url = `${url_api}Route/newRoute`;
     const resp = await axios.post(url, data)
     return resp;
 }
 
-  
+
 export const editRoute = async (data, id_ruta) => {
     const url = `${url_api}Route/routeEdit/${id_ruta}`;
     const resp = await axios.put(url, data);
     return resp;
 };
 
-export const getRouteByIdRoute= async (id_ruta) => {
+export const getRouteByIdRoute = async (id_ruta) => {
     const url = `${url_api}Route/getRoute/${id_ruta}`;
     const resp = await axios.get(url);
     const routeData = resp.data.map((dataRoute) => {
         return {
-            codigo_manifiesto:dataRoute.codigo_manifiesto,    
+            codigo_manifiesto: dataRoute.codigo_manifiesto,
             producto: dataRoute.producto,
             cantidad: dataRoute.cantidad,
             fecha_inicio: dataRoute.fecha_inicio,
@@ -142,16 +140,16 @@ export const getRouteByIdRoute= async (id_ruta) => {
             id_origen: dataRoute.id_origen,
             id_destino: dataRoute.id_destino,
         };
-      });
-    
-      return routeData;
-    };
-  
+    });
+
+    return routeData;
+};
+
 
 export const deleteRoute = async (id_ruta) => {
     const url = `${url_api}Route/deleteRoute/${id_ruta}`;
     const resp = await axios.delete(url)
-    
+
     return resp;
 }
 
@@ -161,12 +159,12 @@ export const getProductByRoute = async (codigo_manifiesto) => {
 
     const products = resp.data.map(route => {
         return {
-            id_detalle:route.id_detalle,
-            id_producto:route.id_producto,
-            codigo_manifiesto:route.codigo_manifiesto,
-            cantidad_producto:route.cantidad_producto,
-            referencia:route.referencia,
-            nombre_producto:route.nombre_producto
+            id_detalle: route.id_detalle,
+            id_producto: route.id_producto,
+            codigo_manifiesto: route.codigo_manifiesto,
+            cantidad_producto: route.cantidad_producto,
+            referencia: route.referencia,
+            nombre_producto: route.nombre_producto
         }
     });
 

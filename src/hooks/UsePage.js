@@ -53,8 +53,10 @@ export const UsePage = (data, perPage, search, active) => {
     }
 
     const filtroRuta = (data, search) => {
-        return data.id_ruta.includes(search) || data.nombre_producto.toLowerCase().includes(search);
+        console.log(data);
+        return data.codigo_manifiesto.includes(search) || data.conductor.toLowerCase().includes(search);
     }
+    
 
     const filterRoutes = () => {
         if (search.length === 0) {

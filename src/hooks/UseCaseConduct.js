@@ -10,11 +10,11 @@ export const UseEffectConduct = () => {
     useEffect(() => {
         getConducts()
             .then(conducts => {
-                    setState({
-                        data: conducts,
-                        loading: false,
-                        error: null
-                    });
+                setState({
+                    data: conducts,
+                    loading: false,
+                    error: null
+                });
             });
     }, []);
 
@@ -39,7 +39,7 @@ export const UseLicenseAvailable = () => {
     return licenseAvailable;
 };
 
-export const UseDeleteConduct = (identificacion) => {    
+export const UseDeleteConduct = (identificacion) => {
     deleteConduct(identificacion)
         .then((response) => {
             window.location.reload();

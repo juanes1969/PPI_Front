@@ -7,7 +7,7 @@ export const Mensajes = {
         },
         gasto:{
             campoObligatorio: "Este campo es obligatorio",
-            placaInvalida: "Formato de placa no válido",
+            valorInvalido: "Valor minimo $10.000 ",
             campoNumerico: "Solo se permiten números",
             modelo: "Modelo no válido"
         }
