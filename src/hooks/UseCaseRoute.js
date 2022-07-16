@@ -23,12 +23,12 @@ export const UseEffectGetRoutes = () => {
 
   useEffect(() => {
     getAllRoute()
-    .then(route => {
-      setRoutes({
-        data: route,
-        loading: false
+      .then(route => {
+        setRoutes({
+          data: route,
+          loading: false
+        });
       });
-    });
   }, []);
 
   return routes;
@@ -52,12 +52,12 @@ export const UseDeleteRoute = (id_ruta) => {
         'success'
       )
       deleteRoute(id_ruta)
-      .then((response) => {
+        .then((response) => {
           window.location.reload();
-      })
-      .catch((e) => {
+        })
+        .catch((e) => {
           console.log(e);
-      });
+        });
     } else if (
       result.dismiss === Swal.DismissReason.cancel
     ) {
@@ -96,11 +96,11 @@ export const UseGetProductByRoute = (codigo_manifiesto) => {
 
   useEffect(() => {
     getProductByRoute(codigo_manifiesto)
-    .then(product => {
-      setProduct({
-        data: product
+      .then(product => {
+        setProduct({
+          data: product
+        });
       });
-    });
   }, []);
 
   return product;
@@ -183,18 +183,15 @@ export const UseInsertRoute = (dataRoute) => {
 
 
   var data = {
-
-    producto: dataRoute.producto,
-    cantidad: dataRoute.cantidad,
+    codigo_manifiesto: dataRoute.codigo_manifiesto,
     fecha_inicio: dataRoute.fecha_inicio,
     fecha_fin: dataRoute.fecha_fin,
     flete: dataRoute.flete,
     id_vehiculo: dataRoute.id_vehiculo,
+    id_estado_envio: 1,
     id_origen: dataRoute.id_origen,
     id_destino: dataRoute.id_destino,
-    id_estado_envio: 1,
-
-
+    id_conductor: dataRoute.id_conductor,
   };
 
   insertRoute(data)
@@ -221,32 +218,32 @@ export const UseSaveRoute = (dataRoute) => {
     id_destino: dataRoute.id_destino,
     id_estado_envio: 1,
   };
-  if(route != null ){
+  if (route != null) {
     editRoute(data, dataRoute.id_ruta)
-    .then((response) => {
-      swalWithBootstrapButtons.fire(
-        '¡Registro Exitoso!',
-        'El vehículo fue editado con éxito',
-        'success'
-      )
-      window.location.reload();
-    })
-    .catch((e) => {
-      console.log(e);
-    });
-  }else{
+      .then((response) => {
+        swalWithBootstrapButtons.fire(
+          '¡Registro Exitoso!',
+          'El vehículo fue editado con éxito',
+          'success'
+        )
+        window.location.reload();
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  } else {
     insertRoute(data)
-    .then((response) => {
-      swalWithBootstrapButtons.fire(
-        '¡Registro Exitoso!',
-        'El vehículo fue agregado con éxito',
-        'success'
-      )
-      window.location.reload();
-    })
-    .catch((e) => {
-      console.log(e);
-    });
+      .then((response) => {
+        swalWithBootstrapButtons.fire(
+          '¡Registro Exitoso!',
+          'El vehículo fue agregado con éxito',
+          'success'
+        )
+        window.location.reload();
+      })
+      .catch((e) => {
+        console.log(e);
+      });
   }
 
 

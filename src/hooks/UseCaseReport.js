@@ -1,30 +1,24 @@
-import { useState, useEffect } from "react";
-import Swal from "sweetalert2";
-import { getAllReport} from "../helpers/ReportHelper";
 
+import { useEffect, useState } from "react";
+import { getReports } from "../helpers/ReportHelper";
 
-export const UseEffectGetReport = () => {
-    const [reports, setReport] = useState({
-      data: [],
-      loading: true,
-    });
-  
+export const UseEffecReports = () => {
+
+    const [state, setState] = useState({ data: [], loading: true, error: null });
+
     useEffect(() => {
-      getAllReport()
-      .then((report) => {
-        debugger
-        console.log(report);
-        
-        setReport({
-          data: report,
-          loading: false,
-          
-        });
-      });
+        getReports()
+            .then(reports => {
+                setState({
+                    data: reports,
+                    loading: false,
+                    error: null
+                });
+            });
     }, []);
-  console.log(reports)
-    return reports;
-  };
 
+    console.log(state)
+    
+    return state;
+}
 
- 

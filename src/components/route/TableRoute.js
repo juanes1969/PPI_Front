@@ -1,18 +1,17 @@
-import React, { useState, useRef, useEffect } from 'react'
-import '../../Styles/tableConduct.css'
-import * as IoIcons from 'react-icons/io5';
-import * as BsIcons from 'react-icons/bs';
-import * as RiIcons from 'react-icons/ri';
+import React, { useEffect, useRef, useState } from 'react';
 import * as AiIcons from 'react-icons/ai';
-import * as FcIcons from 'react-icons/fc';
-import { UseModal } from '../../hooks/UseModal';
-import { ModalRoutes } from './ModalRoute';
-import { UseEffectGetRoutes, UseDeleteRoute } from '../../hooks/UseCaseRoute';
-import { Loader } from '../globalComponents/Loader';
-import { SearchRoute } from '../route/SearchRoute';
+import * as BsIcons from 'react-icons/bs';
+import * as IoIcons from 'react-icons/io5';
+import * as RiIcons from 'react-icons/ri';
 import { getAllRoute } from '../../helpers/RouteHelper';
-import { Pagination } from './Pagination';
-import { UsePageRoute } from '../../hooks/UsePageRoute';
+import { UseDeleteRoute, UseEffectGetRoutes } from '../../hooks/UseCaseRoute';
+import { UseModal } from '../../hooks/UseModal';
+import { UsePage } from '../../hooks/UsePage';
+import '../../Styles/tableConduct.css';
+import { SearchConduct } from '../conduct/SearchConduct';
+import { Loader } from '../globalComponents/Loader';
+import { ModalRoutes } from './ModalRoute';
+import { Pagination } from '../conduct/Pagination';
 
 
 export const Route = () => {
@@ -24,7 +23,7 @@ export const Route = () => {
     const [search, setSearch] = useState('');
     const routeRef = useRef();
     const [perPage, setPerPage] = useState(5);
-    const { filterRoutes, nextPage, prevPage, setCurrentPage, setPage, page } = UsePageRoute(data, perPage, search);
+    const { filterRoutes, nextPage, prevPage, setCurrentPage, setPage, page } = UsePage(data, perPage, search);
 
     routeRef.current = routeData;
 
@@ -36,6 +35,7 @@ export const Route = () => {
 
 
     const getByIdEdit = (route) => {
+        console.log(route)
         setIsEdit(route);
         OpenModalRoute();
     }
@@ -64,7 +64,7 @@ export const Route = () => {
             <div className="container" id="contenedorInicial">
                 <h1 className="title-h1">Rutas</h1>
                 <span>
-                    <SearchRoute
+                    <SearchConduct
                         titleButton={"Agregar Ruta"}
                         icon={<IoIcons.IoCarSportSharp />}
                         openModal={OpenModalRoute}
@@ -111,7 +111,7 @@ export const Route = () => {
 
                                             <button className="btn btn-warning btn-sm"><BsIcons.BsFillEyeFill /></button>
                                             <button className="btn btn-info btn-sm" onClick={() => getByIdEdit(route)} ><RiIcons.RiEditFill /></button>
-                                            <button className="btn btn-danger btn-sm" onClick={() => getById(route.id_ruta)} ><AiIcons.AiFillDelete /></button>
+                                            <button className="btn btn-danger btn-sm" onClick={() => getById(route.codigo_manifiesto)} ><AiIcons.AiFillDelete /></button>
                                         </td>
                                     </tr>
                                 ))}

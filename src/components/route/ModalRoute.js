@@ -1,19 +1,15 @@
-import React, { useState, useEffect } from "react";
-import "../../Styles/modal.css";
-import * as AiIcons from "react-icons/ai";
-import * as RiIcons from 'react-icons/ri';
-import "../../helpers/modal-function";
-import { useForm } from "react-hook-form";
-import dateFormat, { masks } from "dateformat";
+import dateFormat from "dateformat";
+import React, { useEffect } from "react";
 import logo from "../../assets/img/LogoNew.png";
+import "../../helpers/modal-function";
+import "../../Styles/modal.css";
 
+import { UseEffectConduct } from "../../hooks/UseCaseConduct";
 import {
   UseCity,
-  UseInsertRoute,
-  UseVehicleRoute,
-  UseProduct,
-  UseSaveRoute,
+  UseInsertRoute, UseSaveRoute
 } from "../../hooks/UseCaseRoute";
+import { UseEffectGetVehicles } from "../../hooks/UseCaseVehicle";
 
 export const ModalRoutes = ({
   isOpenModal,
@@ -82,9 +78,9 @@ export const ModalRoutes = ({
     return valorMin;
   };
 
-  const { data: vehicles } = UseVehicleRoute();
+  const { data: conducts } = UseEffectConduct();
+  const { data: vehicles } = UseEffectGetVehicles();
   const { data: citys } = UseCity();
-  const { data: products } = UseProduct();
 
   useEffect(() => {
     if (isEdit) {
@@ -138,12 +134,11 @@ export const ModalRoutes = ({
                         name="codigo_manifiesto"
                         id="codigo_manifiesto"
                         onChange={handleChangeData}
-                        min={valorMinimo}
                         required
                       />
                       <label className="col-form-label modal-label">
                         Ciudad Origen *:
-                      </label>
+                      </label>|
                       <select
                         className={`form-control input-form`}
                         value={route.id_origen}
@@ -160,17 +155,21 @@ export const ModalRoutes = ({
                         ))}
                       </select>
                       <label className="col-form-label modal-label">
-                        Fecha Fin *:
+                        Fecha Inicio *:
                       </label>
                       <input
                         type="date"
                         className={`form-control input-form`}
-                        value={route.fecha_fin}
-                        name="fecha_fin"
-                        id="fecha_fin"
+                        value={route.fecha_inicio}
+                        name="fecha_inicio"
+                        id="fecha_inicio"
                         onChange={handleChangeData}
+                        min={fechaMinima()}
+                        max={fechaMaxima()}
                         required
                       />
+
+
                     </div>
                     <div className="col">
                       <label className="col-form-label modal-label">
@@ -187,8 +186,8 @@ export const ModalRoutes = ({
                         <option value="0">Seleccionar</option>
                         {vehicles.map((vehicle) => (
                           <option
-                            key={vehicle.id_vehiculo}
-                            value={vehicle.id_vehiculo}
+                            key={vehicle.placa}
+                            value={vehicle.placa}
                           >
                             {vehicle.placa}
                           </option>
@@ -213,13 +212,20 @@ export const ModalRoutes = ({
                           </option>
                         ))}
                       </select>
-                      <button
-                        type="submit"
-                        className="btn btn-info-form"
-                        onClick={handleSubmit}
-                      >
-                        {isEdit ? "Editar" : "Crear"}
-                      </button>
+
+                      <label className="col-form-label modal-label">
+                        Fecha Fin *:
+                      </label>
+                      <input
+                        type="date"
+                        className={`form-control input-form`}
+                        value={route.fecha_fin}
+                        name="fecha_fin"
+                        id="fecha_fin"
+                        onChange={handleChangeData}
+                        required
+                      />
+
                     </div>
                     <div className="col">
                       <label className="col-form-label modal-label">
@@ -234,33 +240,40 @@ export const ModalRoutes = ({
                         required
                       >
                         <option value="0">Seleccionar</option>
-                        {vehicles.map((vehicle) => (
+                        {conducts.map((conduct) => (
                           <option
-                            key={vehicle.identificacion}
-                            value={vehicle.identificacion}
+                            key={conduct.identificacion}
+                            value={conduct.identificacion}
                           >
-                            {vehicle.nombre}
+                            {conduct.nombre + " " + conduct.primer_apellido}
                           </option>
                         ))}
                       </select>
 
+
                       <label className="col-form-label modal-label">
-                        Fecha Inicio *:
+                        Flete *:
                       </label>
                       <input
-                        type="date"
+                        type="number"
                         className={`form-control input-form`}
-                        value={route.fecha_inicio}
-                        name="fecha_inicio"
-                        id="fecha_inicio"
+                        value={route.flete}
+                        name="flete"
+                        id="flete"
                         onChange={handleChangeData}
-                        min={fechaMinima()}
-                        max={fechaMaxima()}
                         required
                       />
+
+                      <button
+                        type="submit"
+                        className="btn btn-info-form"
+                        onClick={handleSubmit}
+                      >
+                        {isEdit ? "Editar" : null}
+                      </button>
                     </div>
                   </div>
-                  
+
                 </form>
               </div>
             </div>

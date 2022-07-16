@@ -1,17 +1,42 @@
 import { useState } from 'react';
 
-export const UsePage = (data, perPage, search) => {
+export const UsePage = (data, perPage, search, active) => {
 
     const [currentPage, setCurrentPage] = useState(0);
     const [page, setPage] = useState(1);
 
     const filterConducts = () => {
+        console.log(currentPage)
+
+
         if (search.length === 0) {
+            if (active === true) {
+                const result = data.filter(dat => dat.estado_conductor.includes("Activo"));
+                console.log(result)
+                return result.slice(currentPage, currentPage + parseInt(perPage));
+            } else if (active === false) {
+                const result = data.filter(dat => dat.estado_conductor.includes("Inactivo"));
+                console.log(active);
+                console.log(result);
+                return result.slice(currentPage, currentPage + parseInt(perPage));
+            }
             return data.slice(currentPage, currentPage + parseInt(perPage))
         } else {
-            const filtered = data.filter(dat => dat.identificacion.toLowerCase().includes(search.toLowerCase()));
-            return filtered.slice(currentPage, currentPage + parseInt(perPage));
-        }        
+            if (active === true) {
+                const filtered = data.filter(dat => dat.identificacion.toLowerCase().includes(search.toLowerCase()) && dat.estado_conductor.includes("Activo"));
+                return filtered.slice(currentPage, currentPage + parseInt(perPage));
+            }
+            if (active === false) {
+                const filtered = data.filter(dat => dat.identificacion.toLowerCase().includes(search.toLowerCase()) && dat.estado_conductor.includes("Inactivo"));
+                return filtered.slice(currentPage, currentPage + parseInt(perPage));
+
+            } else if (active === null) {
+                const filtered = data.filter(dat => dat.identificacion.toLowerCase().includes(search.toLowerCase()));
+                return filtered.slice(currentPage, currentPage + parseInt(perPage));
+            }
+        }
+
+
     }
 
     const filtroVehiculo = (data, search) => {
@@ -28,8 +53,10 @@ export const UsePage = (data, perPage, search) => {
     }
 
     const filtroRuta = (data, search) => {
-        return data.id_ruta.includes(search) || data.nombre_producto.toLowerCase().includes(search);
+        console.log(data);
+        return data.codigo_manifiesto.includes(search) || data.conductor.toLowerCase().includes(search);
     }
+    
 
     const filterRoutes = () => {
         if (search.length === 0) {
@@ -97,7 +124,6 @@ export const UsePage = (data, perPage, search) => {
         }
     }
 
+    return { filterConducts, filterRoutes, filterVehicle, filterExpense, filterMaintenance, nextPage, prevPage, setCurrentPage, setPage, page }
 
-
-    return { filterConducts, filterRoutes,filterVehicle,filterExpense,filterReport, filterMaintenance, nextPage, prevPage, setCurrentPage, setPage, page }
 };

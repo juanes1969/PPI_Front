@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react'
 import {
   Chart as ChartJS,
@@ -7,9 +8,8 @@ import {
 } from 'chart.js';
 
 import { Bar } from 'react-chartjs-2';
-import { UseEffectGetReport } from '../../hooks/UseCaseReport';
-import { getAllReport } from '../../helpers/ReportHelper';
 
+import { UseEffecReports } from '../../hooks/UseCaseReport';
 // ChartJS.register(
 //   BarElement,
 // );
@@ -17,14 +17,24 @@ import { getAllReport } from '../../helpers/ReportHelper';
 
 export const Report = () => {
 
- const {data, loading }= UseEffectGetReport()
- const [reports, setReport] = useState([]);
+  const [reports, setReport] = useState([]);
+  const { data } = UseEffecReports();
+
+  console.log(data);
+  return (
+    <div>Report</div>
+  )
 
 
 
 
 
-//   var baseUrl = "http://localhost:3000/Report";
+
+
+
+
+
+  //   var baseUrl = "http://localhost:3000/Report";
 
 
   // useEffect(() => {
@@ -96,6 +106,11 @@ export const Report = () => {
   //     />
   //   </div>
   // )
+
 }
+
+
+
+
 
 

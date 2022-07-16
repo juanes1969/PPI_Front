@@ -10,6 +10,7 @@ import { getUsers } from "../../helpers/LoginHelper";
 import { UseForm } from "../../hooks/UseForm";
 import "../../Styles/login.css";
 import { types } from "../../types/types";
+import Swal from 'sweetalert2'
 
 export const Login = () => {
 
@@ -18,7 +19,7 @@ export const Login = () => {
   const { dispatch } = useContext(AuthContext);
 
 
-  const { handleInputChange, formValues, reset } = UseForm({
+  const { handleInputChange, formValues} = UseForm({
     usuario: '',
     clave: ''
   })
@@ -29,7 +30,6 @@ export const Login = () => {
 
   const onSumbit = (e) => {
     e.preventDefault();
-    // reset();
 
     var data = {
       usuario: formValues.usuario,
@@ -38,19 +38,34 @@ export const Login = () => {
 
     getUsers(data)
       .then((response) => {
-        const resp = response.data;
-
-        const action = {
-          type: types.login,
-          payload: resp
-        }
-
         if (response.data.data.length === 1) {
-          dispatch(action);
+          Swal.fire(
+            'Inicio de sesion exitoso ',
+            'Tu inicio de sesion se ejecuto de manera correcta',
+            'success'
+          ).then(resp => {
+            if (resp.isConfirmed) {
+              const resp = response.data;
 
-          navigate('/Home', {
-            replace: true
-          });
+              const action = {
+                type: types.login,
+                payload: resp
+              }
+
+              dispatch(action);
+              navigate('/Home', {
+                replace: true
+              }
+              )
+            }
+          })
+        } else {
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Usuario y contraseña incorrectos',
+            footer: '<a href="">Acaso olvidaste tu usuario o contraseña?</a>'
+          })
         }
       })
       .catch((e) => {
@@ -92,7 +107,7 @@ export const Login = () => {
                 className="form-control"
                 name="clave"
                 placeholder="Password"
-                onChange={handleInputChange}                
+                onChange={handleInputChange}
               />
             </div>
           </IconContext.Provider>
