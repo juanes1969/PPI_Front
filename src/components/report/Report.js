@@ -1,61 +1,88 @@
-import React from 'react'
-import { Cards } from './Cards'
-import '../../Styles/cards.css'
-import {
-    Chart as ChartJS,
-    CategoryScale,
-    LinearScale,
-    BarElement,
-    Title,
-    Tooltip,
-    Legend,
-} from 'chart.js';
+
+import React, { useState, useEffect } from 'react'
+import { Chart as ChartJS, BarElement,CategoryScale,LinearScale ,Legend } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
-
-const { faker } = require('@faker-js/faker');
-
+import { UseEffecReports } from '../../hooks/UseCaseReport';
 
 
 ChartJS.register(
-    CategoryScale,
-    LinearScale,
-    BarElement,
-    Title,
-    Tooltip,
-    Legend
-  );
-  
-  export const options = {
-    responsive: true,
-    plugins: {
-      legend: {
-        position: 'top',
-      },
-      title: {
-        display: true,
-        text: 'Chart.js Bar Chart',
-      },
+  BarElement,
+  CategoryScale,
+  LinearScale,
+  Legend,
+ 
+);
+
+
+export const Report = () => {
+
+  const { data } = UseEffecReports();
+
+  console.log(data);
+
+  const charReport = {
+    labels: data?.map(x => x.id_vehiculo),
+    datasets: [{
+      label: `${data?.length} Vehiculos con Registros de Rutas`,
+      data: data?.map(x => x.cantidad),
+      backgroundColor: [
+        'rgba(255, 99, 132, 0.2)',
+        'rgba(54, 162, 235, 0.2)',
+        'rgba(255, 206, 86, 0.2)',
+        'rgba(75, 192, 192, 0.2)',
+        'rgba(153, 102, 255, 0.2)',
+        'rgba(255, 159, 64, 0.2)'
+      ],
+      borderColor: [
+        'rgba(255, 99, 132, 1)',
+        'rgba(54, 162, 235, 1)',
+        'rgba(255, 206, 86, 1)',
+        'rgba(75, 192, 192, 1)',
+        'rgba(153, 102, 255, 1)',
+        'rgba(255, 159, 64, 1)'
+      ],
+      borderWidth: 1
+    }]
+  };
+
+  console.log(charReport)
+  var options = {
+    maintainAspectRatio: false,
+    scales: {
+      y: {
+        beginAtZero: true
+      }
     },
-  };
-  
-  const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
-  
-  export const data = {
-    labels,
-    datasets: [
-      {
-        label: 'Dataset 1',
-        data: labels.map(() => faker.datatype.number({ min: 0, max: 1000 })),
-        backgroundColor: 'rgba(255, 99, 132, 0.5)',
+    legend: {
+      display: true,
+      labels: {
+        fontColor: "rgb(255, 99, 132)",
       },
-      {
-        label: 'Dataset 2',
-        data: labels.map(() => faker.datatype.number({ min: 0, max: 1000 })),
-        backgroundColor: 'rgba(53, 162, 235, 0.5)',
-      },
-    ],
-  };
-  
-  export function Report() {
-    return <Bar options={options} data={data} />;
+      position: "bottom",
+      align: "start",
+    },
   }
+
+  console.log(options)
+  return (
+    <div>
+      <h1>Report</h1>
+      <Bar
+       data={charReport}
+       height={100}
+    
+      />
+    </div>
+  )
+
+
+
+
+
+}
+
+
+
+
+
+

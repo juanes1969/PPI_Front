@@ -8,7 +8,7 @@
     --warning-color: rgb(240, 129, 18);
     --success-color: rgb(13, 176, 1);
     --info-color: rgb(8, 121, 220);
-    --info-form-color: rgb(39, 151, 61);
+    --info-form-color: #27973d;
     --danger-color: rgb(221 37 37);
     /*--font-color-primary: #620037;*/
     --font-color-primary: #000000;
@@ -73,11 +73,35 @@
     border: none !important;
 }
 
-.home{
+/* .home{
     background-image:url(../assets/img/fondo/home.svg);
     width: 80%;
     height: 80vh;
     margin-top: 3%;
     margin-left: 5%;
     background-size: cover;
+} */
+
+.img-card{
+    width: 150px;
+    height: 150px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px;
+}
+
+.row{
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.card{
+    margin: 5px;
+    width: 300px;
+}
+
+.col-sm-4{
+    width: 25%;
 }

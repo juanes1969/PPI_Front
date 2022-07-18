@@ -3,8 +3,7 @@ import { url_api } from './http-common';
 
 export const getAllRoute = async () => {
     const url = `${url_api}Route/`;
-    const resp = await axios.get(url)
-    debugger
+    const resp = await axios.get(url)    
     console.log(resp.data)
     const typeRoute = resp.data.map(route => {
         return {
@@ -19,7 +18,8 @@ export const getAllRoute = async () => {
             ciudad_destino:route.ciudad_destino,
             id_origen:route.id_origen,
             id_destino:route.id_destino,
-            conductor: route.conductor
+            conductor: route.conductor,
+            id_conductor: route.id_conductor
         }
     });
 
@@ -134,6 +134,7 @@ export const getRouteByIdRoute = async (id_ruta) => {
             id_estado_envio: 1,
             id_origen: dataRoute.id_origen,
             id_destino: dataRoute.id_destino,
+            id_conductor: dataRoute.id_conductor
         };
     });
 
