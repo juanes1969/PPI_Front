@@ -10,9 +10,6 @@ import report from "../../assets/img-cards/report.svg";
 export const HomePage = () => {
   return (
     <div className="home-cards">
-      {/* <div classNameNameName="home">
-                <h4 classNameName="home-p">Sotransiv permite al usuario llevar registro del historico de los enviós que realiza la empresa.  </h4>
-            </div> */}
       <div className="row">
         <div className="col-sm-4">
           <div className="card">
