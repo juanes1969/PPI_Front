@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import Swal from "sweetalert2";
-import { deleteMaintenance, editMaintenance, getAllMaintenances, getMaintenanceById, getMaintenanceByPlaca, insertMaintenance } from "../helpers/MaintenanceHelper";
+import { deleteMaintenance, editMaintenance, getAllMaintenances, getMaintenanceById, getMaintenanceByPlaca, getReportMaintenances, insertMaintenance } from "../helpers/MaintenanceHelper";
 
 const swalWithBootstrapButtons = Swal.mixin({
     customClass: {
@@ -27,6 +27,26 @@ const swalWithBootstrapButtons = Swal.mixin({
     }, []);
   
     return maintenances;
+  };
+
+  export const UseEffectGetReportMaintenances = () => {
+    const [reportmaintenances, setReportMaintenances] = useState({
+      datamaintenances: [],
+      loading: true,
+    });
+  
+    useEffect(() => {
+      getReportMaintenances()
+      .then((report) => {
+        setReportMaintenances({
+          datamaintenances: report,
+          loading: false,
+          error: null
+        });
+      });
+    }, []);
+    console.log(reportmaintenances)
+    return reportmaintenances;
   };
 
   export const UseDeleteMaintenance = (placa) => {

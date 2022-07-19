@@ -18,6 +18,24 @@ export const getAllMaintenances = async () => {
   return typeMaintenance;
 };
 
+export const getReportMaintenances = async () => {
+  const url = `${url_api}Maintenance/getReport/`;
+  const resp = await axios.get(url);
+  
+  const typeReportMaintenance = resp.data.map(maintenance => {
+    return {
+      id_mantenimiento: maintenance.id_mantenimiento,
+      id_vehiculo: maintenance.id_vehiculo,
+      valor_mantenimiento: maintenance.valor_mantenimiento,
+      fecha_realizado: maintenance.fecha_realizado,
+      descripcion: maintenance.descripcion,
+      cantidad: maintenance.cantidad,
+    };
+  });
+
+  return typeReportMaintenance;
+};
+
 
 
 export const deleteMaintenance = async (placa) => {
