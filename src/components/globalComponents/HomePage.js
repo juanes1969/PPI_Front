@@ -17,7 +17,7 @@ export const HomePage = () => {
             <div class="card-body">
               <h5 class="card-title">Conductores</h5>
               <p class="card-text">Módulo de gestión de conductores</p>
-              <Link className="btn btn-info" to="/Conducts">
+              <Link className="btn btn-warning" to="/Conducts">
                 Ver más
               </Link>
             </div>
@@ -29,7 +29,7 @@ export const HomePage = () => {
             <div class="card-body">
               <h5 class="card-title">Vehículos </h5>
               <p class="card-text">Módulo de gestión de vehículos</p>
-              <Link className="btn btn-info" to="/Vehicles">
+              <Link className="btn btn-warning" to="/Vehicles">
                 Ver más
               </Link>
             </div>
@@ -42,7 +42,7 @@ export const HomePage = () => {
             <div class="card-body">
               <h5 class="card-title">Rutas</h5>
               <p class="card-text">Módulo de gestión de rutas</p>
-              <Link className="btn btn-info" to="/Routes">
+              <Link className="btn btn-warning" to="/Routes">
                 Ver más
               </Link>
             </div>
@@ -61,7 +61,7 @@ export const HomePage = () => {
             <div class="card-body">
               <h5 class="card-title">Mantenimiento</h5>
               <p class="card-text">Módulo de gestión de mantenimiento</p>
-              <Link className="btn btn-info" to="/Maintenance">
+              <Link className="btn btn-warning" to="/Maintenance">
                 Ver más
               </Link>
             </div>
@@ -73,7 +73,7 @@ export const HomePage = () => {
             <div class="card-body">
               <h5 class="card-title">Gastos</h5>
               <p class="card-text">Módulo de gestión de gastos rutas.</p>
-              <Link className="btn btn-info" to="/Expense">
+              <Link className="btn btn-warning" to="/Expense">
                 Ver más
               </Link>
             </div>
@@ -85,7 +85,7 @@ export const HomePage = () => {
             <div class="card-body">
               <h5 class="card-title">Reportes</h5>
               <p class="card-text">Módulo para generar informes.</p>
-              <Link className="btn btn-info" to="/Reports">
+              <Link className="btn btn-warning" to="/Reports">
                 Ver más
               </Link>
             </div>
