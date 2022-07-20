@@ -48,8 +48,7 @@ export const getByIdConduct = async (identificacion) => {
     const resp = await axios.get(url)
 
     const getConduct = resp.data.map(img => {
-        console.log(img);
-        return {
+        return {                        
             nombre: img.nombre,
             primer_apellido: img.primer_apellido,
             segundo_apellido: img.segundo_apellido,

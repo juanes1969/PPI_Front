@@ -1,5 +1,5 @@
 import dateFormat from "dateformat";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import logo from "../../assets/img/LogoNew.png";
 import "../../helpers/modal-function";
 import "../../Styles/modal.css";
@@ -7,10 +7,10 @@ import "../../Styles/modal.css";
 import { UseEffectConduct } from "../../hooks/UseCaseConduct";
 import {
   UseCity,
-  UseInsertRoute, UseSaveRoute
+  UseInsertRoute, UseProduct, UseSaveRoute
 } from "../../hooks/UseCaseRoute";
 import { UseEffectGetVehicles } from "../../hooks/UseCaseVehicle";
-import { UseModal } from "../../hooks/UseModal";
+import ItemList from "./ItemList";
 
 export const ModalRoutes = ({
   isOpenModal,
@@ -18,7 +18,7 @@ export const ModalRoutes = ({
   route,
   setRouteData,
   isEdit,
-  setIsEdit,
+  setIsEdit
 }) => {
   const initialRouteState = {
     codigo_manifiesto: "",
@@ -27,13 +27,24 @@ export const ModalRoutes = ({
     flete: "",
     id_vehiculo: "",
     id_estado_envio: null,
-    id_origen: "",
-    id_destino: "",
-    id_conductor: "",
+    id_origen: null,
+    id_destino: null,
+    id_conductor: null,
+    id_producto:null,
+    cantidad_producto:null,
+    nombre_producto:""
   };
+
+
+  const [isEditProduct, setIsEditProduct] = useState(null);
+  const [itemProducts, setItemProducts] = useState([]);
+  const [habilitar, setHabilitar] = useState(true);
 
   const handleChangeData = ({ target }) => {
     const { name, value } = target;
+    debugger
+    console.log(name)
+    console.log(value)
     setRouteData({ ...route, [name]: value });
   };
 
@@ -43,18 +54,34 @@ export const ModalRoutes = ({
       UseSaveRoute(route);
       e.target.reset();
       closeModal();
-      
+
     } else {
-      UseInsertRoute(route);
+      UseInsertRoute(route, itemProducts);
+      closeModal();
       setRouteData(initialRouteState);
       e.target.reset();
-      closeModal();      
     }
   };
+
+  const handleProduct = (e) => {
+    e.preventDefault();
+    if (isEditProduct) {
+
+    } else {
+      const newItem = {
+        id_producto: route.id_producto,
+        codigo_manifiesto: route.codigo_manifiesto,
+        cantidad_producto: route.cantidad_producto,
+      }
+      setItemProducts([...itemProducts, newItem]);
+    }
+    setHabilitar(false)
+  }
 
   const handleCancelButton = () => {
     setRouteData(initialRouteState);
     setIsEdit(null);
+    setItemProducts([]);
     closeModal();
   };
 
@@ -80,9 +107,11 @@ export const ModalRoutes = ({
     return valorMin;
   };
 
+
   const { data: conducts } = UseEffectConduct();
   const { data: vehicles } = UseEffectGetVehicles();
   const { data: citys } = UseCity();
+  const { data: products } = UseProduct();
 
   const [isOpenModalDetail, OpenModalDetail, closeModalDetail] = UseModal();
 
@@ -91,6 +120,8 @@ export const ModalRoutes = ({
     if (isEdit) {
       setRouteData(isEdit);
     } else {
+      debugger
+      console.log(route)
       setRouteData(initialRouteState);
     }
   }, [isEdit, setRouteData, setIsEdit]);
@@ -268,26 +299,74 @@ export const ModalRoutes = ({
                         onChange={handleChangeData}
                         required
                       />
+                    </div>
+                    <div className="row">
+                      <div className="col">
+                        <label className="col-form-label modal-label">
+                          Producto *:
+                        </label>
+                        <select
+                          className={`form-control input-form`}
+                          value={route.id_producto}
+                          name="id_producto"
+                          id="id_producto"
+                          onChange={handleChangeData}
+                          required
+                        >
+                          <option value="0">Seleccionar</option>
+                          {products.map((product) => (
+                            <option
+                              key={product.id_producto}
+                              value={product.id_producto}
+                            >
+                              {product.nombre_producto}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
 
-                      <button
-                        type="submit"
-                        className="btn btn-info-form"
-                        onClick={handleSubmit}
-                      >
-                        {isEdit ? "Editar" : null}
-                      </button>
+                      <div className="col">
+                        <label className="col-form-label modal-label">
+                          Cantidad producto *: (Toneladas)
+                        </label>
+                        <input
+                          type="number"
+                          className={`form-control input-form`}
+                          value={route.cantidad_producto}
+                          name="cantidad_producto"
+                          id="cantidad_producto"
+                          onChange={handleChangeData}
+                          required
+                        />
+                      </div>
+                      <div className="col btn-agregar">
+                        <button
+                          type="submit"
+                          className="btn btn-info input-form "
+                          onClick={handleProduct}
+                        >
+                          {"Agregar producto"}
+                        </button>
+                      </div>
                     </div>
                   </div>
-
                 </form>
+                <div className="lista-products">
+                  <ItemList
+                    setItemProducts={setItemProducts}
+                    itemProducts={itemProducts}
+                    setIsEditProduct={setIsEditProduct}
+                  />
+                </div>
               </div>
             </div>
             <div className="modal-footer modal-btn">
+
               <button
                 type="submit"
                 className="btn btn-info-form"
                 onClick={handleSubmit}
-                disabled={true}
+                disabled={habilitar}
               >
                 {isEdit ? "Editar ruta" : "Registrar ruta"}
               </button>
@@ -301,7 +380,7 @@ export const ModalRoutes = ({
             </div>
           </div>
         </div>
-      </div>      
+      </div>
     </>
   );
 };

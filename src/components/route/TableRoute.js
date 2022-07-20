@@ -35,6 +35,7 @@ export const Route = () => {
 
 
     const getByIdEdit = (route) => {
+        debugger
         console.log(route)
         setIsEdit(route);
         OpenModalRoute();

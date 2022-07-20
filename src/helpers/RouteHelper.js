@@ -81,14 +81,24 @@ export const getAllProduct = async () => {
 
     const typeProduct = resp.data.map(route => {
         return {
-
-
             id_producto: route.id_producto,
             referencia: route.referencia,
-            nombre_producto: route.nombre_producto,
-            caracteristica: route.caracteristica
+            nombre_producto: route.nombre_producto
+        }
+    });
 
+    return typeProduct;
+}
 
+export const getProductById = async (id_producto) => {
+    const url = `${url_api}Route/getProductById/${id_producto}`;
+    const resp = await axios.get(url)
+    
+    const typeProduct = resp.data.map(route => {
+        return {
+            id_producto: route.id_producto,
+            referencia: route.referencia,
+            nombre_producto: route.nombre_producto
         }
     });
 
@@ -113,6 +123,12 @@ export const getConduct = async (placa) => {
 
 export const insertRoute = async (data) => {
     const url = `${url_api}Route/newRoute`;
+    const resp = await axios.post(url, data)
+    return resp;
+}
+
+export const insertRouteDetail = async (data) => {
+    const url = `${url_api}Route/newDetail`;
     const resp = await axios.post(url, data)
     return resp;
 }

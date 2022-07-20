@@ -8,7 +8,7 @@
     --warning-color: rgb(240, 129, 18);
     --success-color: rgb(13, 176, 1);
     --info-color: rgb(8, 121, 220);
-    --info-form-color: rgb(39, 151, 61);
+    --info-form-color: #27973d;
     --danger-color: rgb(221 37 37);
     /*--font-color-primary: #620037;*/
     --font-color-primary: #000000;
@@ -61,7 +61,7 @@
     margin-top: 25px;
 }
 
-.home-p{
+.home-p {
     font-family: var(--font-primary) !important;
     font-size: 30px;
     color: var(--font-color-primary);
@@ -69,15 +69,62 @@
     margin-left: 50%;
 }
 
-.bg-light{
+.bg-light {
     border: none !important;
 }
 
-.home{
+/* .home{
     background-image:url(../assets/img/fondo/home.svg);
     width: 80%;
     height: 80vh;
     margin-top: 3%;
     margin-left: 5%;
     background-size: cover;
+} */
+
+.img-card {
+    width: 150px;
+    height: 150px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px;
+}
+
+.row {
+    margin-top: 35px;
+    display: flex;
+    justify-content: center;
+}
+
+.card-home {
+    margin: 5px;
+    width: 300px;
+    box-shadow: rgba(0.4, 7.8, 35.3, 0.4) 5px 5px, rgba(0.4, 7.8, 35.3, 0.3) 10px 10px, rgba(0.4, 7.8, 35.3, 0.2) 15px 15px, rgba(0.4, 7.8, 35.3, 0.1) 20px 20px, rgba(0.4, 7.8, 35.3, 0.05) 25px 25px;
+}
+
+.col-sm-4 {
+    width: 25%;
+}
+
+.li-item {
+    list-style: none;
+}
+
+.nombre-item {
+    width: 40%;
+}
+
+.cantidad-item {
+    width: 30%;
+}
+
+.button-edit-item,
+.button-delete-item {
+    border: none;
+    outline: none;
+    cursor: pointer;
+    background-color: transparent;
+    font-size: 20px;
+    border-radius: 5px;
 }
