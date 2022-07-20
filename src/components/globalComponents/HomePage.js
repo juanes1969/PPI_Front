@@ -12,7 +12,7 @@ export const HomePage = () => {
     <div className="home-cards">
       <div className="row">
         <div className="col-sm-4">
-          <div className="card">
+          <div className="card card-home">
             <img src={conduct} class="card-img-top img-card" alt="..."></img>
             <div class="card-body">
               <h5 class="card-title">Conductores</h5>
@@ -24,7 +24,7 @@ export const HomePage = () => {
           </div>
         </div>
         <div className="col-sm-4">
-          <div className="card">
+          <div className="card card-home">
             <img src={vehicle} class="card-img-top img-card" alt="..."></img>
             <div class="card-body">
               <h5 class="card-title">Vehículos </h5>
@@ -37,7 +37,7 @@ export const HomePage = () => {
         </div>
 
         <div className="col-sm-4">
-          <div className="card">
+          <div className="card card-home">
             <img src={route} class="card-img-top img-card" alt="..."></img>
             <div class="card-body">
               <h5 class="card-title">Rutas</h5>
@@ -52,7 +52,7 @@ export const HomePage = () => {
 
       <div className="row">
         <div className="col-sm-4">
-          <div className="card">
+          <div className="card card-home">
             <img
               src={maintenance}
               class="card-img-top img-card"
@@ -68,7 +68,7 @@ export const HomePage = () => {
           </div>
         </div>
         <div className="col-sm-4">
-          <div className="card">
+          <div className="card card-home">
             <img src={expenses} class="card-img-top img-card" alt="..."></img>
             <div class="card-body">
               <h5 class="card-title">Gastos</h5>
@@ -80,7 +80,7 @@ export const HomePage = () => {
           </div>
         </div>
         <div className="col-sm-4">
-          <div className="card">
+          <div className="card card-home">
             <img src={report} class="card-img-top img-card" alt="..."></img>
             <div class="card-body">
               <h5 class="card-title">Reportes</h5>

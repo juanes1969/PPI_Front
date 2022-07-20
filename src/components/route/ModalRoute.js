@@ -38,6 +38,7 @@ export const ModalRoutes = ({
 
   const [isEditProduct, setIsEditProduct] = useState(null);
   const [itemProducts, setItemProducts] = useState([]);
+  const [habilitar, setHabilitar] = useState(true);
 
   const handleChangeData = ({ target }) => {
     const { name, value } = target;
@@ -70,6 +71,7 @@ export const ModalRoutes = ({
       }
       setItemProducts([...itemProducts, newItem]);
     }
+    setHabilitar(false)
   }
 
   const handleCancelButton = () => {
@@ -162,7 +164,7 @@ export const ModalRoutes = ({
                       />
                       <label className="col-form-label modal-label">
                         Ciudad Origen *:
-                      </label>|
+                      </label>
                       <select
                         className={`form-control input-form`}
                         value={route.id_origen}
@@ -287,14 +289,6 @@ export const ModalRoutes = ({
                         onChange={handleChangeData}
                         required
                       />
-
-                      {/* <button
-                        type="submit"
-                        className="btn btn-info-form"
-                        onClick={handleSubmit}
-                      >
-                        {isEdit ? "Editar" : "Crear"}
-                      </button> */}
                     </div>
                     <div className="row">
                       <div className="col">
@@ -323,7 +317,7 @@ export const ModalRoutes = ({
 
                       <div className="col">
                         <label className="col-form-label modal-label">
-                          Cantidad producto *:
+                          Cantidad producto *: (Toneladas)
                         </label>
                         <input
                           type="number"
@@ -362,6 +356,7 @@ export const ModalRoutes = ({
                 type="submit"
                 className="btn btn-info-form"
                 onClick={handleSubmit}
+                disabled={habilitar}
               >
                 {isEdit ? "Editar ruta" : "Registrar ruta"}
               </button>
