@@ -90,6 +90,21 @@ export const getAllProduct = async () => {
     return typeProduct;
 }
 
+export const getProductById = async (id_producto) => {
+    const url = `${url_api}Route/getProductById/${id_producto}`;
+    const resp = await axios.get(url)
+    
+    const typeProduct = resp.data.map(route => {
+        return {
+            id_producto: route.id_producto,
+            referencia: route.referencia,
+            nombre_producto: route.nombre_producto
+        }
+    });
+
+    return typeProduct;
+}
+
 export const getConduct = async (placa) => {
     const url = `${url_api}Vehicle/getConductByVehicle/${placa}`;
     const resp = await axios.get(url)

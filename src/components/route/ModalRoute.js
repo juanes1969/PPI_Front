@@ -1,5 +1,5 @@
 import dateFormat from "dateformat";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import logo from "../../assets/img/LogoNew.png";
 import "../../helpers/modal-function";
 import "../../Styles/modal.css";
@@ -10,6 +10,7 @@ import {
   UseInsertRoute, UseProduct, UseSaveRoute
 } from "../../hooks/UseCaseRoute";
 import { UseEffectGetVehicles } from "../../hooks/UseCaseVehicle";
+import ItemList from "./ItemList";
 
 export const ModalRoutes = ({
   isOpenModal,
@@ -17,7 +18,7 @@ export const ModalRoutes = ({
   route,
   setRouteData,
   isEdit,
-  setIsEdit,
+  setIsEdit
 }) => {
   const initialRouteState = {
     codigo_manifiesto: "",
@@ -30,8 +31,13 @@ export const ModalRoutes = ({
     id_destino: null,
     id_conductor: null,
     id_producto:null,
-    cantidad_producto:0
+    cantidad_producto:null,
+    nombre_producto:""
   };
+
+
+  const [isEditProduct, setIsEditProduct] = useState(null);
+  const [itemProducts, setItemProducts] = useState([]);
 
   const handleChangeData = ({ target }) => {
     const { name, value } = target;
@@ -54,6 +60,16 @@ export const ModalRoutes = ({
 
   const handleProduct = (e) => {
     e.preventDefault();
+    if(isEditProduct){
+      
+    }else{
+      const newItem = {
+        id_producto: route.id_producto,
+        codigo_manifiesto: route.codigo_manifiesto,
+        cantidad_producto: route.cantidad_producto,
+      }
+      setItemProducts([...itemProducts, newItem]);
+    }
   }
 
   const handleCancelButton = () => {
@@ -84,6 +100,7 @@ export const ModalRoutes = ({
     return valorMin;
   };
 
+
   const { data: conducts } = UseEffectConduct();
   const { data: vehicles } = UseEffectGetVehicles();
   const { data: citys } = UseCity();
@@ -95,7 +112,7 @@ export const ModalRoutes = ({
     } else {
       setRouteData(initialRouteState);
     }
-  }, [isEdit, setRouteData, setIsEdit]);
+  }, [isEdit, setRouteData, setIsEdit, setItemProducts, itemProducts]);
 
   return (
     <>
@@ -330,6 +347,21 @@ export const ModalRoutes = ({
                     </div>
                   </div>
                 </form>
+                <div className="lista-products">
+                  <ItemList
+                    setItemProducts={setItemProducts}
+                    itemProducts = {itemProducts}
+                    setIsEditProduct = {setIsEditProduct}
+                  />
+                {/* {itemFilter.map((item) => (
+                  <Item
+                    key={item.id}
+                    item={item}
+                    handleDelete={handleDelete}
+                    setEdit={setEdit}
+                  />
+                ))} */}
+                </div>
               </div>
             </div>
             <div className="modal-footer modal-btn">
