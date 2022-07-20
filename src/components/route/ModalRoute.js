@@ -42,6 +42,9 @@ export const ModalRoutes = ({
 
   const handleChangeData = ({ target }) => {
     const { name, value } = target;
+    debugger
+    console.log(name)
+    console.log(value)
     setRouteData({ ...route, [name]: value });
   };
 
@@ -77,6 +80,7 @@ export const ModalRoutes = ({
   const handleCancelButton = () => {
     setRouteData(initialRouteState);
     setIsEdit(null);
+    setItemProducts([]);
     closeModal();
   };
 
@@ -112,6 +116,8 @@ export const ModalRoutes = ({
     if (isEdit) {
       setRouteData(isEdit);
     } else {
+      debugger
+      console.log(route)
       setRouteData(initialRouteState);
     }
   }, [isEdit, setRouteData, setIsEdit ]);
@@ -363,7 +369,7 @@ export const ModalRoutes = ({
               <button
                 type="reset"
                 className="btn  btn-danger"
-                onClick={closeModal}
+                onClick={handleCancelButton}
               >
                 Cancelar registro
               </button>
