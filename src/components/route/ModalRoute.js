@@ -10,6 +10,7 @@ import {
   UseInsertRoute, UseSaveRoute
 } from "../../hooks/UseCaseRoute";
 import { UseEffectGetVehicles } from "../../hooks/UseCaseVehicle";
+import { UseModal } from "../../hooks/UseModal";
 
 export const ModalRoutes = ({
   isOpenModal,
@@ -21,14 +22,14 @@ export const ModalRoutes = ({
 }) => {
   const initialRouteState = {
     codigo_manifiesto: "",
-    fecha_inicio: null,
-    fecha_fin: null,
+    fecha_inicio: "",
+    fecha_fin: "",
     flete: "",
-    id_vehiculo: null,
+    id_vehiculo: "",
     id_estado_envio: null,
-    id_origen: null,
-    id_destino: null,
-    id_conductor: null,
+    id_origen: "",
+    id_destino: "",
+    id_conductor: "",
   };
 
   const handleChangeData = ({ target }) => {
@@ -42,11 +43,12 @@ export const ModalRoutes = ({
       UseSaveRoute(route);
       e.target.reset();
       closeModal();
+      
     } else {
       UseInsertRoute(route);
       setRouteData(initialRouteState);
       e.target.reset();
-      closeModal();
+      closeModal();      
     }
   };
 
@@ -81,6 +83,9 @@ export const ModalRoutes = ({
   const { data: conducts } = UseEffectConduct();
   const { data: vehicles } = UseEffectGetVehicles();
   const { data: citys } = UseCity();
+
+  const [isOpenModalDetail, OpenModalDetail, closeModalDetail] = UseModal();
+
 
   useEffect(() => {
     if (isEdit) {
@@ -138,7 +143,7 @@ export const ModalRoutes = ({
                       />
                       <label className="col-form-label modal-label">
                         Ciudad Origen *:
-                      </label>|
+                      </label>
                       <select
                         className={`form-control input-form`}
                         value={route.id_origen}
@@ -289,14 +294,14 @@ export const ModalRoutes = ({
               <button
                 type="reset"
                 className="btn  btn-danger"
-                onClick={closeModal}
+                onClick={handleCancelButton}
               >
                 Cancelar registro
               </button>
             </div>
           </div>
         </div>
-      </div>
+      </div>      
     </>
   );
 };

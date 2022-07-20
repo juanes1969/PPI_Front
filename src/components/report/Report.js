@@ -17,7 +17,6 @@ ChartJS.register(
 );
 
 
-Chart.register(CategoryScale);
 
 
 export const Report = () => {

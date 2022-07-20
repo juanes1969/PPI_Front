@@ -132,7 +132,7 @@ export const Conduct = () => {
                             </thead>
                             <tbody id="identificacion">
                                 {filterConducts().map((cond) => (
-                                    <tr key={cond.id_conductor}>
+                                    <tr key={cond.identificacion}>
                                         <td >{cond.identificacion}</td>
                                         <td>{cond.nombre}</td>
                                         <td>{cond.primer_apellido}</td>
