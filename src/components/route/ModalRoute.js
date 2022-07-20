@@ -47,14 +47,14 @@ export const ModalRoutes = ({
   const handleSubmit = (e) => {
     e.preventDefault();
     if (isEdit) {
-      UseSaveRoute(route);
+       UseSaveRoute(route);
       e.target.reset();
       closeModal();
     } else {
-      UseInsertRoute(route);
+      UseInsertRoute(route, itemProducts);
+      closeModal();
       setRouteData(initialRouteState);
       e.target.reset();
-      closeModal();
     }
   };
 
@@ -112,7 +112,7 @@ export const ModalRoutes = ({
     } else {
       setRouteData(initialRouteState);
     }
-  }, [isEdit, setRouteData, setIsEdit, setItemProducts, itemProducts]);
+  }, [isEdit, setRouteData, setIsEdit ]);
 
   return (
     <>
@@ -353,14 +353,6 @@ export const ModalRoutes = ({
                     itemProducts = {itemProducts}
                     setIsEditProduct = {setIsEditProduct}
                   />
-                {/* {itemFilter.map((item) => (
-                  <Item
-                    key={item.id}
-                    item={item}
-                    handleDelete={handleDelete}
-                    setEdit={setEdit}
-                  />
-                ))} */}
                 </div>
               </div>
             </div>
@@ -370,7 +362,6 @@ export const ModalRoutes = ({
                 type="submit"
                 className="btn btn-info-form"
                 onClick={handleSubmit}
-                disabled={true}
               >
                 {isEdit ? "Editar ruta" : "Registrar ruta"}
               </button>
@@ -381,21 +372,6 @@ export const ModalRoutes = ({
               >
                 Cancelar registro
               </button>
-              {/* <button
-                type="submit"
-                className="btn btn-info-form"
-                onClick={handleSubmit}
-                disabled={true}
-              >
-                {isEdit ? "Editar ruta" : "Registrar ruta"}
-              </button>
-              <button
-                type="reset"
-                className="btn  btn-danger"
-                onClick={closeModal}
-              >
-                Cancelar registro
-              </button> */}
             </div>
           </div>
         </div>

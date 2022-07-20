@@ -127,6 +127,12 @@ export const insertRoute = async (data) => {
     return resp;
 }
 
+export const insertRouteDetail = async (data) => {
+    const url = `${url_api}Route/newDetail`;
+    const resp = await axios.post(url, data)
+    return resp;
+}
+
 
 export const editRoute = async (data, id_ruta) => {
     const url = `${url_api}Route/routeEdit/${id_ruta}`;

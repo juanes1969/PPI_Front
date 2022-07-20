@@ -11,10 +11,12 @@ import {
   editRoute,
   getRouteByIdRoute,
   getProductByRoute,
-  getProductById
+  getProductById,
+  insertRouteDetail
 } from '../helpers/RouteHelper';
 import Swal from 'sweetalert2'
 import 'sweetalert2/src/sweetalert2.scss';
+
 
 export const UseEffectGetRoutes = () => {
   const [routes, setRoutes] = useState({
@@ -197,30 +199,60 @@ export const UseConductRoute = (placa) => {
 
 
 
-export const UseInsertRoute = (dataRoute) => {
+export const UseInsertRoute = (dataRoute, detailRoute) => {
 
-
-  var data = {
+  let data = {
     codigo_manifiesto: dataRoute.codigo_manifiesto,
     fecha_inicio: dataRoute.fecha_inicio,
     fecha_fin: dataRoute.fecha_fin,
     flete: dataRoute.flete,
     id_vehiculo: dataRoute.id_vehiculo,
-    id_estado_envio: 1,
     id_origen: dataRoute.id_origen,
     id_destino: dataRoute.id_destino,
     id_conductor: dataRoute.id_conductor,
   };
 
+
   insertRoute(data)
-    .then((response) => {
-      window.location.reload();
+    .then(() => {
+      UseInsertRoutDetail(detailRoute);
     })
     .catch((e) => {
       console.log(e);
     });
 };
 
+
+export const UseInsertRoutDetail = (dataDetail) => {
+  if (dataDetail.length !== 0) {
+    dataDetail.forEach((item) => {
+      insertDetail(item);
+    })
+  }
+}
+
+const insertDetail = (dataDetail) => {
+  let data = {
+    id_producto: dataDetail.id_producto,
+    codigo_manifiesto: dataDetail.codigo_manifiesto,
+    cantidad_producto: dataDetail.cantidad_producto
+  }
+
+  insertRouteDetail(data)
+    .then(() => {
+      swalWithBootstrapButtons.fire(
+        '¡Registro Exitoso!',
+        'La ruta fue agregada con éxito',
+        'success'
+      ).then((result) => {
+        if (result.isConfirmed) {
+        window.location.reload();
+      }})
+    })
+    .catch((e) => {
+      console.log(e);
+    });
+}
 
 export const UseSaveRoute = (dataRoute) => {
   let route = getRouteByIdRoute(dataRoute.id_ruta);

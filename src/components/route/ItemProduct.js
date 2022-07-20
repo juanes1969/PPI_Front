@@ -10,7 +10,6 @@ const ItemProduct = ({itemProduct, handleDeleteProduct, setEditProduct}) => {
 
 
   useEffect(() => {
-    debugger
     console.log(itemProduct)
     if(itemProduct){
       getProductById(itemProduct.id_producto)
@@ -19,14 +18,13 @@ const ItemProduct = ({itemProduct, handleDeleteProduct, setEditProduct}) => {
           data: product
         })
       })
-      debugger
       if(producto.data.length !== 0){
         console.log(producto.data.length)
         console.log(producto.data[0].nombre_producto)
       }
       
     }
-  }, [itemProduct, producto]);
+  }, [itemProduct]);
 
   return (
     <div className="card border-dark mb-3">
