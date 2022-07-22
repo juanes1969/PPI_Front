@@ -229,6 +229,8 @@ export const UseInsertRoute = (dataRoute, detailRoute) => {
 export const UseInsertRoutDetail = (dataDetail) => {
   if (dataDetail.length !== 0) {
     dataDetail.forEach((item) => {
+      debugger
+      console.log(item)
       insertDetail(item);
     })
   }

@@ -130,6 +130,7 @@ export const insertRoute = async (data) => {
 export const insertRouteDetail = async (data) => {
     const url = `${url_api}Route/newDetail`;
     const resp = await axios.post(url, data)
+    console.log(resp)
     return resp;
 }
 

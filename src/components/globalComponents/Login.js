@@ -40,8 +40,8 @@ export const Login = () => {
       .then((response) => {
         if (response.data.data.length === 1) {
           Swal.fire(
-            'Inicio de sesion exitoso ',
-            'Tu inicio de sesion se ejecuto de manera correcta',
+            'Inicio de sesión exitoso ',
+            'Tu inicio de sesión se ejecuto de manera correcta',
             'success'
           ).then(resp => {
             if (resp.isConfirmed) {
@@ -62,9 +62,9 @@ export const Login = () => {
         } else {
           Swal.fire({
             icon: 'error',
-            title: 'Oops...',
+            title: 'Credenciales incorrectas',
             text: 'Usuario y contraseña incorrectos',
-            footer: '<a href="">Acaso olvidaste tu usuario o contraseña?</a>'
+            footer: '<a href="">¿Acaso olvidaste tu usuario o contraseña?</a>'
           })
         }
       })
