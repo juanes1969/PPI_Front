@@ -36,6 +36,8 @@ export const ModalRoutes = ({
   };
 
 
+console.log(route);
+
   const [isEditProduct, setIsEditProduct] = useState(null);
   const [itemProducts, setItemProducts] = useState([]);
   const [habilitar, setHabilitar] = useState(true);
@@ -112,8 +114,6 @@ export const ModalRoutes = ({
   const { data: vehicles } = UseEffectGetVehicles();
   const { data: citys } = UseCity();
   const { data: products } = UseProduct();
-
-  const [isOpenModalDetail, OpenModalDetail, closeModalDetail] = UseModal();
 
 
   useEffect(() => {

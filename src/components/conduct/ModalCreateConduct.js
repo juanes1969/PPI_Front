@@ -6,11 +6,14 @@ import { UseEditConduct, UseInsertConduct, UseLicenseAvailable } from "../../hoo
 import { UseVehicleAvailable } from "../../hooks/UseCaseVehicle";
 import logo from "../../assets/img/LogoNew.png";
 import "../../Styles/modal.css";
+import { editConduct } from "../../helpers/ConductHelper";
 
 export const ModalCreateConduct = ({ isOpenEditModal, closeModalEdit, conductEdit, setConductEdit, conduct, setConduct }) => {
 
 
     const [errors, setErrors] = useState({});
+
+    const [habilitar, setHabilitar] = useState(true);
 
     const initialConductState = {
         identificacion: "",
@@ -42,26 +45,27 @@ export const ModalCreateConduct = ({ isOpenEditModal, closeModalEdit, conductEdi
     const handleBlur = (e) => {
         handleChangeData(e);
         setErrors(ValidationsFormConduct(conduct))
+        if (Object.entries(errors).length === 0) {
+            setHabilitar(false);
+        }
     }
 
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // if (!Object.entries(errors).length === 0) {
+
         if (conductEdit) {
             UseEditConduct(conduct)
-            e.target.reset();
             closeModalEdit();
+            e.target.reset();
+
         } else {
             debugger
             UseInsertConduct(conduct);
+            closeModalEdit();
             setConduct(initialConductState);
             e.target.reset();
-            closeModalEdit();
         }
-        // } else {
-        //  alert('Debes ingresar todos los campos de manera correcta');
-        //}
     };
 
 
@@ -116,10 +120,12 @@ export const ModalCreateConduct = ({ isOpenEditModal, closeModalEdit, conductEdi
     useEffect(() => {
         if (conductEdit) {
             setConduct(conductEdit)
+            setErrors({})
         } else {
             setConduct(initialConductState)
+            setErrors(ValidationsFormConduct(conduct))
         }
-    }, [conductEdit, setConduct, setConductEdit]);
+    }, [conductEdit, setConduct, setConductEdit, setErrors]);
 
     return (
         <>
@@ -253,6 +259,7 @@ export const ModalCreateConduct = ({ isOpenEditModal, closeModalEdit, conductEdi
                                                 id="tipo_licencia"
                                                 autoComplete="off"
                                                 onChange={handleChangeData}
+                                                onBlur={handleBlur}
                                                 required
                                             >
                                                 <option value="0">Seleccionar</option>
@@ -282,6 +289,7 @@ export const ModalCreateConduct = ({ isOpenEditModal, closeModalEdit, conductEdi
                                                 onChange={handleChangeData}
                                                 min={fechaMinima()}
                                                 max={fechaMaxima()}
+                                                onBlur={handleBlur}
                                                 required
                                             />
 
@@ -383,10 +391,8 @@ export const ModalCreateConduct = ({ isOpenEditModal, closeModalEdit, conductEdi
                                                 name="segundo_apellido"
                                                 id="segundo_apellido"
                                                 autoComplete="off"
-                                                onBlur={handleBlur}
                                                 onChange={handleChangeData}
                                             />
-                                            {errors.segundo_apellido && <p className="error-message">{errors.segundo_apellido}</p>}
 
                                             <label className="col-form-label modal-label">
                                                 Telefono *:
@@ -410,7 +416,7 @@ export const ModalCreateConduct = ({ isOpenEditModal, closeModalEdit, conductEdi
                             </div>
                         </div>
                         <div className="modal-footer modal-btn mt-4">
-                            <button type="submit" className="btn btn-info-form" onClick={handleSubmit}>
+                            <button type="submit" className="btn btn-info-form" onClick={handleSubmit} disabled={conductEdit ? false : habilitar}>
                                 {conductEdit ?
                                     ('Editar Conductor') :
                                     ('Registrar Conductor')}

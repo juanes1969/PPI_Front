@@ -12,7 +12,8 @@ import {
   getRouteByIdRoute,
   getProductByRoute,
   getProductById,
-  insertRouteDetail
+  insertRouteDetail,
+  deleteProductByRoute
 } from '../helpers/RouteHelper';
 import Swal from 'sweetalert2'
 import 'sweetalert2/src/sweetalert2.scss';
@@ -246,8 +247,9 @@ const insertDetail = (dataDetail) => {
         'success'
       ).then((result) => {
         if (result.isConfirmed) {
-        window.location.reload();
-      }})
+          window.location.reload();
+        }
+      })
     })
     .catch((e) => {
       console.log(e);
@@ -308,30 +310,34 @@ const swalWithBootstrapButtons = Swal.mixin({
 })
 
 
-const handleDelete = () => {
-  swalWithBootstrapButtons.fire({
-    title: '¿Estás seguro?',
-    text: "¡No podrás revertir esto!",
-    icon: 'warning',
-    showCancelButton: true,
-    confirmButtonText: 'Si, eliminar',
-    cancelButtonText: 'No, cancelar'
-  }).then((result) => {
-    if (result.isConfirmed) {
-      swalWithBootstrapButtons.fire(
-        '¡Eliminado!',
-        'El movimiento fue eliminado',
-        'success'
-      )
-    } else if (
-      /* Read more about handling dismissals below */
-      result.dismiss === Swal.DismissReason.cancel
-    ) {
-      swalWithBootstrapButtons.fire(
-        '¡Cancelado!',
-        'Tu movimiento está a salvo :)',
-        'error'
-      )
-    }
-  })
+export const deleteProduct = (id_detail) => {
+  // swalWithBootstrapButtons.fire({
+  //   title: '¿Estás seguro?',
+  //   text: "¡No podrás revertir esto!",
+  //   icon: 'warning',
+  //   showCancelButton: true,
+  //   confirmButtonText: 'Si, eliminar',
+  //   cancelButtonText: 'No, cancelar'
+  // }).then((result) => {
+  deleteProductByRoute(id_detail)
+    .then((response) => {
+      console.log(response)
+      // if (result.isConfirmed) {
+      //   swalWithBootstrapButtons.fire(
+      //     '¡Eliminado!',
+      //     'El movimiento fue eliminado',
+      //     'success'
+      //   )
+      // } else if (
+      //   /* Read more about handling dismissals below */
+      //   result.dismiss === Swal.DismissReason.cancel
+      // ) {
+      //   swalWithBootstrapButtons.fire(
+      //     '¡Cancelado!',
+      //     'Tu movimiento está a salvo :)',
+      //     'error'
+      //   )
+      // }
+    })
+  // })
 }

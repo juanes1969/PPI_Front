@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import ItemProduct from './ItemProduct';
+import { deleteProduct } from "../../hooks/UseCaseRoute";
+import { deleteProductByRoute, getProductByRoute } from '../../helpers/RouteHelper';
 
 const ItemList = ({ setItemProducts, itemProducts, setIsEditProduct }) => {
 
-  const [itemList, setItemList] = useState(itemProducts);
+  const [itemList, setItemList] = useState(itemProducts);  
 
-  const handleDelete = () => {
+
+  const handleDelete = (id) => {
+    console.log(id)    
 
   }
 
