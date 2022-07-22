@@ -11,9 +11,15 @@ import { ModalMaintenance } from './ModalMaintenance';
 import { UseDeleteMaintenance, UseEffectGetMaintenances } from '../../hooks/UseCaseMaintenance';
 import { getAllMaintenances } from "../../helpers/MaintenanceHelper";
 import { UsePage } from '../../hooks/UsePage';
-
+import { useDownloadExcel } from "table-to-excel-react";
 
 export const Maintenance = () => {
+
+    const { onDownload } = useDownloadExcel({
+        fileName: "Rutas",
+        table: "tbl_mantenimiento",
+        sheet: "sheet 1",
+    });
 
     const [isOpenModalMaintenance, openModalMaintenance, closeModalMaintenance] = UseModal();
     const { data, loading } = UseEffectGetMaintenances();
@@ -65,12 +71,13 @@ export const Maintenance = () => {
                         setSearch={setSearch}
                         setCurrentPage={setCurrentPage}
                         setPage={setPage}
+                        onDownload={onDownload}
                          />
                     {/* <button className="btn btn-warning btn-sm" onClick={() => newMaintenance()}><IoIcons.IoCarSportSharp /> Agregar Vehículos</button> */}
                 </span>
 
                 <div className="row">
-                    <table className="table table-striped table-bordered">
+                    <table className="table table-striped table-bordered" id='tbl_mantenimiento'>
                         <thead>
                             <tr>
                                 <th scope="col">Placa Vehículo</th>

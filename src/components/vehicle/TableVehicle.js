@@ -11,9 +11,16 @@ import { ModalVehicle } from './ModalVehicle';
 import { UseDeleteVehicle, UseEffectGetVehicles } from '../../hooks/UseCaseVehicle';
 import { getAllVehicles } from "../../helpers/VehicleHelper";
 import { UsePage } from '../../hooks/UsePage';
+import { useDownloadExcel } from "table-to-excel-react";
 
 
 export const Vehicle = () => {
+
+    const { onDownload } = useDownloadExcel({
+        fileName: "Vehiculos",
+        table: "tbl_vehiculos",
+        sheet: "sheet 1",
+    });
 
     const [isOpenModalVehicle, openModalVehicle, closeModalVehicle] = UseModal();
     const { data, loading } = UseEffectGetVehicles();
@@ -72,12 +79,13 @@ export const Vehicle = () => {
                         setSearch={setSearch}
                         setCurrentPage={setCurrentPage}
                         setPage={setPage}
+                        onDownload={onDownload}
                          />
                     {/* <button className="btn btn-warning btn-sm" onClick={() => newVehicle()}><IoIcons.IoCarSportSharp /> Agregar Vehículos</button> */}
                 </span>
 
                 <div className="row">
-                    <table className="table table-striped table-bordered">
+                    <table className="table table-striped table-bordered" id="tbl_vehiculos">
                         <thead>
                             <tr>
                                 <th scope="col">Placa</th>

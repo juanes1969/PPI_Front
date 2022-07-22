@@ -106,7 +106,7 @@ export const Report = () => {
         />
       </div><br></br>
 
-      <h1 align='center'>Report Mantenimientos</h1><br></br>
+      <h1 align='center'>Reporte Mantenimientos</h1><br></br>
       <div>
         <Bar
           data={charReportMaintenance}

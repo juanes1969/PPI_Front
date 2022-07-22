@@ -12,9 +12,15 @@ import { SearchConduct } from '../conduct/SearchConduct';
 import { Loader } from '../globalComponents/Loader';
 import { ModalRoutes } from './ModalRoute';
 import { Pagination } from '../conduct/Pagination';
-
+import { useDownloadExcel } from "table-to-excel-react";
 
 export const Route = () => {
+
+    const { onDownload } = useDownloadExcel({
+        fileName: "Rutas",
+        table: "tbl_rutas",
+        sheet: "sheet 1",
+    });
 
     const [isOpenModalRoute, OpenModalRoute, closeModalRoute] = UseModal();
     const { data, loading } = UseEffectGetRoutes();
@@ -72,6 +78,7 @@ export const Route = () => {
                         setSearch={setSearch}
                         setCurrentPage={setCurrentPage}
                         setPage={setPage}
+                        onDownload={onDownload}
                     />
 
                 </span>
@@ -82,7 +89,7 @@ export const Route = () => {
                     (<Loader />) :
 
                     <div className="row">
-                        <table className="table table-striped table-bordered">
+                        <table className="table table-striped table-bordered" id="tbl_rutas">
                             <thead>
                                 <tr>
 
