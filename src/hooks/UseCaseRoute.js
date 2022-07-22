@@ -15,7 +15,8 @@ import {
   insertRouteDetail,
   deleteRouteDetail,
   editRouteDetail,
-  getDetailByRoute
+  getDetailByRoute,
+  getDetailById
 } from '../helpers/RouteHelper';
 import Swal from 'sweetalert2'
 import 'sweetalert2/src/sweetalert2.scss';
@@ -236,6 +237,8 @@ export const UseInsertRoutDetail = (dataDetail) => {
   }
 }
 
+
+
 const insertDetail = (dataDetail) => {
   let data = {
     id_detalle: dataDetail.id_detalle,
@@ -261,7 +264,7 @@ const insertDetail = (dataDetail) => {
 }
 
 export const UseEditRoute = (dataRoute, detailRoute) => {
-  let route = getRouteByIdRoute(dataRoute.id_ruta);
+  let route = getRouteByIdRoute(dataRoute.codigo_manifiesto);
 
   let data = {
     codigo_manifiesto: dataRoute.codigo_manifiesto,
@@ -273,17 +276,18 @@ export const UseEditRoute = (dataRoute, detailRoute) => {
     id_destino: dataRoute.id_destino,
     id_conductor: dataRoute.id_conductor,
   };
+
   if (route != null) {
-    editRoute(data, dataRoute.id_ruta)
-      .then((response) => {
-        UseEditRoutDetail(detailRoute);
+    editRoute(data, dataRoute.codigo_manifiesto)
+      .then(() => {
+        UseEditRouteDetail(detailRoute);
       })
       .catch((e) => {
         console.log(e);
       });
   } else {
     insertRoute(data)
-      .then((response) => {
+      .then(() => {
         swalWithBootstrapButtons.fire(
           '¡Registro Exitoso!',
           'El vehículo fue agregado con éxito',
@@ -297,12 +301,23 @@ export const UseEditRoute = (dataRoute, detailRoute) => {
   }
 };
 
-export const UseEditRoutDetail = (dataDetail) => {
+export const UseEditRouteDetail = (dataDetail) => {
   if (dataDetail.length !== 0) {
     dataDetail.forEach((item) => {
-      editDetail(item);
+      validarDetalle(item);
     })
   }
+}
+
+const validarDetalle = (item) => {
+  getDetailById(item.id_detalle)
+  .then((response) => {
+    if(response.length !== 0){
+      editDetail(item);
+    }else{
+      insertDetail(item);
+    }
+  })
 }
 
 const editDetail = (dataDetail) => {

@@ -45,13 +45,16 @@ export const Route = () => {
                 setRouteDetail({
                     data: product
                 })
+                
+            }).then(() => {
+                modalRoute(route);
             })
-        if(routeDetail){
-            setIsEdit(route);
-            console.log(routeDetail)
-            OpenModalRoute();
-        }
-        
+    }
+
+    const modalRoute = (route) => {
+        setIsEdit(route);
+        console.log(routeDetail)
+        OpenModalRoute();
     }
 
 

@@ -135,8 +135,8 @@ export const insertRouteDetail = async (data) => {
 }
 
 
-export const editRoute = async (data, id_ruta) => {
-    const url = `${url_api}Route/routeEdit/${id_ruta}`;
+export const editRoute = async (data, codigo_manifiesto) => {
+    const url = `${url_api}Route/routeEdit/${codigo_manifiesto}`;
     const resp = await axios.put(url, data);
     return resp;
 };
@@ -221,4 +221,23 @@ export const getDetailByRoute = async (codigo_manifiesto) => {
     return products;
 };
 
+
+export const getDetailById = async (id_detalle) => {
+    const url = `${url_api}Route/getDetailById/${id_detalle}`;
+    const resp = await axios.get(url);
+    debugger
+    console.log("RESPOND URL")
+    console.log(resp.data)
+
+    const products = resp.data.map(route => {
+        return {
+            id_detalle: route.id_detalle,
+            id_producto: route.id_producto,
+            codigo_manifiesto: route.codigo_manifiesto,
+            cantidad_producto: route.cantidad_producto
+        }
+    });
+
+    return products;
+};
 

@@ -51,23 +51,23 @@ export const ModalRoutes = ({
 
   const handleChangeData = ({ target }) => {
     const { name, value } = target;
-    debugger
-    console.log(name)
-    console.log(value)
     setRouteData({ ...route, [name]: value });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (isEdit) {
-       UseEditRoute(route);
-      e.target.reset();
+      UseEditRoute(route, itemProducts);
       closeModal();
+      setRouteData(initialRouteState);
+      e.target.reset();
+      setIsEdit(null);
     } else {
       UseInsertRoute(route, itemProducts);
       closeModal();
       setRouteData(initialRouteState);
       e.target.reset();
+      setIsEdit(null);
     }
   };
 
@@ -116,6 +116,11 @@ export const ModalRoutes = ({
     return valorMin;
   };
 
+  const validarProductos = () => {
+    if(routeDetail){
+      setItemProducts(routeDetail.data)
+    }
+  }
 
   const { data: conducts } = UseEffectConduct();
   const { data: vehicles } = UseEffectGetVehicles();
@@ -126,8 +131,9 @@ export const ModalRoutes = ({
     if (isEdit) {
       setRouteData(isEdit);
       setRouteDetail(routeDetail)
+      setHabilitar(false)
+      validarProductos()
     } else {
-      console.log(route)
       setRouteData(initialRouteState);
       setRouteDetail(initialDetailState)
     }
