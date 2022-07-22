@@ -3,11 +3,12 @@ import React, { useEffect, useState } from "react";
 import logo from "../../assets/img/LogoNew.png";
 import "../../helpers/modal-function";
 import "../../Styles/modal.css";
-
+import { v4 as uuid4 } from "uuid";
 import { UseEffectConduct } from "../../hooks/UseCaseConduct";
 import {
   UseCity,
-  UseInsertRoute, UseProduct, UseSaveRoute
+  UseEditRoute,
+  UseInsertRoute, UseProduct
 } from "../../hooks/UseCaseRoute";
 import { UseEffectGetVehicles } from "../../hooks/UseCaseVehicle";
 import ItemList from "./ItemList";
@@ -18,7 +19,9 @@ export const ModalRoutes = ({
   route,
   setRouteData,
   isEdit,
-  setIsEdit
+  setIsEdit,
+  routeDetail, 
+  setRouteDetail
 }) => {
   const initialRouteState = {
     codigo_manifiesto: "",
@@ -35,6 +38,12 @@ export const ModalRoutes = ({
     nombre_producto:""
   };
 
+  const initialDetailState = {
+    codigo_manifiesto: "",
+    id_detalle:null,
+    id_producto:null,
+    cantidad_producto:null
+  };
 
   const [isEditProduct, setIsEditProduct] = useState(null);
   const [itemProducts, setItemProducts] = useState([]);
@@ -51,7 +60,7 @@ export const ModalRoutes = ({
   const handleSubmit = (e) => {
     e.preventDefault();
     if (isEdit) {
-       UseSaveRoute(route);
+       UseEditRoute(route);
       e.target.reset();
       closeModal();
     } else {
@@ -68,13 +77,14 @@ export const ModalRoutes = ({
       
     }else{
       const newItem = {
+        id_detalle: uuid4(),
         id_producto: route.id_producto,
         codigo_manifiesto: route.codigo_manifiesto,
         cantidad_producto: route.cantidad_producto,
       }
       setItemProducts([...itemProducts, newItem]);
     }
-    setHabilitar(false)
+    setHabilitar(false);
   }
 
   const handleCancelButton = () => {
@@ -115,12 +125,13 @@ export const ModalRoutes = ({
   useEffect(() => {
     if (isEdit) {
       setRouteData(isEdit);
+      setRouteDetail(routeDetail)
     } else {
-      debugger
       console.log(route)
       setRouteData(initialRouteState);
+      setRouteDetail(initialDetailState)
     }
-  }, [isEdit, setRouteData, setIsEdit ]);
+  }, [isEdit, setRouteData, setIsEdit, setRouteDetail ]);
 
   return (
     <>
