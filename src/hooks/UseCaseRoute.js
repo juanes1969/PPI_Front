@@ -12,7 +12,11 @@ import {
   getRouteByIdRoute,
   getProductByRoute,
   getProductById,
-  insertRouteDetail
+  insertRouteDetail,
+  deleteRouteDetail,
+  editRouteDetail,
+  getDetailByRoute,
+  getDetailById
 } from '../helpers/RouteHelper';
 import Swal from 'sweetalert2'
 import 'sweetalert2/src/sweetalert2.scss';
@@ -226,13 +230,18 @@ export const UseInsertRoute = (dataRoute, detailRoute) => {
 export const UseInsertRoutDetail = (dataDetail) => {
   if (dataDetail.length !== 0) {
     dataDetail.forEach((item) => {
+      debugger
+      console.log(item)
       insertDetail(item);
     })
   }
 }
 
+
+
 const insertDetail = (dataDetail) => {
   let data = {
+    id_detalle: dataDetail.id_detalle,
     id_producto: dataDetail.id_producto,
     codigo_manifiesto: dataDetail.codigo_manifiesto,
     cantidad_producto: dataDetail.cantidad_producto
@@ -254,36 +263,31 @@ const insertDetail = (dataDetail) => {
     });
 }
 
-export const UseSaveRoute = (dataRoute) => {
-  let route = getRouteByIdRoute(dataRoute.id_ruta);
+export const UseEditRoute = (dataRoute, detailRoute) => {
+  let route = getRouteByIdRoute(dataRoute.codigo_manifiesto);
 
   let data = {
-    producto: dataRoute.producto,
-    cantidad: dataRoute.cantidad,
+    codigo_manifiesto: dataRoute.codigo_manifiesto,
     fecha_inicio: dataRoute.fecha_inicio,
     fecha_fin: dataRoute.fecha_fin,
     flete: dataRoute.flete,
     id_vehiculo: dataRoute.id_vehiculo,
     id_origen: dataRoute.id_origen,
     id_destino: dataRoute.id_destino,
-    id_estado_envio: 1,
+    id_conductor: dataRoute.id_conductor,
   };
+
   if (route != null) {
-    editRoute(data, dataRoute.id_ruta)
-      .then((response) => {
-        swalWithBootstrapButtons.fire(
-          '¡Registro Exitoso!',
-          'El vehículo fue editado con éxito',
-          'success'
-        )
-        window.location.reload();
+    editRoute(data, dataRoute.codigo_manifiesto)
+      .then(() => {
+        UseEditRouteDetail(detailRoute);
       })
       .catch((e) => {
         console.log(e);
       });
   } else {
     insertRoute(data)
-      .then((response) => {
+      .then(() => {
         swalWithBootstrapButtons.fire(
           '¡Registro Exitoso!',
           'El vehículo fue agregado con éxito',
@@ -295,9 +299,51 @@ export const UseSaveRoute = (dataRoute) => {
         console.log(e);
       });
   }
-
-
 };
+
+export const UseEditRouteDetail = (dataDetail) => {
+  if (dataDetail.length !== 0) {
+    dataDetail.forEach((item) => {
+      validarDetalle(item);
+    })
+  }
+}
+
+const validarDetalle = (item) => {
+  getDetailById(item.id_detalle)
+  .then((response) => {
+    if(response.length !== 0){
+      editDetail(item);
+    }else{
+      insertDetail(item);
+    }
+  })
+}
+
+const editDetail = (dataDetail) => {
+  let data = {
+    id_detalle: dataDetail.id_detalle,
+    id_producto: dataDetail.id_producto,
+    codigo_manifiesto: dataDetail.codigo_manifiesto,
+    cantidad_producto: dataDetail.cantidad_producto
+  }
+
+  editRouteDetail(data, dataDetail.id_detalle)
+    .then(() => {
+      swalWithBootstrapButtons.fire(
+        '¡Registro Exitoso!',
+        'La ruta fue editada con éxito',
+        'success'
+      ).then((result) => {
+        if (result.isConfirmed) {
+        window.location.reload();
+      }})
+    })
+    .catch((e) => {
+      console.log(e);
+    });
+}
+
 
 const swalWithBootstrapButtons = Swal.mixin({
   customClass: {
@@ -334,4 +380,34 @@ const handleDelete = () => {
       )
     }
   })
+}
+
+export const UseDeleteDetail = (id_detalle) => {
+
+  deleteRouteDetail(id_detalle)
+  .then((response) => {
+    console.log("Producto eliminado")
+})
+.catch((e) => {
+    console.log(e);
+});
+
+}
+
+export const UseGetDetailByRoute = (codigo_manifiesto) => {
+  const [detail, setDetail] = useState({
+    data: [],
+    loading: true,
+  });
+
+  useEffect(() => {
+    getDetailByRoute(codigo_manifiesto).then((detail) => {
+      setDetail({
+        data: detail,
+        loading: false,
+      });
+    });
+  }, []);
+
+  return detail;
 }

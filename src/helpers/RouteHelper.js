@@ -130,12 +130,19 @@ export const insertRoute = async (data) => {
 export const insertRouteDetail = async (data) => {
     const url = `${url_api}Route/newDetail`;
     const resp = await axios.post(url, data)
+    console.log(resp)
     return resp;
 }
 
 
-export const editRoute = async (data, id_ruta) => {
-    const url = `${url_api}Route/routeEdit/${id_ruta}`;
+export const editRoute = async (data, codigo_manifiesto) => {
+    const url = `${url_api}Route/routeEdit/${codigo_manifiesto}`;
+    const resp = await axios.put(url, data);
+    return resp;
+};
+
+export const editRouteDetail = async (data, id_detalle) => {
+    const url = `${url_api}Route/detailEdit/${id_detalle}`;
     const resp = await axios.put(url, data);
     return resp;
 };
@@ -170,6 +177,13 @@ export const deleteRoute = async (id_ruta) => {
     return resp;
 }
 
+export const deleteRouteDetail = async (id_detalle) => {
+    const url = `${url_api}Route/deleteDetail/${id_detalle}`;
+    const resp = await axios.delete(url)
+
+    return resp;
+}
+
 export const getProductByRoute = async (codigo_manifiesto) => {
     const url = `${url_api}Route/getProductsByRoute/${codigo_manifiesto}`;
     const resp = await axios.get(url);
@@ -188,4 +202,42 @@ export const getProductByRoute = async (codigo_manifiesto) => {
     return products;
 };
 
+export const getDetailByRoute = async (codigo_manifiesto) => {
+    const url = `${url_api}Route/getDetailByRoute/${codigo_manifiesto}`;
+    const resp = await axios.get(url);
+    debugger
+    console.log("RESPOND URL")
+    console.log(resp.data)
+
+    const products = resp.data.map(route => {
+        return {
+            id_detalle: route.id_detalle,
+            id_producto: route.id_producto,
+            codigo_manifiesto: route.codigo_manifiesto,
+            cantidad_producto: route.cantidad_producto
+        }
+    });
+
+    return products;
+};
+
+
+export const getDetailById = async (id_detalle) => {
+    const url = `${url_api}Route/getDetailById/${id_detalle}`;
+    const resp = await axios.get(url);
+    debugger
+    console.log("RESPOND URL")
+    console.log(resp.data)
+
+    const products = resp.data.map(route => {
+        return {
+            id_detalle: route.id_detalle,
+            id_producto: route.id_producto,
+            codigo_manifiesto: route.codigo_manifiesto,
+            cantidad_producto: route.cantidad_producto
+        }
+    });
+
+    return products;
+};
 
