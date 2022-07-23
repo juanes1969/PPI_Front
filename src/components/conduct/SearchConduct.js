@@ -23,7 +23,7 @@ export const SearchConduct = ({ titleButton, icon, openModal, setSearch, setCurr
                     <div className="navbar-brand" id="buttonsActions">
                         <button type="button" className="btn btn-success" onClick={onDownload} ><AiIcons.AiFillFileExcel /></button>
                         <button type="button" className="btn btn-danger"><AiIcons.AiFillFilePdf /></button>
-                        <button type="button" className="btn btn-info"><ImIcons.ImPrinter /></button>
+                       
                         <button type="button" className="btn btn-warning" id="buttonAdd" onClick={openModal}>{icon} {titleButton}</button>
                     </div>
                     <form className="d-flex navbar-brand" id="formSearch">

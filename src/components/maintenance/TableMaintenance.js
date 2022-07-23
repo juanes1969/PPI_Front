@@ -98,8 +98,8 @@ export const Maintenance = () => {
                                     <td>{maintenance.valor_mantenimiento}</td>
                                     <td>{maintenance.descripcion}</td>
                                     <td id="columOptions">
-                                        <button className="btn btn-warning btn-sm" onClick={() => getByIdEdit(maintenance)} ><RiIcons.RiEditFill /></button>
-                                        <button className="btn btn-info btn-sm"><BsIcons.BsFillEyeFill /></button>
+                                        <button className="btn btn-info btn-sm" onClick={() => getByIdEdit(maintenance)} ><RiIcons.RiEditFill /></button>
+                                        
                                         <button className="btn btn-danger btn-sm" onClick={() => handleDeleteMaintenance(maintenance.placa)}><AiIcons.AiFillDelete /></button>
                                     </td>
                                 </tr>

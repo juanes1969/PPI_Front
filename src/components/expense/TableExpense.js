@@ -102,7 +102,7 @@ export const Expenses = () => {
                                     <th className="th-shipping" scope="col">Descripcion</th>
                                     <th className="th-shipping" scope="col">Codigo Manifiesto</th>
                                     <th className="th-shipping" scope="col">Tipo Gasto</th>
-                                    <th className="th-shipping" colSpan="3">Acciones</th>
+                                    <th className="th-shipping" colSpan="1">Acciones</th>
                                 </tr>
                             </thead>
                             <tbody id="id_ruta">
@@ -116,7 +116,7 @@ export const Expenses = () => {
                                         <td>{expense.tipo_gasto}</td>
                                         <td id="columOptions">
 
-                                            <button className="btn btn-warning btn-sm" onClick={onDownload} ><BsIcons.BsFillEyeFill /></button>
+                                            
                                             <button className="btn btn-info btn-sm" onClick={() => getByIdEdit(expense)} ><RiIcons.RiEditFill /></button>
                                             <button className="btn btn-danger btn-sm" onClick={() => handleDeleteExpense(expense.id_gasto)} ><AiIcons.AiFillDelete /></button>
                                         </td>
