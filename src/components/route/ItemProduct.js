@@ -13,7 +13,9 @@ const ItemProduct = ({ itemProduct, handleDeleteProduct, setEditProduct }) => {
 
   useEffect(() => {
     console.log(itemProduct)
-    if (itemProduct) {
+    if(itemProduct){
+      debugger
+      console.log(itemProduct)
       getProductById(itemProduct.id_producto)
         .then((product) => {
           setProducto({
@@ -30,14 +32,14 @@ const ItemProduct = ({ itemProduct, handleDeleteProduct, setEditProduct }) => {
 
   return (
     <>
-      <tr className='table-light' key={itemProduct.id_producto}>
-        <td className='table-light'>{producto.data.length !== 0 ? producto.data[0].nombre_producto : ""}</td>
-        <td className='table-light'>{itemProduct.cantidad_producto + " Toneladas"}</td>
-        <td className='table-light' id="columOptions">
-          <button className="btn btn-warning btn-sm" onClick={() => setEditProduct(itemProduct)} ><RiIcons.RiEditFill /></button>
-          <button className="btn btn-danger btn-sm" onClick={() => handleDeleteProduct(itemProduct)}><AiIcons.AiFillDelete /></button>
-        </td>
-      </tr>
+        <tr className='table-light' key={itemProduct.id_detalle}>
+            <td className='table-light'>{producto.data.length !== 0 ? producto.data[0].nombre_producto : ""}</td>
+            <td className='table-light'>{itemProduct.cantidad_producto + " Toneladas"}</td>
+            <td className='table-light' id="columOptions">
+                {/* <button className="btn btn-warning btn-sm" onClick={() => setEditProduct(itemProduct)} ><RiIcons.RiEditFill /></button> */}
+                <button className="btn btn-danger btn-sm" onClick={() => handleDeleteProduct(itemProduct)}><AiIcons.AiFillDelete /></button>
+            </td>
+        </tr>
     </>
 
     // <div className="card border-dark mb-3">

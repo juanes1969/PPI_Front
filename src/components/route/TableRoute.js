@@ -3,8 +3,8 @@ import * as AiIcons from 'react-icons/ai';
 import * as BsIcons from 'react-icons/bs';
 import * as IoIcons from 'react-icons/io5';
 import * as RiIcons from 'react-icons/ri';
-import { getAllRoute } from '../../helpers/RouteHelper';
-import { UseDeleteRoute, UseEffectGetRoutes } from '../../hooks/UseCaseRoute';
+import { getAllRoute, getDetailByRoute } from '../../helpers/RouteHelper';
+import { UseDeleteRoute, UseEffectGetRoutes, UseGetDetailByRoute } from '../../hooks/UseCaseRoute';
 import { UseModal } from '../../hooks/UseModal';
 import { UsePage } from '../../hooks/UsePage';
 import '../../Styles/tableConduct.css';
@@ -20,6 +20,9 @@ export const Route = () => {
     const { data, loading } = UseEffectGetRoutes();
     const [routeData, setRouteData] = useState([]);
     const [isEdit, setIsEdit] = useState(null);
+    const [routeDetail, setRouteDetail] = useState({
+        data: []
+    });
     const [search, setSearch] = useState('');
     const routeRef = useRef();
     const [perPage, setPerPage] = useState(5);
@@ -37,7 +40,20 @@ export const Route = () => {
     const getByIdEdit = (route) => {
         debugger
         console.log(route)
+        getDetailByRoute(route.codigo_manifiesto)
+            .then((product) => {
+                setRouteDetail({
+                    data: product
+                })
+                
+            }).then(() => {
+                modalRoute(route);
+            })
+    }
+
+    const modalRoute = (route) => {
         setIsEdit(route);
+        console.log(routeDetail)
         OpenModalRoute();
     }
 
@@ -136,6 +152,8 @@ export const Route = () => {
                 setRouteData={setRouteData}
                 isEdit={isEdit}
                 setIsEdit={setIsEdit}
+                routeDetail={routeDetail}
+                setRouteDetail={setRouteDetail}
             />
         </>
     )

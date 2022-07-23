@@ -34,7 +34,9 @@ export const Sidebar = () => {
                     </Link>
                         <div className="collapse navbar-collapse" id="navbarColor02">
                             <form className="me-auto">
+                            <Link  to="/Home">
                                 <img id='logo' className="logo-nav" src={logo} alt="" />
+                            </Link>
                             </form>
                             <ul className="navbar-nav d-flex">
                                 <li className="nav-item dropdown">
