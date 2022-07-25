@@ -12,6 +12,7 @@ import {
 } from "../../hooks/UseCaseRoute";
 import { UseEffectGetVehicles } from "../../hooks/UseCaseVehicle";
 import ItemList from "./ItemList";
+import ValidationFormRoute from "../../helpers/ValidationFormRoute";
 
 export const ModalRoutes = ({
   isOpenModal,
@@ -48,14 +49,21 @@ export const ModalRoutes = ({
   const [isEditProduct, setIsEditProduct] = useState(null);
   const [itemProducts, setItemProducts] = useState([]);
   const [habilitar, setHabilitar] = useState(true);
+  const [error, setError] = useState({});
 
   const handleChangeData = ({ target }) => {
     const { name, value } = target;
     setRouteData({ ...route, [name]: value });
   };
 
+  const handleBlur = (e) => {
+    handleChangeData(e);
+    setError(ValidationFormRoute(route));
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (Object.entries(error).length === 0) {
     if (isEdit) {
       UseEditRoute(route, itemProducts);
       closeModal();
@@ -69,6 +77,9 @@ export const ModalRoutes = ({
       e.target.reset();
       setIsEdit(null);
     }
+  } else {
+    alert('Debes ingresar los campos de manera correcta');
+  }
   };
 
   const handleProduct = (e) => {
@@ -183,8 +194,11 @@ export const ModalRoutes = ({
                         name="codigo_manifiesto"
                         id="codigo_manifiesto"
                         onChange={handleChangeData}
+                        onBlur={handleBlur}
+                        autoComplete="off"
                         required
                       />
+                      {error.codigo_manifiesto && <p className="error-message">{error.codigo_manifiesto}</p>}
                       <label className="col-form-label modal-label">
                         Ciudad Origen *:
                       </label>
@@ -194,6 +208,7 @@ export const ModalRoutes = ({
                         name="id_origen"
                         id="id_origen"
                         onChange={handleChangeData}
+                        onBlur={handleBlur}
                         required
                       >
                         <option value="0">Seleccionar</option>
@@ -203,6 +218,7 @@ export const ModalRoutes = ({
                           </option>
                         ))}
                       </select>
+                      {error.id_origen && <p className="error-message">{error.id_origen}</p>}
                       <label className="col-form-label modal-label">
                         Fecha Inicio *:
                       </label>
@@ -213,12 +229,12 @@ export const ModalRoutes = ({
                         name="fecha_inicio"
                         id="fecha_inicio"
                         onChange={handleChangeData}
+                        onBlur={handleBlur}
                         min={fechaMinima()}
                         max={fechaMaxima()}
                         required
                       />
-
-
+{error.fecha_inicio && <p className="error-message">{error.fecha_inicio}</p>}
                     </div>
                     <div className="col">
                       <label className="col-form-label modal-label">
@@ -230,6 +246,7 @@ export const ModalRoutes = ({
                         name="id_vehiculo"
                         id="id_vehiculo"
                         onChange={handleChangeData}
+                        onBlur={handleBlur}
                         required
                       >
                         <option value="0">Seleccionar</option>
@@ -242,7 +259,7 @@ export const ModalRoutes = ({
                           </option>
                         ))}
                       </select>
-
+{error.id_vehiculo && <p className="error-message">{error.id_vehiculo}</p>}
                       <label className="col-form-label modal-label">
                         Ciudad Destino *:
                       </label>
@@ -252,6 +269,7 @@ export const ModalRoutes = ({
                         name="id_destino"
                         id="id_destino"
                         onChange={handleChangeData}
+                        onBlur={handleBlur}
                         required
                       >
                         <option value="0">Seleccionar</option>
@@ -261,7 +279,7 @@ export const ModalRoutes = ({
                           </option>
                         ))}
                       </select>
-
+                      {error.id_destino && <p className="error-message">{error.id_destino}</p>}
                       <label className="col-form-label modal-label">
                         Fecha Fin *:
                       </label>
@@ -272,9 +290,10 @@ export const ModalRoutes = ({
                         name="fecha_fin"
                         id="fecha_fin"
                         onChange={handleChangeData}
+                        onBlur={handleBlur}
                         required
                       />
-
+{error.fecha_fin && <p className="error-message">{error.fecha_fin}</p>}
                     </div>
                     <div className="col">
                       <label className="col-form-label modal-label">
@@ -286,6 +305,7 @@ export const ModalRoutes = ({
                         name="id_conductor"
                         id="id_conductor"
                         onChange={handleChangeData}
+                        onBlur={handleBlur}
                         required
                       >
                         <option value="0">Seleccionar</option>
@@ -298,8 +318,7 @@ export const ModalRoutes = ({
                           </option>
                         ))}
                       </select>
-
-
+{error.id_conductor && <p className="error-message">{error.id_conductor}</p>}
                       <label className="col-form-label modal-label">
                         Flete *:
                       </label>
@@ -310,8 +329,12 @@ export const ModalRoutes = ({
                         name="flete"
                         id="flete"
                         onChange={handleChangeData}
+                        onBlur={handleBlur}
+                        min={300000}
+                        autoComplete="off"
                         required
                       />
+                      {error.flete && <p className="error-message">{error.flete}</p>}
                     </div>
                     <div className="row">
                       <div className="col">
@@ -324,6 +347,7 @@ export const ModalRoutes = ({
                           name="id_producto"
                           id="id_producto"
                           onChange={handleChangeData}
+                          onBlur={handleBlur}
                           required
                         >
                           <option value="0">Seleccionar</option>
@@ -336,6 +360,7 @@ export const ModalRoutes = ({
                             </option>
                           ))}
                         </select>
+                        {error.id_producto && <p className="error-message">{error.id_producto}</p>}
                       </div>
 
                       <div className="col">
@@ -349,8 +374,10 @@ export const ModalRoutes = ({
                           name="cantidad_producto"
                           id="cantidad_producto"
                           onChange={handleChangeData}
+                          onBlur={handleBlur}
                           required
                         />
+                        {error.cantidad_producto && <p className="error-message">{error.cantidad_producto}</p>}
                       </div>
                       <div className="col btn-agregar">
                         <button

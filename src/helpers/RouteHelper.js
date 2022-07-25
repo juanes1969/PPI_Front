@@ -177,10 +177,19 @@ export const deleteRoute = async (id_ruta) => {
     return resp;
 }
 
-export const deleteRouteDetail = async (id_detalle) => {
-    const url = `${url_api}Route/deleteDetail/${id_detalle}`;
+export const deleteRouteDetail = async (id_ruta) => {
+    const url = `${url_api}Route/deleteAllDetail/${id_ruta}`;
     const resp = await axios.delete(url)
+    debugger
+    console.log(resp)
+    return resp;
+}
 
+export const deleteTracking = async (codigo_manifiesto) => {
+    const url = `${url_api}Route/deleteAllTracking/${codigo_manifiesto}`;
+    const resp = await axios.delete(url)
+    debugger
+    console.log(resp)
     return resp;
 }
 

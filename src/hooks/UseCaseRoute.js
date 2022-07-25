@@ -16,7 +16,8 @@ import {
   deleteRouteDetail,
   editRouteDetail,
   getDetailByRoute,
-  getDetailById
+  getDetailById,
+  deleteTracking
 } from '../helpers/RouteHelper';
 import Swal from 'sweetalert2'
 import 'sweetalert2/src/sweetalert2.scss';
@@ -53,18 +54,29 @@ export const UseDeleteRoute = (id_ruta) => {
     cancelButtonText: 'No, cancelar'
   }).then((result) => {
     if (result.isConfirmed) {
+
+      deleteRouteDetail(id_ruta)
+        .then(() => {
+          debugger
+          console.log(id_ruta)
+          deleteTracking(id_ruta)
+            .then(() => {
+              deleteRoute(id_ruta)
+                .then(() => {
+                  window.location.reload();
+                })
+                .catch((e) => {
+                  console.log(e);
+                });
+            })
+        })
+
       swalWithBootstrapButtons.fire(
         '¡Eliminado!',
         'La Ruta fue Completada',
         'success'
       )
-      deleteRoute(id_ruta)
-        .then((response) => {
-          window.location.reload();
-        })
-        .catch((e) => {
-          console.log(e);
-        });
+      
     } else if (
       result.dismiss === Swal.DismissReason.cancel
     ) {
@@ -255,8 +267,9 @@ const insertDetail = (dataDetail) => {
         'success'
       ).then((result) => {
         if (result.isConfirmed) {
-        window.location.reload();
-      }})
+          window.location.reload();
+        }
+      })
     })
     .catch((e) => {
       console.log(e);
@@ -311,13 +324,13 @@ export const UseEditRouteDetail = (dataDetail) => {
 
 const validarDetalle = (item) => {
   getDetailById(item.id_detalle)
-  .then((response) => {
-    if(response.length !== 0){
-      editDetail(item);
-    }else{
-      insertDetail(item);
-    }
-  })
+    .then((response) => {
+      if (response.length !== 0) {
+        editDetail(item);
+      } else {
+        insertDetail(item);
+      }
+    })
 }
 
 const editDetail = (dataDetail) => {
@@ -336,8 +349,9 @@ const editDetail = (dataDetail) => {
         'success'
       ).then((result) => {
         if (result.isConfirmed) {
-        window.location.reload();
-      }})
+          window.location.reload();
+        }
+      })
     })
     .catch((e) => {
       console.log(e);
@@ -385,12 +399,12 @@ const handleDelete = () => {
 export const UseDeleteDetail = (id_detalle) => {
 
   deleteRouteDetail(id_detalle)
-  .then((response) => {
-    console.log("Producto eliminado")
-})
-.catch((e) => {
-    console.log(e);
-});
+    .then((response) => {
+      console.log("Producto eliminado")
+    })
+    .catch((e) => {
+      console.log(e);
+    });
 
 }
 

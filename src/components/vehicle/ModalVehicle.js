@@ -13,7 +13,7 @@ export const ModalVehicle = ({ isOpenModal, closeModal, vehicleEdit,  setVehicle
   const initialVehicleState = {
     placa: "",
     matricula: "",
-    r_trailer: "",
+    placa_trailer: "",
     capacidad: null,
     modelo: "",
     vencimiento_soat: null,
@@ -306,15 +306,15 @@ export const ModalVehicle = ({ isOpenModal, closeModal, vehicleEdit,  setVehicle
                       </label>
                       <input
                         type="text"
-                        className={`form-control input-form ${error.r_trailer ? "input-error" : ""}`}
-                        value={vehicles.r_trailer}
-                        name="r_trailer"
-                        id="r_trailer"
+                        className={`form-control input-form ${error.placa_trailer ? "input-error" : ""}`}
+                        value={vehicles.placa_trailer}
+                        name="placa_trailer"
+                        id="placa_trailer"
                         onChange={handleChangeData}
                         autoComplete="off"
                         onBlur={handleBlur}
                       />
-                      {error.r_trailer && <p className="error-message">{error.r_trailer}</p>}
+                      {error.placa_trailer && <p className="error-message">{error.placa_trailer}</p>}
                     </div>
                     <div className="col">
                       <label className="col-form-label modal-label">
