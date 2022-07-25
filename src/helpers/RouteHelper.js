@@ -255,5 +255,3 @@ export const getDetailById = async (id_detalle) => {
 
     return products;
 };
-
-}
