@@ -6,7 +6,7 @@ import { UseDeleteDetail } from '../../hooks/UseCaseRoute';
 
 const ItemList = ({ setItemProducts, itemProducts, setIsEditProduct }) => {
 
-  const [itemList, setItemList] = useState(itemProducts);
+  const [itemList, setItemList] = useState(itemProducts);  
 
   const swalWithBootstrapButtons = Swal.mixin({
     customClass: {

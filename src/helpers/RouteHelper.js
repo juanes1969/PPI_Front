@@ -211,6 +211,12 @@ export const getProductByRoute = async (codigo_manifiesto) => {
     return products;
 };
 
+
+export const deleteProductByRoute = async (id_detail) => {
+    const url = `${url_api}Route/deleteDetail/${id_detail}`;
+    const resp = await axios.delete(url)
+    return resp;
+}
 export const getDetailByRoute = async (codigo_manifiesto) => {
     const url = `${url_api}Route/getDetailByRoute/${codigo_manifiesto}`;
     const resp = await axios.get(url);
@@ -250,3 +256,4 @@ export const getDetailById = async (id_detalle) => {
     return products;
 };
 
+}

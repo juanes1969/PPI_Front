@@ -13,6 +13,7 @@ import {
   getProductByRoute,
   getProductById,
   insertRouteDetail,
+  deleteProductByRoute,
   deleteRouteDetail,
   editRouteDetail,
   getDetailByRoute,
@@ -367,7 +368,37 @@ const swalWithBootstrapButtons = Swal.mixin({
   buttonsStyling: false
 })
 
-
+export const deleteProduct = (id_detail) => {
+  // swalWithBootstrapButtons.fire({
+  //   title: '¿Estás seguro?',
+  //   text: "¡No podrás revertir esto!",
+  //   icon: 'warning',
+  //   showCancelButton: true,
+  //   confirmButtonText: 'Si, eliminar',
+  //   cancelButtonText: 'No, cancelar'
+  // }).then((result) => {
+  deleteProductByRoute(id_detail)
+    .then((response) => {
+      console.log(response)
+      // if (result.isConfirmed) {
+      //   swalWithBootstrapButtons.fire(
+      //     '¡Eliminado!',
+      //     'El movimiento fue eliminado',
+      //     'success'
+      //   )
+      // } else if (
+      //   /* Read more about handling dismissals below */
+      //   result.dismiss === Swal.DismissReason.cancel
+      // ) {
+      //   swalWithBootstrapButtons.fire(
+      //     '¡Cancelado!',
+      //     'Tu movimiento está a salvo :)',
+      //     'error'
+      //   )
+      // }
+    })
+  // })
+}
 const handleDelete = () => {
   swalWithBootstrapButtons.fire({
     title: '¿Estás seguro?',

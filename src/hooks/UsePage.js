@@ -5,9 +5,7 @@ export const UsePage = (data, perPage, search, active) => {
     const [currentPage, setCurrentPage] = useState(0);
     const [page, setPage] = useState(1);
 
-    const filterConducts = () => {
-        console.log(currentPage)
-
+    const filterConducts = () => {        
 
         if (search.length === 0) {
             if (active === true) {

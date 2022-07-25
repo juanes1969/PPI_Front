@@ -26,10 +26,10 @@ export const ModalRoutes = ({
 }) => {
   const initialRouteState = {
     codigo_manifiesto: "",
-    fecha_inicio: null,
-    fecha_fin: null,
+    fecha_inicio: "",
+    fecha_fin: "",
     flete: "",
-    id_vehiculo: null,
+    id_vehiculo: "",
     id_estado_envio: null,
     id_origen: null,
     id_destino: null,
@@ -45,6 +45,8 @@ export const ModalRoutes = ({
     id_producto:null,
     cantidad_producto:null
   };
+
+console.log(route);
 
   const [isEditProduct, setIsEditProduct] = useState(null);
   const [itemProducts, setItemProducts] = useState([]);
@@ -84,9 +86,9 @@ export const ModalRoutes = ({
 
   const handleProduct = (e) => {
     e.preventDefault();
-    if(isEditProduct){
-      
-    }else{
+    if (isEditProduct) {
+
+    } else {
       const newItem = {
         id_detalle: uuid4(),
         id_producto: route.id_producto,
@@ -137,6 +139,7 @@ export const ModalRoutes = ({
   const { data: vehicles } = UseEffectGetVehicles();
   const { data: citys } = UseCity();
   const { data: products } = UseProduct();
+
 
   useEffect(() => {
     if (isEdit) {
@@ -394,8 +397,8 @@ export const ModalRoutes = ({
                 <div className="lista-products">
                   <ItemList
                     setItemProducts={setItemProducts}
-                    itemProducts = {itemProducts}
-                    setIsEditProduct = {setIsEditProduct}
+                    itemProducts={itemProducts}
+                    setIsEditProduct={setIsEditProduct}
                   />
                 </div>
               </div>

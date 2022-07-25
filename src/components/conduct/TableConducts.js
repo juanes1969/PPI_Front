@@ -66,37 +66,37 @@ export const Conduct = () => {
         retrieveConducts();
     }, []);
 
-    const selectAlert = () => {
-        Swal.fire({
-            title: 'Select field validation',
-            input: 'select',
-            inputOptions: {
-                'Fruits': {
-                    apples: 'Apples',
-                    bananas: 'Bananas',
-                    grapes: 'Grapes',
-                    oranges: 'Oranges'
-                },
-                'Vegetables': {
-                    potato: 'Potato',
-                    broccoli: 'Broccoli',
-                    carrot: 'Carrot'
-                },
-                'icecream': 'Ice cream'
-            },
-            inputPlaceholder: 'Select a fruit',
-            showCancelButton: true,
-            inputValidator: (value) => {
-                return new Promise((resolve) => {
-                    if (value === 'oranges') {
-                        resolve()
-                    } else {
-                        resolve('You need to select oranges :)')
-                    }
-                })
-            }
-        })
-    }
+    // const selectAlert = () => {
+    //     Swal.fire({
+    //         title: 'Select field validation',
+    //         input: 'select',
+    //         inputOptions: {
+    //             'Fruits': {
+    //                 apples: 'Apples',
+    //                 bananas: 'Bananas',
+    //                 grapes: 'Grapes',
+    //                 oranges: 'Oranges'
+    //             },
+    //             'Vegetables': {
+    //                 potato: 'Potato',
+    //                 broccoli: 'Broccoli',
+    //                 carrot: 'Carrot'
+    //             },
+    //             'icecream': 'Ice cream'
+    //         },
+    //         inputPlaceholder: 'Select a fruit',
+    //         showCancelButton: true,
+    //         inputValidator: (value) => {
+    //             return new Promise((resolve) => {
+    //                 if (value === 'oranges') {
+    //                     resolve()
+    //                 } else {
+    //                     resolve('You need to select oranges :)')
+    //                 }
+    //             })
+    //         }
+    //     })
+    // }
 
     return (
         <>
@@ -119,57 +119,63 @@ export const Conduct = () => {
                     <button type="button" className="btn btn-outline-primary" onClick={() => setActive(null)}>Ver todos</button>
                 </div>
 
-                {loading
+                {data.length === 0 && loading
                     ?
 
-                    (<Loader />) :
 
-                    (<div className="row" >
-                        <table className="table table-striped table-bordered" id='table-conducts'>
-                            <thead>
-                                <tr>
-                                    <th scope="col">Identificación</th>
-                                    <th scope="col">Nombre</th>
-                                    <th scope="col">Primer apellido</th>
-                                    <th scope="col">Segundo apellido</th>
-                                    <th scope="col">Telefono</th>
-                                    <th scope="col">Estado conductor</th>                                    
-                                    <th scope="col" colSpan="3">
-                                        Acciones
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody id="identificacion">
-                                {filterConducts().map((cond) => (
-                                    <tr key={cond.id_conductor}>
-                                        <td >{cond.identificacion}</td>
-                                        <td>{cond.nombre}</td>
-                                        <td>{cond.primer_apellido}</td>
-                                        <td>{cond.segundo_apellido}</td>
-                                        <td><b>(+57) </b>{cond.telefono_contacto}</td>
-                                        <td>{cond.estado_conductor}</td>                                        
-                                        <td id="columOptions">
-                                            {cond.estado_conductor == "Activo" ?
-                                                (<button className="btn btn-warning btn-sm"><BsIcons.BsFillEyeFill /></button>) :
-                                                (<button className="btn btn-warning btn-sm" onClick={selectAlert}><GiIcons.GiCarSeat /></button>)
-                                            }
-                                            <button disabled={active == false || cond.estado_conductor == "Inactivo"} className="btn btn-info btn-sm" onClick={() => getByIdEdit(cond)}><RiIcons.RiEditFill /></button>
-                                            <button disabled={active == false || cond.estado_conductor == "Inactivo"} className="btn btn-danger btn-sm" onClick={() => getById(cond.identificacion)}><AiIcons.AiFillDelete /></button>
-                                        </td>
+                    (
+                        <Loader />
+                    ) :
+
+
+                    (
+                        <div className="row" >
+                            <table className="table table-striped table-bordered" id='table-conducts'>
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Identificación</th>
+                                        <th scope="col">Nombre</th>
+                                        <th scope="col">Primer apellido</th>
+                                        <th scope="col">Segundo apellido</th>
+                                        <th scope="col">Telefono</th>
+                                        <th scope="col">Estado conductor</th>
+                                        <th scope="col" colSpan="3">
+                                            Acciones
+                                        </th>
                                     </tr>
-                                ))}
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody id="identificacion">
+                                    {filterConducts().map((cond) => (
+                                        <tr key={cond.identificacion}>
+                                            <td >{cond.identificacion}</td>
+                                            <td>{cond.nombre}</td>
+                                            <td>{cond.primer_apellido}</td>
+                                            <td>{cond.segundo_apellido}</td>
+                                            <td><b>(+57) </b>{cond.telefono_contacto}</td>
+                                            <td>{cond.estado_conductor}</td>
+                                            <td id="columOptions">
+                                                {/* {cond.estado_conductor == "Activo" ?
+                                                (<button className="btn btn-warning btn-sm"><BsIcons.BsFillEyeFill /></button>) :
+                                                (<button className="btn btn-warning btn-sm"><GiIcons.GiCarSeat /></button>)
+                                            } */}
+                                                <button className="btn btn-warning btn-sm"><BsIcons.BsFillEyeFill /></button>
+                                                <button disabled={active == false || cond.estado_conductor == "Inactivo"} className="btn btn-info btn-sm" onClick={() => getByIdEdit(cond)}><RiIcons.RiEditFill /></button>
+                                                <button disabled={active == false || cond.estado_conductor == "Inactivo"} className="btn btn-danger btn-sm" onClick={() => getById(cond.identificacion)}><AiIcons.AiFillDelete /></button>
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
 
-                        <Pagination
-                            nextPage={nextPage}
-                            prevPage={prevPage}
-                            page={page}
-                            setPerPage={setPerPage}
-                            setCurrentPage={setCurrentPage}
-                            setPage={setPage}
-                        />
-                    </div>)}
+                            <Pagination
+                                nextPage={nextPage}
+                                prevPage={prevPage}
+                                page={page}
+                                setPerPage={setPerPage}
+                                setCurrentPage={setCurrentPage}
+                                setPage={setPage}
+                            />
+                        </div>)}
             </div>
 
             <ModalCreateConduct

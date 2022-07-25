@@ -1,4 +1,5 @@
 
+
 import React, { useState, useEffect } from 'react'
 import { Chart as ChartJS, BarElement, CategoryScale, LinearScale, Legend,Title,
   Tooltip} from 'chart.js';
@@ -35,7 +36,11 @@ export const options = {
 };
 
 
+
+
 export const Report = () => {
+
+
 
   const { data } = UseEffecReports();
   const { datamaintenances } = UseEffectGetReportMaintenances();
@@ -60,7 +65,6 @@ export const Report = () => {
       borderWidth: 2
     }]
   };
-
   const charReportMaintenance = {
     labels: datamaintenances?.map(x => x.id_vehiculo),
     datasets: [{
@@ -110,6 +114,7 @@ export const Report = () => {
       align: "start",
     },
 
+
   }
 
   console.log(options)
@@ -139,9 +144,3 @@ export const Report = () => {
 
 
 }
-
-
-
-
-
-
