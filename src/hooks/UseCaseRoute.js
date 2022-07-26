@@ -47,9 +47,8 @@ export const UseEffectGetRoutes = () => {
 
 
 export const UseDeleteRoute = (id_ruta) => {
-debugger
 let fecha = new Date;
-console.log(fecha)
+
   let data = {
     fecha: dateFormat(fecha.getDate(), "isoDate"),
     codigo_manifiesto: id_ruta,
@@ -232,10 +231,19 @@ export const UseInsertRoute = (dataRoute, detailRoute) => {
     id_destino: dataRoute.id_destino,
     id_conductor: dataRoute.id_conductor,
   };
+    
+  let fecha = new Date;
+
+  let dataTracking = {
+    fecha: dateFormat(fecha.getDate(), "isoDate"),
+    codigo_manifiesto: dataRoute.codigo_manifiesto,
+    id_estado_ruta: 1,
+  };
 
 
   insertRoute(data)
     .then(() => {
+      cancelTracking(dataTracking)
       UseInsertRoutDetail(detailRoute);
     })
     .catch((e) => {
@@ -247,8 +255,6 @@ export const UseInsertRoute = (dataRoute, detailRoute) => {
 export const UseInsertRoutDetail = (dataDetail) => {
   if (dataDetail.length !== 0) {
     dataDetail.forEach((item) => {
-      debugger
-      console.log(item)
       insertDetail(item);
     })
   }
