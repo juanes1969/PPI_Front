@@ -1,8 +1,21 @@
 import { useEffect, useRef, useState } from 'react';
 import { deleteConduct, editConduct, getByIdConduct, getConducts, getTypeLicense, insertConduct } from '../helpers/ConductHelper';
 import dateFormat from "dateformat";
+import Swal from 'sweetalert2'
+import 'sweetalert2/src/sweetalert2.scss';
+
+
+const swalWithBootstrapButtons = Swal.mixin({
+    customClass: {
+        confirmButton: 'btn btn-success',
+        cancelButton: 'btn btn-danger'
+    },
+    buttonsStyling: false
+});
 
 export const UseEffectConduct = () => {
+
+
 
     const isMounted = useRef(true)
     const [state, setState] = useState({ data: [], loading: true, error: null });
@@ -40,13 +53,47 @@ export const UseLicenseAvailable = () => {
 };
 
 export const UseDeleteConduct = (identificacion) => {
-    deleteConduct(identificacion)
-        .then((response) => {
-            window.location.reload();
-        })
-        .catch((e) => {
-            console.log(e);
-        });
+    swalWithBootstrapButtons.fire({
+        title: '¿Estás seguro?',
+        text: "El Conductor estaría inactivo",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Si, eliminar',
+        cancelButtonText: 'No, cancelar'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            swalWithBootstrapButtons.fire(
+                '¡Eliminado!',
+                'El Conductor fue inactivado',
+                'success'
+            ).then((result) => {
+                if (result.isConfirmed) {
+                    deleteConduct(identificacion)
+                        .then((response) => {
+                            window.location.reload();
+                        })
+                        .catch((e) => {
+                            console.log(e);
+                        });
+                }
+            })
+        } else if (
+            result.dismiss === Swal.DismissReason.cancel
+        ) {
+            swalWithBootstrapButtons.fire(
+                '¡Cancelado!',
+                'El Conductor sigue activo',
+                'error'
+            )
+        }
+    })
+    // deleteConduct(identificacion)
+    //     .then((response) => {
+    //         window.location.reload();
+    //     })
+    //     .catch((e) => {
+    //         console.log(e);
+    //     });
 }
 
 const calcularFecha = (fecha) => {
@@ -86,7 +133,15 @@ export const UseEditConduct = (dataCondut) => {
     if (conduct != null) {
         editConduct(data, dataCondut.identificacion)
             .then((response) => {
-                window.location.reload();
+                swalWithBootstrapButtons.fire(
+                    '¡Registro Exitoso!',
+                    'El vehículo fue editado con éxito',
+                    'success'
+                ).then((response) => {
+                    if (response.isConfirmed) {
+                        window.location.reload();
+                    }
+                })
             })
             .catch((e) => {
                 console.log(e);
@@ -94,6 +149,11 @@ export const UseEditConduct = (dataCondut) => {
     } else {
         insertConduct(data)
             .then((response) => {
+                swalWithBootstrapButtons.fire(
+                    '¡Registro Exitoso!',
+                    'El vehículo fue agregado con éxito',
+                    'success'
+                )
                 window.location.reload();
             })
             .catch((e) => {
@@ -124,8 +184,16 @@ export const UseInsertConduct = (dataCondut) => {
     };
 
     insertConduct(data)
-        .then((response) => {
-            window.location.reload();
+        .then(() => {
+            swalWithBootstrapButtons.fire(
+                '¡Registro Exitoso!',
+                'El Conductor fue agregado con éxito',
+                'success'
+            ).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.reload();
+                }
+            })
         })
         .catch((e) => {
             console.log(e);

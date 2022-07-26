@@ -9,7 +9,7 @@ export const getAllVehicles = async () => {
     return {
       placa: vehicle.placa,
       matricula: vehicle.matricula,
-      r_trailer: vehicle.r_trailer,
+      placa_trailer: vehicle.placa_trailer,
       capacidad: vehicle.capacidad,
       modelo: vehicle.modelo,
       vencimiento_soat: vehicle.vencimiento_soat,
@@ -88,7 +88,7 @@ export const getVehicleByPlaca = async (placa) => {
     return {
       placa: type.placa,
       matricula: type.matricula,
-      r_trailer: type.r_trailer,
+      placa_trailer: type.placa_trailer,
       capacidad: type.capacidad,
       modelo: type.modelo,
       vencimiento_soat: type.vencimiento_soat,

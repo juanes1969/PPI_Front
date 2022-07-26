@@ -42,7 +42,9 @@ export const Sidebar = () => {
                                 <li className="nav-item dropdown">
                                     <a className="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">{user.data[0].descripcion}</a>
                                     <div className="dropdown-menu">
-                                        <a className="dropdown-item" href="#">Acerca de...</a>
+                                        <Link className='dropdown-item' to="/Acerca">
+                                        Acerca de...
+                                        </Link>
                                         <div className="dropdown-divider"></div>
                                         <a className="dropdown-item"> <FcIcons.FcLock /><span onClick={handleLogout}>Cerrar Sesión</span></a>
                                     </div>

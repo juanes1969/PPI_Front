@@ -174,7 +174,7 @@ export const ModalExpense = ({
                       </label>
                       <input
                         type="text"
-                        className={`form-select input-form ${error.descripcion ? "input-error" : ""}`}
+                        className={`form-control input-form ${error.descripcion ? "input-error" : ""}`}
                         value={expenses.descripcion}
                         name="descripcion"
                         id="descripcion"
@@ -226,8 +226,8 @@ export const ModalExpense = ({
                         Tipo gasto *:
                       </label>
                       <select
-                        className={`form-control input-form ${error.id_tipo_gasto ? "input-error" : ""}`}
-                        value={Expense.id_tipo_gasto}
+                        className={`form-select input-form ${error.id_tipo_gasto ? "input-error" : ""}`}
+                        value={expenses.id_tipo_gasto}
                         name="id_tipo_gasto"
                         id="id_tipo_gasto"
                         onChange={handleChangeData}

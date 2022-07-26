@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { FcCdLogo } from 'react-icons/fc';
 import { url_api } from './http-common';
 
 
@@ -14,6 +15,7 @@ export const getAllExpense = async () => {
             descripcion: expense.descripcion,
             codigo_manifiesto: expense.codigo_manifiesto,
             tipo_gasto: expense.tipo_gasto,
+            id_tipo_gasto: expense.id_tipo_gasto,
         }
     });
 
@@ -48,6 +50,8 @@ export const getAllTypeExpense = async () => {
 export const insertExpense = async (data) => {
     const url = `${url_api}Expenses/newExpense`;
     const resp = await axios.post(url, data)
+    debugger
+    console.log(resp)
     return resp;
 }
 

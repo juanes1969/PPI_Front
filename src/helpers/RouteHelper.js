@@ -134,9 +134,16 @@ export const insertRouteDetail = async (data) => {
     return resp;
 }
 
+export const cancelTracking = async (data) => {
+    const url = `${url_api}Route/newTracking`;
+    const resp = await axios.post(url, data)
+    console.log(resp)
+    return resp;
+}
 
-export const editRoute = async (data, id_ruta) => {
-    const url = `${url_api}Route/routeEdit/${id_ruta}`;
+
+export const editRoute = async (data, codigo_manifiesto) => {
+    const url = `${url_api}Route/routeEdit/${codigo_manifiesto}`;
     const resp = await axios.put(url, data);
     return resp;
 };
@@ -177,10 +184,19 @@ export const deleteRoute = async (id_ruta) => {
     return resp;
 }
 
-export const deleteRouteDetail = async (id_detalle) => {
-    const url = `${url_api}Route/deleteDetail/${id_detalle}`;
+export const deleteRouteDetail = async (id_ruta) => {
+    const url = `${url_api}Route/deleteAllDetail/${id_ruta}`;
     const resp = await axios.delete(url)
+    debugger
+    console.log(resp)
+    return resp;
+}
 
+export const deleteTracking = async (codigo_manifiesto) => {
+    const url = `${url_api}Route/deleteAllTracking/${codigo_manifiesto}`;
+    const resp = await axios.delete(url)
+    debugger
+    console.log(resp)
     return resp;
 }
 
@@ -202,6 +218,12 @@ export const getProductByRoute = async (codigo_manifiesto) => {
     return products;
 };
 
+
+export const deleteProductByRoute = async (id_detail) => {
+    const url = `${url_api}Route/deleteDetail/${id_detail}`;
+    const resp = await axios.delete(url)
+    return resp;
+}
 export const getDetailByRoute = async (codigo_manifiesto) => {
     const url = `${url_api}Route/getDetailByRoute/${codigo_manifiesto}`;
     const resp = await axios.get(url);
@@ -222,3 +244,21 @@ export const getDetailByRoute = async (codigo_manifiesto) => {
 };
 
 
+export const getDetailById = async (id_detalle) => {
+    const url = `${url_api}Route/getDetailById/${id_detalle}`;
+    const resp = await axios.get(url);
+    debugger
+    console.log("RESPOND URL")
+    console.log(resp.data)
+
+    const products = resp.data.map(route => {
+        return {
+            id_detalle: route.id_detalle,
+            id_producto: route.id_producto,
+            codigo_manifiesto: route.codigo_manifiesto,
+            cantidad_producto: route.cantidad_producto
+        }
+    });
+
+    return products;
+};

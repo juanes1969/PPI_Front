@@ -91,8 +91,8 @@ function validarModelo(vehicles, error, regexYear) {
 }
 
 function validarPlacaTrailer(regexPlacaTrailer, vehicles, error) {
-  if (vehicles.r_trailer && !regexPlacaTrailer.test(vehicles.r_trailer)) {
-    error.r_trailer = Mensajes.vehiculo.placaInvalida;
+  if (vehicles.placa_trailer && !regexPlacaTrailer.test(vehicles.placa_trailer)) {
+    error.placa_trailer = Mensajes.vehiculo.formatoTrailer;
   }
 }
 

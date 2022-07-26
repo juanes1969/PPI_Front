@@ -13,11 +13,16 @@ import {
   getProductByRoute,
   getProductById,
   insertRouteDetail,
+  deleteProductByRoute,
   deleteRouteDetail,
   editRouteDetail,
-  getDetailByRoute
+  getDetailByRoute,
+  getDetailById,
+  deleteTracking,
+  cancelTracking
 } from '../helpers/RouteHelper';
 import Swal from 'sweetalert2'
+import dateFormat, { masks } from "dateformat";
 import 'sweetalert2/src/sweetalert2.scss';
 
 
@@ -42,6 +47,14 @@ export const UseEffectGetRoutes = () => {
 
 
 export const UseDeleteRoute = (id_ruta) => {
+debugger
+let fecha = new Date;
+console.log(fecha)
+  let data = {
+    fecha: dateFormat(fecha.getDate(), "isoDate"),
+    codigo_manifiesto: id_ruta,
+    id_estado_ruta: 3,
+  };
 
   swalWithBootstrapButtons.fire({
     title: '¿Estás seguro?',
@@ -52,18 +65,23 @@ export const UseDeleteRoute = (id_ruta) => {
     cancelButtonText: 'No, cancelar'
   }).then((result) => {
     if (result.isConfirmed) {
+      deleteTracking(id_ruta)
+      .then(() => {
+        cancelTracking(data)
+          .then(() => {
+            window.location.reload();
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      })
+
       swalWithBootstrapButtons.fire(
         '¡Eliminado!',
         'La Ruta fue Completada',
         'success'
       )
-      deleteRoute(id_ruta)
-        .then((response) => {
-          window.location.reload();
-        })
-        .catch((e) => {
-          console.log(e);
-        });
+      
     } else if (
       result.dismiss === Swal.DismissReason.cancel
     ) {
@@ -236,6 +254,8 @@ export const UseInsertRoutDetail = (dataDetail) => {
   }
 }
 
+
+
 const insertDetail = (dataDetail) => {
   let data = {
     id_detalle: dataDetail.id_detalle,
@@ -252,8 +272,9 @@ const insertDetail = (dataDetail) => {
         'success'
       ).then((result) => {
         if (result.isConfirmed) {
-        window.location.reload();
-      }})
+          window.location.reload();
+        }
+      })
     })
     .catch((e) => {
       console.log(e);
@@ -261,7 +282,7 @@ const insertDetail = (dataDetail) => {
 }
 
 export const UseEditRoute = (dataRoute, detailRoute) => {
-  let route = getRouteByIdRoute(dataRoute.id_ruta);
+  let route = getRouteByIdRoute(dataRoute.codigo_manifiesto);
 
   let data = {
     codigo_manifiesto: dataRoute.codigo_manifiesto,
@@ -273,17 +294,18 @@ export const UseEditRoute = (dataRoute, detailRoute) => {
     id_destino: dataRoute.id_destino,
     id_conductor: dataRoute.id_conductor,
   };
+
   if (route != null) {
-    editRoute(data, dataRoute.id_ruta)
-      .then((response) => {
-        UseEditRoutDetail(detailRoute);
+    editRoute(data, dataRoute.codigo_manifiesto)
+      .then(() => {
+        UseEditRouteDetail(detailRoute);
       })
       .catch((e) => {
         console.log(e);
       });
   } else {
     insertRoute(data)
-      .then((response) => {
+      .then(() => {
         swalWithBootstrapButtons.fire(
           '¡Registro Exitoso!',
           'El vehículo fue agregado con éxito',
@@ -297,12 +319,23 @@ export const UseEditRoute = (dataRoute, detailRoute) => {
   }
 };
 
-export const UseEditRoutDetail = (dataDetail) => {
+export const UseEditRouteDetail = (dataDetail) => {
   if (dataDetail.length !== 0) {
     dataDetail.forEach((item) => {
-      editDetail(item);
+      validarDetalle(item);
     })
   }
+}
+
+const validarDetalle = (item) => {
+  getDetailById(item.id_detalle)
+    .then((response) => {
+      if (response.length !== 0) {
+        editDetail(item);
+      } else {
+        insertDetail(item);
+      }
+    })
 }
 
 const editDetail = (dataDetail) => {
@@ -321,8 +354,9 @@ const editDetail = (dataDetail) => {
         'success'
       ).then((result) => {
         if (result.isConfirmed) {
-        window.location.reload();
-      }})
+          window.location.reload();
+        }
+      })
     })
     .catch((e) => {
       console.log(e);
@@ -338,7 +372,37 @@ const swalWithBootstrapButtons = Swal.mixin({
   buttonsStyling: false
 })
 
-
+export const deleteProduct = (id_detail) => {
+  // swalWithBootstrapButtons.fire({
+  //   title: '¿Estás seguro?',
+  //   text: "¡No podrás revertir esto!",
+  //   icon: 'warning',
+  //   showCancelButton: true,
+  //   confirmButtonText: 'Si, eliminar',
+  //   cancelButtonText: 'No, cancelar'
+  // }).then((result) => {
+  deleteProductByRoute(id_detail)
+    .then((response) => {
+      console.log(response)
+      // if (result.isConfirmed) {
+      //   swalWithBootstrapButtons.fire(
+      //     '¡Eliminado!',
+      //     'El movimiento fue eliminado',
+      //     'success'
+      //   )
+      // } else if (
+      //   /* Read more about handling dismissals below */
+      //   result.dismiss === Swal.DismissReason.cancel
+      // ) {
+      //   swalWithBootstrapButtons.fire(
+      //     '¡Cancelado!',
+      //     'Tu movimiento está a salvo :)',
+      //     'error'
+      //   )
+      // }
+    })
+  // })
+}
 const handleDelete = () => {
   swalWithBootstrapButtons.fire({
     title: '¿Estás seguro?',
@@ -370,12 +434,12 @@ const handleDelete = () => {
 export const UseDeleteDetail = (id_detalle) => {
 
   deleteRouteDetail(id_detalle)
-  .then((response) => {
-    console.log("Producto eliminado")
-})
-.catch((e) => {
-    console.log(e);
-});
+    .then((response) => {
+      console.log("Producto eliminado")
+    })
+    .catch((e) => {
+      console.log(e);
+    });
 
 }
 

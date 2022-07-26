@@ -11,9 +11,16 @@ import { ModalVehicle } from './ModalVehicle';
 import { UseDeleteVehicle, UseEffectGetVehicles } from '../../hooks/UseCaseVehicle';
 import { getAllVehicles } from "../../helpers/VehicleHelper";
 import { UsePage } from '../../hooks/UsePage';
+import { useDownloadExcel } from "table-to-excel-react";
 
 
 export const Vehicle = () => {
+
+    const { onDownload } = useDownloadExcel({
+        fileName: "Vehiculos",
+        table: "tbl_vehiculos",
+        sheet: "sheet 1",
+    });
 
     const [isOpenModalVehicle, openModalVehicle, closeModalVehicle] = UseModal();
     const { data, loading } = UseEffectGetVehicles();
@@ -72,12 +79,13 @@ export const Vehicle = () => {
                         setSearch={setSearch}
                         setCurrentPage={setCurrentPage}
                         setPage={setPage}
+                        onDownload={onDownload}
                          />
                     {/* <button className="btn btn-warning btn-sm" onClick={() => newVehicle()}><IoIcons.IoCarSportSharp /> Agregar Vehículos</button> */}
                 </span>
 
                 <div className="row">
-                    <table className="table table-striped table-bordered">
+                    <table className="table table-striped table-bordered" id="tbl_vehiculos">
                         <thead>
                             <tr>
                                 <th scope="col">Placa</th>
@@ -104,8 +112,8 @@ export const Vehicle = () => {
                                     <td>{vehicle.tipoVehiculo}</td>
                                     <td>{vehicle.estadoVehiculo}</td>
                                     <td id="columOptions">
-                                        <button className="btn btn-warning btn-sm" onClick={() => getByIdEdit(vehicle)} ><RiIcons.RiEditFill /></button>
-                                        <button className="btn btn-info btn-sm"><BsIcons.BsFillEyeFill /></button>
+                                        <button className="btn btn-info btn-sm" onClick={() => getByIdEdit(vehicle)} ><RiIcons.RiEditFill /></button>
+                                        
                                         <button className="btn btn-danger btn-sm" onClick={() => handleDeleteVehicle(vehicle.placa)}><AiIcons.AiFillDelete /></button>
                                     </td>
                                 </tr>

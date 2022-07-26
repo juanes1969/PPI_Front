@@ -102,10 +102,11 @@ export const UseTypeExpense = () => {
 
 export const UseInsertExpense= (dataExpense) => {
 
-
+debugger
+console.log(dataExpense)
   var data = {
 
-    id_gasto: dataExpense.id_gasto,
+   
     fecha_gasto: dataExpense.fecha_gasto,
     valor_gasto: dataExpense.valor_gasto,
     descripcion: dataExpense.descripcion,
@@ -131,7 +132,7 @@ export const UseSaveExpense = (dataExpense) => {
   let expense = getExpenseByIdExpense(dataExpense.id_gasto);
 
   let data = {
-    id_gasto: dataExpense.id_gasto,
+    
     fecha_gasto: dataExpense.fecha_gasto,
     valor_gasto: dataExpense.valor_gasto,
     descripcion: dataExpense.descripcion,
