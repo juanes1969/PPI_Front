@@ -18,9 +18,11 @@ import {
   editRouteDetail,
   getDetailByRoute,
   getDetailById,
-  deleteTracking
+  deleteTracking,
+  cancelTracking
 } from '../helpers/RouteHelper';
 import Swal from 'sweetalert2'
+import dateFormat, { masks } from "dateformat";
 import 'sweetalert2/src/sweetalert2.scss';
 
 
@@ -45,6 +47,14 @@ export const UseEffectGetRoutes = () => {
 
 
 export const UseDeleteRoute = (id_ruta) => {
+debugger
+let fecha = new Date;
+console.log(fecha)
+  let data = {
+    fecha: dateFormat(fecha.getDate(), "isoDate"),
+    codigo_manifiesto: id_ruta,
+    id_estado_ruta: 3,
+  };
 
   swalWithBootstrapButtons.fire({
     title: '¿Estás seguro?',
@@ -55,22 +65,16 @@ export const UseDeleteRoute = (id_ruta) => {
     cancelButtonText: 'No, cancelar'
   }).then((result) => {
     if (result.isConfirmed) {
-
-      deleteRouteDetail(id_ruta)
-        .then(() => {
-          debugger
-          console.log(id_ruta)
-          deleteTracking(id_ruta)
-            .then(() => {
-              deleteRoute(id_ruta)
-                .then(() => {
-                  window.location.reload();
-                })
-                .catch((e) => {
-                  console.log(e);
-                });
-            })
-        })
+      deleteTracking(id_ruta)
+      .then(() => {
+        cancelTracking(data)
+          .then(() => {
+            window.location.reload();
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      })
 
       swalWithBootstrapButtons.fire(
         '¡Eliminado!',

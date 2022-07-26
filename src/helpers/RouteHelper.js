@@ -134,6 +134,13 @@ export const insertRouteDetail = async (data) => {
     return resp;
 }
 
+export const cancelTracking = async (data) => {
+    const url = `${url_api}Route/newTracking`;
+    const resp = await axios.post(url, data)
+    console.log(resp)
+    return resp;
+}
+
 
 export const editRoute = async (data, codigo_manifiesto) => {
     const url = `${url_api}Route/routeEdit/${codigo_manifiesto}`;
