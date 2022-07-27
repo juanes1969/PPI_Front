@@ -13,14 +13,11 @@ import {
   getProductByRoute,
   getProductById,
   insertRouteDetail,
-<<<<<<< HEAD
-  deleteProductByRoute
-=======
   deleteRouteDetail,
   editRouteDetail,
   getDetailByRoute,
   getDetailById
->>>>>>> bc925ccf8774bf1e3217bb56c687a118527f1458
+
 } from '../helpers/RouteHelper';
 import Swal from 'sweetalert2'
 import 'sweetalert2/src/sweetalert2.scss';
@@ -359,38 +356,6 @@ const swalWithBootstrapButtons = Swal.mixin({
 })
 
 
-<<<<<<< HEAD
-export const deleteProduct = (id_detail) => {
-  // swalWithBootstrapButtons.fire({
-  //   title: '¿Estás seguro?',
-  //   text: "¡No podrás revertir esto!",
-  //   icon: 'warning',
-  //   showCancelButton: true,
-  //   confirmButtonText: 'Si, eliminar',
-  //   cancelButtonText: 'No, cancelar'
-  // }).then((result) => {
-  deleteProductByRoute(id_detail)
-    .then((response) => {
-      console.log(response)
-      // if (result.isConfirmed) {
-      //   swalWithBootstrapButtons.fire(
-      //     '¡Eliminado!',
-      //     'El movimiento fue eliminado',
-      //     'success'
-      //   )
-      // } else if (
-      //   /* Read more about handling dismissals below */
-      //   result.dismiss === Swal.DismissReason.cancel
-      // ) {
-      //   swalWithBootstrapButtons.fire(
-      //     '¡Cancelado!',
-      //     'Tu movimiento está a salvo :)',
-      //     'error'
-      //   )
-      // }
-    })
-  // })
-=======
 const handleDelete = () => {
   swalWithBootstrapButtons.fire({
     title: '¿Estás seguro?',
@@ -447,5 +412,4 @@ export const UseGetDetailByRoute = (codigo_manifiesto) => {
   }, []);
 
   return detail;
->>>>>>> bc925ccf8774bf1e3217bb56c687a118527f1458
 }

@@ -174,7 +174,7 @@ export const ModalExpense = ({
                       </label>
                       <input
                         type="text"
-                        className={`form-select input-form ${error.descripcion ? "input-error" : ""}`}
+                        className={`form-control input-form ${error.descripcion ? "input-error" : ""}`}
                         value={expenses.descripcion}
                         name="descripcion"
                         id="descripcion"

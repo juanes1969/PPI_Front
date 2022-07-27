@@ -25,6 +25,18 @@ export const ValidationsFormConduct = (conduct) => {
         }
     }
 
+    const validarDatoExiste = (numero) => {
+        
+        console.log(conduct)
+        for (const [clave, valor] of Object.entries(conduct)) {
+            // console.log("Iterando...");
+            // console.log("La identificacion es: " + clave);            
+            // console.log("La identificacion es: " + valor);            
+        }
+
+    }
+
+
     if (!conduct.identificacion) {
         errors.identificacion = 'El campo Identificacion es requerido';
     } else if (!regexNumber.test(conduct.identificacion)) {

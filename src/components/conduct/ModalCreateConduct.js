@@ -36,7 +36,7 @@ export const ModalCreateConduct = ({ isOpenEditModal, closeModalEdit, conductEdi
 
     const handleChangeData = ({ target }) => {
         const { name, value } = target;
-        setConduct({ ...conduct, [name]: value });
+        setConduct({ ...conduct, [name]: value });        
     }
 
 
@@ -45,7 +45,8 @@ export const ModalCreateConduct = ({ isOpenEditModal, closeModalEdit, conductEdi
     const handleBlur = (e) => {
         handleChangeData(e);
         setErrors(ValidationsFormConduct(conduct))
-        if (Object.entries(errors).length === 0) {
+        console.log(Object.entries(errors).length === 0);
+        if (Object.entries(errors).length === 0) {            
             setHabilitar(false);
         }
     }
@@ -53,7 +54,6 @@ export const ModalCreateConduct = ({ isOpenEditModal, closeModalEdit, conductEdi
 
     const handleSubmit = (e) => {
         e.preventDefault();
-
         if (conductEdit) {
             UseEditConduct(conduct)
             closeModalEdit();
@@ -66,7 +66,8 @@ export const ModalCreateConduct = ({ isOpenEditModal, closeModalEdit, conductEdi
             setConduct(initialConductState);
             e.target.reset();
         }
-    };
+    }
+
 
 
 
