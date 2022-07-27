@@ -4,6 +4,7 @@ import dateFormat, { masks } from "dateformat";
 import logo from "../../assets/img/LogoNew.png";
 import { UseEditMaintenance, UseSaveMaintenance } from "../../hooks/UseCaseMaintenance";
 import { UseVehicleAvailable } from "../../hooks/UseCaseVehicle";
+import ValidationsMaintenance from "../../helpers/ValidationsMaintenance";
 export const ModalMaintenance = ({
   isOpenModal,
   closeModal,
@@ -30,8 +31,7 @@ export const ModalMaintenance = ({
 
   const handleBlur = (e) => {
     handleChangeData(e);
-    //TODO: HACER VALIDACIONES
-    //setError(ValidationsFormMaintenance(maintenances));
+    setError(ValidationsMaintenance(maintenances));
   };
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -128,6 +128,7 @@ export const ModalMaintenance = ({
                         name="id_vehiculo"
                         id="id_vehiculo"
                         onChange={handleChangeData}
+                        onBlur={handleBlur}
                         required
                       >
                         <option value="0">Seleccionar</option>
@@ -155,6 +156,7 @@ export const ModalMaintenance = ({
                         name="fecha_realizado"
                         id="fecha_realizado"
                         onChange={handleChangeData}
+                        onBlur={handleBlur}
                         min={fechaMinima()}
                         max={fechaMaxima()}
                         required
@@ -176,6 +178,7 @@ export const ModalMaintenance = ({
                         name="valor_mantenimiento"
                         id="valor_mantenimiento"
                         onChange={handleChangeData}
+                        onBlur={handleBlur}
                       />
                       {error.valor_mantenimiento && (
                         <p className="error-message">
@@ -194,6 +197,7 @@ export const ModalMaintenance = ({
                         name="descripcion"
                         id="descripcion"
                         onChange={handleChangeData}
+                        onBlur={handleBlur}
                         required
                       />
                       {error.descripcion && (
