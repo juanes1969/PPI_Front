@@ -6,7 +6,11 @@ import { Chart as ChartJS, BarElement, CategoryScale, LinearScale, Legend,Title,
 import { Bar } from 'react-chartjs-2';
 import { UseEffecReports } from '../../hooks/UseCaseReport';
 import { UseEffectGetReportMaintenances } from '../../hooks/UseCaseMaintenance';
-
+import {
+  exportComponentAsJPEG,
+  exportComponentAsPDF,
+  exportComponentAsPNG
+} from "react-component-export-image";
 
 
 ChartJS.register(
@@ -120,7 +124,7 @@ export const Report = () => {
   console.log(options)
   return (
     <div className='container-sm'>
-      <h1 align='center' font-family='Arial Narrow Bold'>Cantidad de Rutas Por Vehiculo</h1><br></br>
+      <h1 align='center' font-family='Arial Narrow Bold'>Cantidad de Rutas Por Vehiculos</h1><br></br>
       <div className='col-sm'>
         <Bar
           data={charReport}
