@@ -19,7 +19,8 @@ export const getAllRoute = async () => {
             id_origen:route.id_origen,
             id_destino:route.id_destino,
             conductor: route.conductor,
-            id_conductor: route.id_conductor
+            id_conductor: route.id_conductor,
+            estado: route.estado
         }
     });
 

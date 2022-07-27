@@ -117,6 +117,7 @@ export const Route = () => {
                                     <th className="th-shipping" scope="col">Ciudad Origen</th>
                                     <th className="th-shipping" scope="col">Ciudad Destino</th>
                                     <th className="th-shipping" scope="col">Conductor</th>
+                                    <th className="th-shipping" scope="col">Estado Ruta</th>
                                     <th className="th-shipping" colSpan="3">Acciones</th>
                                 </tr>
                             </thead>
@@ -131,6 +132,7 @@ export const Route = () => {
                                         <td>{route.ciudad_origen}</td>
                                         <td>{route.ciudad_destino}</td>
                                         <td>{route.conductor}</td>
+                                        <td>{route.estado}</td>
                                         <td id="columOptions">
 
                                         
