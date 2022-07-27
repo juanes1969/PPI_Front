@@ -5,6 +5,8 @@ import dateFormat, { masks } from "dateformat";
 import logo from "../../assets/img/LogoNew.png";
 import ValidationsFormVehicle from "../../helpers/ValidationsFormVehicle";
 import { UseEffectConduct } from "../../hooks/UseCaseConduct";
+import Swal from 'sweetalert2'
+import 'sweetalert2/src/sweetalert2.scss';
 export const ModalVehicle = ({ isOpenModal, closeModal, vehicleEdit,  setVehicleEdit, vehicles, setVehicles }) => {
 
 
@@ -38,7 +40,28 @@ export const ModalVehicle = ({ isOpenModal, closeModal, vehicleEdit,  setVehicle
     handleChangeData(e);
     setError(ValidationsFormVehicle(vehicles));
   }
+
+  const swalWithBootstrapButtons = Swal.mixin({
+    customClass: {
+      confirmButton: 'btn btn-success',
+      cancelButton: 'btn btn-danger'
+    },
+    buttonsStyling: false
+  })
+
+  const validarCampos = (e) => {
+    const placa = document.getElementById('placa');
+    if(placa.value === ""){
+      alert("¡Debes ingresar todos los campos obligatorios!")
+      // swalWithBootstrapButtons.fire(
+      //   '¡Campos incompletos!',
+      //   'Debes ingresar todos los campos obligatorios',
+      //   'error'
+      // )
+    }
+  }
   const handleSubmit = (e) => {
+    validarCampos(e);
     e.preventDefault();
     if (Object.entries(error).length === 0) {
       if (vehicleEdit) {
