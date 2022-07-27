@@ -13,8 +13,16 @@ import { ModalCreateConduct } from './ModalCreateConduct';
 import { Pagination } from './Pagination';
 import { SearchConduct } from './SearchConduct';
 import Swal from 'sweetalert2';
+import { useDownloadExcel } from "table-to-excel-react";
 
 export const Conduct = () => {
+
+    const { onDownload } = useDownloadExcel({
+        fileName: "Conductores",
+        table: "table-conducts",
+        sheet: "sheet 1",
+    });
+
 
     const [isOpenModalConduct, openModalConduct, closeModalConduct] = UseModal();
     const [conductEdit, setConductEdit] = useState(null);
@@ -102,6 +110,7 @@ export const Conduct = () => {
                         setSearch={setSearch}
                         setCurrentPage={setCurrentPage}
                         setPage={setPage}
+                        onDownload={onDownload}
                     />
                 </span>
 

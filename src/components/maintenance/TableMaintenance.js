@@ -11,9 +11,15 @@ import { ModalMaintenance } from './ModalMaintenance';
 import { UseDeleteMaintenance, UseEffectGetMaintenances } from '../../hooks/UseCaseMaintenance';
 import { getAllMaintenances } from "../../helpers/MaintenanceHelper";
 import { UsePage } from '../../hooks/UsePage';
-
+import { useDownloadExcel } from "table-to-excel-react";
 
 export const Maintenance = () => {
+
+    const { onDownload } = useDownloadExcel({
+        fileName: "Rutas",
+        table: "tbl_mantenimiento",
+        sheet: "sheet 1",
+    });
 
     const [isOpenModalMaintenance, openModalMaintenance, closeModalMaintenance] = UseModal();
     const { data, loading } = UseEffectGetMaintenances();
@@ -65,12 +71,13 @@ export const Maintenance = () => {
                         setSearch={setSearch}
                         setCurrentPage={setCurrentPage}
                         setPage={setPage}
+                        onDownload={onDownload}
                          />
                     {/* <button className="btn btn-warning btn-sm" onClick={() => newMaintenance()}><IoIcons.IoCarSportSharp /> Agregar Vehículos</button> */}
                 </span>
 
                 <div className="row">
-                    <table className="table table-striped table-bordered">
+                    <table className="table table-striped table-bordered" id='tbl_mantenimiento'>
                         <thead>
                             <tr>
                                 <th scope="col">Placa Vehículo</th>
@@ -91,8 +98,8 @@ export const Maintenance = () => {
                                     <td>{maintenance.valor_mantenimiento}</td>
                                     <td>{maintenance.descripcion}</td>
                                     <td id="columOptions">
-                                        <button className="btn btn-warning btn-sm" onClick={() => getByIdEdit(maintenance)} ><RiIcons.RiEditFill /></button>
-                                        <button className="btn btn-info btn-sm"><BsIcons.BsFillEyeFill /></button>
+                                        <button className="btn btn-info btn-sm" onClick={() => getByIdEdit(maintenance)} ><RiIcons.RiEditFill /></button>
+                                        
                                         <button className="btn btn-danger btn-sm" onClick={() => handleDeleteMaintenance(maintenance.placa)}><AiIcons.AiFillDelete /></button>
                                     </td>
                                 </tr>

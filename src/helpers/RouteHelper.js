@@ -19,7 +19,8 @@ export const getAllRoute = async () => {
             id_origen:route.id_origen,
             id_destino:route.id_destino,
             conductor: route.conductor,
-            id_conductor: route.id_conductor
+            id_conductor: route.id_conductor,
+            estado: route.estado
         }
     });
 
@@ -134,6 +135,13 @@ export const insertRouteDetail = async (data) => {
     return resp;
 }
 
+export const cancelTracking = async (data) => {
+    const url = `${url_api}Route/newTracking`;
+    const resp = await axios.post(url, data)
+    console.log(resp)
+    return resp;
+}
+
 
 export const editRoute = async (data, codigo_manifiesto) => {
     const url = `${url_api}Route/routeEdit/${codigo_manifiesto}`;
@@ -177,10 +185,19 @@ export const deleteRoute = async (id_ruta) => {
     return resp;
 }
 
-export const deleteRouteDetail = async (id_detalle) => {
-    const url = `${url_api}Route/deleteDetail/${id_detalle}`;
+export const deleteRouteDetail = async (id_ruta) => {
+    const url = `${url_api}Route/deleteAllDetail/${id_ruta}`;
     const resp = await axios.delete(url)
+    debugger
+    console.log(resp)
+    return resp;
+}
 
+export const deleteTracking = async (codigo_manifiesto) => {
+    const url = `${url_api}Route/deleteAllTracking/${codigo_manifiesto}`;
+    const resp = await axios.delete(url)
+    debugger
+    console.log(resp)
     return resp;
 }
 
@@ -201,6 +218,13 @@ export const getProductByRoute = async (codigo_manifiesto) => {
 
     return products;
 };
+
+
+export const deleteProductByRoute = async (id_detail) => {
+    const url = `${url_api}Route/deleteDetail/${id_detail}`;
+    const resp = await axios.delete(url)
+    return resp;
+}
 
 export const getDetailByRoute = async (codigo_manifiesto) => {
     const url = `${url_api}Route/getDetailByRoute/${codigo_manifiesto}`;
@@ -240,5 +264,3 @@ export const getDetailById = async (id_detalle) => {
 
     return products;
 };
-
-

@@ -163,7 +163,7 @@ export const UseInsertVehicle = (dataVehicle) => {
   var data = {
     placa: dataVehicle.placa,
     matricula: dataVehicle.matricula,
-    r_trailer: dataVehicle.r_trailer,
+    placa_trailer: dataVehicle.placa_trailer,
     capacidad: dataVehicle.capacidad,
     modelo: dataVehicle.modelo.toString(),
     vencimiento_soat: calcularFecha(dataVehicle.expedicion_soat),
@@ -200,7 +200,7 @@ export const UseSaveVehicle = (dataVehicle) => {
   let data = {
     placa: dataVehicle.placa,
     matricula: dataVehicle.matricula,
-    r_trailer: dataVehicle.r_trailer,
+    placa_trailer: dataVehicle.placa_trailer,
     capacidad: dataVehicle.capacidad,
     modelo: dataVehicle.modelo.toString(),
     vencimiento_soat: calcularFecha(dataVehicle.expedicion_soat),

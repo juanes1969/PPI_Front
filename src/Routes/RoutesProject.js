@@ -1,6 +1,7 @@
 import { Route, Routes } from 'react-router-dom';
 import Conduct from '../pages/conduct/Conduct';
 import Expense from '../pages/expense/Expense';
+import Acerca from '../pages/globalPages/AcercaDe';
 import Main from '../pages/globalPages/Home';
 import Maintenances from '../pages/maintenance/Maintenance';
 import Report from '../pages/report/Report';
@@ -20,6 +21,7 @@ export const RoutesProject = () => {
                 <Route path="/Reports" element={<Report />} />
                 <Route path="/Supports" element={<Support />} />
                 <Route path="/Expense" element={<Expense />} />
+                <Route path="/Acerca" element={<Acerca />} />
             </Routes>
         </>
     )

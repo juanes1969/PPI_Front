@@ -1,4 +1,6 @@
 import { Mensajes } from "./Message";
+import React, {  useState } from 'react'
+import { getVehicleByPlaca } from "./VehicleHelper";
 
 const ValidationsFormVehicle = (vehicles) => {
     let error = {}
@@ -9,7 +11,7 @@ const ValidationsFormVehicle = (vehicles) => {
     //let regexRangoModelo = /^(199d|200d|/+ year.getFullYear() +/)$/;
     let regexCapacidad = /^([1-4][0-9])$/;
 
-    validarPlaca(vehicles, error, regexPlaca);
+    //validarPlaca(vehicles, error, regexPlaca);
     
     validarCapacidad(vehicles, error, regexNumber, regexCapacidad);
 
@@ -31,10 +33,30 @@ const ValidationsFormVehicle = (vehicles) => {
 
     validarConductor(vehicles, error);
 
+    validarPlacaExistente(vehicles, error, regexPlaca);
+
     return error;
 }
 
 export default ValidationsFormVehicle
+
+function validarPlacaExistente(vehicles, error, regexPlaca){
+  if (!vehicles.placa) {
+    error.placa = Mensajes.vehiculo.campoObligatorio;
+  }else if (!regexPlaca.test(vehicles.placa)) {
+    error.placa = Mensajes.vehiculo.placaInvalida;
+  }
+
+  if(vehicles.placa){
+    getVehicleByPlaca(vehicles.placa)
+        .then((product) => {
+          if(product.length !== 0){
+            error.placa = Mensajes.vehiculo.placaExistente;
+          }
+        })
+  }
+  
+}
 
 function validarTecnomecanica(vehicles, error) {
   if (!vehicles.expedicion_tecnomecanica) {
@@ -91,8 +113,8 @@ function validarModelo(vehicles, error, regexYear) {
 }
 
 function validarPlacaTrailer(regexPlacaTrailer, vehicles, error) {
-  if (vehicles.r_trailer && !regexPlacaTrailer.test(vehicles.r_trailer)) {
-    error.r_trailer = Mensajes.vehiculo.placaInvalida;
+  if (vehicles.placa_trailer && !regexPlacaTrailer.test(vehicles.placa_trailer)) {
+    error.placa_trailer = Mensajes.vehiculo.formatoTrailer;
   }
 }
 
@@ -104,10 +126,10 @@ function validarCapacidad(vehicles, error, regexNumber, regexCapacidad) {
   }
 }
 
-function validarPlaca(vehicles, error, regexPlaca) {
-  if (!vehicles.placa) {
-    error.placa = Mensajes.vehiculo.campoObligatorio;
-  }else if (!regexPlaca.test(vehicles.placa)) {
-    error.placa = Mensajes.vehiculo.placaInvalida;
-  }
-}
+// function validarPlaca(vehicles, error, regexPlaca) {
+//   if (!vehicles.placa) {
+//     error.placa = Mensajes.vehiculo.campoObligatorio;
+//   }else if (!regexPlaca.test(vehicles.placa)) {
+//     error.placa = Mensajes.vehiculo.placaInvalida;
+//   }
+// }

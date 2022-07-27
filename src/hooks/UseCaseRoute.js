@@ -13,13 +13,16 @@ import {
   getProductByRoute,
   getProductById,
   insertRouteDetail,
+  deleteProductByRoute,
   deleteRouteDetail,
   editRouteDetail,
   getDetailByRoute,
-  getDetailById
-
+  getDetailById,
+  deleteTracking,
+  cancelTracking
 } from '../helpers/RouteHelper';
 import Swal from 'sweetalert2'
+import dateFormat, { masks } from "dateformat";
 import 'sweetalert2/src/sweetalert2.scss';
 
 
@@ -44,6 +47,13 @@ export const UseEffectGetRoutes = () => {
 
 
 export const UseDeleteRoute = (id_ruta) => {
+let fecha = new Date;
+
+  let data = {
+    fecha: dateFormat(fecha.getDate(), "isoDate"),
+    codigo_manifiesto: id_ruta,
+    id_estado_ruta: 3,
+  };
 
   swalWithBootstrapButtons.fire({
     title: '¿Estás seguro?',
@@ -54,18 +64,23 @@ export const UseDeleteRoute = (id_ruta) => {
     cancelButtonText: 'No, cancelar'
   }).then((result) => {
     if (result.isConfirmed) {
+      deleteTracking(id_ruta)
+      .then(() => {
+        cancelTracking(data)
+          .then(() => {
+            window.location.reload();
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      })
+
       swalWithBootstrapButtons.fire(
         '¡Eliminado!',
         'La Ruta fue Completada',
         'success'
       )
-      deleteRoute(id_ruta)
-        .then((response) => {
-          window.location.reload();
-        })
-        .catch((e) => {
-          console.log(e);
-        });
+      
     } else if (
       result.dismiss === Swal.DismissReason.cancel
     ) {
@@ -216,10 +231,19 @@ export const UseInsertRoute = (dataRoute, detailRoute) => {
     id_destino: dataRoute.id_destino,
     id_conductor: dataRoute.id_conductor,
   };
+    
+  let fecha = new Date;
+
+  let dataTracking = {
+    fecha: dateFormat(fecha.getDate(), "isoDate"),
+    codigo_manifiesto: dataRoute.codigo_manifiesto,
+    id_estado_ruta: 1,
+  };
 
 
   insertRoute(data)
     .then(() => {
+      cancelTracking(dataTracking)
       UseInsertRoutDetail(detailRoute);
     })
     .catch((e) => {
@@ -231,8 +255,6 @@ export const UseInsertRoute = (dataRoute, detailRoute) => {
 export const UseInsertRoutDetail = (dataDetail) => {
   if (dataDetail.length !== 0) {
     dataDetail.forEach((item) => {
-      debugger
-      console.log(item)
       insertDetail(item);
     })
   }
@@ -313,13 +335,13 @@ export const UseEditRouteDetail = (dataDetail) => {
 
 const validarDetalle = (item) => {
   getDetailById(item.id_detalle)
-  .then((response) => {
-    if(response.length !== 0){
-      editDetail(item);
-    }else{
-      insertDetail(item);
-    }
-  })
+    .then((response) => {
+      if (response.length !== 0) {
+        editDetail(item);
+      } else {
+        insertDetail(item);
+      }
+    })
 }
 
 const editDetail = (dataDetail) => {
@@ -338,8 +360,9 @@ const editDetail = (dataDetail) => {
         'success'
       ).then((result) => {
         if (result.isConfirmed) {
-        window.location.reload();
-      }})
+          window.location.reload();
+        }
+      })
     })
     .catch((e) => {
       console.log(e);
@@ -355,6 +378,38 @@ const swalWithBootstrapButtons = Swal.mixin({
   buttonsStyling: false
 })
 
+
+export const deleteProduct = (id_detail) => {
+  // swalWithBootstrapButtons.fire({
+  //   title: '¿Estás seguro?',
+  //   text: "¡No podrás revertir esto!",
+  //   icon: 'warning',
+  //   showCancelButton: true,
+  //   confirmButtonText: 'Si, eliminar',
+  //   cancelButtonText: 'No, cancelar'
+  // }).then((result) => {
+  deleteProductByRoute(id_detail)
+    .then((response) => {
+      console.log(response)
+      // if (result.isConfirmed) {
+      //   swalWithBootstrapButtons.fire(
+      //     '¡Eliminado!',
+      //     'El movimiento fue eliminado',
+      //     'success'
+      //   )
+      // } else if (
+      //   /* Read more about handling dismissals below */
+      //   result.dismiss === Swal.DismissReason.cancel
+      // ) {
+      //   swalWithBootstrapButtons.fire(
+      //     '¡Cancelado!',
+      //     'Tu movimiento está a salvo :)',
+      //     'error'
+      //   )
+      // }
+    })
+  // })
+}
 
 const handleDelete = () => {
   swalWithBootstrapButtons.fire({
@@ -387,12 +442,12 @@ const handleDelete = () => {
 export const UseDeleteDetail = (id_detalle) => {
 
   deleteRouteDetail(id_detalle)
-  .then((response) => {
-    console.log("Producto eliminado")
-})
-.catch((e) => {
-    console.log(e);
-});
+    .then((response) => {
+      console.log("Producto eliminado")
+    })
+    .catch((e) => {
+      console.log(e);
+    });
 
 }
 

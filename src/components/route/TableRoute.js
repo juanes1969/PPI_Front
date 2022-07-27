@@ -12,9 +12,15 @@ import { SearchConduct } from '../conduct/SearchConduct';
 import { Loader } from '../globalComponents/Loader';
 import { ModalRoutes } from './ModalRoute';
 import { Pagination } from '../conduct/Pagination';
-
+import { useDownloadExcel } from "table-to-excel-react";
 
 export const Route = () => {
+
+    const { onDownload } = useDownloadExcel({
+        fileName: "Rutas",
+        table: "tbl_rutas",
+        sheet: "sheet 1",
+    });
 
     const [isOpenModalRoute, OpenModalRoute, closeModalRoute] = UseModal();
     const { data, loading } = UseEffectGetRoutes();
@@ -88,6 +94,7 @@ export const Route = () => {
                         setSearch={setSearch}
                         setCurrentPage={setCurrentPage}
                         setPage={setPage}
+                        onDownload={onDownload}
                     />
 
                 </span>
@@ -98,7 +105,7 @@ export const Route = () => {
                     (<Loader />) :
 
                     <div className="row">
-                        <table className="table table-striped table-bordered">
+                        <table className="table table-striped table-bordered" id="tbl_rutas">
                             <thead>
                                 <tr>
 
@@ -110,6 +117,7 @@ export const Route = () => {
                                     <th className="th-shipping" scope="col">Ciudad Origen</th>
                                     <th className="th-shipping" scope="col">Ciudad Destino</th>
                                     <th className="th-shipping" scope="col">Conductor</th>
+                                    <th className="th-shipping" scope="col">Estado Ruta</th>
                                     <th className="th-shipping" colSpan="3">Acciones</th>
                                 </tr>
                             </thead>
@@ -124,9 +132,10 @@ export const Route = () => {
                                         <td>{route.ciudad_origen}</td>
                                         <td>{route.ciudad_destino}</td>
                                         <td>{route.conductor}</td>
+                                        <td>{route.estado}</td>
                                         <td id="columOptions">
 
-                                            <button className="btn btn-warning btn-sm"><BsIcons.BsFillEyeFill /></button>
+                                        
                                             <button className="btn btn-info btn-sm" onClick={() => getByIdEdit(route)} ><RiIcons.RiEditFill /></button>
                                             <button className="btn btn-danger btn-sm" onClick={() => getById(route.codigo_manifiesto)} ><AiIcons.AiFillDelete /></button>
                                         </td>
