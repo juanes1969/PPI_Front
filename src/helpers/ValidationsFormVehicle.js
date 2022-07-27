@@ -100,14 +100,20 @@ function validarMatricula(vehicles, error) {
   }
 }
 
-const validarFecha = (year) =>{
-  let fecha = new Date;
-  return year > 1990 && year <= fecha.getFullYear();
+const validarFecha = (valor) =>{
+  if (valor < 2023 && valor > 1995){
+    return true;
+  }
+  return false;
 }
+// const validarFecha = (year) =>{
+//   let fecha = new Date;
+//   return year > 1990 && year <= fecha.getFullYear();
+// }
 function validarModelo(vehicles, error, regexYear) {
   if (!vehicles.modelo) {
     error.modelo = Mensajes.vehiculo.campoObligatorio;
-  } else if (!regexYear.test(vehicles.modelo) && !validarFecha(vehicles.modelo)) {
+  } else if (!regexYear.test(vehicles.modelo) || !validarFecha(vehicles.modelo)) {
     error.modelo = Mensajes.vehiculo.modelo;
   }
 }

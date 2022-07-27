@@ -17,6 +17,20 @@ const ValidationFormRoute = (route) => {
     return error;
 }
 
+const valorMinimo = (valor) =>{
+    if (valor <300000){
+      return valor;
+    }
+  }
+
+
+  const valorMinimoCantidad = (valor) =>{
+    if (valor < 50 && valor > 1){
+      return true;
+    }
+    return false;
+  }
+
 function validarManifiesto(route, error) {
     if (!route.codigo_manifiesto) {
         error.codigo_manifiesto = Mensajes.rutas.campoObligatorio;
@@ -63,6 +77,8 @@ function validarConductor(route, error) {
 function validarFlete(route, error) {
     if (!route.flete) {
         error.flete = Mensajes.rutas.campoObligatorio;
+    }else if (valorMinimo(route.flete) < 300000){
+        error.flete = Mensajes.rutas.flete;
     }
 }
 
@@ -75,6 +91,8 @@ function validarProducto(route, error) {
 function validarCantidad(route, error) {
     if (!route.cantidad_producto) {
         error.cantidad_producto = Mensajes.rutas.campoObligatorio;
+    }else if (!valorMinimoCantidad(route.cantidad_producto)){
+        error.cantidad_producto = Mensajes.rutas.cantidad;
     }
 }
 
