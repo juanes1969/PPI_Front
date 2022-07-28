@@ -141,8 +141,8 @@ export const ModalMaintenance = ({
                           </option>
                         ))}
                       </select>
-                      {error.placa && (
-                        <p className="error-message">{error.placa}</p>
+                      {error.id_vehiculo && (
+                        <p className="error-message">{error.id_vehiculo}</p>
                       )}
                       <label className="col-form-label modal-label">
                         <h6 className="label-form"> Fecha Mantenimiento *:</h6>

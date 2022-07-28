@@ -41,8 +41,8 @@ const valorMinimo = (valor) =>{
   }
 
   function validarPlaca(maintenance, error){
-    if(!maintenance.placa || maintenance.placa === "0"){
-        error.placa = Mensajes.mantenimiento.campoObligatorio;
+    if(!maintenance.id_vehiculo || maintenance.id_vehiculo === "0"){
+        error.id_vehiculo = Mensajes.mantenimiento.campoObligatorio;
     }
   }
 
