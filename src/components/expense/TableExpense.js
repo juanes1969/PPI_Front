@@ -117,8 +117,8 @@ export const Expenses = () => {
                                         <td id="columOptions">
 
                                             
-                                            <button className="btn btn-info btn-sm" onClick={() => getByIdEdit(expense)} ><RiIcons.RiEditFill /></button>
-                                            <button className="btn btn-danger btn-sm" onClick={() => handleDeleteExpense(expense.id_gasto)} ><AiIcons.AiFillDelete /></button>
+                                            <button className="btn btn-info btn-sm"   data-toggle="tooltip" data-placement="top" title="Editar"   onClick={() => getByIdEdit(expense)} ><RiIcons.RiEditFill /></button>
+                                            <button className="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="top" title="Eliminar" onClick={() => handleDeleteExpense(expense.id_gasto)} ><AiIcons.AiFillDelete /></button>
                                         </td>
                                     </tr>
                                 ))}

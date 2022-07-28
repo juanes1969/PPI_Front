@@ -115,8 +115,8 @@ export const Conduct = () => {
                 </span>
 
                 <div className="btn-group" role="group" aria-label="Basic outlined example" id="btn-groupA">
-                    <button type="button" className="btn btn-outline-primary" onClick={() => setActive(!active)}>{`Conductores ${active ? ('Inactivos') : ('Activos')}`}</button>
-                    <button type="button" className="btn btn-outline-primary" onClick={() => setActive(null)}>Ver todos</button>
+                    <button type="button" className="btn btn-outline-primary"  onClick={() => setActive(!active)}>{`Conductores ${active ? ('Inactivos') : ('Activos')}`}</button>
+                    <button type="button" className="btn btn-outline-primary"  onClick={() => setActive(null)}>Ver todos</button>
                 </div>
 
                 {data.length === 0 && loading

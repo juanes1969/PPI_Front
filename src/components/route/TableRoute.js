@@ -134,8 +134,8 @@ export const Route = () => {
                                         <td id="columOptions">
 
                                         
-                                            <button className="btn btn-info btn-sm" onClick={() => getByIdEdit(route)} ><RiIcons.RiEditFill /></button>
-                                            <button className="btn btn-danger btn-sm" onClick={() => getById(route.codigo_manifiesto)} ><AiIcons.AiFillDelete /></button>
+                                            <button className="btn btn-info btn-sm"   data-toggle="tooltip" data-placement="top" title="Editar"   onClick={() => getByIdEdit(route)} ><RiIcons.RiEditFill /></button>
+                                            <button className="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="top" title="Eliminar" onClick={() => getById(route.codigo_manifiesto)} ><AiIcons.AiFillDelete /></button>
                                         </td>
                                     </tr>
                                 ))}
