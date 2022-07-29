@@ -21,7 +21,7 @@ export const ModalRoutes = ({
   setRouteData,
   isEdit,
   setIsEdit,
-  routeDetail, 
+  routeDetail,
   setRouteDetail
 }) => {
   const initialRouteState = {
@@ -34,19 +34,19 @@ export const ModalRoutes = ({
     id_origen: null,
     id_destino: null,
     id_conductor: null,
-    id_producto:null,
-    cantidad_producto:null,
-    nombre_producto:""
+    id_producto: null,
+    cantidad_producto: null,
+    nombre_producto: ""
   };
 
   const initialDetailState = {
     codigo_manifiesto: "",
-    id_detalle:null,
-    id_producto:null,
-    cantidad_producto:null
+    id_detalle: null,
+    id_producto: null,
+    cantidad_producto: null
   };
 
-console.log(route);
+  console.log(route);
 
   const [isEditProduct, setIsEditProduct] = useState(null);
   const [itemProducts, setItemProducts] = useState([]);
@@ -66,22 +66,22 @@ console.log(route);
   const handleSubmit = (e) => {
     e.preventDefault();
     if (Object.entries(error).length === 0) {
-    if (isEdit) {
-      UseEditRoute(route, itemProducts);
-      closeModal();
-      setRouteData(initialRouteState);
-      e.target.reset();
-      setIsEdit(null);
+      if (isEdit) {
+        UseEditRoute(route, itemProducts);
+        closeModal();
+        setRouteData(initialRouteState);
+        e.target.reset();
+        setIsEdit(null);
+      } else {
+        UseInsertRoute(route, itemProducts);
+        closeModal();
+        setRouteData(initialRouteState);
+        e.target.reset();
+        setIsEdit(null);
+      }
     } else {
-      UseInsertRoute(route, itemProducts);
-      closeModal();
-      setRouteData(initialRouteState);
-      e.target.reset();
-      setIsEdit(null);
+      alert('Debes ingresar los campos de manera correcta');
     }
-  } else {
-    alert('Debes ingresar los campos de manera correcta');
-  }
   };
 
   const handleProduct = (e) => {
@@ -130,7 +130,7 @@ console.log(route);
   };
 
   const validarProductos = () => {
-    if(routeDetail){
+    if (routeDetail) {
       setItemProducts(routeDetail.data)
     }
   }
@@ -151,7 +151,7 @@ console.log(route);
       setRouteData(initialRouteState);
       setRouteDetail(initialDetailState)
     }
-  }, [isEdit, setRouteData, setIsEdit, setRouteDetail ]);
+  }, [isEdit, setRouteData, setIsEdit, setRouteDetail]);
 
   return (
     <>
@@ -237,7 +237,7 @@ console.log(route);
                         max={fechaMaxima()}
                         required
                       />
-{error.fecha_inicio && <p className="error-message">{error.fecha_inicio}</p>}
+                      {error.fecha_inicio && <p className="error-message">{error.fecha_inicio}</p>}
                     </div>
                     <div className="col">
                       <label className="col-form-label modal-label">
@@ -262,7 +262,7 @@ console.log(route);
                           </option>
                         ))}
                       </select>
-{error.id_vehiculo && <p className="error-message">{error.id_vehiculo}</p>}
+                      {error.id_vehiculo && <p className="error-message">{error.id_vehiculo}</p>}
                       <label className="col-form-label modal-label">
                         Ciudad Destino *:
                       </label>
@@ -296,7 +296,7 @@ console.log(route);
                         onBlur={handleBlur}
                         required
                       />
-{error.fecha_fin && <p className="error-message">{error.fecha_fin}</p>}
+                      {error.fecha_fin && <p className="error-message">{error.fecha_fin}</p>}
                     </div>
                     <div className="col">
                       <label className="col-form-label modal-label">
@@ -321,7 +321,7 @@ console.log(route);
                           </option>
                         ))}
                       </select>
-{error.id_conductor && <p className="error-message">{error.id_conductor}</p>}
+                      {error.id_conductor && <p className="error-message">{error.id_conductor}</p>}
                       <label className="col-form-label modal-label">
                         Flete *:
                       </label>

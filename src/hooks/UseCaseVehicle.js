@@ -31,12 +31,12 @@ export const UseEffectGetVehicles = () => {
 
   useEffect(() => {
     getAllVehicles()
-    .then((vehicle) => {
-      setVehicles({
-        data: vehicle,
-        loading: false,
+      .then((vehicle) => {
+        setVehicles({
+          data: vehicle,
+          loading: false,
+        });
       });
-    });
   }, []);
 
   return vehicles;
@@ -112,12 +112,12 @@ export const UseDeleteVehicle = (placa) => {
         'success'
       )
       deleteVehicle(placa)
-      .then((response) => {
+        .then((response) => {
           window.location.reload();
-      })
-      .catch((e) => {
+        })
+        .catch((e) => {
           console.log(e);
-      });
+        });
     } else if (
       result.dismiss === Swal.DismissReason.cancel
     ) {
@@ -139,22 +139,22 @@ export const UseGetVehiclePlaca = (placa) => {
 
   useEffect(() => {
     getVehicleByPlaca(placa)
-    .then((type) => {
-      setVehicleByPlaca({
-        data: type,
-        loading: false,
+      .then((type) => {
+        setVehicleByPlaca({
+          data: type,
+          loading: false,
+        });
       });
-    });
   }, []);
 
   return vehicleByPlaca;
 };
 
-const calcularFecha = ( fecha) => {
+const calcularFecha = (fecha) => {
   let fechaVencimiento = new Date(fecha)
-  if(fecha != null){
+  if (fecha != null) {
     fechaVencimiento.setDate(fechaVencimiento.getDate() + 1)
-    fechaVencimiento.setFullYear(fechaVencimiento.getFullYear()+1)
+    fechaVencimiento.setFullYear(fechaVencimiento.getFullYear() + 1)
     fechaVencimiento = dateFormat(fechaVencimiento, "isoDate")
     return fechaVencimiento;
   }
@@ -169,9 +169,9 @@ export const UseInsertVehicle = (dataVehicle) => {
     vencimiento_soat: calcularFecha(dataVehicle.expedicion_soat),
     vencimiento_poliza: calcularFecha(dataVehicle.expedicion_poliza),
     vencimiento_tecnomecanica: calcularFecha(dataVehicle.expedicion_tecnomecanica),
-    expedicion_soat: dataVehicle.expedicion_soat,
-    expedicion_poliza: dataVehicle.expedicion_poliza,
-    expedicion_tecnomecanica: dataVehicle.expedicion_tecnomecanica,
+    expedicion_soat: dateFormat(dataVehicle.expedicion_soat, "isoDate"),
+    expedicion_poliza: dateFormat(dataVehicle.expedicion_poliza, "isoDate"),
+    expedicion_tecnomecanica: dateFormat(dataVehicle.expedicion_tecnomecanica, "isoDate"),
     id_marca: dataVehicle.id_marca,
     id_tipo_vehiculo: dataVehicle.id_tipo_vehiculo,
     id_conductor: dataVehicle.id_conductor,
@@ -179,22 +179,24 @@ export const UseInsertVehicle = (dataVehicle) => {
   };
 
   insertVehicle(data)
-  .then(() => {
-    swalWithBootstrapButtons.fire(
-      '¡Registro Exitoso!',
-      'El vehículo fue agregado con éxito',
-      'success'
-    ).then((result) => {
-      if (result.isConfirmed) {
-      window.location.reload();
-    }})
-  })
-  .catch((e) => {
-    console.log(e);
-  });
+    .then(() => {
+      swalWithBootstrapButtons.fire(
+        '¡Registro Exitoso!',
+        'El vehículo fue agregado con éxito',
+        'success'
+      ).then((result) => {
+        if (result.isConfirmed) {
+          window.location.reload();
+        }
+      })
+    })
+    .catch((e) => {
+      console.log(e);
+    });
 };
 
 export const UseSaveVehicle = (dataVehicle) => {
+  debugger
   let vehiculo = getVehicleByPlaca(dataVehicle.placa);
 
   let data = {
@@ -206,44 +208,46 @@ export const UseSaveVehicle = (dataVehicle) => {
     vencimiento_soat: calcularFecha(dataVehicle.expedicion_soat),
     vencimiento_poliza: calcularFecha(dataVehicle.expedicion_poliza),
     vencimiento_tecnomecanica: calcularFecha(dataVehicle.expedicion_tecnomecanica),
-    expedicion_soat: dataVehicle.expedicion_soat,
-    expedicion_poliza: dataVehicle.expedicion_poliza,
-    expedicion_tecnomecanica: dataVehicle.expedicion_tecnomecanica,
+    expedicion_soat: dateFormat(dataVehicle.expedicion_soat, "isoDate"),
+    expedicion_poliza: dateFormat(dataVehicle.expedicion_poliza, "isoDate"),
+    expedicion_tecnomecanica: dateFormat(dataVehicle.expedicion_tecnomecanica, "isoDate"),
     id_marca: dataVehicle.id_marca,
     id_tipo_vehiculo: dataVehicle.id_tipo_vehiculo,
     id_conductor: dataVehicle.id_conductor,
     id_estado_vehiculo: 1,
   };
 
-  if(vehiculo != null ){
+  if (vehiculo != null) {
     editVehicle(data, dataVehicle.placa)
-    .then((response) => {
-      swalWithBootstrapButtons.fire(
-        '¡Registro Exitoso!',
-        'El vehículo fue editado con éxito',
-        'success'
-      ).then((result) => {
-        if (result.isConfirmed) {
-        window.location.reload();
-      }})
-    })
-    .catch((e) => {
-      console.log(e);
-    });
-  }else{
+      .then((response) => {
+        swalWithBootstrapButtons.fire(
+          '¡Registro Exitoso!',
+          'El vehículo fue editado con éxito',
+          'success'
+        ).then((result) => {
+          if (result.isConfirmed) {
+            window.location.reload();
+          }
+        })
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  } else {
     insertVehicle(data)
-    .then((response) => {
-      swalWithBootstrapButtons.fire(
-        '¡Registro Exitoso!',
-        'El vehículo fue agregado con éxito',
-        'success'
-      ).then((result) => {
-        if (result.isConfirmed) {
-        window.location.reload();
-      }})
-    })
-    .catch((e) => {
-      console.log(e);
-    });
+      .then((response) => {
+        swalWithBootstrapButtons.fire(
+          '¡Registro Exitoso!',
+          'El vehículo fue agregado con éxito',
+          'success'
+        ).then((result) => {
+          if (result.isConfirmed) {
+            window.location.reload();
+          }
+        })
+      })
+      .catch((e) => {
+        console.log(e);
+      });
   }
 };
