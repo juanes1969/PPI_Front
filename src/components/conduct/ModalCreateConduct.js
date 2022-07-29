@@ -1,12 +1,11 @@
 import dateFormat, { masks } from "dateformat";
 import React, { useEffect, useState } from "react";
-import "../../helpers/modal-function";
 import { ValidationsFormConduct } from "../../helpers/ValidationsFormConduct";
 import { UseEditConduct, UseInsertConduct, UseLicenseAvailable } from "../../hooks/UseCaseConduct";
 import { UseVehicleAvailable } from "../../hooks/UseCaseVehicle";
 import logo from "../../assets/img/LogoNew.png";
 import "../../Styles/modal.css";
-import { editConduct } from "../../helpers/ConductHelper";
+import { editConduct, getByIdConduct } from "../../helpers/ConductHelper";
 
 export const ModalCreateConduct = ({ isOpenEditModal, closeModalEdit, conductEdit, setConductEdit, conduct, setConduct }) => {
 
@@ -36,19 +35,12 @@ export const ModalCreateConduct = ({ isOpenEditModal, closeModalEdit, conductEdi
 
     const handleChangeData = ({ target }) => {
         const { name, value } = target;
-        setConduct({ ...conduct, [name]: value });        
+        setConduct({ ...conduct, [name]: value });
     }
-
-
-
 
     const handleBlur = (e) => {
         handleChangeData(e);
         setErrors(ValidationsFormConduct(conduct))
-        console.log(Object.entries(errors).length === 0);
-        if (Object.entries(errors).length === 0) {            
-            setHabilitar(false);
-        }
     }
 
 
@@ -121,10 +113,8 @@ export const ModalCreateConduct = ({ isOpenEditModal, closeModalEdit, conductEdi
     useEffect(() => {
         if (conductEdit) {
             setConduct(conductEdit)
-            setErrors({})
         } else {
             setConduct(initialConductState)
-            setErrors(ValidationsFormConduct(conduct))
         }
     }, [conductEdit, setConduct, setConductEdit, setErrors]);
 
@@ -417,7 +407,7 @@ export const ModalCreateConduct = ({ isOpenEditModal, closeModalEdit, conductEdi
                             </div>
                         </div>
                         <div className="modal-footer modal-btn mt-4">
-                            <button type="submit" className="btn btn-info-form" onClick={handleSubmit} disabled={conductEdit ? false : habilitar}>
+                            <button type="submit" className="btn btn-info-form" onClick={handleSubmit}>
                                 {conductEdit ?
                                     ('Editar Conductor') :
                                     ('Registrar Conductor')}

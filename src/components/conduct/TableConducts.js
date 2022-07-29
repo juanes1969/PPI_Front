@@ -14,6 +14,7 @@ import { Pagination } from './Pagination';
 import { SearchConduct } from './SearchConduct';
 import Swal from 'sweetalert2';
 import { useDownloadExcel } from "table-to-excel-react";
+import { ModalVisualize } from './ModalVisualize';
 
 export const Conduct = () => {
 
@@ -25,6 +26,7 @@ export const Conduct = () => {
 
 
     const [isOpenModalConduct, openModalConduct, closeModalConduct] = UseModal();
+    const [isOpenModalVisualize, openModalVisualize, closeModalVisualize] = UseModal();
     const [conductEdit, setConductEdit] = useState(null);
     const { data, loading } = UseEffectConduct();
     const [conducts, setConducts] = useState([]);
@@ -42,6 +44,9 @@ export const Conduct = () => {
         refreshList();
     }
 
+    const getVisualize = (conduct) => {
+        openModalVisualize();
+    }
 
     const getByIdEdit = (conduct) => {
         setConductEdit(conduct);
@@ -119,63 +124,58 @@ export const Conduct = () => {
                     <button type="button" className="btn btn-outline-primary" onClick={() => setActive(null)}>Ver todos</button>
                 </div>
 
-                {data.length === 0 && loading
+                {loading
                     ?
 
+                    (<Loader />) :
 
-                    (
-                        <Loader />
-                    ) :
-
-
-                    (
-                        <div className="row" >
-                            <table className="table table-striped table-bordered" id='table-conducts'>
-                                <thead>
-                                    <tr>
-                                        <th scope="col">Identificación</th>
-                                        <th scope="col">Nombre</th>
-                                        <th scope="col">Primer apellido</th>
-                                        <th scope="col">Segundo apellido</th>
-                                        <th scope="col">Telefono</th>
-                                        <th scope="col">Estado conductor</th>
-                                        <th scope="col" colSpan="3">
-                                            Acciones
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody id="identificacion">
-                                    {filterConducts().map((cond) => (
-                                        <tr key={cond.identificacion}>
-                                            <td >{cond.identificacion}</td>
-                                            <td>{cond.nombre}</td>
-                                            <td>{cond.primer_apellido}</td>
-                                            <td>{cond.segundo_apellido}</td>
-                                            <td><b>(+57) </b>{cond.telefono_contacto}</td>
-                                            <td>{cond.estado_conductor}</td>
-                                            <td id="columOptions">
-                                                {/* {cond.estado_conductor == "Activo" ?
+                    <div className="row" >
+                        <table className="table table-striped table-bordered" id='table-conducts'>
+                            <thead>
+                                <tr>
+                                    <th scope="col">Identificación</th>
+                                    <th scope="col">Nombre</th>
+                                    <th scope="col">Primer apellido</th>
+                                    <th scope="col">Segundo apellido</th>
+                                    <th scope="col">Telefono</th>
+                                    <th scope="col">Estado conductor</th>
+                                    <th scope="col" colSpan="3">
+                                        Acciones
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody id="identificacion">
+                                {filterConducts().map((cond) => (
+                                    <tr key={cond.identificacion}>
+                                        <td >{cond.identificacion}</td>
+                                        <td>{cond.nombre}</td>
+                                        <td>{cond.primer_apellido}</td>
+                                        <td>{cond.segundo_apellido}</td>
+                                        <td><b>(+57) </b>{cond.telefono_contacto}</td>
+                                        <td>{cond.estado_conductor}</td>
+                                        <td id="columOptions">
+                                            {/* {cond.estado_conductor == "Activo" ?
                                                 (<button className="btn btn-warning btn-sm"><BsIcons.BsFillEyeFill /></button>) :
                                                 (<button className="btn btn-warning btn-sm"><GiIcons.GiCarSeat /></button>)
                                             } */}
-                                                <button className="btn btn-warning btn-sm"><BsIcons.BsFillEyeFill /></button>
-                                                <button disabled={active == false || cond.estado_conductor == "Inactivo"} className="btn btn-info btn-sm" onClick={() => getByIdEdit(cond)}><RiIcons.RiEditFill /></button>
-                                                <button disabled={active == false || cond.estado_conductor == "Inactivo"} className="btn btn-danger btn-sm" onClick={() => getById(cond.identificacion)}><AiIcons.AiFillDelete /></button>
-                                            </td>
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            </table>
+                                            {/* <button className="btn btn-warning btn-sm" onClick={() => getVisualize(cond)}><BsIcons.BsFillEyeFill /></button> */}
+                                            <button disabled={active == false || cond.estado_conductor == "Inactivo"} className="btn btn-info btn-sm" onClick={() => getByIdEdit(cond)}><RiIcons.RiEditFill /></button>
+                                            <button disabled={active == false || cond.estado_conductor == "Inactivo"} className="btn btn-danger btn-sm" onClick={() => getById(cond.identificacion)}><AiIcons.AiFillDelete /></button>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
 
-                            <Pagination
-                                nextPage={nextPage}
-                                prevPage={prevPage}
-                                page={page}
-                                setPerPage={setPerPage}
-                                setCurrentPage={setCurrentPage}
-                                setPage={setPage}
-                            />
-                        </div>)}
+                        <Pagination
+                            nextPage={nextPage}
+                            prevPage={prevPage}
+                            page={page}
+                            setPerPage={setPerPage}
+                            setCurrentPage={setCurrentPage}
+                            setPage={setPage}
+                        />
+                    </div>}
             </div>
 
             <ModalCreateConduct
@@ -185,6 +185,11 @@ export const Conduct = () => {
                 setConductEdit={setConductEdit}
                 conduct={conducts}
                 setConduct={setConducts}
+            />
+
+            <ModalVisualize
+                isOpenModalVisualize={isOpenModalVisualize}
+                closeModalVisualize={closeModalVisualize}
             />
         </>
     )
