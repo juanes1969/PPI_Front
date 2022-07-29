@@ -33,7 +33,20 @@ export const ModalMaintenance = ({
     handleChangeData(e);
     setError(ValidationsMaintenance(maintenances));
   };
+
+  const validarCampos = (e) => {
+    const mantenimiento = document.getElementById('valor_mantenimiento');
+    if(mantenimiento.value === ""){
+      alert("¡Debes ingresar todos los campos obligatorios!")
+      // swalWithBootstrapButtons.fire(
+      //   '¡Campos incompletos!',
+      //   'Debes ingresar todos los campos obligatorios',
+      //   'error'
+      // )
+    }
+  }
   const handleSubmit = (e) => {
+    validarCampos(e);
     e.preventDefault();
     if (Object.entries(error).length === 0) {
       if (maintenanceEdit) {

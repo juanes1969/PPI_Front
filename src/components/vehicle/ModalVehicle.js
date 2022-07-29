@@ -66,8 +66,8 @@ export const ModalVehicle = ({ isOpenModal, closeModal, vehicleEdit,  setVehicle
     if (Object.entries(error).length === 0) {
       if (vehicleEdit) {
         UseSaveVehicle(vehicles)
-        e.target.reset();
         closeModal();
+        e.target.reset();
       } else {
           UseInsertVehicle(vehicles);
           closeModal();
