@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { getByIdConduct } from "./ConductHelper";
 
 
-export const ValidationsFormConduct = (conduct) => {
+export const ValidationsFormConduct = (conduct, conductEdit) => {
     let errors = {};
     let regexName = /^[A-Za-zÑñÁáÉéÍíÓóÚúÜü\s]+$/;
     let regexTel = /^.{1,10}$/;
@@ -10,7 +10,7 @@ export const ValidationsFormConduct = (conduct) => {
     let regexLicence = /^LC.{1,10}$/;
 
     validarIdentificacion(conduct, errors, regexNumber);
-    validarIdentificacionExistente(conduct, errors);
+    validarIdentificacionExistente(conduct, errors, conductEdit);
     validarNombre(conduct, errors, regexName);
     validarFechaNacimiento(conduct, errors, calcularEdad);
     validarPrimerApellido(conduct, errors, regexName);
@@ -54,8 +54,8 @@ const validarIdentificacion = (conduct, errors, regexNumber) => {
     }
 }
 
-const validarIdentificacionExistente = async (conduct, errors) => {
-    if (conduct.identificacion) {
+const validarIdentificacionExistente = async (conduct, errors, conductEdit) => {
+    if (conduct.identificacion && !conductEdit) {
         await getByIdConduct(conduct.identificacion)
             .then((response) => {
                 if (response.length != 0) {

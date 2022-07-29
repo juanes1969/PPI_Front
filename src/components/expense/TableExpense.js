@@ -18,7 +18,10 @@ import { useDownloadExcel } from "table-to-excel-react";
 
 
 
+
 export const Expenses = () => {
+
+    const componentRef = useRef();
 
     const { onDownload } = useDownloadExcel({
         fileName: "Gastos",
@@ -82,6 +85,7 @@ export const Expenses = () => {
                         setCurrentPage={setCurrentPage}
                         setPage={setPage}
                         onDownload={onDownload}
+                        componentRef={componentRef}
                     />
 
                 </span>
@@ -94,7 +98,7 @@ export const Expenses = () => {
                     <div className="row">
                         {data.length === 0 ?
                             (<h1>No hay Gastos registrados...</h1>) :
-                            <table id="table-to-xls" className="table table-striped table-bordered">
+                            <table ref={componentRef} id="table-to-xls" className="table table-striped table-bordered">
                                 <thead>
                                     <tr>
 

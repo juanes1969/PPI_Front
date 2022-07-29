@@ -4,6 +4,7 @@ import dateFormat, { masks } from "dateformat";
 import logo from "../../assets/img/LogoNew.png";
 import { UseEditMaintenance, UseSaveMaintenance } from "../../hooks/UseCaseMaintenance";
 import { UseVehicleAvailable } from "../../hooks/UseCaseVehicle";
+import ValidationsMaintenance from "../../helpers/ValidationsMaintenance";
 export const ModalMaintenance = ({
   isOpenModal,
   closeModal,
@@ -30,10 +31,22 @@ export const ModalMaintenance = ({
 
   const handleBlur = (e) => {
     handleChangeData(e);
-    //TODO: HACER VALIDACIONES
-    //setError(ValidationsFormMaintenance(maintenances));
+    setError(ValidationsMaintenance(maintenances));
   };
+
+  const validarCampos = (e) => {
+    const mantenimiento = document.getElementById('valor_mantenimiento');
+    if(mantenimiento.value === ""){
+      alert("¡Debes ingresar todos los campos obligatorios!")
+      // swalWithBootstrapButtons.fire(
+      //   '¡Campos incompletos!',
+      //   'Debes ingresar todos los campos obligatorios',
+      //   'error'
+      // )
+    }
+  }
   const handleSubmit = (e) => {
+    validarCampos(e);
     e.preventDefault();
     if (Object.entries(error).length === 0) {
       if (maintenanceEdit) {
@@ -128,6 +141,7 @@ export const ModalMaintenance = ({
                         name="id_vehiculo"
                         id="id_vehiculo"
                         onChange={handleChangeData}
+                        onBlur={handleBlur}
                         required
                       >
                         <option value="0">Seleccionar</option>
@@ -140,8 +154,8 @@ export const ModalMaintenance = ({
                           </option>
                         ))}
                       </select>
-                      {error.placa && (
-                        <p className="error-message">{error.placa}</p>
+                      {error.id_vehiculo && (
+                        <p className="error-message">{error.id_vehiculo}</p>
                       )}
                       <label className="col-form-label modal-label">
                         <h6 className="label-form"> Fecha Mantenimiento *:</h6>
@@ -155,6 +169,7 @@ export const ModalMaintenance = ({
                         name="fecha_realizado"
                         id="fecha_realizado"
                         onChange={handleChangeData}
+                        onBlur={handleBlur}
                         min={fechaMinima()}
                         max={fechaMaxima()}
                         required
@@ -176,6 +191,7 @@ export const ModalMaintenance = ({
                         name="valor_mantenimiento"
                         id="valor_mantenimiento"
                         onChange={handleChangeData}
+                        onBlur={handleBlur}
                       />
                       {error.valor_mantenimiento && (
                         <p className="error-message">
@@ -194,6 +210,7 @@ export const ModalMaintenance = ({
                         name="descripcion"
                         id="descripcion"
                         onChange={handleChangeData}
+                        onBlur={handleBlur}
                         required
                       />
                       {error.descripcion && (

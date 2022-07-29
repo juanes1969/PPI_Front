@@ -38,7 +38,7 @@ export const ModalVehicle = ({ isOpenModal, closeModal, vehicleEdit,  setVehicle
 
   const handleBlur = (e) => {
     handleChangeData(e);
-    setError(ValidationsFormVehicle(vehicles));
+    setError(ValidationsFormVehicle(vehicles, vehicleEdit));
   }
 
   const swalWithBootstrapButtons = Swal.mixin({
@@ -66,8 +66,8 @@ export const ModalVehicle = ({ isOpenModal, closeModal, vehicleEdit,  setVehicle
     if (Object.entries(error).length === 0) {
       if (vehicleEdit) {
         UseSaveVehicle(vehicles)
-        e.target.reset();
         closeModal();
+        e.target.reset();
       } else {
           UseInsertVehicle(vehicles);
           closeModal();
@@ -292,6 +292,7 @@ export const ModalVehicle = ({ isOpenModal, closeModal, vehicleEdit,  setVehicle
                         onChange={handleChangeData}
                         onBlur={handleBlur}
                         autoComplete="off"
+                        min={1995}
                         required
                       />
                       {error.modelo && <p className="error-message">{error.modelo}</p>}

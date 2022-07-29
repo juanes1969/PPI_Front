@@ -27,11 +27,11 @@ export const ModalExpense = ({
 }) => {
 
   const initialExpenseState = {
-    id_gasto: "",
+    
     fecha_gasto: "",
     valor_gasto: "",
     descripcion: "",
-    id_ruta: "",
+    codigo_manifiesto: "",
     id_tipo_gasto: "",
 
   }
@@ -42,16 +42,30 @@ export const ModalExpense = ({
     setExpense({ ...expenses, [name]: value });
   }
 
+  const validarCampos = (e) => {
+    const codigo_manifiesto = document.getElementById('codigo_manifiesto');
+    if(codigo_manifiesto.value === ""){
+      alert("¡Debes ingresar todos los campos obligatorios!")
+      // swalWithBootstrapButtons.fire(
+      //   '¡Campos incompletos!',
+      //   'Debes ingresar todos los campos obligatorios',
+      //   'error'
+      // )
+    }
+  }
+
 
 
   const handleSubmit = (e) => {
+    validarCampos(e);
     e.preventDefault();
     console.log(Object.entries(error).length)
     if (Object.entries(error).length === 0) {
       if (expenseEdit) {
         UseSaveExpense(expenses)
-        e.target.reset();
         closeModal();
+        e.target.reset();
+        
       } else {
         UseInsertExpense(expenses);
         closeModal();

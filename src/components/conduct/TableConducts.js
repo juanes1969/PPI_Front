@@ -37,6 +37,7 @@ export const Conduct = () => {
     const conductRef = useRef();
 
     conductRef.current = conducts;
+    const componentRef = useRef();
 
 
     const getById = (id) => {
@@ -116,6 +117,7 @@ export const Conduct = () => {
                         setCurrentPage={setCurrentPage}
                         setPage={setPage}
                         onDownload={onDownload}
+                        componentRef={componentRef}
                     />
                 </span>
 
@@ -133,7 +135,9 @@ export const Conduct = () => {
 
                         {data.length === 0 ?
                             (<h1>No hay conductores registrados...</h1>) :
-                            <table className="table table-striped table-bordered" id='table-conducts'>
+                            <table ref={componentRef} className="table table-striped table-bordered" id='table-conducts'>
+
+
                                 <thead>
                                     <tr>
                                         <th scope="col">Identificación</th>

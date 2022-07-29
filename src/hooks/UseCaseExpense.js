@@ -10,7 +10,13 @@ getExpenseByIdExpense
 import Swal from 'sweetalert2'
 import 'sweetalert2/src/sweetalert2.scss';
 
-
+const swalWithBootstrapButtons = Swal.mixin({
+  customClass: {
+    confirmButton: 'btn btn-success',
+    cancelButton: 'btn btn-danger'
+  },
+  buttonsStyling: false
+})
 
 export const UseEffectGetExpense = () => {
   const [expenses, setExpenses] = useState({
@@ -40,7 +46,7 @@ export const UseDeleteExpense = (id_gasto) => {
 
   swalWithBootstrapButtons.fire({
     title: '¿Estás seguro?',
-    text: "La Ruta quedara completa",
+    text: "El Gasto quedara eliminado",
     icon: 'warning',
     showCancelButton: true,
     confirmButtonText: 'Si, eliminar',
@@ -49,7 +55,7 @@ export const UseDeleteExpense = (id_gasto) => {
     if (result.isConfirmed) {
       swalWithBootstrapButtons.fire(
         '¡Eliminado!',
-        'La Ruta fue Completada',
+        'El Gasto fue Eliminado',
         'success'
       )
       deleteExpense(id_gasto)
@@ -64,7 +70,7 @@ export const UseDeleteExpense = (id_gasto) => {
     ) {
       swalWithBootstrapButtons.fire(
         '¡Cancelado!',
-        'La Ruta sigue en Proceso',
+        'El Gasto sigue Registrado',
         'error'
       )
     }
@@ -102,7 +108,7 @@ export const UseTypeExpense = () => {
 
 export const UseInsertExpense= (dataExpense) => {
 
-debugger
+
 console.log(dataExpense)
   var data = {
 
@@ -116,12 +122,20 @@ console.log(dataExpense)
   };
 
   insertExpense(data)
-    .then((response) => {
-      window.location.reload();
+    .then(() => {
+      swalWithBootstrapButtons.fire(
+        '¡Registro Exitoso!',
+        'El Gasto fue agregado con éxito',
+        'success'
+      ).then((result) => {
+        if (result.isConfirmed) {
+        window.location.reload();
+      }})
     })
     .catch((e) => {
       console.log(e);
-    });
+    });     
+
 };
 
 
@@ -146,8 +160,10 @@ export const UseSaveExpense = (dataExpense) => {
         '¡Registro Exitoso!',
         'El Gasto fue editado con éxito',
         'success'
-      )
-      window.location.reload();
+      ).then((response) => {
+        if (response.isConfirmed) {
+        window.location.reload();
+      }})
     })
     .catch((e) => {
       console.log(e);
@@ -157,10 +173,12 @@ export const UseSaveExpense = (dataExpense) => {
     .then((response) => {
       swalWithBootstrapButtons.fire(
         '¡Registro Exitoso!',
-        'El vehículo fue agregado con éxito',
+        'El Gasto fue agregado con éxito',
         'success'
-      )
-      window.location.reload();
+      ).then((response) => {
+        if (response.isConfirmed) {
+        window.location.reload();
+      }})
     })
     .catch((e) => {
       console.log(e);
@@ -170,13 +188,7 @@ export const UseSaveExpense = (dataExpense) => {
 
 };
 
-const swalWithBootstrapButtons = Swal.mixin({
-  customClass: {
-    confirmButton: 'btn btn-success',
-    cancelButton: 'btn btn-danger'
-  },
-  buttonsStyling: false
-})
+
 
 
 const handleDelete = () => {

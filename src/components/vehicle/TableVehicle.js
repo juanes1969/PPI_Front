@@ -68,6 +68,8 @@ export const Vehicle = () => {
         retrieveVehicles();
     }, []);
 
+    const componentRef = useRef();
+
     return (
         <>
             <div className="container" id="contenedorInicial">
@@ -81,6 +83,7 @@ export const Vehicle = () => {
                         setCurrentPage={setCurrentPage}
                         setPage={setPage}
                         onDownload={onDownload}
+                        componentRef={componentRef}
                     />
                     {/* <button className="btn btn-warning btn-sm" onClick={() => newVehicle()}><IoIcons.IoCarSportSharp /> Agregar Vehículos</button> */}
                 </span>
@@ -94,7 +97,7 @@ export const Vehicle = () => {
                     <div className="row">
                         {data.length === 0 ?
                             (<h1>No hay Vehiculos registrados...</h1>) :
-                            <table className="table table-striped table-bordered" id="tbl_vehiculos">
+                            <table ref={componentRef} className="table table-striped table-bordered" id="tbl_vehiculos">
                                 <thead>
                                     <tr>
                                         <th scope="col">Placa</th>

@@ -39,7 +39,7 @@ export const ModalCreateConduct = ({ isOpenEditModal, closeModalEdit, conductEdi
 
     const handleBlur = (e) => {
         handleChangeData(e);
-        setErrors(ValidationsFormConduct(conduct))
+        setErrors(ValidationsFormConduct(conduct, conductEdit))
     }
 
     const validarCampos = (e) => {
