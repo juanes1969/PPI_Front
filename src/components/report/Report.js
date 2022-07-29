@@ -128,9 +128,20 @@ export const Report = () => {
   console.log(options)
   return (
     <div className='container-sm'>
+      
       <div ref={componentRef} className='container-sm'>
         <h1 align='center' font-family='Arial Narrow Bold'>Cantidad de Rutas Por Vehiculos</h1><br></br>
+        <button class="btn btn-warning" data-toggle="tooltip" data-placement="top" title="Export As JPEG" onClick={() => exportComponentAsJPEG(componentRef)}>
+          Export As JPEG
+        </button>
+      <button class="btn btn-warning" onClick={() => exportComponentAsPDF(componentRef,{pdfOptions:{w:200,h:200}})}>
+          Export As PDF
+        </button>
+        <button class="btn btn-warning" onClick={() => exportComponentAsPNG(componentRef)}>
+          Export As PNG
+        </button>
         <div className='col-sm'>
+    
           <Bar
             data={charReport}
             height={100}
@@ -148,15 +159,7 @@ export const Report = () => {
           />
         </div>
       </div>
-      <button class="btn btn-warning" data-toggle="tooltip" data-placement="top" title="Export As JPEG" onClick={() => exportComponentAsJPEG(componentRef)}>
-          Export As JPEG
-        </button>
-      <button class="btn btn-warning" onClick={() => exportComponentAsPDF(componentRef,{pdfOptions:{w:200,h:200}})}>
-          Export As PDF
-        </button>
-        <button class="btn btn-warning" onClick={() => exportComponentAsPNG(componentRef)}>
-          Export As PNG
-        </button>
+      
     </div >
 
   )
