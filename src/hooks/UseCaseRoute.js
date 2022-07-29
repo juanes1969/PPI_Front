@@ -57,7 +57,7 @@ let fecha = new Date;
 
   swalWithBootstrapButtons.fire({
     title: '¿Estás seguro?',
-    text: "La Ruta quedara completa",
+    text: "La ruta quedara eliminada",
     icon: 'warning',
     showCancelButton: true,
     confirmButtonText: 'Si, eliminar',
@@ -237,7 +237,7 @@ export const UseInsertRoute = (dataRoute, detailRoute) => {
   let dataTracking = {
     fecha: dateFormat(fecha.getDate(), "isoDate"),
     codigo_manifiesto: dataRoute.codigo_manifiesto,
-    id_estado_ruta: 1,
+    id_estado_ruta: dataRoute.fecha_fin != null ? 2 : 1,
   };
 
 
@@ -301,9 +301,19 @@ export const UseEditRoute = (dataRoute, detailRoute) => {
     id_conductor: dataRoute.id_conductor,
   };
 
+  let fecha = new Date;
+  fecha.setDate(fecha.getDate() + 1)
+
+  let dataTracking = {
+    fecha: dateFormat(fecha.setDate(fecha.getDate() + 10), "isoDate"),
+    codigo_manifiesto: dataRoute.codigo_manifiesto,
+    id_estado_ruta: dataRoute.fecha_fin != null ? 2 : 1,
+  };
+
   if (route != null) {
     editRoute(data, dataRoute.codigo_manifiesto)
       .then(() => {
+        cancelTracking(dataTracking)
         UseEditRouteDetail(detailRoute);
       })
       .catch((e) => {

@@ -222,8 +222,10 @@ export const UseSaveVehicle = (dataVehicle) => {
         '¡Registro Exitoso!',
         'El vehículo fue editado con éxito',
         'success'
-      )
-      window.location.reload();
+      ).then((result) => {
+        if (result.isConfirmed) {
+        window.location.reload();
+      }})
     })
     .catch((e) => {
       console.log(e);
@@ -235,8 +237,10 @@ export const UseSaveVehicle = (dataVehicle) => {
         '¡Registro Exitoso!',
         'El vehículo fue agregado con éxito',
         'success'
-      )
-      window.location.reload();
+      ).then((result) => {
+        if (result.isConfirmed) {
+        window.location.reload();
+      }})
     })
     .catch((e) => {
       console.log(e);

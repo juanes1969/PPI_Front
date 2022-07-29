@@ -1,4 +1,6 @@
 import { Mensajes } from "./Message";
+import React, {  useState } from 'react'
+import { getVehicleByPlaca } from "./VehicleHelper";
 
 const ValidationsFormVehicle = (vehicles) => {
     let error = {}
@@ -9,7 +11,7 @@ const ValidationsFormVehicle = (vehicles) => {
     //let regexRangoModelo = /^(199d|200d|/+ year.getFullYear() +/)$/;
     let regexCapacidad = /^([1-4][0-9])$/;
 
-    validarPlaca(vehicles, error, regexPlaca);
+    //validarPlaca(vehicles, error, regexPlaca);
     
     validarCapacidad(vehicles, error, regexNumber, regexCapacidad);
 
@@ -31,10 +33,30 @@ const ValidationsFormVehicle = (vehicles) => {
 
     validarConductor(vehicles, error);
 
+    validarPlacaExistente(vehicles, error, regexPlaca);
+
     return error;
 }
 
 export default ValidationsFormVehicle
+
+function validarPlacaExistente(vehicles, error, regexPlaca){
+  if (!vehicles.placa) {
+    error.placa = Mensajes.vehiculo.campoObligatorio;
+  }else if (!regexPlaca.test(vehicles.placa)) {
+    error.placa = Mensajes.vehiculo.placaInvalida;
+  }
+
+  if(vehicles.placa){
+    getVehicleByPlaca(vehicles.placa)
+        .then((product) => {
+          if(product.length !== 0){
+            error.placa = Mensajes.vehiculo.placaExistente;
+          }
+        })
+  }
+  
+}
 
 function validarTecnomecanica(vehicles, error) {
   if (!vehicles.expedicion_tecnomecanica) {
@@ -78,14 +100,20 @@ function validarMatricula(vehicles, error) {
   }
 }
 
-const validarFecha = (year) =>{
-  let fecha = new Date;
-  return year > 1990 && year <= fecha.getFullYear();
+const validarFecha = (valor) =>{
+  if (valor < 2023 && valor > 1995){
+    return true;
+  }
+  return false;
 }
+// const validarFecha = (year) =>{
+//   let fecha = new Date;
+//   return year > 1990 && year <= fecha.getFullYear();
+// }
 function validarModelo(vehicles, error, regexYear) {
   if (!vehicles.modelo) {
     error.modelo = Mensajes.vehiculo.campoObligatorio;
-  } else if (!regexYear.test(vehicles.modelo) && !validarFecha(vehicles.modelo)) {
+  } else if (!regexYear.test(vehicles.modelo) || !validarFecha(vehicles.modelo)) {
     error.modelo = Mensajes.vehiculo.modelo;
   }
 }
@@ -104,10 +132,10 @@ function validarCapacidad(vehicles, error, regexNumber, regexCapacidad) {
   }
 }
 
-function validarPlaca(vehicles, error, regexPlaca) {
-  if (!vehicles.placa) {
-    error.placa = Mensajes.vehiculo.campoObligatorio;
-  }else if (!regexPlaca.test(vehicles.placa)) {
-    error.placa = Mensajes.vehiculo.placaInvalida;
-  }
-}
+// function validarPlaca(vehicles, error, regexPlaca) {
+//   if (!vehicles.placa) {
+//     error.placa = Mensajes.vehiculo.campoObligatorio;
+//   }else if (!regexPlaca.test(vehicles.placa)) {
+//     error.placa = Mensajes.vehiculo.placaInvalida;
+//   }
+// }
