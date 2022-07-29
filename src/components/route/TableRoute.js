@@ -202,7 +202,7 @@ export const Route = () => {
                                         <td>{route.conductor}</td>
                                         <td>{route.estado}</td>
                                         <td id="columOptions">
-                                            <button className="btn btn-info btn-sm" data-toggle="tooltip" data-placement="top" title="Finalizar ruta" onClick={() => getByIdStatus(route.codigo_manifiesto)} ><FaIcons.FaSyncAlt /></button>
+                                            {/* <button className="btn btn-info btn-sm" data-toggle="tooltip" data-placement="top" title="Finalizar ruta" onClick={() => getByIdStatus(route.codigo_manifiesto)} ><FaIcons.FaSyncAlt /></button> */}
                                             <button className="btn btn-info btn-sm" data-toggle="tooltip" data-placement="top" title="Editar" onClick={() => getByIdEdit(route)} ><RiIcons.RiEditFill /></button>
                                             <button className="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="top" title="Eliminar" onClick={() => getById(route.codigo_manifiesto)} ><AiIcons.AiFillDelete /></button>
                                         </td>

@@ -17,7 +17,8 @@ export const Mensajes = {
             campoObligatorio: "Este campo es obligatorio",
             codigoManifiesto: "Esta ruta ya fue registrada",
             flete:"El valor minimo del flete es 300.000 COP",
-            cantidad:"Ingrese una cantidad entre 1 y 49"
+            cantidad:"Ingrese una cantidad entre 1 y 49",
+            fechaFin: "La fecha fin no puede ser menor a la inicial"
         },
         mantenimiento:{
             campoObligatorio: "Este campo es obligatorio"

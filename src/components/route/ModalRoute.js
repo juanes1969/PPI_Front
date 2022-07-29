@@ -60,7 +60,7 @@ console.log(route);
 
   const handleBlur = (e) => {
     handleChangeData(e);
-    setError(ValidationFormRoute(route));
+    setError(ValidationFormRoute(route, isEdit));
   }
 
   const handleSubmit = (e) => {
