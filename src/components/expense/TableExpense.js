@@ -18,7 +18,10 @@ import { useDownloadExcel } from "table-to-excel-react";
 
 
 
+
 export const Expenses = () => {
+
+    const componentRef = useRef();
 
     const { onDownload } = useDownloadExcel({
         fileName: "Gastos",
@@ -82,6 +85,7 @@ export const Expenses = () => {
                         setCurrentPage={setCurrentPage}
                         setPage={setPage}
                         onDownload={onDownload}
+                        componentRef={componentRef} 
                     />
 
                 </span>
@@ -92,7 +96,7 @@ export const Expenses = () => {
                     (<Loader />) :
 
                     <div className="row">
-                        <table id="table-to-xls" className="table table-striped table-bordered">
+                        <table ref={componentRef} id="table-to-xls" className="table table-striped table-bordered">
                             <thead>
                                 <tr>
 
@@ -115,10 +119,8 @@ export const Expenses = () => {
                                         <td>{expense.codigo_manifiesto}</td>
                                         <td>{expense.tipo_gasto}</td>
                                         <td id="columOptions">
-
-                                            
-                                            <button className="btn btn-info btn-sm" onClick={() => getByIdEdit(expense)} ><RiIcons.RiEditFill /></button>
-                                            <button className="btn btn-danger btn-sm" onClick={() => handleDeleteExpense(expense.id_gasto)} ><AiIcons.AiFillDelete /></button>
+                                            <button className="btn btn-info btn-sm"   data-toggle="tooltip" data-placement="top" title="Editar"   onClick={() => getByIdEdit(expense)} ><RiIcons.RiEditFill /></button>
+                                            <button className="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="top" title="Eliminar" onClick={() => handleDeleteExpense(expense.id_gasto)} ><AiIcons.AiFillDelete /></button>
                                         </td>
                                     </tr>
                                 ))}

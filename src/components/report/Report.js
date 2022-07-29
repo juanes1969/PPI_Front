@@ -1,12 +1,18 @@
 
 
-import React, { useState, useEffect } from 'react'
-import { Chart as ChartJS, BarElement, CategoryScale, LinearScale, Legend,Title,
-  Tooltip} from 'chart.js';
+import React, { useState, useEffect, useRef } from 'react'
+import {
+  Chart as ChartJS, BarElement, CategoryScale, LinearScale, Legend, Title,
+  Tooltip
+} from 'chart.js';
 import { Bar } from 'react-chartjs-2';
 import { UseEffecReports } from '../../hooks/UseCaseReport';
 import { UseEffectGetReportMaintenances } from '../../hooks/UseCaseMaintenance';
-
+import {
+  exportComponentAsJPEG,
+  exportComponentAsPDF,
+  exportComponentAsPNG
+} from "react-component-export-image";
 
 
 ChartJS.register(
@@ -16,7 +22,7 @@ ChartJS.register(
   Legend,
   Title,
   Tooltip
-  
+
 
 );
 
@@ -24,13 +30,13 @@ export const options = {
   responsive: true,
   plugins: {
     legend: {
-      position: 'top' ,
+      position: 'top',
     },
     title: {
       display: true,
     },
-    label:{
-      backgroundColor:'#ffffff'
+    label: {
+      backgroundColor: '#ffffff'
     }
   },
 };
@@ -38,20 +44,22 @@ export const options = {
 
 
 
+
+
 export const Report = () => {
 
 
-
+  const componentRef = useRef();
   const { data } = UseEffecReports();
   const { datamaintenances } = UseEffectGetReportMaintenances();
 
- // label: `${data?.length} Cantidad de Rutas del Vehiculo`,
+  // label: `${data?.length} Cantidad de Rutas del Vehiculo`,
   const charReport = {
     labels: data?.map(x => x.id_vehiculo),
     datasets: [{
       label: `Cantidad de Rutas del Vehiculo`,
       data: data?.map(x => x.cantidad),
-      backgroundColor:  [
+      backgroundColor: [
         '#4dc9f6',
         '#f67019',
         '#f53794',
@@ -61,7 +69,7 @@ export const Report = () => {
         '#00a950',
         '#58595b',
         '#8549ba'
-    ],
+      ],
       borderWidth: 2
     }]
   };
@@ -80,7 +88,7 @@ export const Report = () => {
         '#00a950',
         '#58595b',
         '#8549ba'
-    ],
+      ],
       borderColor: [
         'rgba(255, 99, 132, 1)',
         'rgba(54, 162, 235, 1)',
@@ -96,7 +104,7 @@ export const Report = () => {
 
   console.log(charReport)
   console.log(charReportMaintenance)
-  
+
 
   var optionss = {
     maintainAspectRatio: false,
@@ -120,23 +128,41 @@ export const Report = () => {
   console.log(options)
   return (
     <div className='container-sm'>
-      <h1 align='center' font-family='Arial Narrow Bold'>Cantidad de Rutas Por Vehiculo</h1><br></br>
-      <div className='col-sm'>
-        <Bar
-          data={charReport}
-          height={100}
-          options={options}
-        />
-      </div><br></br>
+      <div className='container-sm'>
+      <h1 align='center' font-family='Arial Narrow Bold'>Cantidad de Rutas Por Vehiculos</h1><br></br>
+      <button class="btn btn-warning" data-toggle="tooltip" data-placement="top" title="Export As JPEG" onClick={() => exportComponentAsJPEG(componentRef)}>
+        Export As JPEG
+      </button>
+      <button class="btn btn-warning" onClick={() => exportComponentAsPDF(componentRef, { pdfOptions: { w: 200, h: 200 } })}>
+        Export As PDF
+      </button>
+      <button class="btn btn-warning" onClick={() => exportComponentAsPNG(componentRef)}>
+        Export As PNG
+      </button>
+        <div ref={componentRef} className='container-sm'>
+          
+          <div className='col-sm'>
+            <Bar
+              data={charReport}
+              height={100}
+              options={options}
+            />
+          </div><br></br>
 
-      <h1 align='center'>Cantidad Mantenimientos Por Vehiculos</h1><br></br>
-      <div>
-        <Bar
-          data={charReportMaintenance}
-          height={100}
-        />
+          <h1 align='center'> Cantidad Mantenimientos Por Vehiculos</h1><br></br>
+          <div >
+            <Bar
+
+              data={charReportMaintenance}
+              height={100}
+
+            />
+          </div>
+        </div>
       </div>
-    </div>
+     
+    </div >
+
   )
 
 
