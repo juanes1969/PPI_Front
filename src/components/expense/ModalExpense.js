@@ -50,8 +50,9 @@ export const ModalExpense = ({
     if (Object.entries(error).length === 0) {
       if (expenseEdit) {
         UseSaveExpense(expenses)
-        e.target.reset();
         closeModal();
+        e.target.reset();
+        
       } else {
         UseInsertExpense(expenses);
         closeModal();

@@ -38,6 +38,8 @@ export const ModalVehicle = ({ isOpenModal, closeModal, vehicleEdit,  setVehicle
     handleChangeData(e);
     setError(ValidationsFormVehicle(vehicles));
   }
+
+  
   const handleSubmit = (e) => {
     e.preventDefault();
     if (Object.entries(error).length === 0) {
