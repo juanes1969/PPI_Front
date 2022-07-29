@@ -51,7 +51,7 @@ export const Route = () => {
                 setRouteDetail({
                     data: product
                 })
-                
+
             }).then(() => {
                 modalRoute(route);
             })
@@ -105,44 +105,47 @@ export const Route = () => {
                     (<Loader />) :
 
                     <div className="row">
-                        <table className="table table-striped table-bordered" id="tbl_rutas">
-                            <thead>
-                                <tr>
-
-                                    <th className="th-shipping" scope="col">Manifiesto</th>
-                                    <th className="th-shipping" scope="col">Fecha Inicio</th>
-                                    <th className="th-shipping" scope="col">Fecha Fin</th>
-                                    <th className="th-shipping" scope="col">Flete</th>
-                                    <th className="th-shipping" scope="col">Vehiculo Asignado</th>
-                                    <th className="th-shipping" scope="col">Ciudad Origen</th>
-                                    <th className="th-shipping" scope="col">Ciudad Destino</th>
-                                    <th className="th-shipping" scope="col">Conductor</th>
-                                    <th className="th-shipping" scope="col">Estado Ruta</th>
-                                    <th className="th-shipping" colSpan="3">Acciones</th>
-                                </tr>
-                            </thead>
-                            <tbody id="id_ruta">
-                                {filterRoutes().map((route) => (
-                                    <tr key={route.codigo_manifiesto}>
-                                        <td>{route.codigo_manifiesto}</td>
-                                        <td>{route.fecha_inicio}</td>
-                                        <td>{route.fecha_fin}</td>
-                                        <td>{route.flete}</td>
-                                        <td>{route.id_vehiculo}</td>
-                                        <td>{route.ciudad_origen}</td>
-                                        <td>{route.ciudad_destino}</td>
-                                        <td>{route.conductor}</td>
-                                        <td>{route.estado}</td>
-                                        <td id="columOptions">
-
-                                        
-                                            <button className="btn btn-info btn-sm"   data-toggle="tooltip" data-placement="top" title="Editar"   onClick={() => getByIdEdit(route)} ><RiIcons.RiEditFill /></button>
-                                            <button className="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="top" title="Eliminar" onClick={() => getById(route.codigo_manifiesto)} ><AiIcons.AiFillDelete /></button>
-                                        </td>
+                        {data.length === 0 ?
+                            (<h1>No hay Rutas registradas...</h1>) :
+                            <table className="table table-striped table-bordered" id="tbl_rutas">
+                                <thead>
+                                    <tr>
+                                        <th className="th-shipping" scope="col">Manifiesto</th>
+                                        <th className="th-shipping" scope="col">Fecha Inicio</th>
+                                        <th className="th-shipping" scope="col">Fecha Fin</th>
+                                        <th className="th-shipping" scope="col">Flete</th>
+                                        <th className="th-shipping" scope="col">Vehiculo Asignado</th>
+                                        <th className="th-shipping" scope="col">Ciudad Origen</th>
+                                        <th className="th-shipping" scope="col">Ciudad Destino</th>
+                                        <th className="th-shipping" scope="col">Conductor</th>
+                                        <th className="th-shipping" scope="col">Estado Ruta</th>
+                                        <th className="th-shipping" colSpan="3">Acciones</th>
                                     </tr>
-                                ))}
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody id="id_ruta">
+                                    {filterRoutes().map((route) => (
+                                        <tr key={route.codigo_manifiesto}>
+                                            <td>{route.codigo_manifiesto}</td>
+                                            <td>{route.fecha_inicio}</td>
+                                            <td>{route.fecha_fin}</td>
+                                            <td>{route.flete}</td>
+                                            <td>{route.id_vehiculo}</td>
+                                            <td>{route.ciudad_origen}</td>
+                                            <td>{route.ciudad_destino}</td>
+                                            <td>{route.conductor}</td>
+                                            <td>{route.estado}</td>
+                                            <td id="columOptions">
+
+
+                                                <button className="btn btn-info btn-sm" data-toggle="tooltip" data-placement="top" title="Editar" onClick={() => getByIdEdit(route)} ><RiIcons.RiEditFill /></button>
+                                                <button className="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="top" title="Eliminar" onClick={() => getById(route.codigo_manifiesto)} ><AiIcons.AiFillDelete /></button>
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        }
+
                         <Pagination
                             nextPage={nextPage}
                             prevPage={prevPage}

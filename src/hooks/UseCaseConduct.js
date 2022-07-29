@@ -135,7 +135,7 @@ export const UseEditConduct = (dataCondut) => {
             .then((response) => {
                 swalWithBootstrapButtons.fire(
                     '¡Registro Exitoso!',
-                    'El vehículo fue editado con éxito',
+                    'El conductor fue editado con éxito',
                     'success'
                 ).then((response) => {
                     if (response.isConfirmed) {

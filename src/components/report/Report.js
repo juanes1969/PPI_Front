@@ -13,6 +13,7 @@ import {
   exportComponentAsPDF,
   exportComponentAsPNG
 } from "react-component-export-image";
+import { Loader } from '../globalComponents/Loader';
 
 
 ChartJS.register(
@@ -50,7 +51,7 @@ export const Report = () => {
 
 
   const componentRef = useRef();
-  const { data } = UseEffecReports();
+  const { data, loading } = UseEffecReports();
   const { datamaintenances } = UseEffectGetReportMaintenances();
 
   // label: `${data?.length} Cantidad de Rutas del Vehiculo`,
@@ -128,38 +129,47 @@ export const Report = () => {
   console.log(options)
   return (
     <div className='container-sm'>
-      
-      <div ref={componentRef} className='container-sm'>
-        <h1 align='center' font-family='Arial Narrow Bold'>Cantidad de Rutas Por Vehiculos</h1><br></br>
-        <button class="btn btn-warning" data-toggle="tooltip" data-placement="top" title="Export As JPEG" onClick={() => exportComponentAsJPEG(componentRef)}>
-          Export As JPEG
-        </button>
-      <button class="btn btn-warning" onClick={() => exportComponentAsPDF(componentRef,{pdfOptions:{w:200,h:200}})}>
-          Export As PDF
-        </button>
-        <button class="btn btn-warning" onClick={() => exportComponentAsPNG(componentRef)}>
-          Export As PNG
-        </button>
-        <div className='col-sm'>
-    
-          <Bar
-            data={charReport}
-            height={100}
-            options={options}
-          />
-        </div><br></br>
+      {
+        loading ?
+          (<Loader />) :
 
-        <h1 align='center'>Cantidad Mantenimientos Por Vehiculos</h1><br></br>
-        <div >
-          <Bar
+          data.length === 0 ?
+            (<h1 style={{ alignItems: 'center', textAlign: 'center', marginTop: '20%' }}>Aun no hay reportes generados...</h1>) :
+            <div ref={componentRef} className='container-sm'>
 
-            data={charReportMaintenance}
-            height={100}
+              <h1 align='center' font-family='Arial Narrow Bold'>Cantidad de Rutas Por Vehiculos</h1><br></br>
+              <button class="btn btn-warning" data-toggle="tooltip" data-placement="top" title="Export As JPEG" onClick={() => exportComponentAsJPEG(componentRef)}>
+                Export As JPEG
+              </button>
+              <button class="btn btn-warning" onClick={() => exportComponentAsPDF(componentRef, { pdfOptions: { w: 200, h: 200 } })}>
+                Export As PDF
+              </button>
+              <button class="btn btn-warning" onClick={() => exportComponentAsPNG(componentRef)}>
+                Export As PNG
+              </button>
+              <div className='col-sm'>
 
-          />
-        </div>
-      </div>
-      
+                <Bar
+                  data={charReport}
+                  height={100}
+                  options={options}
+                />
+              </div><br></br>
+
+              <h1 align='center'>Cantidad Mantenimientos Por Vehiculos</h1><br></br>
+              <div >
+                <Bar
+
+                  data={charReportMaintenance}
+                  height={100}
+
+                />
+              </div>
+
+            </div>
+      }
+
+
     </div >
 
   )

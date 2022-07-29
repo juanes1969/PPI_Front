@@ -5,7 +5,7 @@ import { getByIdConduct } from "./ConductHelper";
 export const ValidationsFormConduct = (conduct) => {
     let errors = {};
     let regexName = /^[A-Za-zÑñÁáÉéÍíÓóÚúÜü\s]+$/;
-    let regexTel = /^.{1,9}$/;
+    let regexTel = /^.{1,10}$/;
     let regexNumber = /^.{1,9}(\d)$/;
     let regexLicence = /^LC.{1,10}$/;
 

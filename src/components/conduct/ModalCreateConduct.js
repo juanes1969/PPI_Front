@@ -1,11 +1,10 @@
-import dateFormat, { masks } from "dateformat";
+import dateFormat from "dateformat";
 import React, { useEffect, useState } from "react";
+import logo from "../../assets/img/LogoNew.png";
 import { ValidationsFormConduct } from "../../helpers/ValidationsFormConduct";
 import { UseEditConduct, UseInsertConduct, UseLicenseAvailable } from "../../hooks/UseCaseConduct";
 import { UseVehicleAvailable } from "../../hooks/UseCaseVehicle";
-import logo from "../../assets/img/LogoNew.png";
 import "../../Styles/modal.css";
-import { editConduct, getByIdConduct } from "../../helpers/ConductHelper";
 
 export const ModalCreateConduct = ({ isOpenEditModal, closeModalEdit, conductEdit, setConductEdit, conduct, setConduct }) => {
 
@@ -43,22 +42,36 @@ export const ModalCreateConduct = ({ isOpenEditModal, closeModalEdit, conductEdi
         setErrors(ValidationsFormConduct(conduct))
     }
 
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        if (conductEdit) {
-            UseEditConduct(conduct)
-            closeModalEdit();
-            e.target.reset();
-
-        } else {
-            debugger
-            UseInsertConduct(conduct);
-            closeModalEdit();
-            setConduct(initialConductState);
-            e.target.reset();
+    const validarCampos = (e) => {
+        const identificacion = document.getElementById('identificacion');
+        if (identificacion.value === "") {
+            alert("¡Debes ingresar todos los campos obligatorios!")
+            // swalWithBootstrapButtons.fire(
+            //   '¡Campos incompletos!',
+            //   'Debes ingresar todos los campos obligatorios',
+            //   'error'
+            // )
         }
     }
+    const handleSubmit = (e) => {
+        debugger
+        validarCampos(e);
+        e.preventDefault();
+        if (Object.entries(errors).length === 0) {
+            if (conductEdit) {
+                UseEditConduct(conduct)
+                closeModalEdit();
+                e.target.reset();                
+            } else {
+                UseInsertConduct(conduct);
+                closeModalEdit();
+                setConduct(initialConductState);
+                e.target.reset();
+            }
+        } else {
+            alert('Debes ingresar los campos de manera correcta');
+        }
+    };
 
 
 
@@ -67,7 +80,7 @@ export const ModalCreateConduct = ({ isOpenEditModal, closeModalEdit, conductEdi
         setConduct(initialConductState)
         setConductEdit(null)
         setErrors({})
-        closeModalEdit()
+        closeModalEdit();
     }
 
     const handleModalDialogClick = (e) => {
@@ -116,7 +129,7 @@ export const ModalCreateConduct = ({ isOpenEditModal, closeModalEdit, conductEdi
         } else {
             setConduct(initialConductState)
         }
-    }, [conductEdit, setConduct, setConductEdit, setErrors]);
+    }, [conductEdit, setConduct, setConductEdit]);
 
     return (
         <>

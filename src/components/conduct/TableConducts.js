@@ -120,8 +120,8 @@ export const Conduct = () => {
                 </span>
 
                 <div className="btn-group" role="group" aria-label="Basic outlined example" id="btn-groupA">
-                    <button type="button" className="btn btn-outline-primary"  onClick={() => setActive(!active)}>{`Conductores ${active ? ('Inactivos') : ('Activos')}`}</button>
-                    <button type="button" className="btn btn-outline-primary"  onClick={() => setActive(null)}>Ver todos</button>
+                    <button type="button" className="btn btn-outline-primary" onClick={() => setActive(!active)}>{`Conductores ${active ? ('Inactivos') : ('Activos')}`}</button>
+                    <button type="button" className="btn btn-outline-primary" onClick={() => setActive(null)}>Ver todos</button>
                 </div>
 
                 {loading
@@ -130,42 +130,43 @@ export const Conduct = () => {
                     (<Loader />) :
 
                     <div className="row" >
-                        <table className="table table-striped table-bordered" id='table-conducts'>
-                            <thead>
-                                <tr>
-                                    <th scope="col">Identificación</th>
-                                    <th scope="col">Nombre</th>
-                                    <th scope="col">Primer apellido</th>
-                                    <th scope="col">Segundo apellido</th>
-                                    <th scope="col">Telefono</th>
-                                    <th scope="col">Estado conductor</th>
-                                    <th scope="col" colSpan="3">
-                                        Acciones
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody id="identificacion">
-                                {filterConducts().map((cond) => (
-                                    <tr key={cond.identificacion}>
-                                        <td >{cond.identificacion}</td>
-                                        <td>{cond.nombre}</td>
-                                        <td>{cond.primer_apellido}</td>
-                                        <td>{cond.segundo_apellido}</td>
-                                        <td><b>(+57) </b>{cond.telefono_contacto}</td>
-                                        <td>{cond.estado_conductor}</td>
-                                        <td id="columOptions">
-                                            {/* {cond.estado_conductor == "Activo" ?
-                                                (<button className="btn btn-warning btn-sm"><BsIcons.BsFillEyeFill /></button>) :
-                                                (<button className="btn btn-warning btn-sm"><GiIcons.GiCarSeat /></button>)
-                                            } */}
-                                            {/* <button className="btn btn-warning btn-sm" onClick={() => getVisualize(cond)}><BsIcons.BsFillEyeFill /></button> */}
-                                            <button disabled={active == false || cond.estado_conductor == "Inactivo"} className="btn btn-info btn-sm" onClick={() => getByIdEdit(cond)}><RiIcons.RiEditFill /></button>
-                                            <button disabled={active == false || cond.estado_conductor == "Inactivo"} className="btn btn-danger btn-sm" onClick={() => getById(cond.identificacion)}><AiIcons.AiFillDelete /></button>
-                                        </td>
+
+                        {data.length === 0 ?
+                            (<h1>No hay conductores registrados...</h1>) :
+                            <table className="table table-striped table-bordered" id='table-conducts'>
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Identificación</th>
+                                        <th scope="col">Nombre</th>
+                                        <th scope="col">Primer apellido</th>
+                                        <th scope="col">Segundo apellido</th>
+                                        <th scope="col">Telefono</th>
+                                        <th scope="col">Estado conductor</th>
+                                        <th scope="col" colSpan="3">
+                                            Acciones
+                                        </th>
                                     </tr>
-                                ))}
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                    {filterConducts().map((cond) => (
+                                        <tr key={cond.identificacion}>
+                                            <td >{cond.identificacion}</td>
+                                            <td>{cond.nombre}</td>
+                                            <td>{cond.primer_apellido}</td>
+                                            <td>{cond.segundo_apellido}</td>
+                                            <td><b>(+57) </b>{cond.telefono_contacto}</td>
+                                            <td>{cond.estado_conductor}</td>
+                                            <td id="columOptions">
+                                                <button disabled={active == false || cond.estado_conductor == "Inactivo"} className="btn btn-info btn-sm" data-toggle="tooltip" data-placement="top" title="Editar conductor" onClick={() => getByIdEdit(cond)}><RiIcons.RiEditFill /></button>
+                                                <button disabled={active == false || cond.estado_conductor == "Inactivo"} className="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="top" title="Eliminar conductor" onClick={() => getById(cond.identificacion)}><AiIcons.AiFillDelete /></button>
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        }
+
+
 
                         <Pagination
                             nextPage={nextPage}
@@ -175,7 +176,8 @@ export const Conduct = () => {
                             setCurrentPage={setCurrentPage}
                             setPage={setPage}
                         />
-                    </div>}
+                    </div>
+                }
             </div>
 
             <ModalCreateConduct

@@ -12,6 +12,7 @@ import { UseDeleteMaintenance, UseEffectGetMaintenances } from '../../hooks/UseC
 import { getAllMaintenances } from "../../helpers/MaintenanceHelper";
 import { UsePage } from '../../hooks/UsePage';
 import { useDownloadExcel } from "table-to-excel-react";
+import { Loader } from '../globalComponents/Loader';
 
 export const Maintenance = () => {
 
@@ -44,16 +45,16 @@ export const Maintenance = () => {
 
     const retrieveMaintenances = () => {
         getAllMaintenances()
-        .then((maintenance) => {
-            setMaintenances(maintenance);
-        }).catch((e) => {
-            console.log(e);
-        });
+            .then((maintenance) => {
+                setMaintenances(maintenance);
+            }).catch((e) => {
+                console.log(e);
+            });
     }
 
     const refreshList = () => {
         retrieveMaintenances();
-      };
+    };
 
     useEffect(() => {
         retrieveMaintenances();
@@ -64,48 +65,56 @@ export const Maintenance = () => {
             <div className="container" id="contenedorInicial">
                 <h1 className="title-h1">Mantenimiento Vehículos</h1>
                 <span>
-                    <SearchConduct 
-                        titleButton={"Agregar Mantenimiento"} 
-                        icon={<IoIcons.IoCarSportSharp />} 
+                    <SearchConduct
+                        titleButton={"Agregar Mantenimiento"}
+                        icon={<IoIcons.IoCarSportSharp />}
                         openModal={openModalMaintenance}
                         setSearch={setSearch}
                         setCurrentPage={setCurrentPage}
                         setPage={setPage}
                         onDownload={onDownload}
-                         />
+                    />
                     {/* <button className="btn btn-warning btn-sm" onClick={() => newMaintenance()}><IoIcons.IoCarSportSharp /> Agregar Vehículos</button> */}
                 </span>
 
-                <div className="row">
-                    <table className="table table-striped table-bordered" id='tbl_mantenimiento'>
-                        <thead>
-                            <tr>
-                                <th scope="col">Placa Vehículo</th>
-                                <th scope="col">Fecha Mantenimiento</th>
-                                <th scope="col">Valor</th>
-                                <th scope="col">Descripción</th>
-                                <th scope="col" colSpan="3">
-                                    Acciones
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {/* {loading && <Loader />} */}
-                            {filterMaintenance().map((maintenance) => (
-                                <tr key={maintenance.id_mantenimiento}>
-                                    <td>{maintenance.id_vehiculo}</td>
-                                    <td>{maintenance.fecha_realizado}</td>
-                                    <td>{maintenance.valor_mantenimiento}</td>
-                                    <td>{maintenance.descripcion}</td>
-                                    <td id="columOptions">
-                                        <button className="btn btn-info btn-sm"   data-toggle="tooltip" data-placement="top" title="Editar"   onClick={() => getByIdEdit(maintenance)} ><RiIcons.RiEditFill /></button>
-                                        <button className="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="top" title="Eliminar" onClick={() => handleDeleteMaintenance(maintenance.placa)}><AiIcons.AiFillDelete /></button>
-                                    </td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                    <Pagination
+                {loading
+                    ?
+
+                    (<Loader />) :
+                    <div className="row">
+                        {data.length === 0 ?
+                            (<h1>No hay Mantenimientos registrados...</h1>) :
+                            <table className="table table-striped table-bordered" id='tbl_mantenimiento'>
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Placa Vehículo</th>
+                                        <th scope="col">Fecha Mantenimiento</th>
+                                        <th scope="col">Valor</th>
+                                        <th scope="col">Descripción</th>
+                                        <th scope="col" colSpan="3">
+                                            Acciones
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {/* {loading && <Loader />} */}
+                                    {filterMaintenance().map((maintenance) => (
+                                        <tr key={maintenance.id_mantenimiento}>
+                                            <td>{maintenance.id_vehiculo}</td>
+                                            <td>{maintenance.fecha_realizado}</td>
+                                            <td>{maintenance.valor_mantenimiento}</td>
+                                            <td>{maintenance.descripcion}</td>
+                                            <td id="columOptions">
+                                                <button className="btn btn-info btn-sm" data-toggle="tooltip" data-placement="top" title="Editar" onClick={() => getByIdEdit(maintenance)} ><RiIcons.RiEditFill /></button>
+                                                <button className="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="top" title="Eliminar" onClick={() => handleDeleteMaintenance(maintenance.placa)}><AiIcons.AiFillDelete /></button>
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        }
+
+                        <Pagination
                             nextPage={nextPage}
                             prevPage={prevPage}
                             page={page}
@@ -113,7 +122,7 @@ export const Maintenance = () => {
                             setCurrentPage={setCurrentPage}
                             setPage={setPage}
                         />
-                </div>
+                    </div>}
             </div>
 
             <ModalMaintenance

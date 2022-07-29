@@ -92,38 +92,42 @@ export const Expenses = () => {
                     (<Loader />) :
 
                     <div className="row">
-                        <table id="table-to-xls" className="table table-striped table-bordered">
-                            <thead>
-                                <tr>
+                        {data.length === 0 ?
+                            (<h1>No hay Gastos registrados...</h1>) :
+                            <table id="table-to-xls" className="table table-striped table-bordered">
+                                <thead>
+                                    <tr>
 
-                                    <th className="th-shipping" scope="col">Codigo Gasto</th>
-                                    <th className="th-shipping" scope="col">Fecha Gasto</th>
-                                    <th className="th-shipping" scope="col">Valor Gasto</th>
-                                    <th className="th-shipping" scope="col">Descripcion</th>
-                                    <th className="th-shipping" scope="col">Codigo Manifiesto</th>
-                                    <th className="th-shipping" scope="col">Tipo Gasto</th>
-                                    <th className="th-shipping" colSpan="1">Acciones</th>
-                                </tr>
-                            </thead>
-                            <tbody id="id_ruta">
-                                {filterExpense().map((expense) => (
-                                    <tr key={expense.id_gasto}>
-                                        <td>{expense.id_gasto}</td>
-                                        <td>{expense.fecha_gasto}</td>
-                                        <td>{expense.valor_gasto}</td>
-                                        <td>{expense.descripcion}</td>
-                                        <td>{expense.codigo_manifiesto}</td>
-                                        <td>{expense.tipo_gasto}</td>
-                                        <td id="columOptions">
-
-                                            
-                                            <button className="btn btn-info btn-sm"   data-toggle="tooltip" data-placement="top" title="Editar"   onClick={() => getByIdEdit(expense)} ><RiIcons.RiEditFill /></button>
-                                            <button className="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="top" title="Eliminar" onClick={() => handleDeleteExpense(expense.id_gasto)} ><AiIcons.AiFillDelete /></button>
-                                        </td>
+                                        <th className="th-shipping" scope="col">Codigo Gasto</th>
+                                        <th className="th-shipping" scope="col">Fecha Gasto</th>
+                                        <th className="th-shipping" scope="col">Valor Gasto</th>
+                                        <th className="th-shipping" scope="col">Descripcion</th>
+                                        <th className="th-shipping" scope="col">Codigo Manifiesto</th>
+                                        <th className="th-shipping" scope="col">Tipo Gasto</th>
+                                        <th className="th-shipping" colSpan="1">Acciones</th>
                                     </tr>
-                                ))}
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody id="id_ruta">
+                                    {filterExpense().map((expense) => (
+                                        <tr key={expense.id_gasto}>
+                                            <td>{expense.id_gasto}</td>
+                                            <td>{expense.fecha_gasto}</td>
+                                            <td>{expense.valor_gasto}</td>
+                                            <td>{expense.descripcion}</td>
+                                            <td>{expense.codigo_manifiesto}</td>
+                                            <td>{expense.tipo_gasto}</td>
+                                            <td id="columOptions">
+
+
+                                                <button className="btn btn-info btn-sm" data-toggle="tooltip" data-placement="top" title="Editar" onClick={() => getByIdEdit(expense)} ><RiIcons.RiEditFill /></button>
+                                                <button className="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="top" title="Eliminar" onClick={() => handleDeleteExpense(expense.id_gasto)} ><AiIcons.AiFillDelete /></button>
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        }
+
                         <Pagination
                             nextPage={nextPage}
                             prevPage={prevPage}
