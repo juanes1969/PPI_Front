@@ -10,7 +10,13 @@ getExpenseByIdExpense
 import Swal from 'sweetalert2'
 import 'sweetalert2/src/sweetalert2.scss';
 
-
+const swalWithBootstrapButtons = Swal.mixin({
+  customClass: {
+    confirmButton: 'btn btn-success',
+    cancelButton: 'btn btn-danger'
+  },
+  buttonsStyling: false
+})
 
 export const UseEffectGetExpense = () => {
   const [expenses, setExpenses] = useState({
@@ -102,7 +108,7 @@ export const UseTypeExpense = () => {
 
 export const UseInsertExpense= (dataExpense) => {
 
-debugger
+
 console.log(dataExpense)
   var data = {
 
@@ -182,13 +188,7 @@ export const UseSaveExpense = (dataExpense) => {
 
 };
 
-const swalWithBootstrapButtons = Swal.mixin({
-  customClass: {
-    confirmButton: 'btn btn-success',
-    cancelButton: 'btn btn-danger'
-  },
-  buttonsStyling: false
-})
+
 
 
 const handleDelete = () => {
