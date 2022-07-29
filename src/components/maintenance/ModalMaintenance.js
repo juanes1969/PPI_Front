@@ -51,8 +51,8 @@ export const ModalMaintenance = ({
     if (Object.entries(error).length === 0) {
       if (maintenanceEdit) {
         UseEditMaintenance(maintenances)
-        e.target.reset();
         closeModal();
+        e.target.reset();
       } else {
           UseSaveMaintenance(maintenances);
           closeModal();
@@ -67,6 +67,7 @@ export const ModalMaintenance = ({
   const handleCancelButton = () => {
     setMaintenances(initialMaintenanceState);
     setMaintenanceEdit(null);
+    setError({})
     closeModal();
   };
 
