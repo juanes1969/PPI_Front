@@ -57,7 +57,7 @@ export const Report = () => {
   const charReport = {
     labels: data?.map(x => x.id_vehiculo),
     datasets: [{
-      label: `Cantidad de Rutas del Vehiculo`,
+      label: `Cantidad de Rutas del Vehículo`,
       data: data?.map(x => x.cantidad),
       backgroundColor: [
         '#4dc9f6',
@@ -129,15 +129,15 @@ export const Report = () => {
   return (
     <div className='container-sm'>
       <div className='container-sm'>
-      <h1 align='center' font-family='Arial Narrow Bold'>Cantidad de Rutas Por Vehiculos</h1><br></br>
-      <button class="btn btn-warning" data-toggle="tooltip" data-placement="top" title="Export As JPEG" onClick={() => exportComponentAsJPEG(componentRef)}>
-        Export As JPEG
+      <h1 align='center' font-family='Arial Narrow Bold'>Cantidad de Rutas Por Vehículos</h1><br></br>
+      <button class="btn btn-warning" data-toggle="tooltip" data-placement="top" title="Exportar en JPEG" onClick={() => exportComponentAsJPEG(componentRef,{fileName:"Gráficas"})}>
+         Exportar en JPEG
       </button>
-      <button class="btn btn-warning" onClick={() => exportComponentAsPDF(componentRef, { pdfOptions: { w: 200, h: 200 } })}>
-        Export As PDF
+      <button class="btn btn-warning" data-toggle="tooltip" data-placement="top" title=" Exportar en PDF" onClick={() => exportComponentAsPDF(componentRef, { fileName:"Gráficas", pdfOptions: { w: 200, h: 200 } })}>
+        Exportar en PDF
       </button>
-      <button class="btn btn-warning" onClick={() => exportComponentAsPNG(componentRef)}>
-        Export As PNG
+      <button class="btn btn-warning" data-toggle="tooltip" data-placement="top" title="Exportar en PNG" onClick={() => exportComponentAsPNG(componentRef ,{fileName:"Gráficas"})}>
+        Exportar en PNG
       </button>
         <div ref={componentRef} className='container-sm'>
           
@@ -149,7 +149,7 @@ export const Report = () => {
             />
           </div><br></br>
 
-          <h1 align='center'> Cantidad Mantenimientos Por Vehiculos</h1><br></br>
+          <h1 align='center'> Cantidad de Mantenimientos Por Vehículos</h1><br></br>
           <div >
             <Bar
 
