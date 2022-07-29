@@ -31,6 +31,7 @@ export const Maintenance = () => {
     const { filterMaintenance, nextPage, prevPage, setCurrentPage, setPage, page } = UsePage(data, perPage, search);
 
     maintenanceRef.current = maintenances;
+    const componentRef = useRef();
 
     const handleDeleteMaintenance = (placa) => {
         UseDeleteMaintenance(placa);
@@ -72,12 +73,13 @@ export const Maintenance = () => {
                         setCurrentPage={setCurrentPage}
                         setPage={setPage}
                         onDownload={onDownload}
+                        componentRef={componentRef}
                          />
                     {/* <button className="btn btn-warning btn-sm" onClick={() => newMaintenance()}><IoIcons.IoCarSportSharp /> Agregar Vehículos</button> */}
                 </span>
 
                 <div className="row">
-                    <table className="table table-striped table-bordered" id='tbl_mantenimiento'>
+                    <table ref={componentRef} className="table table-striped table-bordered" id='tbl_mantenimiento'>
                         <thead>
                             <tr>
                                 <th scope="col">Placa Vehículo</th>

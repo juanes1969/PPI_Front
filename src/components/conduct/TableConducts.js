@@ -35,6 +35,7 @@ export const Conduct = () => {
     const conductRef = useRef();
 
     conductRef.current = conducts;
+    const componentRef = useRef();
 
 
     const getById = (id) => {
@@ -111,6 +112,7 @@ export const Conduct = () => {
                         setCurrentPage={setCurrentPage}
                         setPage={setPage}
                         onDownload={onDownload}
+                        componentRef={componentRef} 
                     />
                 </span>
 
@@ -130,7 +132,7 @@ export const Conduct = () => {
 
                     (
                         <div className="row" >
-                            <table className="table table-striped table-bordered" id='table-conducts'>
+                            <table ref={componentRef} className="table table-striped table-bordered" id='table-conducts'>
                                 <thead>
                                     <tr>
                                         <th scope="col">Identificación</th>

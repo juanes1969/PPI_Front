@@ -81,6 +81,8 @@ export const Route = () => {
         retrieveConducts();
     }, []);
 
+    const componentRef = useRef();
+
 
     return (
         <>
@@ -95,6 +97,7 @@ export const Route = () => {
                         setCurrentPage={setCurrentPage}
                         setPage={setPage}
                         onDownload={onDownload}
+                        componentRef={componentRef}
                     />
 
                 </span>
@@ -105,7 +108,7 @@ export const Route = () => {
                     (<Loader />) :
 
                     <div className="row">
-                        <table className="table table-striped table-bordered" id="tbl_rutas">
+                        <table ref={componentRef} className="table table-striped table-bordered" id="tbl_rutas">
                             <thead>
                                 <tr>
 
